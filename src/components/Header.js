@@ -1,11 +1,10 @@
 import React from 'react';
 import { withRouter } from 'react-dom';
-
-import logo from './logo.png';
 import {Button, Col, Form, FormGroup, FormText, Nav, Navbar, NavbarBrand, Row} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {Code} from "react-bootstrap-icons";
-
+import {Cart, Cart3, Code, House, PersonCheck, PersonCircle, Search} from "react-bootstrap-icons";
+import "./Header.css";
+import logo from './logo.png';
 
 /*const useStyles = makeStyles((theme) => ({
     toolbar: {
@@ -26,29 +25,27 @@ const Header = (props) => {
 
     //const [menuAnchor, setMenuAnchor] = React.useState(null);
 
+    //TODO: Change the logo to .svg
+    //TODO: Find a better icon for Garage
+    //TODO: Extend search bar and I think it is not centered
+    //TODO: Color of the buttons?
     return (
         <div className="Header">
-            <Navbar bg="dark" variant="dark" sticky="top">
+            <Navbar bg="#85A582" variant="light" sticky="top" className="justify-content-between">
                 <NavbarBrand href="#mygarage">
-                    <img src={logo} style={{width:200, marginTop: -7}}/>
+                    <img src={logo} style={{width:200, marginTop:-7, marginBottom:-7}}/>
                 </NavbarBrand>
                 <Form inline>
-                    <Row>
-                        <Col xs="auto">
-                            <Form.Control type="text" placeholder="Search" className="mr-sm-2" />
-                        </Col>
-                        <Col xs="auto">
-                            <Button variant="outline-info">Search</Button>
-                        </Col>
-                    </Row>
+                    <Form.Control type="text" placeholder="Search for an item or a hashtag" className="mr-sm-2" />
+                    <Button variant="dark"><Search size={15} /></Button>
                 </Form>
                 <Nav className="justify-content-end">
-                    <Nav.Link href="#home">Home</Nav.Link>
-                    <Nav.Link href="#features">Features</Nav.Link>
-                    <Nav.Link href="#pricing">Pricing</Nav.Link>
+                    <Nav.Link href="#cart"><Cart3 size={25} /></Nav.Link>
+                    <Nav.Link href="#garage"><House size={25} /></Nav.Link>
+                    <Nav.Link href="#account"><PersonCircle size={25} /> </Nav.Link>
                 </Nav>
             </Navbar>
-            <Navbar bg="dark" variant="dark">
+            <Navbar className="navbar-links" bg="dark" variant="dark" >
                 <Nav className="mr-auto">
                     <Nav.Link href="#sales">Today's Sales</Nav.Link>
                     <Nav.Link href="#fashion">Fashion</Nav.Link>
