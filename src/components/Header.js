@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-dom';
-import {Button, Col, Form, FormGroup, FormText, Nav, Navbar, NavbarBrand, Row} from "react-bootstrap";
+import {Button, Col, Form, NavDropdown, FormGroup, FormText, Nav, Navbar, NavbarBrand, Row} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Cart, Cart3, Code, House, PersonCheck, PersonCircle, Search} from "react-bootstrap-icons";
 import "./Header.css";
@@ -20,6 +20,7 @@ import logo from './logo.png';
  * Navigation bar of the app
  * @param {props} props
  */
+const NavdropdownIcon = (<PersonCircle size={25} />);
 const Header = (props) => {
     //const classes = useStyles();
 
@@ -42,7 +43,9 @@ const Header = (props) => {
                 <Nav className="justify-content-end">
                     <Nav.Link href="#cart"><Cart3 size={25} /></Nav.Link>
                     <Nav.Link href="#garage"><House size={25} /></Nav.Link>
-                    <Nav.Link href="#account"><PersonCircle size={25} /> </Nav.Link>
+                    <NavDropdown alignRight title={NavdropdownIcon}>
+                            <NavDropdown.Item href="#/action-1">Login or Sign up</NavDropdown.Item>
+                    </NavDropdown>
                 </Nav>
             </Navbar>
             <Navbar className="navbar-links" bg="dark" variant="dark" >
