@@ -20,7 +20,7 @@ import logo from './logo.png';
  * Navigation bar of the app
  * @param {props} props
  */
-const Header = () => {
+const Header = (props) => {
     //const classes = useStyles();
     //const [menuAnchor, setMenuAnchor] = React.useState(null);
 

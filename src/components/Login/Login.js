@@ -6,7 +6,6 @@ const Login = () => {
 
     return (
         <div className="Login-page">
-            <CategoryBar />
             <div className="Loginform">
                 <Container>
                     <Row>
