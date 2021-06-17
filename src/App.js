@@ -1,9 +1,24 @@
 import React from "react";
-import Header from './components/Header';
+import Header from './components/Header/Header';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Login from './components/Login/Login';
+import Signup from './components/Signup/Signup';
 
 function App() {
   return (
-    <Header />
+    <Router>
+      <div className="wrapper">
+        <Header />
+        <Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/signup">
+            <Signup />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 

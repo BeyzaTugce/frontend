@@ -1,8 +1,8 @@
 import React from 'react';
-import { withRouter } from 'react-dom';
-import {Button, Col, Form, NavDropdown, FormGroup, FormText, Nav, Navbar, NavbarBrand, Row} from "react-bootstrap";
+import { useHistory } from 'react-router-dom';
+import {Button, Form, NavDropdown, Nav, Navbar, NavbarBrand} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {Cart, Cart3, Code, House, PersonCheck, PersonCircle, Search} from "react-bootstrap-icons";
+import {Cart3, House, PersonCircle, Search} from "react-bootstrap-icons";
 import "./Header.css";
 import logo from './logo.png';
 
@@ -20,8 +20,10 @@ import logo from './logo.png';
  * Navigation bar of the app
  * @param {props} props
  */
+
 const NavdropdownIcon = (<PersonCircle size={25} />);
-const Header = (props) => {
+const Header = () => {
+
     //const classes = useStyles();
 
     //const [menuAnchor, setMenuAnchor] = React.useState(null);
@@ -30,6 +32,11 @@ const Header = (props) => {
     //TODO: Find a better icon for Garage
     //TODO: Extend search bar and I think it is not centered
     //TODO: Color of the buttons?
+    
+    const history = useHistory();
+    const handleClick = () => {
+        history.push("/login");
+    }
     return (
         <div className="Header">
             <Navbar bg="#85A582" variant="light" sticky="top" className="justify-content-between">
@@ -43,8 +50,8 @@ const Header = (props) => {
                 <Nav className="justify-content-end">
                     <Nav.Link href="#cart"><Cart3 size={25} /></Nav.Link>
                     <Nav.Link href="#garage"><House size={25} /></Nav.Link>
-                    <NavDropdown alignRight title={NavdropdownIcon}>
-                            <NavDropdown.Item href="#/action-1">Login or Sign up</NavDropdown.Item>
+                    <NavDropdown alignRight title={NavdropdownIcon}>                       
+                        <NavDropdown.Item onClick={handleClick}>Login</NavDropdown.Item>
                     </NavDropdown>
                 </Nav>
             </Navbar>
@@ -63,3 +70,4 @@ const Header = (props) => {
 }
 
 export default Header;
+
