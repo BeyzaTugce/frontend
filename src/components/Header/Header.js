@@ -32,13 +32,12 @@ const Header = (props) => {
 
     //TODO: Change the logo to .svg
     //TODO: Find a better icon for Garage
-    //TODO: Extend search bar and I think it is not centered
-    //TODO: Color of the buttons?
+    //TODO: Colors?
 
     return (
         <div className="Header">
             <Navbar bg="#85A582" variant="dark" sticky="top" className="navbar fixed-top justify-content-between">
-                <NavbarBrand href="#mygarage">
+                <NavbarBrand href="/">
                     <img src={logo} style={{width:200, marginTop:-7, marginBottom:-10}}/>
                 </NavbarBrand>
                 <Nav className="d-flex flex-sm-grow-1 justify-content-center">
