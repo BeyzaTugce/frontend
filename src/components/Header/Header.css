@@ -2,6 +2,7 @@
     background-color: #85A582;
 }
 
-.search-button {
+.btn.shadow-none {
     background-color: #6A8E66;
+    border: none;
 }

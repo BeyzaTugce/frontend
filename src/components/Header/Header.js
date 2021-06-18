@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import {Button, Form, NavDropdown, Nav, Navbar, NavbarBrand} from "react-bootstrap";
+import {Button, Form, NavDropdown, Nav, Navbar, NavbarBrand, InputGroup} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Cart3, House, PersonCircle, Search} from "react-bootstrap-icons";
 import "./Header.css";
@@ -20,7 +20,7 @@ import logo from './logo.png';
  * Navigation bar of the app
  * @param {props} props
  */
-const Header = () => {
+const Header = (props) => {
     //const classes = useStyles();
     //const [menuAnchor, setMenuAnchor] = React.useState(null);
 
@@ -37,14 +37,20 @@ const Header = () => {
 
     return (
         <div className="Header">
-            <Navbar bg="#85A582" variant="dark" sticky="top" className="justify-content-between">
+            <Navbar bg="#85A582" variant="dark" sticky="top" className="navbar fixed-top justify-content-between">
                 <NavbarBrand href="#mygarage">
                     <img src={logo} style={{width:200, marginTop:-7, marginBottom:-10}}/>
                 </NavbarBrand>
-                <Form inline>
-                    <Form.Control type="text" placeholder="Search for an item or a hashtag" className="mr-sm-2" />
-                    <Button className="search-button" variant="light"><Search size={15} className="text-white"/></Button>
-                </Form>
+                <Nav className="d-flex flex-sm-grow-1 justify-content-center">
+                    <Form className="w-50">
+                        <InputGroup className="input-group">
+                            <Form.Control type="text" class="form-control border border-right-0" placeholder="Search for an item or a hashtag"/>
+                            <span className="input-group-append">
+                                <Button className='btn shadow-none border-left-0' variant="light"><Search size={18} className="text-white my-lg-1"/></Button>
+                            </span>
+                        </InputGroup>
+                    </Form>
+                </Nav>
                 <Nav className="justify-content-end">
                     <Nav.Link href="#cart"><Cart3 size={28} /></Nav.Link>
                     <Nav.Link href="/garage"><House size={28} /></Nav.Link>
