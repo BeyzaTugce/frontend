@@ -36,14 +36,14 @@ const Header = (props) => {
 
     return (
         <div className="Header">
-            <Navbar bg="#85A582" variant="dark" sticky="top" className="navbar fixed-top justify-content-between">
+            <Navbar bg="#85A582" variant="dark" sticky="top" className="header-navbar navbar fixed-top justify-content-between">
                 <NavbarBrand href="/">
                     <img src={logo} style={{width:200, marginTop:-7, marginBottom:-10}}/>
                 </NavbarBrand>
                 <Nav className="d-flex flex-sm-grow-1 justify-content-center">
                     <Form className="w-50">
                         <InputGroup className="input-group">
-                            <Form.Control type="text" class="form-control border border-right-0" placeholder="Search for an item or a hashtag"/>
+                            <Form.Control type="text" className="form-control border border-right-0" placeholder="Search for an item or a hashtag"/>
                             <span className="input-group-append">
                                 <Button className='btn shadow-none border-left-0' variant="light"><Search size={18} className="text-white my-lg-1"/></Button>
                             </span>
