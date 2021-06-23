@@ -1,25 +1,21 @@
 .myGarage{
-    margin-left: 450px;
-    margin-top: 20px;
-    font-family: Monaco;
     font-size: 40px;
     text-decoration-line: underline;
 }
 .garageOptions{
-    margin-top: 10px;
     padding: 10px;
     border: 2px solid #85A582;
     border-top: cornflowerblue 0.4rem solid;
-    font-family: Monaco;
 }
 
 .frame{
     padding-left: 10px;
     padding-top: 40px;
-    font-family: Monaco;
 }
 
 .button-rounded{
+    margin-left: 30px;
+    margin-bottom: 10px;
     paddingTop: 10px;
     border-radius: 50px;
     border: black 2px solid;
@@ -27,34 +23,9 @@
 }
 
 .addItems{
-    border: 2px solid #85A582 ;
-    margin-left: 15px;
+    font-style: oblique;
+    border: 1px solid #85A582 ;
     margin-top: 20px;
     padding: 5px;
-    font-family: Monaco;
 }
 
-.addItemTable{
-    border: 2px #85A582 solid;
-    margin-left: 15px;
-    margin-top: 0.5px;
-    width: 1000px;
-    height: 70px;
-}
-
-.addItemCheckBox{
-    padding-left: 30px;
-    padding-top: 20px;
-    width: 50px;
-    border-radius: 50px;
-}
-
-.itemImage{
-    padding-left: 50px;
-    padding-bottom: 50px;
-    font-size: 40px;
-}
-.itemName{
-    padding-bottom: 50px;
-    font-size: 20px;
-}
