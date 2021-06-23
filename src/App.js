@@ -5,6 +5,7 @@ import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';
 import Garage from "./views/Garage";
 import CategoryBar from "./components/Header/CategoryBar";
+import GarageCreation from "./components/GarageCreation/GarageCreation";
 
 function App() {
   return (
@@ -23,6 +24,9 @@ function App() {
           </Route>
           <Route path="/garage">
             <Garage />
+          </Route>
+          <Route path="/garagecreation">
+            <GarageCreation />
           </Route>
         </Switch>
       </div>
