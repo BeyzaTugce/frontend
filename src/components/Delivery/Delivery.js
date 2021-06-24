@@ -19,12 +19,12 @@ function Delivery() {
     locale: enGB,
     onDateChange: setDate,
   });
-  const [newDate, setNewDate] = useState();
-  //const [newDate, setNewDate] = useState([]);
+  //const [newDate, setNewDate] = useState();
+  const [newDate, setNewDate] = useState([]);
 
   const addDate = (input) => {
-    setNewDate(input);
-    //setNewDate([...newDate, input]);
+    //setNewDate(input);
+    setNewDate([...newDate, input]);
   };
 
   return (
@@ -73,7 +73,11 @@ function Delivery() {
           <Col>
             <h4>Selected Dates</h4>
             <p>
-              {newDate ? format(newDate, "dd MMM yyyy HH:mm", { locale: enGB }) : ""}
+              {newDate.map(item => {
+                return <li>{item
+                    ? format(item, "dd MMM yyyy HH:mm", { locale: enGB })
+                    : ""}</li>;
+              })}
             </p>
           </Col>
         </Row>
