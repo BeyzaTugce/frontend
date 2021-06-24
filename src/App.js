@@ -3,6 +3,7 @@ import Header from './components/Header/Header';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';
+import Delivery from './components/Delivery/Delivery';
 import Garage from "./views/Garage";
 import CategoryBar from "./components/Header/CategoryBar";
 import GarageCreation from "./components/GarageCreation/GarageCreation";
@@ -27,6 +28,9 @@ function App() {
           </Route>
           <Route path="/garagecreation">
             <GarageCreation />
+          </Route>
+          <Route path="/delivery">
+            <Delivery />
           </Route>
         </Switch>
       </div>
