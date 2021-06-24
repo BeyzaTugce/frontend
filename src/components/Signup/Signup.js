@@ -3,6 +3,15 @@ import { Container, Row, Col, Jumbotron, Form, Button } from 'react-bootstrap';
 
 const Signup = () => {
 
+    const [username, setUsername] = React.useState("");
+    const [password, setPassword] = React.useState("");
+    const [confirmPassword, setConfirmPassword] = React.useState("");
+    const [disabled, setDisabled] = React.useState(false);
+
+    React.useEffect(() => {
+        if (password === confirmPassword) setDisabled(false);
+        else setDisabled(true);
+    }, [password, confirmPassword])
 
     return (
         <div className="Signup-page">
@@ -17,7 +26,7 @@ const Signup = () => {
                             <Form>
 
                                 {/* Name */}
-                                <Form.Group>
+                                <Form.Group controlId="signupName">
                                     <Form.Label>Name</Form.Label>
                                     <Form.Row>
                                         <Col>
@@ -31,7 +40,7 @@ const Signup = () => {
 
                                 {/* Birthday and Gender */}
                                 <Form.Row>
-                                    <Form.Group xs={8} as={Col} controlId="signupBirth">
+                                    <Form.Group xs={8} as={Col} controlId="signupBirthDate">
                                         <Form.Label>Birthday</Form.Label>
                                         <Form.Control type="date" />
                                     </Form.Group>
@@ -48,31 +57,31 @@ const Signup = () => {
 
                                 {/* Email and Phone*/}
                                 <Form.Row>
-                                    <Form.Group as={Col} controlId="formGridEmail">
+                                    <Form.Group as={Col} controlId="signupEmail">
                                         <Form.Label>Email</Form.Label>
                                             <Form.Control type="email" placeholder="Enter Email" />
                                     </Form.Group>
-                                    <Form.Group as={Col} controlId="formGridPhone">
+                                    <Form.Group as={Col} controlId="signupPhone">
                                         <Form.Label>Phone</Form.Label>
                                             <Form.Control type="telephone" placeholder="Enter Phone Number" />
                                     </Form.Group>
                                 </Form.Row>
                                 
                                 {/* Password */}
-                                <Form.Group controlId="formGridEmail">
+                                <Form.Group controlId="signupPass">
                                     <Form.Label>Password</Form.Label>
                                     <Form.Row>                                   
                                         <Col>
-                                            <Form.Control type="password" placeholder="Password" />
+                                            <Form.Control onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" />
                                         </Col>
                                         <Col>
-                                            <Form.Control type="password" placeholder="Re-enter password" />
+                                            <Form.Control onChange={(e) => setConfirmPassword(e.target.value)} type="password" placeholder="Re-enter password" />
                                         </Col>
                                     </Form.Row>
                                 </Form.Group>
 
                                 {/* Address */}
-                                <Form.Group>
+                                <Form.Group controlId="signupAddress">
                                     <Form.Label>Address</Form.Label>
                                     <Form.Control placeholder="Address line 1 (or Company name)"></Form.Control>
                                 </Form.Group>
@@ -89,19 +98,19 @@ const Signup = () => {
                                 </Form.Row>
 
                                 {/* City */}
-                                <Form.Group>
+                                <Form.Group controlId="signupCity">
                                     <Form.Label>Town/City</Form.Label>
                                     <Form.Control placeholder="Munich"></Form.Control>
                                 </Form.Group>
 
                                 {/* Checkbox for terms and Register button */}
-                                <Form.Group controlId="formBasicCheckbox">
+                                <Form.Group controlId="signupCheckbox">
                                     <Form.Check type="checkbox" label="I agree to the terms and conditions ..." />
                                 </Form.Group>
-                                <Button variant="primary" type="submit">
+                                <Button variant="primary" type="submit" disabled={disabled} className= {disabled ? "btn btn-secondary" : ""}>
                                     Register
                                 </Button>
-                                
+                                {disabled ? (<span className="text-muted font-weight-bold ml-3">Passwords do not match!</span>) : (<p></p>)}
                             </Form>
                         </Jumbotron>
                     </Col>
