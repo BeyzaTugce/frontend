@@ -1,6 +1,6 @@
 import React from "react";
 import {FormCheck, ListGroupItem} from "react-bootstrap";
-import logo from "../components/Header/logo.png"
+import logo from "../views/logo.png"
 
 const GarageItem = (props) => {
     return (

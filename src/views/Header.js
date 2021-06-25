@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import {Cart3, House, PersonCircle, Search} from "react-bootstrap-icons";
 import "./Header.css";
 import logo from './logo.png';
+import CategoryBar from "../components/CategoryBar";
 
 /*const useStyles = makeStyles((theme) => ({
     toolbar: {
@@ -58,6 +59,7 @@ const Header = (props) => {
                     </NavDropdown>
                 </Nav>
             </Navbar>
+            <CategoryBar/>
         </div>
     );
 }

@@ -16,7 +16,7 @@ import {
 import FormCheckInput from "react-bootstrap/FormCheckInput";
 import {Book, Clock, PlusLg} from "react-bootstrap-icons";
 import "./GarageCreation.css"
-import logo from "../Header/logo.png";
+import logo from "./logo.png";
 
 const GarageCreation = (props) => {
 

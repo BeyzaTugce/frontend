@@ -1,6 +1,6 @@
 import React from "react";
 import {Button, FormCheck, Image, ListGroup, ListGroupItem} from "react-bootstrap";
-import logo from "../components/Header/logo.png";
+import logo from "./logo.png";
 import "./Garage.css"
 
 function App() {
