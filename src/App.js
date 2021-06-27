@@ -6,7 +6,7 @@ import reducers from "./redux/reducers";
 import routes from "./routes";
 import {applyMiddleware, createStore, compose} from "redux";
 import thunk from "redux-thunk";
-import Provider from "react-redux/lib/components/Provider";
+import { Provider } from 'react-redux'
 
 function App() {
 

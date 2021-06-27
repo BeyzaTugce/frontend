@@ -59,7 +59,7 @@ const Signup = () => {
                                 <Form.Row>
                                     <Form.Group as={Col} controlId="signupEmail">
                                         <Form.Label>Email</Form.Label>
-                                            <Form.Control type="email" placeholder="Enter Email" />
+                                            <Form.Control type="email" placeholder="Enter Email" required />
                                     </Form.Group>
                                     <Form.Group as={Col} controlId="signupPhone">
                                         <Form.Label>Phone</Form.Label>
@@ -72,7 +72,7 @@ const Signup = () => {
                                     <Form.Label>Password</Form.Label>
                                     <Form.Row>                                   
                                         <Col>
-                                            <Form.Control onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" />
+                                            <Form.Control onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" required />
                                         </Col>
                                         <Col>
                                             <Form.Control onChange={(e) => setConfirmPassword(e.target.value)} type="password" placeholder="Re-enter password" />
@@ -107,7 +107,7 @@ const Signup = () => {
                                 <Form.Group controlId="signupCheckbox">
                                     <Form.Check type="checkbox" label="I agree to the terms and conditions ..." />
                                 </Form.Group>
-                                <Button variant="primary" type="submit" disabled={disabled} className= {disabled ? "btn btn-secondary" : ""}>
+                                <Button variant="primary"  type="submit" disabled={disabled} className= {disabled ? "btn btn-secondary" : ""} required>
                                     Register
                                 </Button>
                                 {disabled ? (<span className="text-muted font-weight-bold ml-3">Passwords do not match!</span>) : (<p></p>)}
