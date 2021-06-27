@@ -6,9 +6,11 @@ import reducers from "./redux/reducers";
 import routes from "./routes";
 import {applyMiddleware, createStore, compose} from "redux";
 import thunk from "redux-thunk";
-import { Provider } from 'react-redux'
+import {Provider, useDispatch} from 'react-redux'
 
-function App() {
+const App = () => {
+
+  //const dispact = useDispatch();
 
   // set document title
   useEffect(() => {
