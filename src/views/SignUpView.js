@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
 
-import SignUpComponent from "../SignUp";
+import SignUpComponent from "../components/Signup";
 
-import { register } from "../redux/actions";
+import { register } from "../redux/actions/UserActions";
 
 /**
  * For register new users

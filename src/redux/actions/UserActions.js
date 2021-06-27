@@ -27,7 +27,7 @@ export function loginReset() {
     return { type: "LOGIN_RESET" };
 }
 
-export function register(username, password) {
+export function register(username, password){
     function onSuccess(user) {
         return { type: "LOGIN_SUCCESS", user: user };
     }
@@ -44,3 +44,4 @@ export function register(username, password) {
         }
     };
 }
+
