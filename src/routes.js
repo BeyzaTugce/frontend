@@ -4,6 +4,7 @@ import GarageCreationView from "./views/GarageCreation";
 import SignUpView from "./views/SignUpView";
 import LoginView from "./views/LoginView";
 import DeliveryView from "./views/Delivery";
+import AdminSignUpView from "./views/AdminSignUpView";
 
 
 // routes within the movie database example app
@@ -36,6 +37,11 @@ const routes = [
     {
         path: "/delivery",
         component: DeliveryView,
+    },
+
+    {
+        path: "/adminsignup",
+        component: AdminSignUpView,
     },
 ];
 

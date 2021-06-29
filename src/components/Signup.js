@@ -3,6 +3,8 @@ import { Container, Row, Col, Jumbotron, Form, Button } from "react-bootstrap";
 
 function Signup  (props) {
   const [username, setUsername] = React.useState("");
+  const [name, setName] = React.useState("");
+  const [surname, setSurname] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [password2, setPassword2] = React.useState("");
