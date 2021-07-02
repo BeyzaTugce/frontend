@@ -11,23 +11,23 @@ import { register } from "../redux/actions/AdminActions";
  * @param {props} props
  */
 function AdminSignUpView(props) {
-    const admin = useSelector((state) => state.user);
+    const admin = useSelector((state) => this.state.admin);
 
     useEffect(() => {
         if (admin.admin) {
-            props.history.push("/");
+            this.props.history.push("/");
         }
-    }, [admin, props.history]);
+    }, [admin, this.props.history]);
 
     const onRegister = (email,password) => {
-        props.dispatch(register(email, password));
+        this.props.dispatch(register(email, password));
     };
 
     const onCancel = () => {
-        props.history.push("/");
+        this.props.history.push("/");
     };
     const onSignUp = () => {
-        props.history.push("/adminsinup");
+        this.props.history.push("/adminsinup");
     };
 
 

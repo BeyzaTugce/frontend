@@ -1,4 +1,4 @@
-export default function entities(state = {}, action) {
+export default function garageReducer(state = {}, action) {
     switch (action.type) {
         case "GETGARAGES_SUCCESS":
             return { garages: action.garages };

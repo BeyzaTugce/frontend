@@ -3,7 +3,7 @@ import {Button, FormCheck, Image, ListGroup, ListGroupItem} from "react-bootstra
 import logo from "./logo.png";
 import "./Garage.css"
 
-function App() {
+function Garage() {
 /*
     TODO: After backend get the garage items using GarageItem.js with this method
     const renderedList = garageItems.map(garageItem => {
@@ -144,4 +144,4 @@ function App() {
     );
 }
 
-export default App;
+export default Garage;

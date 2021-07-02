@@ -14,12 +14,20 @@ import {
     Row, TabContent, TabPane, TabContainer
 } from "react-bootstrap";
 import FormCheckInput from "react-bootstrap/FormCheckInput";
-import {Book, Clock, PlusLg} from "react-bootstrap-icons";
+import {Clock, PlusLg} from "react-bootstrap-icons";
+
 import "./GarageCreation.css"
-import logo from "./logo.png";
+import logo from "../views/logo.png";
 
 const GarageCreation = (props) => {
 
+    const getDate = (today) => {
+        let day = new Date();
+        if ( today){
+            return day.getDate() + '.' + (day.getMonth()+1) + '.' + day.getFullYear();
+        }
+        return day.getDate() + '.' + (day.getMonth()+2) + '.' + day.getFullYear();
+    }
 
     return(
 
@@ -57,9 +65,9 @@ const GarageCreation = (props) => {
                         <div className="d-inline-flex justify-content-center" style={{marginBottom:-20}}>
                             <div style={{marginRight:10, marginTop:10}}><Clock/></div>
                             <FormGroup style={{fontStyle: "italic"}}>
-                                <FormLabel>Beginning Date: 16.05.2021</FormLabel>
+                                <FormLabel>Beginning Date: {getDate(true)}</FormLabel>
                                 <br/>
-                                <FormLabel>Ending Date: 16.06.2021</FormLabel>
+                                <FormLabel>Ending Date: {getDate(false)}</FormLabel>
                             </FormGroup>
                         </div>
                     </div>
@@ -112,7 +120,7 @@ const GarageCreation = (props) => {
                     </div>
                 </div>
 
-                <div><FormLabel className="addItems">Add Items</FormLabel></div>
+                <div><FormLabel className="addItems">Added Items</FormLabel></div>
                 <div className="list-whole">
                     <ListGroup>
                         <ListGroupItem className="d-inline-flex align-items-center justify-content-between" style={{borderColor: "#85A582"}}>

@@ -2,7 +2,7 @@ import GarageService from "../../services/GarageService";
 
 export function getGarages(){
 
-    function onSuccess(movies) {
+    function onSuccess(garages) {
         return { type: "GETGARAGES_SUCCESS", garages: garages };
     }
     // when the backend call was failed

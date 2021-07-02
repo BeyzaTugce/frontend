@@ -11,20 +11,20 @@ import { register } from "../redux/actions/UserActions";
  * @param {props} props
  */
 function SignUpView(props) {
-    const user = useSelector((state) => state.user);
+    const user = useSelector((state) => this.state.user);
 
     useEffect(() => {
         if (user.user) {
-            props.history.push("/");
+            this.props.history.push("/");
         }
-    }, [user, props.history]);
+    }, [user, this.props.history]);
 
     const onRegister = (email, userName,password, loginStatus, registerDate,role) => {
-        props.dispatch(register(email, userName,password, loginStatus, registerDate,role));
+        this.props.dispatch(register(email, userName,password, loginStatus, registerDate,role));
     };
 
     const onCancel = () => {
-        props.history.push("/");
+        this.props.history.push("/");
     };
 
     return (

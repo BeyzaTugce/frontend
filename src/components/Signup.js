@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col, Jumbotron, Form, Button } from "react-bootstrap";
 
-function Signup  (props) {
+const Signup = (props) => {
   const [username, setUsername] = React.useState("");
   const [name, setName] = React.useState("");
   const [surname, setSurname] = React.useState("");
