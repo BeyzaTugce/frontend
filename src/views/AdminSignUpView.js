@@ -11,7 +11,7 @@ import { register } from "../redux/actions/AdminActions";
  * @param {props} props
  */
 function AdminSignUpView(props) {
-    const admin = useSelector((state) => state.admin);
+    const admin = useSelector((state) => state.user);
 
     useEffect(() => {
         if (admin.admin) {
