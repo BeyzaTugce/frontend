@@ -1,9 +1,35 @@
 import React from "react";
-import {Button, FormCheck, Image, ListGroupItem} from "react-bootstrap";
+import {Button, Form, FormCheck, Image, ListGroupItem} from "react-bootstrap";
 import logo from "../views/logo.png"
 
 const GarageItem = (props) => {
 
+    const [name, setName] = React.useState("");
+    const [info, setInfo] = React.useState("");
+    const [tags, setTags] = React.useState([]);
+    const [price, setPrice] = React.useState("");
+    const [image, setImage] = React.useState("");
+
+
+    const onChangeName = (e) => {
+        setName(e.target.value);
+    };
+
+    const onChangeInfo = (e) => {
+        setInfo(e.target.value);
+    };
+
+    const onChangeTags = (e) => {
+        setTags([...tags, e.target.value]);
+    };
+
+    const onChangePrice = (e) => {
+        setPrice(e.target.value);
+    };
+
+    const onChangeImage = (e) => {
+        setImage(e.target.value);
+    };
 
     return (
         <ListGroupItem className="d-inline-flex align-items-center justify-content-between" style={{borderColor: "#85A582"}}>
@@ -18,13 +44,26 @@ const GarageItem = (props) => {
             >
                 <Image
                     className="item-image"
-                    src={logo}
+                    onChange={onChangeImage}
+                    src={image}
                     fluid
                 />
             </div>
             <div className="name-and-tags flex-fill">
-                <div className="item-name">Some Item</div>
-                <div className="item-tags text-black-50" style={{fontSize:14}}>#all #tags #here</div>
+                <div className="item-name"
+                     type="name"
+                     fullWidth
+                     value={name}
+                     onChange={onChangeName}
+                     required
+                />
+                <div className="item-tags text-black-50" style={{fontSize:14}}
+                     type="name"
+                     fullWidth
+                     value={tags.map(tag => {return "#"+tag})}
+                     onChange={onChangeTags}
+                     required
+                />
             </div>
             <div className="justify-content-end d-inline-flex align-items-center justify-content-end">
                 <Button

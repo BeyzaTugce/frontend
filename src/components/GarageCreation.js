@@ -8,7 +8,6 @@ import {
     FormGroup,
     FormLabel,
     FormControl,
-    Image,
     ListGroup,
     ListGroupItem, Nav,
     Row, TabContent, TabPane, TabContainer
@@ -17,7 +16,6 @@ import FormCheckInput from "react-bootstrap/FormCheckInput";
 import {Clock, PlusLg} from "react-bootstrap-icons";
 
 import "./GarageCreation.css"
-import logo from "../views/logo.png";
 import GarageItem from "./GarageItem";
 
 const GarageCreation = (props) => {
@@ -50,12 +48,15 @@ const GarageCreation = (props) => {
         setShipmentType(e.target.value);
     };
 
+
     const onAddItems = (item) => {
+        item.preventDefault();
+        this.props.onCreate();
         setItems([...setItems, item]);
     };
 
-    const onRemoveItem = (index) => {
-        items.splice(index, 1);
+    const onRemoveGarage = (garage) => {
+        garage.preventDefault();
         setItems([...setItems]);
     };
 

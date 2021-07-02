@@ -20,7 +20,7 @@ export function getGarages(){
     };
 }
 
-export function deleteGarage(id) {
+export function deleteGarage(item) {
     function onSuccess(garages) {
         return { type: "DELETEGARAGE_SUCCESS", garages: garages };
     }
@@ -30,7 +30,7 @@ export function deleteGarage(id) {
 
     return async (dispatch) => {
         try {
-            await GarageService.deleteGarage(id);
+            await GarageService.deleteGarage(item);
             let garages = await GarageService.getGarages();
             dispatch(onSuccess(garages));
         } catch (e) {

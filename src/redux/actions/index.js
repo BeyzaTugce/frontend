@@ -1,2 +1,3 @@
-export * from "./userActions";
-export * from "./AdminActions";
+export * from "../actions/UserActions";
+export * from "../actions/AdminActions";
+export * from "../actions/GarageActions";

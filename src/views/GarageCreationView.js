@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import {connect, useDispatch, useSelector} from "react-redux";
 
 import GarageCreationComponent from "../components/GarageCreation";
-import {addGarage} from "../redux/actions/GarageActions";
+import {addGarage, deleteGarage} from "../redux/actions/GarageActions";
 
 /**
  * For register new users
@@ -22,12 +22,18 @@ function GarageCreationView(props) {
         this.props.dispatch(addGarage(garage))
     }
 
+    const onRemove = (garage) => {
+        this.props.dispatch(deleteGarage(garage._id))
+    }
+
+
+
     const onCancel = () => {
         this.props.history.push("/");
     };
 
     const onSignUp = () => {
-        this.props.history.push("/mygarage");
+        this.props.history.push("/garage");
     };
 
 
