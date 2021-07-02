@@ -92,7 +92,7 @@ function AdminSignUp  (props) {
         <Row>
           <Col className="mt-5" md={{ span: 7, offset: 3 }}>
             <Jumbotron>
-              <h1>Admin Sign Up Pahr</h1>
+              <h1>Admin Sign Up Page</h1>
               <Form>
         
                 {/* Email*/}

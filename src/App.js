@@ -14,7 +14,7 @@ const App = () => {
 
   // set document title
   useEffect(() => {
-    document.title = "Movie Database App";
+    document.title = "MyGarage";
   }, []);
 
   // create store for redux

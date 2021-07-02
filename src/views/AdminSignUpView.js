@@ -11,7 +11,7 @@ import { register } from "../redux/actions/AdminActions";
  * @param {props} props
  */
 function AdminSignUpView(props) {
-    const admin = useSelector((state) => state.user);
+    const admin = useSelector((state) => state.admin);
 
     useEffect(() => {
         if (admin.admin) {
@@ -26,6 +26,10 @@ function AdminSignUpView(props) {
     const onCancel = () => {
         props.history.push("/");
     };
+    const onSignUp = () => {
+        props.history.push("/adminsinup");
+    };
+
 
     return (
         <AdminSignUpComponent
