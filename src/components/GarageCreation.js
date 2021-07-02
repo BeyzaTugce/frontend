@@ -18,8 +18,49 @@ import {Clock, PlusLg} from "react-bootstrap-icons";
 
 import "./GarageCreation.css"
 import logo from "../views/logo.png";
+import GarageItem from "./GarageItem";
 
 const GarageCreation = (props) => {
+
+    const [dateCreated, setDateCreated] = React.useState("");
+    const [isPromoted, setIsPromoted] = React.useState("");
+    const [discount, setDiscount] = React.useState("");
+    const [bargain, setBargain] = React.useState("");
+    const [shipmentType, setShipmentType] = React.useState("");
+    const [items, setItems] = React.useState([]);
+
+
+    const onChangeDateCreated = (e) => {
+        setDateCreated(e.target.value);
+    };
+
+    const onChangeIsPromoted = (e) => {
+        setIsPromoted(e.target.value);
+    };
+
+    const onChangeDiscount = (e) => {
+        setDiscount(e.target.value);
+    };
+
+    const onChangeBargain = (e) => {
+        setBargain(e.target.value);
+    };
+
+    const onChangeShipmentType = (e) => {
+        setShipmentType(e.target.value);
+    };
+
+    const onAddItems = (item) => {
+        setItems([...setItems, item]);
+    };
+
+    const onRemoveItem = (index) => {
+        items.splice(index, 1);
+        setItems([...setItems]);
+    };
+
+
+
 
     const getDate = (today) => {
         let day = new Date();
@@ -116,43 +157,12 @@ const GarageCreation = (props) => {
                                 </TabContainer>
                             </ListGroupItem>
                         </ListGroup>
-
                     </div>
                 </div>
-
                 <div><FormLabel className="addItems">Added Items</FormLabel></div>
                 <div className="list-whole">
                     <ListGroup>
-                        <ListGroupItem className="d-inline-flex align-items-center justify-content-between" style={{borderColor: "#85A582"}}>
-                            <FormCheck
-                                type="checkbox"
-                                id="item-checkbox"
-                                style={{marginInline:17, marginRight:30}}
-                            />
-                            <div
-                                className="img-container d-flex align-items-center"
-                                style={{width:100, height:100, textAlign:"center", marginRight:30}}
-                            >
-                                <Image
-                                    className="item-image"
-                                    src={logo}
-                                    fluid
-                                />
-                            </div>
-                            <div className="name-and-tags flex-fill">
-                                <div className="item-name">Some Item</div>
-                                <div className="item-tags text-black-50" style={{fontSize:14}}>#all #tags #here</div>
-                            </div>
-                            <div className="justify-content-end d-inline-flex align-items-center justify-content-end">
-                                <Button
-                                    className='btn'
-                                    variant="dark"
-                                    style={{backgroundColor: "#85A582"}}
-                                >
-                                    Edit
-                                </Button>
-                            </div>
-                        </ListGroupItem>
+                        <GarageItem/>
                     </ListGroup>
                 </div>
             </div>

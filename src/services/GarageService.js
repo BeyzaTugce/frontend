@@ -3,17 +3,17 @@ import HttpService from "./HttpService";
 
 export default class GarageService{
     static baseURL() {
-            return "http://localhost:4000/garagecreation";
+            return "http://localhost:4000/garage";
     }
 
     static getGarages(){
         return new Promise(async (resolve, reject) => {
-            HttpService.get(
+            await HttpService.get(
                 this.baseURL(),
-                function (data){
+                function (data) {
                     resolve(data);
                 },
-                function (status){
+                function (status) {
                     reject(status);
                 });
             });
@@ -21,7 +21,7 @@ export default class GarageService{
 
     static getGarage(id){
         return new Promise(async (resolve, reject) => {
-            HttpService.get(`${GarageService.baseURL()}/${id}`,
+            await HttpService.get(`${GarageService.baseURL()}/${id}`,
                 function (data) {
                     if (data !== undefined || Object.keys(data).length !== 0) {
                         resolve(data);
@@ -35,10 +35,10 @@ export default class GarageService{
         });
     }
 
-    static deleteGarage(id) {
+    static deleteGarage(garage) {
         return new Promise((resolve, reject) => {
             HttpService.remove(
-                `${GarageService.baseURL()}/${id}`,
+                `${GarageService.baseURL()}/${garage._id}`,
                 function (data) {
                     if (data.message !== undefined) {
                         resolve(data.message);
@@ -72,7 +72,8 @@ export default class GarageService{
         garage.id = Math.floor(Math.random() * 100000000 + 1).toString();
 
         return new Promise((resolve, reject) => {
-            HttpService.post(GarageService.baseURL(),
+            HttpService.post(
+                `${GarageService.baseURL()}/createGarage`,
                 garage,
                 function (data){
                     resolve(data);
