@@ -20,14 +20,14 @@ function AdminSignUpView(props) {
     }, [admin, props.history]);
 
     const onRegister = (email,password) => {
-        this.props.dispatch(register(email, password));
+      //  props.dispatch(register(email, password));
     };
 
     const onCancel = () => {
-        this.props.history.push("/");
+        props.history.push("/");
     };
     const onSignUp = () => {
-        this.props.history.push("/adminsinup");
+        props.history.push("/adminsinup");
     };
 
 
