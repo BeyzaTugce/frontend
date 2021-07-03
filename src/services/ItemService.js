@@ -73,7 +73,7 @@ export default class ItemService{
 
         return new Promise((resolve, reject) => {
             HttpService.post(
-                `${ItemService.baseURL()}/createItem`,
+                `${ItemService.baseURL()}`,
                 Item,
                 function (data){
                     resolve(data);

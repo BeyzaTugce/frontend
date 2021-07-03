@@ -73,7 +73,7 @@ export default class GarageService{
 
         return new Promise((resolve, reject) => {
             HttpService.post(
-                `${GarageService.baseURL()}/createGarage`,
+                `${GarageService.baseURL()}`,
                 garage,
                 function (data){
                     resolve(data);
