@@ -1,14 +1,40 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Button, FormCheck, Image, ListGroup, ListGroupItem} from "react-bootstrap";
 import logo from "../views/logo.png";
 import "./Garage.css"
 import GarageItem from "./GarageItem";
 import {getUser} from "../redux/actions/UserActions";
+import {withRouter} from "react-router-dom";
 
 
 const Garage = (props) => {
-    //const user = props.dispatch(getUser("berke"));
+    const [userName, setUserName] = React.useState("");
+    const [postcode, setPostcode] = React.useState("");
+    const [district, setDistrict] = React.useState("");
+    const [city, setCity] = React.useState("");
+    const [garageEndDate, setGarageEndDate] = React.useState("");
+
+    const extractInfo = () => {
+        if (!props.user) {
+            return;
+        }
+
+        setUserName(props.user.name);
+        setPostcode(props.user.postcode);
+        setDistrict(props.user.district);
+        setCity(props.user.city);
+        setGarageEndDate(props.garage.dateCreated);
+
+    };
+
+    useEffect(() => {
+        if (!props.new) {
+            extractInfo();
+        }
+    }, [props.user, props.new]);
+
 /*
+
     TODO: After backend get the garage items using GarageItem.js with this method
     const renderedList = garageItems.map(garageItem => {
         return <GarageItem
@@ -24,10 +50,10 @@ const Garage = (props) => {
         <div className="Garage">
             <span>
                 <div className="jumbotron jumbotron-fluid bg-white" style={{marginBottom:-10}}>
-                    <h1 className="display-5 text-center">{}'s Garage</h1>
+                    <h1 className="display-5 text-center">{userName}'s Garage</h1>
                     <em>
                         <p className="lead text-black-50 text-sm-center" style={{fontSize:17}}>
-                            Schwabing-Freimann 80805 <br />until 26.07.2021
+                            {postcode} {district} {city} <br />until {garageEndDate}
                         </p>
                     </em>
                 </div>
@@ -115,4 +141,4 @@ might be useful for GarageItem
                         </ListGroupItem>
  */
 
-export default Garage;
+export default withRouter(Garage);

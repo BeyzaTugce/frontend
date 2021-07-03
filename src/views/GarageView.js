@@ -1,54 +1,33 @@
 import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import {connect, useDispatch, useSelector} from "react-redux";
-
-import GarageCreationComponent from "../components/GarageCreation";
-import {addGarage, changeGarage, deleteGarage} from "../redux/actions/GarageActions";
-import {addItem, deleteItem} from "../redux/actions/ItemActions";
+import GarageComponent from "../components/Garage";
 
 function GarageView(props) {
-    //TODO: After dealing with the Garage.js come here to connect them
-    //const garages = useSelector((state) => state.garages);
-    //const items = useSelector((state) => state.items);
+    let {matchGarage, getGarage} = props;
+    let {matchUser, getUser} = props
 
-    /*useEffect(() => {
-        if (garages.garages) {
-            props.history.push("/");
-        }
-    }, [garages, props.history]);
+    const garage = useSelector((state) => state.garage);
+    const user = useSelector((state) => state.user);
 
 
-    const onCreate = (garage) => {
-        props.dispatch(addGarage(garage))
-    }
+    useEffect(() => {
+        // get id of movie from URL
+        let userId = matchUser.params.id;
+        getUser(userId);
+    }, [matchUser.params]);
 
-    const onRemove = (garage) => {
-        props.dispatch(deleteGarage(garage._id))
-    }
-
-    const onChange = (newGarage) => {
-        props.dispatch(changeGarage(newGarage));
-    }
-
-    const onCancel = () => {
-        props.history.push("/");
-    };
-
-    const onAddItem = (item) => {
-        props.dispatch(addItem(item));
-    }
-
-    const onRemoveItem = (item) => {
-        props.dispatch(deleteItem(item));
-    }
-
-    return (
-        <GarageCreationComponent
-            items = {items}
-
+    return user.error ? (
+        <div>error</div>
+    ) : user.user ? (
+        <GarageComponent
+            user={user.user}
+            isLoggedIn={!!user.user}
+            isAdmin={!!user.user ? user.user.role === "admin" : false}
         />
-    );
-    */
+    ) : null;
 }
 
-export default connect()(withRouter(GarageView));
+export default connect(null, { getUser })(
+    GarageView
+);
