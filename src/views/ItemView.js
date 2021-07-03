@@ -22,13 +22,14 @@ function ItemView(props) {
    // state variable of this functional component
    const [newItem, setNewItem] = React.useState(false);
    let { match, getItem } = props;
+
    useEffect(() => {
        // get id of movie from URL
        let itemId = match.params.id;
 
        // check if a new movie is created
        if (itemId === "new") {
-           // procedd with an empty element
+           // proceed with an empty element
            setNewItem(true);
        } else {
            // trigger movie load from backend

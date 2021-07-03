@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
-import {connect, useDispatch, useSelector} from "react-redux";
+import {connect, useSelector} from "react-redux";
 
 import GarageCreationComponent from "../components/GarageCreation";
 import {addGarage, changeGarage, deleteGarage} from "../redux/actions/GarageActions";
@@ -15,10 +15,10 @@ function GarageCreationView(props) {
     const items = useSelector((state) => state.items);
 
     /*useEffect(() => {
-        if (garages.garages) {
+        if (items.garages) {
             props.history.push("/");
         }
-    }, [garages, props.history]);*/
+    }, [items, props.history]);*/
 
 
     const onCreate = (garage) => {
@@ -37,18 +37,17 @@ function GarageCreationView(props) {
         props.history.push("/");
     };
 
-    const onAddItem = (item) => {
+    /*const onAddItem = (item) => {
         props.dispatch(addItem(item));
     }
 
     const onRemoveItem = (item) => {
         props.dispatch(deleteItem(item));
-    }
+    }*/
 
     return (
         <GarageCreationComponent
             items = {items}
-
         />
     );
 }

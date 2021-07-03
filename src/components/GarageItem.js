@@ -11,11 +11,11 @@ const GarageItem = (props) => {
     const [price, setPrice] = React.useState("");
     const [image, setImage] = React.useState("");
 
-    /*useEffect(() => {
-        if ( items.items){
-            props.history.push("/");
+    const extractItem= () => {
+        if (!props.item) {
+            return;
         }
-    }, [items, props.history]);*/
+    }
 
     const onChangeName = (e) => {
         setName(e.target.value);
@@ -36,6 +36,30 @@ const GarageItem = (props) => {
     const onChangeImage = (e) => {
         setImage(e.target.value);
     };
+
+    const packItem = () => {
+        let back = {
+            ...props.item,
+        };
+        back.name = name;
+        back.info = info;
+        back.tags = tags;
+        back.price = price;
+        back.imag = image;
+        return back;
+    };
+    const onSave = () => {
+        if (props.new) {
+            props.onCreate(packItem());
+        }
+    };
+
+
+    useEffect(() => {
+        if (!props.new) {
+            extractItem();
+        }
+    }, [props.item, props.new]);
 
 
     return (

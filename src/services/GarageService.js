@@ -83,4 +83,33 @@ export default class GarageService{
                 });
         });
     }
+
+    static getItems(garageId){
+        return new Promise((resolve, reject) => {
+            HttpService.get(
+                `${GarageService.baseURL()}/item/${garageId}`,
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
+    static addItem(garageId, item) {
+        return new Promise((resolve, reject) => {
+            HttpService.post(
+                `${GarageService.baseURL()}/item/${garageId}`,
+                { item: item },
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
 }

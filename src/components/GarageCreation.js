@@ -20,6 +20,7 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from "prop-types";
 import GarageItem from "./GarageItem";
 import ItemComponent from "./ItemComponent";
+import GarageService from "../services/GarageService";
 
 const GarageCreation = (props) => {
     const history = useHistory();
@@ -30,10 +31,42 @@ const GarageCreation = (props) => {
     const [bargain, setBargain] = React.useState("");
     const [shipmentType, setShipmentType] = React.useState("");
     const [items, setItems] = React.useState([]);
+
+    const [itemTitle, setItemTitle] = React.useState("");
+    const [itemInfo, setItemInfo] = React.useState("");
     const [itemTags, setItemTags] = React.useState("");
     const [itemPrice, setItemPrice] = React.useState("");
-    const [itemInfo, setItemInfo] = React.useState("");
-    const [itemTitle, setItemTitle] = React.useState("");
+    const [itemImage, setItemImage] = React.useState("");
+
+    // for extracting the attributes of the given garage to the appropriate state variables
+    const extractGarage = () => {
+        if (!props.garage) {
+            return;
+        }
+        setDateCreated(props.garage.dateCreated);
+        setIsPromoted(props.garage.isPromoted);
+        setDiscount(props.garage.discount);
+        setBargain(props.garage.bargain);
+        setShipmentType(props.garage.shipmentType);
+        setItems(JSON.parse(JSON.stringify(props.garage.items)));
+    };
+
+    // creating a object with all relevant data to update or create a changed garage
+    const packGarage = () => {
+        let back = {
+            ...props.garage,
+        };
+
+        back.dateCreated = dateCreated;
+        back.isPromoted = isPromoted;
+        back.discount = discount;
+        back.bargain = bargain;
+        back.shipmentType = shipmentType;
+        back.items = items;
+
+        return back;
+    };
+
 
     const onChangeDateCreated = (e) => {
         setDateCreated(e.target.value);
@@ -51,24 +84,35 @@ const GarageCreation = (props) => {
         setBargain(e.target.value);
     };
 
-
-    const onChangeItemInfo = (e) => {
-        setItemInfo(e.target.value);
-    };
-    const onChangeItemPrice = (e) => {
-        setItemPrice(e.target.value);
-    };
-    const onChangeItemTags = (e) => {
-        setItemTags(e.target.value);
-    };
-    const onChangeItemTitle = (e) => {
-        setItemTitle(e.target.value);
-    };
-
     const onChangeShipmentType = (e) => {
         setShipmentType(e.target.value);
     };
 
+    const onChangeItemTitle = (e) => {
+        setItemTitle(e.target.value);
+    };
+
+    const onChangeItemInfo = (e) => {
+        setItemInfo(e.target.value);
+    };
+
+    const onChangeItemTags = (e) => {
+        setItemTags(e.target.value);
+    };
+
+    const onChangeItemPrice = (e) => {
+        setItemPrice(e.target.value);
+    };
+
+    const onChangeItemImage = (e) => {
+        setItemImage(e.target.value);
+    };
+
+    const onAddItems = async (e) => {
+        await GarageService.addItem(props.garage._id, e);
+        let items = await GarageService.getItems(props.garage._id);
+        setItems(items);
+    }
     
     const onRemoveItems = (removedItem) => {
         removedItem.preventDefault();
