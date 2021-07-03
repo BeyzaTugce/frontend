@@ -2,39 +2,37 @@ import React from "react";
 import { Container, Row, Col, Jumbotron, Form, Button } from "react-bootstrap";
 
 import { makeStyles } from "@material-ui/core/styles";
-import {
-    Typography,
-    FormControlLabel,
-    Checkbox,
-} from "@material-ui/core";
+import { useHistory } from 'react-router-dom';
+import { Typography, FormControlLabel, Checkbox } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-    usersignUpRoot: {
-        margin: "auto",
+  usersignUpRoot: {
+    margin: "auto",
+  },
+  signUpPaper: {
+    width: "500px",
+    padding: theme.spacing(2),
+  },
+  signUpRow: {
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
+    "&:last-child": {
+      paddingBottom: theme.spacing(0),
     },
-    signUpPaper: {
-        width: "500px",
-        padding: theme.spacing(2),
+    "&:first-child": {
+      paddingTop: theme.spacing(0),
     },
-    signUpRow: {
-        paddingTop: theme.spacing(1),
-        paddingBottom: theme.spacing(1),
-        "&:last-child": {
-            paddingBottom: theme.spacing(0),
-        },
-        "&:first-child": {
-            paddingTop: theme.spacing(0),
-        },
-    },
-    signUpButtons: {
-        display: "flex",
-        justifyContent: "flex-end",
-    },
-    signUpButton: {
-        marginLeft: theme.spacing(1),
-    },
+  },
+  signUpButtons: {
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+  signUpButton: {
+    marginLeft: theme.spacing(1),
+  },
 }));
 const Signup = (props) => {
+  const history = useHistory();
   const classes = useStyles();
   const registeredDate = new Date();
   const [username, setUsername] = React.useState("");
@@ -58,14 +56,24 @@ const Signup = (props) => {
 
   const onRegister = (e) => {
     e.preventDefault();
-    props.onRegister(email,username, firstname, surname, password, phone, birthdate,registeredDate);
+    props.onRegister(
+      email,
+      username,
+      firstname,
+      surname,
+      password,
+      phone,
+      birthdate,
+      registeredDate
+    );
+    history.push("/signup");
   };
 
   const onChangeUsername = (e) => {
     setUsername(e.target.value);
     setRegisterError("");
   };
-  
+
   const onChangeFirstname = (e) => {
     setFirstname(e.target.value);
     setRegisterError("");
@@ -79,8 +87,7 @@ const Signup = (props) => {
     setRegisterError("");
   };
 
-  
-  const onChangeEmail= (e) => {
+  const onChangeEmail = (e) => {
     setEmail(e.target.value);
     setRegisterError("");
   };
@@ -127,20 +134,18 @@ const Signup = (props) => {
                 sale, also start bargaining for zillions of products.
               </p>
               <Form>
-              <Form.Group controlId="Username">
+                <Form.Group controlId="Username">
                   <Form.Label>Username</Form.Label>
                   <Form.Row>
-            
                     <Col>
-                      <Form.Control 
-                       placeholder="Username"
-                       fullWidth
-                       value={username}
-                       onChange={onChangeUsername}
-                       error={registerError !== ""}
-                       required
+                      <Form.Control
+                        placeholder="Username"
+                        fullWidth
+                        value={username}
+                        onChange={onChangeUsername}
+                        error={registerError !== ""}
+                        required
                       />
-
                     </Col>
                   </Form.Row>
                 </Form.Group>
@@ -149,24 +154,24 @@ const Signup = (props) => {
                   <Form.Label>Name</Form.Label>
                   <Form.Row>
                     <Col>
-                      <Form.Control 
-                       placeholder="First Name"
-                       fullWidth
-                       value={firstname}
-                       onChange={onChangeFirstname}
-                       error={registerError !== ""}
-                       required
+                      <Form.Control
+                        placeholder="First Name"
+                        fullWidth
+                        value={firstname}
+                        onChange={onChangeFirstname}
+                        error={registerError !== ""}
+                        required
                       />
-
                     </Col>
                     <Col>
-                      <Form.Control 
-                      placeholder="Last Name"
-                                             fullWidth
-                                             value={surname}
-                                             onChange={onChangeSurname}
-                                             error={registerError !== ""}
-                                             required />
+                      <Form.Control
+                        placeholder="Last Name"
+                        fullWidth
+                        value={surname}
+                        onChange={onChangeSurname}
+                        error={registerError !== ""}
+                        required
+                      />
                     </Col>
                   </Form.Row>
                 </Form.Group>
@@ -175,28 +180,27 @@ const Signup = (props) => {
                 <Form.Row>
                   <Form.Group xs={8} as={Col} controlId="signupBirthDate">
                     <Form.Label>Birthday</Form.Label>
-                    <Form.Control 
-                    type="date"
-                    value={birthdate}
-                    onChange={onChangeBirthdate}
-                    error={registerError !== ""}
-                    required
-                     />
+                    <Form.Control
+                      type="date"
+                      value={birthdate}
+                      onChange={onChangeBirthdate}
+                      error={registerError !== ""}
+                      required
+                    />
                   </Form.Group>
                   <Form.Group as={Col}>
                     <Form.Label>Gender</Form.Label>
-                    <Form.Control 
-                    as="select"
-                    value={gender}
-                    onChange={onChangeGender}
-                    error={registerError !== ""}
-                    required
+                    <Form.Control
+                      as="select"
+                      value={gender}
+                      onChange={onChangeGender}
+                      error={registerError !== ""}
+                      required
                     >
                       <option>m/f/d</option>
                       <option>m</option>
                       <option>f</option>
                       <option>d</option>
-                      
                     </Form.Control>
                   </Form.Group>
                 </Form.Row>
@@ -289,36 +293,36 @@ const Signup = (props) => {
                   />
                 </Form.Group>
                 {registerError !== "" ? (
-                                    <div className={classes.signUpRow}>
-                                        <Typography color="error">{registerError}</Typography>
-                                    </div>
-                                ) : null}
-                                <div
-                                    className={classes.signUpRow + " " + classes.signUpButtons}
-                                >
-                                    <Button
-                                        className={classes.signUpButton}
-                                        onClick={props.onCancel}
-                                    >
-                                        Cancel
-                                    </Button>
-                                    <Button
-                                        className={classes.signUpButton}
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={onRegister}
-                                        disabled={
-                                            email === "" ||
-                                            password === "" ||
-                                            password2 === "" ||
-                                            registerError !== "" ||
-                                            password !== password2
-                                        }
-                                        type="submit"
-                                    >
-                                        Register
-                                    </Button>
-                                </div>
+                  <div className={classes.signUpRow}>
+                    <Typography color="error">{registerError}</Typography>
+                  </div>
+                ) : null}
+                <div
+                  className={classes.signUpRow + " " + classes.signUpButtons}
+                >
+                  <Button
+                    className={classes.signUpButton}
+                    onClick={props.onCancel}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    className={classes.signUpButton}
+                    variant="contained"
+                    color="primary"
+                    onClick={onRegister}
+                    disabled={
+                      email === "" ||
+                      password === "" ||
+                      password2 === "" ||
+                      registerError !== "" ||
+                      password !== password2
+                    }
+                    type="submit"
+                  >
+                    Register
+                  </Button>
+                </div>
               </Form>
             </Jumbotron>
           </Col>

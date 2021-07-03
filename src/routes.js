@@ -2,7 +2,7 @@ import MainPageView from "./components/CategoryBar"
 import GarageView from "./views/Garage";
 import GarageCreationView from "./views/GarageCreationView";
 import SignUpView from "./views/SignUpView";
-import LoginView from "./views/LoginView";
+import UserLoginView from "./views/UserLoginView";
 import DeliveryView from "./views/Delivery";
 import AdminSignUpView from "./views/AdminSignUpView";
 
@@ -28,21 +28,26 @@ const routes = [
     },
     {
         path: "/login",
-        component: LoginView,
+        component: UserLoginView,
+        exact: true,
     },
     {
         path: "/signup",
         component: SignUpView,
+        exact: true,
     },
     {
         path: "/delivery",
         component: DeliveryView,
+        exact: true,
     },
 
     {
         path: "/adminsignup",
         component: AdminSignUpView,
+        exact: true,
     },
+    
 ];
 
 export default routes;
