@@ -16,6 +16,7 @@ import { withRouter } from "react-router-dom";
 import {Clock, PlusLg} from "react-bootstrap-icons";
 import PropTypes from "prop-types";
 import { useHistory } from 'react-router-dom';
+import FileBase from "react-file-base64";
 
 
 const ItemComponent = (props) => {
@@ -25,6 +26,7 @@ const ItemComponent = (props) => {
     const [itemPrice, setItemPrice] = React.useState("");
     const [itemInfo, setItemInfo] = React.useState("");
     const [itemTitle, setItemTitle] = React.useState("");
+    const [itemImage, setItemImage] = React.useState("");
     const extractItem= () => {
         if (!props.item) {
             return;
@@ -43,7 +45,6 @@ const ItemComponent = (props) => {
     const onChangeItemTitle = (e) => {
         setItemTitle(e.target.value);
     };
-
 
 
     const packItem = () => {
@@ -122,6 +123,9 @@ const ItemComponent = (props) => {
                                                 <Nav.Item>
                                                     <Nav.Link eventKey="tag">Tags</Nav.Link>
                                                 </Nav.Item>
+                                                <Nav.Item>
+                                                    <Nav.Link eventKey="image">Upload Image</Nav.Link>
+                                                </Nav.Item>
                                             </Nav>
                                         </Col>
                                         <Col sm={9}>
@@ -155,6 +159,15 @@ const ItemComponent = (props) => {
                                                     value={itemTags}
                                                     onChange={onChangeItemTags}
                                                     style={{marginLeft:15, marginTop:170}}/>
+                                                </TabPane>
+                                                <TabPane eventKey="image">
+                                                    <div style={{marginLeft:15, marginTop:210}}>
+                                                        <FileBase
+                                                            type="file"
+                                                            multiple={false}
+                                                            onDone={({base64}) => setItemImage({ ...itemImage, selectedFile: base64})}
+                                                        />
+                                                    </div>
                                                 </TabPane>
                                             </TabContent>
                                         </Col>
