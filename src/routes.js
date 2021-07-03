@@ -1,11 +1,12 @@
 import MainPageView from "./components/CategoryBar"
-import GarageView from "./views/Garage";
+import GarageView from "./components/Garage";
 import GarageCreationView from "./views/GarageCreationView";
 import SignUpView from "./views/SignUpView";
 import UserLoginView from "./views/UserLoginView";
 import DeliveryView from "./views/Delivery";
 import AdminSignUpView from "./views/AdminSignUpView";
 import ItemView from "./views/ItemView";
+import UserView from "./views/UserView";
 
 
 // routes within the movie database example app
@@ -55,7 +56,12 @@ const routes = [
         component: ItemView,
         exact: true,
     },
-    
+
+    {
+        path: "/user",
+        component: UserView,
+        exact: true,
+    },
 ];
 
 export default routes;

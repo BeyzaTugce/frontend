@@ -7,9 +7,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import {Cart3, House, PersonCircle, Search} from "react-bootstrap-icons";
 import "./Header.css";
 import { connect, useSelector } from "react-redux";
-import logo from './logo.png';
+import logo from '../views/logo.png';
 import { logout } from "../redux/actions";
-import CategoryBar from "../components/CategoryBar";
+import CategoryBar from "./CategoryBar";
 
 /*const useStyles = makeStyles((theme) => ({
     toolbar: {

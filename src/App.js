@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import Header from './views/Header';
+import Header from './components/Header';
 import reducers from "./redux/reducers";
 import routes from "./routes";
 import {applyMiddleware, createStore, compose} from "redux";

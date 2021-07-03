@@ -74,14 +74,14 @@ const GarageItem = (props) => {
             </div>
             <div className="justify-content-end d-inline-flex align-items-center justify-content-end">
                 <Button
-                    className='btn'
+                    className='btn border-0'
                     variant="dark"
                     style={{backgroundColor: "#85A582", width: 80, marginRight: 10}}
                 >
                     Edit
                 </Button>
                 <Button
-                    className='btn'
+                    className='btn border-0'
                     variant="dark"
                     style={{backgroundColor: "#85A582", width: 80}}
                 >

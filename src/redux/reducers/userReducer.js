@@ -38,6 +38,14 @@ export default function user(state = getUser(), action) {
             return {};
         case "LOGOUT":
             return {};
+        case "GETUSERS_SUCCESS":
+            return { users: action.users };
+        case "DELETEUSER_SUCCESS":
+            return { users: action.users };
+        case "UPDATEUSER_SUCCESS":
+            return { user: action.user };
+        case "GETUSER_SUCCESS":
+            return { user: action.user };
         default:
             return state;
     }
