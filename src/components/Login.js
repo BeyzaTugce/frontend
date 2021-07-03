@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 const Login = (props) => {
 
     const [username, setUsername] = React.useState("");
+    const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [loginError, setLoginError] = React.useState("");
     const history = useHistory();
@@ -24,11 +25,11 @@ const Login = (props) => {
 
     const onLogin = (e) => {
         e.preventDefault();
-        props.onLogin(username, password);
+        props.onLogin(email, password);
     };
 
-    const onChangeUsername = (e) => {
-        setUsername(e.target.value);
+    const onChangeEmail = (e) => {
+        setEmail(e.target.value);
         setLoginError("");
     };
 
@@ -55,8 +56,8 @@ const Login = (props) => {
                                         type="email"
                                         fullWidth
                                         placeholder="Enter Email" 
-                                        value={username}
-                                        onChange={onChangeUsername}
+                                        value={email}
+                                        onChange={onChangeEmail}
                                         error={loginError !== ""}
                                     />
                                     <Form.Text className="text-muted">
@@ -93,7 +94,7 @@ const Login = (props) => {
                                         variant="contained"
                                         color="primary"
                                         onClick={onLogin}
-                                        disabled={username === "" || password === ""}
+                                        disabled={email === "" || password === ""}
                                         type="submit"
                                     >
                                         Login

@@ -29,12 +29,12 @@ export default class UserService {
         });
     }
 
-    static login(user, pass) {
+    static login(email, pass) {
         return new Promise((resolve, reject) => {
             HttpService.post(
                 `${UserService.baseURL()}/login`,
                 {
-                    username: user,
+                    email: email,
                     password: pass,
                 },
                 function (data) {

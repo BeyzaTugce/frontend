@@ -1,6 +1,6 @@
 import UserService from "../../services/UserService";
 
-export function login(username, password) {
+export function login(email, password) {
     function onSuccess(user) {
         return { type: "LOGIN_SUCCESS", user: user };
     }
@@ -10,7 +10,7 @@ export function login(username, password) {
 
     return async (dispatch) => {
         try {
-            let resp = await UserService.login(username, password);
+            let resp = await UserService.login(email, password);
             dispatch(onSuccess(resp.user));
         } catch (e) {
             dispatch(onFailure(e));

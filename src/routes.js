@@ -27,13 +27,13 @@ const routes = [
         exact: true,
     },
     {
-        path: "/login",
-        component: UserLoginView,
+        path: "/signup",
+        component: SignUpView,
         exact: true,
     },
     {
-        path: "/signup",
-        component: SignUpView,
+        path: "/login",
+        component: UserLoginView,
         exact: true,
     },
     {

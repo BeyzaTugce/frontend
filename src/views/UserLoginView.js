@@ -14,8 +14,8 @@ function UserLoginView(props) {
         }
     }, [user, props.history]);
 
-    const onLogin = (username, password) => {
-        props.dispatch(login(username, password));
+    const onLogin = (email, password) => {
+        props.dispatch(login(email, password));
     };
 
     const onCancel = () => {

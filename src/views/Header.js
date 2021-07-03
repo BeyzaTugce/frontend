@@ -37,7 +37,7 @@ const Header = (props) => {
 
     const onClickLogin = () => {
         // close this menu
-        props.onClose();
+       // props.onClose();
         // navigate to the login page
         props.history.push("/login");
     };
@@ -46,7 +46,7 @@ const Header = (props) => {
         // trigger redux logout action
         props.dispatch(logout());
         // close this menu
-        props.onClose();
+       // props.onClose();
         // navigate to the home page
         props.history.push("/");
     };
