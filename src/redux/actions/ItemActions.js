@@ -57,7 +57,7 @@ export function addItem(item) {
     };
 }
 
-export function changeGarage(changedItem) {
+export function changeItem(changedItem) {
     function onSuccess(item) {
         return { type: "UPDATEITEM_SUCCESS", item: item };
     }

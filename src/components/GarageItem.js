@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Button, Form, FormCheck, Image, ListGroupItem} from "react-bootstrap";
-import logo from "../views/logo.png"
+import {useSelector} from "react-redux";
 
 const GarageItem = (props) => {
+   // const items = useSelector((state) => state.items);
 
     const [name, setName] = React.useState("");
     const [info, setInfo] = React.useState("");
@@ -10,6 +11,11 @@ const GarageItem = (props) => {
     const [price, setPrice] = React.useState("");
     const [image, setImage] = React.useState("");
 
+    /*useEffect(() => {
+        if ( items.items){
+            props.history.push("/");
+        }
+    }, [items, props.history]);*/
 
     const onChangeName = (e) => {
         setName(e.target.value);
@@ -30,6 +36,7 @@ const GarageItem = (props) => {
     const onChangeImage = (e) => {
         setImage(e.target.value);
     };
+
 
     return (
         <ListGroupItem className="d-inline-flex align-items-center justify-content-between" style={{borderColor: "#85A582"}}>

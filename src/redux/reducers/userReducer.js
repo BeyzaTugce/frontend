@@ -15,12 +15,12 @@ const getUser = () => {
                 _id: userJson._id,
                 email: userJson.email,
                 username:userJson.username,
-                 firstname:userJson.firstname,
-                  surname:userJson.surname,
-                   password:userJson.password, 
-                   phone:userJson.phone, 
-                   birthdate:userJson.birthdate,
-                   registeredDate:userJson.registeredDate,
+                firstname:userJson.firstname,
+                surname:userJson.surname,
+                password:userJson.password,
+                phone:userJson.phone,
+                birthdate:userJson.birthdate,
+                registeredDate:userJson.registeredDate,
                 
             },
         };

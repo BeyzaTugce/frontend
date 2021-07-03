@@ -3,42 +3,52 @@ import { withRouter } from "react-router-dom";
 import {connect, useDispatch, useSelector} from "react-redux";
 
 import GarageCreationComponent from "../components/GarageCreation";
-import {addGarage, deleteGarage} from "../redux/actions/GarageActions";
+import {addGarage, changeGarage, deleteGarage} from "../redux/actions/GarageActions";
+import {addItem, deleteItem} from "../redux/actions/ItemActions";
 
 /**
  * For register new users
  * @param {props} props
  */
 function GarageCreationView(props) {
-    const garage = useSelector((state) => state.garage);
+    //const garages = useSelector((state) => state.garages);
+    const items = useSelector((state) => state.items);
 
-    useEffect(() => {
-        if (garage.garage) {
-            this.props.history.push("/");
+    /*useEffect(() => {
+        if (garages.garages) {
+            props.history.push("/");
         }
-    }, [garage, props.history]);
+    }, [garages, props.history]);*/
+
 
     const onCreate = (garage) => {
-        this.props.dispatch(addGarage(garage))
+        props.dispatch(addGarage(garage))
     }
 
     const onRemove = (garage) => {
-        this.props.dispatch(deleteGarage(garage._id))
+        props.dispatch(deleteGarage(garage._id))
     }
 
-
+    const onChange = (newGarage) => {
+        props.dispatch(changeGarage(newGarage));
+    }
 
     const onCancel = () => {
-        this.props.history.push("/");
+        props.history.push("/");
     };
 
-    const onSignUp = () => {
-        this.props.history.push("/garage");
-    };
+    const onAddItem = (item) => {
+        props.dispatch(addItem(item));
+    }
 
+    const onRemoveItem = (item) => {
+        props.dispatch(deleteItem(item));
+    }
 
     return (
         <GarageCreationComponent
+            items = {items}
+
         />
     );
 }

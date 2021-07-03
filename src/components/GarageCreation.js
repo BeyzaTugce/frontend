@@ -49,10 +49,16 @@ const GarageCreation = (props) => {
     };
 
 
-    const onAddItems = (item) => {
-        item.preventDefault();
-        this.props.onCreate();
-        setItems([...setItems, item]);
+    const onAddItems = (addedItem) => {
+        addedItem.preventDefault();
+        setItems([...setItems, addedItem]);
+
+    };
+
+    const onRemoveItems = (removedItem) => {
+        removedItem.preventDefault();
+        setItems.filter(item => item !== removedItem._id);
+
     };
 
     const onRemoveGarage = (garage) => {
@@ -82,7 +88,10 @@ const GarageCreation = (props) => {
                             <div className="garageOptions">
                                 <FormLabel>Garage Sale Options</FormLabel>
                                 <FormCheck>
-                                    <FormCheckInput isValid />
+                                    <FormCheckInput
+                                        isValid
+
+                                    />
                                     <FormCheck.Label >{`Discount for multiple item selection`}</FormCheck.Label>
                                 </FormCheck>
                                 <FormCheck>
