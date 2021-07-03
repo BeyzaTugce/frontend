@@ -1,9 +1,7 @@
 import React, {useEffect} from "react";
 import {Button, FormCheck, Image, ListGroup, ListGroupItem} from "react-bootstrap";
-import logo from "../views/logo.png";
 import "./Garage.css"
 import GarageItem from "./GarageItem";
-import {getUser} from "../redux/actions/UserActions";
 import {withRouter} from "react-router-dom";
 
 
@@ -12,9 +10,14 @@ const Garage = (props) => {
     const [postcode, setPostcode] = React.useState("");
     const [district, setDistrict] = React.useState("");
     const [city, setCity] = React.useState("");
-    const [garageEndDate, setGarageEndDate] = React.useState("");
 
-    const extractInfo = () => {
+    const [garageEndDate, setGarageEndDate] = React.useState("");
+    const [garageItems, setGarageItems] = React.useState([]);
+
+    //there should be some kind of code where it compares garageid of garage
+    // and garageid from the user (Which does not even exist yet)
+
+    const extractUser = () => {
         if (!props.user) {
             return;
         }
@@ -23,26 +26,34 @@ const Garage = (props) => {
         setPostcode(props.user.postcode);
         setDistrict(props.user.district);
         setCity(props.user.city);
-        setGarageEndDate(props.garage.dateCreated);
-
     };
+
+    const extractGarage = () => {
+        if (!props.garage) {
+            return;
+        }
+
+        //will change the date later.
+        setGarageEndDate(props.garage.dateCreated)
+        setGarageItems(props.garage.items)
+    }
 
     useEffect(() => {
         if (!props.new) {
-            extractInfo();
+            extractUser();
+            extractGarage();
         }
-    }, [props.user, props.new]);
+    }, [props.user, props.garage, props.new]);
 
-/*
-
-    TODO: After backend get the garage items using GarageItem.js with this method
     const renderedList = garageItems.map(garageItem => {
         return <GarageItem
-            key={id-here}
-            item={item}
+            name={garageItem.name}
+            info={garageItem.info}
+            tags={garageItem.tags}
+            price={garageItem.price}
+            image={garageItem.image}
         />;
     });
-*/
 
     //TODO: "Select All" button color
     //TODO: Bargain and buy buttons do not light up when clicked.
@@ -68,7 +79,7 @@ const Garage = (props) => {
                 </div>
                 <div className="list-whole w-100" style={{paddingInline:50}}>
                     <ListGroup>
-                        <GarageItem />
+                        {renderedList}
                     </ListGroup>
 
                     <div className="price-info-text text-center" style={{marginTop:25, marginBottom:25}}>

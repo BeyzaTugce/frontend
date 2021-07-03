@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import { withRouter } from "react-router-dom";
-import {connect, useDispatch, useSelector} from "react-redux";
+import { connect, useSelector } from "react-redux";
 import GarageComponent from "../components/Garage";
+import { getUser, getGarage } from "../redux/actions";
 
 function GarageView(props) {
     let {matchGarage, getGarage} = props;
-    let {matchUser, getUser} = props
+    let {matchUser, getUser} = props;
 
     const garage = useSelector((state) => state.garage);
     const user = useSelector((state) => state.user);
@@ -15,12 +15,17 @@ function GarageView(props) {
         // get id of movie from URL
         let userId = matchUser.params.id;
         getUser(userId);
-    }, [matchUser.params]);
+        let garageId = matchGarage.params.id;
+        getGarage(garageId);
+    }, [matchUser.params, matchGarage.params]);
 
     return user.error ? (
         <div>error</div>
-    ) : user.user ? (
+    ) : garage.error ? (
+        <div>error</div>
+    ) : user.user && garage.garage ? (
         <GarageComponent
+            garage={garage.garage}
             user={user.user}
             isLoggedIn={!!user.user}
             isAdmin={!!user.user ? user.user.role === "admin" : false}
@@ -28,6 +33,6 @@ function GarageView(props) {
     ) : null;
 }
 
-export default connect(null, { getUser })(
+export default connect(null, { getUser, getGarage })(
     GarageView
 );
