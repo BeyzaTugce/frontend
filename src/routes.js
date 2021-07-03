@@ -5,6 +5,7 @@ import SignUpView from "./views/SignUpView";
 import UserLoginView from "./views/UserLoginView";
 import DeliveryView from "./views/Delivery";
 import AdminSignUpView from "./views/AdminSignUpView";
+import ItemView from "./views/ItemView";
 
 
 // routes within the movie database example app
@@ -45,6 +46,13 @@ const routes = [
     {
         path: "/adminsignup",
         component: AdminSignUpView,
+        exact: true,
+    },
+
+    
+    {
+        path: "/item",
+        component: ItemView,
         exact: true,
     },
     

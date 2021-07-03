@@ -16,9 +16,13 @@ import FormCheckInput from "react-bootstrap/FormCheckInput";
 import {Clock, PlusLg} from "react-bootstrap-icons";
 
 import "./GarageCreation.css"
+import { useHistory } from 'react-router-dom';
+import PropTypes from "prop-types";
 import GarageItem from "./GarageItem";
+import ItemComponent from "./ItemComponent";
 
 const GarageCreation = (props) => {
+    const history = useHistory();
 
     const [dateCreated, setDateCreated] = React.useState("");
     const [isPromoted, setIsPromoted] = React.useState("");
@@ -26,7 +30,10 @@ const GarageCreation = (props) => {
     const [bargain, setBargain] = React.useState("");
     const [shipmentType, setShipmentType] = React.useState("");
     const [items, setItems] = React.useState([]);
-
+    const [itemTags, setItemTags] = React.useState("");
+    const [itemPrice, setItemPrice] = React.useState("");
+    const [itemInfo, setItemInfo] = React.useState("");
+    const [itemTitle, setItemTitle] = React.useState("");
 
     const onChangeDateCreated = (e) => {
         setDateCreated(e.target.value);
@@ -44,17 +51,25 @@ const GarageCreation = (props) => {
         setBargain(e.target.value);
     };
 
+
+    const onChangeItemInfo = (e) => {
+        setItemInfo(e.target.value);
+    };
+    const onChangeItemPrice = (e) => {
+        setItemPrice(e.target.value);
+    };
+    const onChangeItemTags = (e) => {
+        setItemTags(e.target.value);
+    };
+    const onChangeItemTitle = (e) => {
+        setItemTitle(e.target.value);
+    };
+
     const onChangeShipmentType = (e) => {
         setShipmentType(e.target.value);
     };
 
-
-    const onAddItems = (addedItem) => {
-        addedItem.preventDefault();
-        setItems([...setItems, addedItem]);
-
-    };
-
+    
     const onRemoveItems = (removedItem) => {
         removedItem.preventDefault();
         setItems.filter(item => item !== removedItem._id);
@@ -123,50 +138,17 @@ const GarageCreation = (props) => {
                         </div>
                     </div>
                     <div className="d-inline-block" style={{paddingRight: 40, width: 600}}>
-                        <Button className="button-rounded">
-                            <PlusLg></PlusLg>
-                        </Button>
-                        <FormLabel className="frame">Add Item</FormLabel>
-                        <ListGroup>
-                            <ListGroupItem className="d-flex align-items-start">
-                                <TabContainer id="left-tabs-example" defaultActiveKey="info">
-                                    <Row>
-                                        <Col sm={3}>
-                                            <Nav variant="pills" className="flex-column">
-                                                <Nav.Item>
-                                                    <Nav.Link eventKey="item">Item Title</Nav.Link>
-                                                </Nav.Item>
-                                                <Nav.Item>
-                                                    <Nav.Link eventKey="info">General Information</Nav.Link>
-                                                </Nav.Item>
-                                                <Nav.Item>
-                                                    <Nav.Link eventKey="price">Price</Nav.Link>
-                                                </Nav.Item>
-                                                <Nav.Item>
-                                                    <Nav.Link eventKey="tag">Tags</Nav.Link>
-                                                </Nav.Item>
-                                            </Nav>
-                                        </Col>
-                                        <Col sm={9}>
-                                            <TabContent>
-                                                <TabPane eventKey="item">
-                                                    <FormControl type="title" placeholder="Enter item title" style={{marginLeft:15}}/>
-                                                </TabPane>
-                                                <TabPane eventKey="info">
-                                                    <FormControl type="info" placeholder="Write about your item" style={{marginLeft:15, marginTop:75}}/>
-                                                </TabPane>
-                                                <TabPane eventKey="price">
-                                                    <FormControl type="price" placeholder="Enter item price" style={{marginLeft:15, marginTop:130}}/>
-                                                </TabPane>
-                                                <TabPane eventKey="tag">
-                                                    <FormControl type="tag" placeholder="Enter some tags" style={{marginLeft:15, marginTop:170}}/>
-                                                </TabPane>
-                                            </TabContent>
-                                        </Col>
-                                    </Row>
-                                </TabContainer>
-                            </ListGroupItem>
-                        </ListGroup>
+                       <ItemComponent 
+                          item={props.item}
+                          onSave={
+                              props.onSave
+                          }
+                          onCreate={
+                            props.onCreate
+                        }
+            
+                       
+                       />
                     </div>
                 </div>
                 <div><FormLabel className="addItems">Added Items</FormLabel></div>
@@ -181,5 +163,15 @@ const GarageCreation = (props) => {
     );
 }
 
+
+
+// attributes of props and their type
+GarageCreation.propTypes = {
+    
+    onSave: PropTypes.func.isRequired,
+    onCreate: PropTypes.func.isRequired,
+   
+    item: PropTypes.object,
+};
 
 export default GarageCreation

@@ -49,7 +49,7 @@ export function addItem(item) {
 
     return async (dispatch) => {
         try {
-            await ItemService.createGarage(item);
+            await ItemService.createItem(item);
             dispatch(onSuccess());
         } catch (e) {
             onFailure(e);
