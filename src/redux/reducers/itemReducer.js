@@ -8,6 +8,17 @@ export default function itemReducer(state = {}, action) {
             return { ...state };
         case "UPDATEITEM_SUCCESS":
             return { items: action.items}
+        case "GETITEM_SUCCESS":
+            return { item: action.item };
+        case "GETITEM_ERROR":
+            return { error: action.error };
+        case "CHANGE_SELECTED_ITEM":
+            return {
+                movie: {
+                    ...state.item,
+                    ...action.updates,
+                },
+            };
         default:
             return state;
     }

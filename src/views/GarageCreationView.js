@@ -4,7 +4,7 @@ import {connect, useSelector} from "react-redux";
 
 import GarageCreationComponent from "../components/GarageCreation";
 import {addGarage, changeGarage, deleteGarage} from "../redux/actions/GarageActions";
-import {addItem, deleteItem} from "../redux/actions/ItemActions";
+import {getItem} from "../redux/actions";
 
 /**
  * For register new users
@@ -12,14 +12,27 @@ import {addItem, deleteItem} from "../redux/actions/ItemActions";
  */
 function GarageCreationView(props) {
     //const garages = useSelector((state) => state.garages);
+    const user = useSelector((state) => state.user);
     const items = useSelector((state) => state.items);
+    //const selectedItem = useSelector((state) => state.item);
 
-    /*useEffect(() => {
-        if (items.garages) {
-            props.history.push("/");
+
+    // state variable of this functional component
+    const [newItem, setNewItem] = React.useState(false);
+
+    useEffect(() => {
+        // get id of item from URL
+        let itemId = props.match.params.id;
+
+        // check if a new item is created
+        if (itemId === "new") {
+            // proceed with an empty element
+            setNewItem(true);
+        } else {
+            // trigger item load from backend
+            props.dispatch(getItem(itemId));
         }
-    }, [items, props.history]);*/
-
+    }, [props.match.params]);
 
     const onCreate = (garage) => {
         props.dispatch(addGarage(garage))
@@ -47,9 +60,9 @@ function GarageCreationView(props) {
 
     return (
         <GarageCreationComponent
-            items = {items}
+            newItem = {newItem}
         />
-    );
+    )
 }
 
 export default connect()(withRouter(GarageCreationView));

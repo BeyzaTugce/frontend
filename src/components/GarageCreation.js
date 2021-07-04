@@ -1,16 +1,10 @@
 import React, {Component} from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
-    Button,
-    Col,
-    Container,
     FormCheck,
     FormGroup,
     FormLabel,
-    FormControl,
     ListGroup,
-    ListGroupItem, Nav,
-    Row, TabContent, TabPane, TabContainer
 } from "react-bootstrap";
 import FormCheckInput from "react-bootstrap/FormCheckInput";
 import {Clock, PlusLg} from "react-bootstrap-icons";
@@ -18,9 +12,10 @@ import {Clock, PlusLg} from "react-bootstrap-icons";
 import "./GarageCreation.css"
 import { useHistory } from 'react-router-dom';
 import PropTypes from "prop-types";
-import GarageItem from "./GarageItem";
-import ItemComponent from "./ItemComponent";
 import GarageService from "../services/GarageService";
+import ItemCreation from "./ItemCreation";
+import GarageItem from "./GarageItem";
+import ItemList from "./ItemList";
 
 const GarageCreation = (props) => {
     const history = useHistory();
@@ -31,12 +26,6 @@ const GarageCreation = (props) => {
     const [bargain, setBargain] = React.useState("");
     const [shipmentType, setShipmentType] = React.useState("");
     const [items, setItems] = React.useState([]);
-
-    const [itemTitle, setItemTitle] = React.useState("");
-    const [itemInfo, setItemInfo] = React.useState("");
-    const [itemTags, setItemTags] = React.useState("");
-    const [itemPrice, setItemPrice] = React.useState("");
-    const [itemImage, setItemImage] = React.useState("");
 
     // for extracting the attributes of the given garage to the appropriate state variables
     const extractGarage = () => {
@@ -67,6 +56,8 @@ const GarageCreation = (props) => {
         return back;
     };
 
+    // indicates whether the garage can be changed
+    const [editMode, setEditMode] = React.useState(null);
 
     const onChangeDateCreated = (e) => {
         setDateCreated(e.target.value);
@@ -88,36 +79,18 @@ const GarageCreation = (props) => {
         setShipmentType(e.target.value);
     };
 
-    const onChangeItemTitle = (e) => {
-        setItemTitle(e.target.value);
-    };
-
-    const onChangeItemInfo = (e) => {
-        setItemInfo(e.target.value);
-    };
-
-    const onChangeItemTags = (e) => {
-        setItemTags(e.target.value);
-    };
-
-    const onChangeItemPrice = (e) => {
-        setItemPrice(e.target.value);
-    };
-
-    const onChangeItemImage = (e) => {
-        setItemImage(e.target.value);
-    };
-
-    const onAddItems = async (e) => {
-        await GarageService.addItem(props.garage._id, e);
+    const onAddItems = async (newItem) => {
+        await GarageService.addItem(props.garage._id, newItem);
         let items = await GarageService.getItems(props.garage._id);
         setItems(items);
     }
     
-    const onRemoveItems = (removedItem) => {
+    const onRemoveItems = async (removedItem) => {
         removedItem.preventDefault();
-        setItems.filter(item => item !== removedItem._id);
-
+        let items = await GarageService.getItems(props.garage._id);
+        await items.deleteItem(removedItem);
+        setItems(items);
+        //setItems.filter(item => item !== removedItem._id);
     };
 
     const onRemoveGarage = (garage) => {
@@ -149,7 +122,6 @@ const GarageCreation = (props) => {
                                 <FormCheck>
                                     <FormCheckInput
                                         isValid
-
                                     />
                                     <FormCheck.Label >{`Discount for multiple item selection`}</FormCheck.Label>
                                 </FormCheck>
@@ -182,23 +154,25 @@ const GarageCreation = (props) => {
                         </div>
                     </div>
                     <div className="d-inline-block" style={{paddingRight: 40, width: 600}}>
-                       <ItemComponent 
-                          item={props.item}
-                          onSave={
-                              props.onSave
-                          }
-                          onCreate={
-                            props.onCreate
-                        }
-            
-                       
+                       <ItemList
+                          items={items}
+                          newItem={props.newItem}
                        />
                     </div>
                 </div>
                 <div><FormLabel className="addItems">Added Items</FormLabel></div>
                 <div className="list-whole">
                     <ListGroup>
-                        <GarageItem/>
+                        {items.map(item => {
+                            return (
+                                <GarageItem
+                                    name={item.name}
+                                    info={item.info}
+                                    price={item.price}
+                                    tags={item.tags}
+                                />
+                            );
+                        })}
                     </ListGroup>
                 </div>
             </div>

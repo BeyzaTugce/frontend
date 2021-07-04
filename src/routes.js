@@ -5,7 +5,7 @@ import SignUpView from "./views/SignUpView";
 import UserLoginView from "./views/UserLoginView";
 import DeliveryView from "./views/DeliveryView";
 import AdminSignUpView from "./views/AdminSignUpView";
-import ItemView from "./views/ItemView";
+import ItemView from "./components/ItemList";
 import UserView from "./views/UserView";
 import BargainView from "./views/BargainView";
 
@@ -48,13 +48,6 @@ const routes = [
     {
         path: "/adminsignup",
         component: AdminSignUpView,
-        exact: true,
-    },
-
-    
-    {
-        path: "/item",
-        component: ItemView,
         exact: true,
     },
 
