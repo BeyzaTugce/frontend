@@ -11,7 +11,10 @@ export default function offerReducer(state = initialState, action) {
         case "MAKE_OFFER":
             return { ...state };
         case "WITHDRAW_OFFER":
-            return { ...state };
+            return { 
+                ...state,
+                offers: state.offers.filter(offer => offer.id !== action.payload)
+            };
         default:
             return state;
     }

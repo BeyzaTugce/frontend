@@ -1,75 +1,78 @@
-import React, { Component } from 'react';
-import { useHistory } from 'react-router-dom';
-import { Container, Button, ListGroup, ListGroupItem } from 'react-bootstrap';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { v4 as uuid } from 'uuid';
-import "./Offer.css";
-import { PropTypes } from "prop-types";
-import {connect, useSelector} from "react-redux";
-import { getOfferHistory, makeOffer, withdrawOffer } from "../redux/actions/OfferActions";
-import { withRouter } from "react-router-dom";
+import React, { Component, useState } from 'react';
+import { Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { makeOffer } from '../redux/actions/OfferActions';
+import Slider from 'react-input-slider';
 
-class Offer extends Component {
-    
-    componentDidMount() {
-        this.props.getOfferHistory();
-        this.props.makeOffer();
+const OfferModal = () => {
+    const [show, setShow] = useState(false);
+    const [state, setState] = useState({ x: 10});
+
+    // const handleClose = () => setShow(false);
+    // const handleShow = () => setShow(true);
+    const toggle = () => {
+        setShow(!show);
     }
+    // state = {
+    //     modal: false,
+    //     name: ''
+    // }
+
+    // toggle = () => {
+    //     this.setState({
+    //         modal: !this.state.modal
+    //     });
+    // }
+
+    return(
+        //<React.Fragment> = <>
+        <>
+            <Button variant="primary" onClick={toggle}>
+            New Offer
+            </Button>
     
-    render() {
-        var turn = false;
-        const { offers } = this.props.offer;
-        return (
-            <Container>
-                <Button
-                    variant="dark"
-                    style={{marginBottom: '2rem'}}
-                    onClick={() => {
-                        const offer = prompt('Enter Offer');
-                        if(offer) {
-                            this.setState(state => ({
-                                offers: [
-                                    ...offers, { 
-                                    id: uuid(), 
-                                    buyerUserName: "e", 
-                                    sellerUserName: "f", 
-                                    price: offer, 
-                                    bargainOffer: [25, 35]}]
-                            }))
-                        }
-                    }}
-                >{(turn)
-                ? "Buyer New Offer"
-                : "Seller New Offer"} </Button>
-                
-                {(turn = !turn)}
-                <ListGroup>
-                    <TransitionGroup className="offers">
-                        {offers.map(({ id, price}) => (
-                            <CSSTransition key={id} timeout={1000} classNames="fade">
-                                {(turn)
-                                    ? <Button variant="success" size="lg" block>{price}</Button>
-                                    : <Button variant="dark" size="lg" block>{price}</Button>
-                                }
-                            </CSSTransition>
-                        ))}
-                    </TransitionGroup>
-                </ListGroup>
-            </Container>
-        );
-    }
+            <Modal show={show} onHide={toggle}>
+            <Modal.Header closeButton>
+                <Modal.Title>Modal heading</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+            <div>
+                ({state.x})
+                {/* <Slider axis="x" x={state.x} onChange={setState} /> */}
+                <Slider
+                  styles={{
+                    track: {
+                    backgroundColor: 'blue'
+                    },
+                    active: {
+                    backgroundColor: 'red'
+                    },
+                    thumb: {
+                    width: 20,
+                    height: 20
+                    },
+                    disabled: {
+                    opacity: 0.5
+                    }
+                }}
+                    axis="x"
+                    x={state.x}
+                    xmin={20}
+                    onChange={({x}) => setState(state => ({ ...state, x }))}
+                />
+            </div>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={toggle}>
+                Cancel
+                </Button>
+                <Button variant="primary" onClick={toggle}>
+                Make Offer
+                </Button>
+            </Modal.Footer>
+            </Modal>
+        </>
+    )
 }
 
-Offer.propTypes = { 
-    getOfferHistory: PropTypes.func.isRequired,
-    makeOffer: PropTypes.func.isRequired,
-    offer: PropTypes.object.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-    offer: state.offer
-});
-
-export default connect(mapStateToProps, { getOfferHistory, makeOffer })(withRouter(Offer));
-
-//export default Offer;
+export default OfferModal;

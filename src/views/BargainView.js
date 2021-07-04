@@ -1,4 +1,4 @@
-import OfferComponent from "../components/Offer";
+import BargainComponent from "../components/Bargain";
 import { withRouter } from "react-router-dom";
 import {connect, useSelector} from "react-redux";
 import { getOfferHistory, makeOffer, withdrawOffer } from "../redux/actions/OfferActions";
@@ -10,7 +10,7 @@ import { PropTypes } from "prop-types";
  */
  function BargainView(props) {
      return(
-         <OfferComponent />
+         <BargainComponent />
      )
  }
  
