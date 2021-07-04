@@ -4,20 +4,21 @@ import { Container, Button, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { v4 as uuid } from 'uuid';
 import "./Offer.css";
+import { PropTypes } from "prop-types";
+import {connect, useSelector} from "react-redux";
+import { getOfferHistory, makeOffer, withdrawOffer } from "../redux/actions/OfferActions";
+import { withRouter } from "react-router-dom";
 
 class Offer extends Component {
-    state = {
-        offers: [
-            //{buyerUserName: "a", sellerUserName: "b", price: 55, bargainOffer: [45, 55]},
-        ],
-        turn: false
+    
+    componentDidMount() {
+        this.props.getOfferHistory();
+        this.props.makeOffer();
     }
-    // const [offers, setOffers] = React.useState([{"price": 55}]);
-    // const onClick = () => {
-    //     setOffers( offer => [...offers, { offer }]);
-    // }
+    
     render() {
-        const { offers } = this.state;
+        var turn = false;
+        const { offers } = this.props.offer;
         return (
             <Container>
                 <Button
@@ -28,7 +29,7 @@ class Offer extends Component {
                         if(offer) {
                             this.setState(state => ({
                                 offers: [
-                                    ...state.offers, { 
+                                    ...offers, { 
                                     id: uuid(), 
                                     buyerUserName: "e", 
                                     sellerUserName: "f", 
@@ -37,16 +38,16 @@ class Offer extends Component {
                             }))
                         }
                     }}
-                >{(this.state.turn)
+                >{(turn)
                 ? "Buyer New Offer"
                 : "Seller New Offer"} </Button>
                 
-                {(this.state.turn = !this.state.turn)}
+                {(turn = !turn)}
                 <ListGroup>
                     <TransitionGroup className="offers">
                         {offers.map(({ id, price}) => (
                             <CSSTransition key={id} timeout={1000} classNames="fade">
-                                {(this.state.turn)
+                                {(turn)
                                     ? <Button variant="success" size="lg" block>{price}</Button>
                                     : <Button variant="dark" size="lg" block>{price}</Button>
                                 }
@@ -59,4 +60,16 @@ class Offer extends Component {
     }
 }
 
-export default Offer;
+Offer.propTypes = { 
+    getOfferHistory: PropTypes.func.isRequired,
+    makeOffer: PropTypes.func.isRequired,
+    offer: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+    offer: state.offer
+});
+
+export default connect(mapStateToProps, { getOfferHistory, makeOffer })(withRouter(Offer));
+
+//export default Offer;

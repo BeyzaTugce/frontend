@@ -8,7 +8,12 @@ import reducers from "./redux/reducers";
 
 import { BrowserRouter as Router } from "react-router-dom";
 
-const store = createStore(reducers, compose(applyMiddleware(thunk)));
+const middleware = [thunk];
+
+const store = createStore(reducers, compose(
+  applyMiddleware(...middleware),
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+));
 
 ReactDOM.render(
   <Router>
