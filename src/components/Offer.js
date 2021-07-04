@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Container, Button, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { v4 as uuid } from 'uuid';
+import "./Offer.css";
 
 class Offer extends Component {
     state = {
@@ -26,7 +27,13 @@ class Offer extends Component {
                         const offer = prompt('Enter Offer');
                         if(offer) {
                             this.setState(state => ({
-                                offers: [...state.offers, { id: uuid(), buyerUserName: "e", sellerUserName: "f", price: offer, bargainOffer: [25, 35]}]
+                                offers: [
+                                    ...state.offers, { 
+                                    id: uuid(), 
+                                    buyerUserName: "e", 
+                                    sellerUserName: "f", 
+                                    price: offer, 
+                                    bargainOffer: [25, 35]}]
                             }))
                         }
                     }}
