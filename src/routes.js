@@ -3,7 +3,7 @@ import GarageView from "./components/Garage";
 import GarageCreationView from "./views/GarageCreationView";
 import SignUpView from "./views/SignUpView";
 import UserLoginView from "./views/UserLoginView";
-import DeliveryView from "./views/Delivery";
+import DeliveryView from "./views/DeliveryView";
 import AdminSignUpView from "./views/AdminSignUpView";
 import ItemView from "./views/ItemView";
 import UserView from "./views/UserView";
