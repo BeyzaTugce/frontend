@@ -54,11 +54,11 @@ const routes = [
     component: BargainView,
     exact: true,
   },
-  {
+ /* {
     path: "/item",
     component: ItemView,
     exact: true,
-  },
+  },*/
 ];
 
 export default routes;
