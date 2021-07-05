@@ -13,9 +13,9 @@ import "./GarageCreation.css"
 import { useHistory } from 'react-router-dom';
 import PropTypes from "prop-types";
 import GarageService from "../services/GarageService";
-import ItemCreation from "./ItemCreation";
+import ItemCreation from "../views/ItemView";
 import GarageItem from "./GarageItem";
-import ItemList from "./ItemList";
+//import ItemList from "./ItemList";
 
 const GarageCreation = (props) => {
     const history = useHistory();
@@ -152,26 +152,10 @@ const GarageCreation = (props) => {
                         </div>
                     </div>
                     <div className="d-inline-block" style={{paddingRight: 40, width: 600}}>
-                       <ItemList
-                          items={items}
-                          newItem={props.newItem}
+                       <ItemCreation
+                          //items={itemList}
                        />
                     </div>
-                </div>
-                <div><FormLabel className="addItems">Added Items</FormLabel></div>
-                <div className="list-whole">
-                    <ListGroup>
-                        {items.map(item => {
-                            return (
-                                <GarageItem
-                                    name={item.name}
-                                    info={item.info}
-                                    price={item.price}
-                                    tags={item.tags}
-                                />
-                            );
-                        })}
-                    </ListGroup>
                 </div>
             </div>
         </div>
@@ -190,3 +174,5 @@ GarageCreation.propTypes = {
 };
 
 export default GarageCreation
+
+

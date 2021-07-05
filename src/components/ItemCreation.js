@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+/*import React, {useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
     Button,
@@ -12,12 +12,12 @@ import {
     ListGroupItem, Nav,
     Row, TabContent, TabPane, TabContainer
 } from "react-bootstrap";
-import { withRouter } from "react-router-dom";
 import {PlusLg} from "react-bootstrap-icons";
 import PropTypes from "prop-types";
 import { useHistory } from 'react-router-dom';
 import FileBase from "react-file-base64";
-import GarageItem from "./GarageItem";
+
+
 
 
 const ItemCreation = (props) => {
@@ -33,7 +33,21 @@ const ItemCreation = (props) => {
         if (!props.item) {
             return;
         }
-    }
+        setItemTitle(props.item.itemTitle);
+        setItemInfo(props.item.itemInfo);
+        setItemTags(props.item.itemTags);
+        setItemPrice(props.item.itemPrice);
+        setItemImage(props.item.itemImage);
+
+    };
+
+    useEffect(() => {
+        if (!props.new) {
+            //extractUser();
+            extractItem();
+        }
+    }, [props.user, props.item, props.new]);
+
 
     const onChangeItemTitle = (e) => {
         setItemTitle(e.target.value);
@@ -71,9 +85,9 @@ const ItemCreation = (props) => {
     };
 
     // indicates whether the item can be changed
-    const [editMode, setEditMode] = React.useState(null);
+  //  const [editMode, setEditMode] = React.useState(null);
 
-    useEffect(() => {
+   /* useEffect(() => {
         if (!props.new) {
             extractItem();
         }
@@ -84,22 +98,18 @@ const ItemCreation = (props) => {
         if (props.new) {
             setEditMode(true);
         }
-    }, [props.new]);
-
-
-    const onSave = () => {
-        if (props.new) {
-            props.onCreate(packItem());
-        } else {
-            setEditMode(false);
-            props.onSave(packItem());
-        }
-    };
+    }, [props.new]);*/
+/*
+    const addItem = (e) => {
+        e.preventDefault();
+        props.onCreate(packItem());
+        history.push("/signup");
+      };
 
     return(
-        <div className="d-inline-block" style={{paddingRight: 40, width: 600}}>
+        <div className="Item" style={{paddingRight: 40, width: 600}}>
             <Button className="button-rounded"
-                    onClick={onSave}
+                    onClick={addItem}
                     type="save"
             >
                 <PlusLg></PlusLg>
@@ -157,7 +167,7 @@ const ItemCreation = (props) => {
                                     <TabPane eventKey="tag">
                                         <FormControl type="tag" placeholder="Enter some tags"
                                                      fullWidth
-                                                     value={itemTags.map(tag => {return "#"+tag})}
+                                                     value={itemTags}
                                                      onChange={onChangeItemTags}
                                                      style={{marginLeft:15, marginTop:170}}/>
                                     </TabPane>
@@ -170,7 +180,6 @@ const ItemCreation = (props) => {
         </div>
     );
 }
-
 ItemCreation.propTypes = {
     item: PropTypes.object,
     name: PropTypes.string,
@@ -179,4 +188,4 @@ ItemCreation.propTypes = {
     onSave: PropTypes.func,
 };
 // withRouter() allows accessing the necessary functionality to navigate from this component
-export default withRouter(ItemCreation);
+export default ItemCreation;*/

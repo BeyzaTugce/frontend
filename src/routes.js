@@ -5,7 +5,7 @@ import SignUpView from "./views/SignUpView";
 import UserLoginView from "./views/UserLoginView";
 import DeliveryView from "./views/DeliveryView";
 import AdminSignUpView from "./views/AdminSignUpView";
-import ItemView from "./components/ItemList";
+import ItemView from "./views/ItemView";
 import UserView from "./views/UserView";
 import BargainView from "./views/BargainView";
 
@@ -60,6 +60,11 @@ const routes = [
     {
         path: "/bargain",
         component: BargainView,
+        exact: true,
+    },
+    {
+        path: "/item",
+        component: ItemView,
         exact: true,
     },
 ];

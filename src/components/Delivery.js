@@ -12,7 +12,7 @@ import InputGroup from 'react-bootstrap/InputGroup'
 
 const Delivery = (props) => {
     const history = useHistory();
-  const [date, setDate] = useState(new Date());
+const [date, setDate] = useState(new Date());
   const [pickUpError, setPickUpError] = React.useState("");
   const [location, setLocation] = React.useState("");
 
@@ -34,11 +34,11 @@ const Delivery = (props) => {
   };
     // for extracting the attributes of the given garage to the appropriate state variables
     const extractPickUp = () => {
-        if (!props.garage) {
+        if (!props.pickup) {
             return;
         }
-        setLocation(props.garage.availableDates);
-        setNewDate(props.garage.pickupLocation);
+        setLocation(props.pickup.availableDates);
+        setNewDate(props.pickup.pickupLocation);
     };
     useEffect(() => {
         if (!props.new) {

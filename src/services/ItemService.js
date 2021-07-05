@@ -68,13 +68,13 @@ export default class ItemService{
         });
     }
 
-    static createItem(Item){
-        Item.id = Math.floor(Math.random() * 100000000 + 1).toString();
+    static createItem(item){
+        item.id = Math.floor(Math.random() * 100000000 + 1).toString();
 
         return new Promise((resolve, reject) => {
             HttpService.post(
-                ItemService.baseURL(),
-                Item,
+                `${ItemService.baseURL()}`,
+                item,
                 function (data){
                     resolve(data);
                 },

@@ -28,9 +28,10 @@ const GarageItem = (props) => {
                 <div className="item-tags text-black-50" style={{fontSize:14}}
                      type="name"
                      fullWidth
-                     value={props.tags.map(tag => {return "#"+tag})}
+                     //value={props.tags.map(tag => {return "#"+tag})}
                      required
-                > {props.tags.map(tag => {return "#"+tag})} </div>
+               // > {props.tags.map(tag => {return "#"+tag})} </div>
+               > {props.tags} </div>
             </div>
             <div className="justify-content-end d-inline-flex align-items-center justify-content-end">
                 <Button
