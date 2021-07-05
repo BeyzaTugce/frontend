@@ -21,9 +21,10 @@ export default class GarageService {
 
   static getGarage(id) {
     return new Promise(async (resolve, reject) => {
-      await HttpService.get(
+     HttpService.get(
         `${GarageService.baseURL()}/${id}`,
         function (data) {
+       
           if (data !== undefined || Object.keys(data).length !== 0) {
             resolve(data);
           } else {

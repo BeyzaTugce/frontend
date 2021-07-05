@@ -10,23 +10,24 @@ import "./Garage.css";
 import GarageItem from "./GarageItem";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
-
+import { connect, useSelector } from "react-redux";
 const Garage = (props) => {
   const [userName, setUserName] = React.useState("");
   const [postcode, setPostcode] = React.useState("");
   const [district, setDistrict] = React.useState("");
   const [city, setCity] = React.useState("");
-
+  const user = useSelector((state) => state.user);
   const [garageEndDate, setGarageEndDate] = React.useState("");
   const [garageItems, setGarageItems] = React.useState([]);
 
   const extractGarage = () => {
     if (!props.garage) {
+
       return;
     }
-
-    setUserName(props.garage.user.name)
-    setPostcode(props.garage.user.postcode)
+    
+    setUserName(user.firstname)
+    setPostcode(user.postcode)
     setDistrict(props.garage.user.district)
     setCity(props.garage.user.city)
     //will change the date later.

@@ -1,5 +1,6 @@
 import MainPageView from "./components/CategoryBar";
-import GarageView from "./components/Garage";
+
+import GarageView from "./views/GarageView";
 import GarageCreationView from "./views/GarageCreationView";
 import SignUpView from "./views/SignUpView";
 import UserLoginView from "./views/UserLoginView";

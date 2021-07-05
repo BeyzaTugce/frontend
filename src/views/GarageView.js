@@ -10,7 +10,7 @@ function GarageView(props) {
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
-    let garageId = match.params._id;
+    let garageId = match.params.id;
     getGarage(garageId);
   }, [match.params]);
 
