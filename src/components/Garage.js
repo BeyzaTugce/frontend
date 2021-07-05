@@ -1,114 +1,131 @@
-import React, {useEffect} from "react";
-import {Button, FormCheck, Image, ListGroup, ListGroupItem} from "react-bootstrap";
-import "./Garage.css"
+import React, { useEffect } from "react";
+import {
+  Button,
+  FormCheck,
+  Image,
+  ListGroup,
+  ListGroupItem,
+} from "react-bootstrap";
+import "./Garage.css";
 import GarageItem from "./GarageItem";
-import {withRouter} from "react-router-dom";
-
+import { withRouter } from "react-router-dom";
 
 const Garage = (props) => {
-    const [userName, setUserName] = React.useState("");
-    const [postcode, setPostcode] = React.useState("");
-    const [district, setDistrict] = React.useState("");
-    const [city, setCity] = React.useState("");
+  const [userName, setUserName] = React.useState("");
+  const [postcode, setPostcode] = React.useState("");
+  const [district, setDistrict] = React.useState("");
+  const [city, setCity] = React.useState("");
 
-    const [garageEndDate, setGarageEndDate] = React.useState("");
-    const [garageItems, setGarageItems] = React.useState([]);
+  const [garageEndDate, setGarageEndDate] = React.useState("");
+  const [garageItems, setGarageItems] = React.useState([]);
 
-    //there should be some kind of code where it compares garageid of garage
-    // and garageid from the user (Which does not even exist yet)
+  //there should be some kind of code where it compares garageid of garage
+  // and garageid from the user (Which does not even exist yet)
 
-    const extractUser = () => {
-        if (!props.user) {
-            return;
-        }
-
-        setUserName(props.user.name);
-        setPostcode(props.user.postcode);
-        setDistrict(props.user.district);
-        setCity(props.user.city);
-    };
-
-    const extractGarage = () => {
-        if (!props.garage) {
-            return;
-        }
-
-        //will change the date later.
-        setGarageEndDate(props.garage.dateCreated)
-        setGarageItems(props.garage.items)
+  const extractUser = () => {
+    if (!props.user) {
+      return;
     }
 
-    useEffect(() => {
-        if (!props.new) {
-            extractUser();
-            extractGarage();
-        }
-    }, [props.user, props.garage, props.new]);
+    setUserName(props.user.name);
+    setPostcode(props.user.postcode);
+    setDistrict(props.user.district);
+    setCity(props.user.city);
+  };
 
-    const renderedList = garageItems.map(garageItem => {
-        return <GarageItem
-            name={garageItem.name}
-            info={garageItem.info}
-            tags={garageItem.tags}
-            price={garageItem.price}
-            image={garageItem.image}
-        />;
-    });
+  const extractGarage = () => {
+    if (!props.garage) {
+      return;
+    }
 
-    //TODO: "Select All" button color
-    //TODO: Bargain and buy buttons do not light up when clicked.
+    //will change the date later.
+    setGarageEndDate(props.garage.dateCreated);
+    setGarageItems(props.garage.items);
+  };
+
+  useEffect(() => {
+    if (!props.new) {
+      extractUser();
+      extractGarage();
+    }
+  }, [props.user, props.garage, props.new]);
+
+  const renderedList = garageItems.map((garageItem) => {
     return (
-        <div className="Garage">
-            <span>
-                <div className="jumbotron jumbotron-fluid bg-white" style={{marginBottom:-10}}>
-                    <h1 className="display-5 text-center">{userName}'s Garage</h1>
-                    <em>
-                        <p className="lead text-black-50 text-sm-center" style={{fontSize:17}}>
-                            {postcode} {district} {city} <br />until {garageEndDate}
-                        </p>
-                    </em>
-                </div>
-                <div className="select-all-button-field" style={{paddingInline:50}}>
-                    <Button
-                        className="btn select-all-button"
-                        variant="light"
-                        style={{color:"black", borderColor:"lightgray"}}
-                    >
-                        <div style={{fontSize:14}}>Select all</div>
-                    </Button>
-                </div>
-                <div className="list-whole w-100" style={{paddingInline:50}}>
-                    <ListGroup>
-                        {renderedList}
-                    </ListGroup>
-
-                    <div className="price-info-text text-center" style={{marginTop:25, marginBottom:25}}>
-                        <div className="total-price-text">Total price: €60</div>
-                        <div className="saving-text">Saving: €10</div>
-                        <div className="amount-to-pay-text">Amount to Pay: €50</div>
-                        <div className="promotional-sentence-text text-danger">You can save up to 10% by choosing 1 more item!</div>
-                    </div>
-                    <div className="bargain-buy-buttons d-flex align-items-center justify-content-center">
-                        <Button
-                            className='btn border-0'
-                            variant="dark"
-                            style={{backgroundColor: "#A282A5", marginRight:8}}
-                        >
-                            Bargain for Selected Items
-                        </Button>
-                        <Button
-                            className='btn border-0 text-white'
-                            variant="light"
-                            style={{backgroundColor: "#85A582"}}
-                        >
-                            Buy Selected Items
-                        </Button>
-                    </div>
-                </div>
-            </span>
-        </div>
+      <GarageItem
+        name={garageItem.name}
+        info={garageItem.info}
+        tags={garageItem.tags}
+        price={garageItem.price}
+        image={garageItem.image}
+      />
     );
-}
+  });
+
+  //TODO: "Select All" button color
+  //TODO: Bargain and buy buttons do not light up when clicked.
+  return (
+    <div className="Garage">
+      <span>
+        <div
+          className="jumbotron jumbotron-fluid bg-white"
+          style={{ marginBottom: -10 }}
+        >
+          <h1 className="display-5 text-center">{userName}'s Garage</h1>
+          <em>
+            <p
+              className="lead text-black-50 text-sm-center"
+              style={{ fontSize: 17 }}
+            >
+              {postcode} {district} {city} <br />
+              until {garageEndDate}
+            </p>
+          </em>
+        </div>
+        <div className="select-all-button-field" style={{ paddingInline: 50 }}>
+          <Button
+            className="btn select-all-button"
+            variant="light"
+            style={{ color: "black", borderColor: "lightgray" }}
+          >
+            <div style={{ fontSize: 14 }}>Select all</div>
+          </Button>
+        </div>
+        <div className="list-whole w-100" style={{ paddingInline: 50 }}>
+          <ListGroup>{renderedList}</ListGroup>
+
+          <div
+            className="price-info-text text-center"
+            style={{ marginTop: 25, marginBottom: 25 }}
+          >
+            <div className="total-price-text">Total price: €60</div>
+            <div className="saving-text">Saving: €10</div>
+            <div className="amount-to-pay-text">Amount to Pay: €50</div>
+            <div className="promotional-sentence-text text-danger">
+              You can save up to 10% by choosing 1 more item!
+            </div>
+          </div>
+          <div className="bargain-buy-buttons d-flex align-items-center justify-content-center">
+            <Button
+              className="btn border-0"
+              variant="dark"
+              style={{ backgroundColor: "#A282A5", marginRight: 8 }}
+            >
+              Bargain for Selected Items
+            </Button>
+            <Button
+              className="btn border-0 text-white"
+              variant="light"
+              style={{ backgroundColor: "#85A582" }}
+            >
+              Buy Selected Items
+            </Button>
+          </div>
+        </div>
+      </span>
+    </div>
+  );
+};
 
 /*
 might be useful for GarageItem

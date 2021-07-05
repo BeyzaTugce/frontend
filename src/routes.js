@@ -1,4 +1,4 @@
-import MainPageView from "./components/CategoryBar"
+import MainPageView from "./components/CategoryBar";
 import GarageView from "./components/Garage";
 import GarageCreationView from "./views/GarageCreationView";
 import SignUpView from "./views/SignUpView";
@@ -9,64 +9,63 @@ import ItemView from "./views/ItemView";
 import UserView from "./views/UserView";
 import BargainView from "./views/BargainView";
 
-
 // routes within the movie database example app
 // used for routing
 
 const routes = [
-    {
-        path: "/Header",
-        component: MainPageView,
-        exact: true,
-    },
-    {
-        path: "/garage",
-        component: GarageView,
-        exact: true,
-    },
-    {
-        path: "/mygarage",
-        component: GarageCreationView,
-        exact: true,
-    },
-    {
-        path: "/signup",
-        component: SignUpView,
-        exact: true,
-    },
-    {
-        path: "/login",
-        component: UserLoginView,
-        exact: true,
-    },
-    {
-        path: "/delivery",
-        component: DeliveryView,
-        exact: true,
-    },
+  {
+    path: "/Header",
+    component: MainPageView,
+    exact: true,
+  },
+  {
+    path: "/garage",
+    component: GarageView,
+    exact: true,
+  },
+  {
+    path: "/mygarage",
+    component: GarageCreationView,
+    exact: true,
+  },
+  {
+    path: "/signup",
+    component: SignUpView,
+    exact: true,
+  },
+  {
+    path: "/login",
+    component: UserLoginView,
+    exact: true,
+  },
+  {
+    path: "/delivery",
+    component: DeliveryView,
+    exact: true,
+  },
 
-    {
-        path: "/adminsignup",
-        component: AdminSignUpView,
-        exact: true,
-    },
+  {
+    path: "/adminsignup",
+    component: AdminSignUpView,
+    exact: true,
+  },
 
-    {
-        path: "/user",
-        component: UserView,
-        exact: true,
-    },
+  {
+    path: "/user",
+    component: UserView,
+    exact: true,
+  },
 
-    {
-        path: "/bargain",
-        component: BargainView,
-        exact: true,
-    },
-    {
-        path: "/item",
-        component: ItemView,
-        exact: true,
-    },
+  {
+    path: "/bargain",
+    component: BargainView,
+    exact: true,
+  },
+  {
+    path: "/item",
+    component: ItemView,
+    exact: true,
+  },
 ];
 
 export default routes;

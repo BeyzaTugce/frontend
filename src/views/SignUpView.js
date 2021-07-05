@@ -11,29 +11,45 @@ import { register } from "../redux/actions/UserActions";
  * @param {props} props
  */
 function SignUpView(props) {
-    const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user);
 
-    useEffect(() => {
-        if (user.user) {
-            props.history.push("/");
-        }
-    }, [user, props.history]);
+  useEffect(() => {
+    if (user.user) {
+      props.history.push("/");
+    }
+  }, [user, props.history]);
 
-    const onRegister = (email,username, firstname, surname, password, phone, birthdate,registeredDate) => {
-       props.dispatch(register(email,username, firstname, surname, password, phone, birthdate,registeredDate));
-    };
-
-    const onCancel = () => {
-        props.history.push("/");
-    };
-
-    return (
-        <SignUpComponent
-            user={user}
-            onRegister={onRegister}
-            onCancel={onCancel}
-        />
+  const onRegister = (
+    email,
+    username,
+    firstname,
+    surname,
+    password,
+    phone,
+    birthdate,
+    registeredDate
+  ) => {
+    props.dispatch(
+      register(
+        email,
+        username,
+        firstname,
+        surname,
+        password,
+        phone,
+        birthdate,
+        registeredDate
+      )
     );
+  };
+
+  const onCancel = () => {
+    props.history.push("/");
+  };
+
+  return (
+    <SignUpComponent user={user} onRegister={onRegister} onCancel={onCancel} />
+  );
 }
 
 export default connect()(withRouter(SignUpView));

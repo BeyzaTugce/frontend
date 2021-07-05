@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Row, Col, Jumbotron, Form, Button } from "react-bootstrap";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import { Typography, FormControlLabel, Checkbox } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({

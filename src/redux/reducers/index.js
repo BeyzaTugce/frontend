@@ -7,10 +7,10 @@ import offer from "./offerReducer";
 import pickup from "./pickupReducer";
 
 export default combineReducers({
-    user,
-    admin,
-    garage,
-    items,
-    offer,
-    pickup,
+  user,
+  admin,
+  garage,
+  items,
+  offer,
+  pickup,
 });

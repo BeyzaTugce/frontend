@@ -1,7 +1,7 @@
-import React, {useEffect} from "react";
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import Header from './components/Header';
+import Header from "./components/Header";
 //import reducers from "./redux/reducers";
 import routes from "./routes";
 //import {applyMiddleware, createStore, compose} from "redux";
@@ -9,7 +9,6 @@ import routes from "./routes";
 //import {Provider, useDispatch} from 'react-redux'
 
 const App = () => {
-
   //const dispact = useDispatch();
 
   // set document title
@@ -29,20 +28,19 @@ const App = () => {
   };*/
 
   return (
-      <Router>
-        <div className="wrapper">
-            <React.Fragment>
-              <Header/>
-              <Switch>
-                {routes.map((route, i) => (
-                    <Route key={i} {...route} />
-                ))}
-              </Switch>
-            </React.Fragment>
-        </div>
-      </Router>
+    <Router>
+      <div className="wrapper">
+        <React.Fragment>
+          <Header />
+          <Switch>
+            {routes.map((route, i) => (
+              <Route key={i} {...route} />
+            ))}
+          </Switch>
+        </React.Fragment>
+      </div>
+    </Router>
   );
-
-}
+};
 
 export default App;
