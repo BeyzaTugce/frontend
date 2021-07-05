@@ -20,6 +20,7 @@ const Bargain = (props) => {
     const [offer, setOffer] = useState({ price: 10 });
     const handleToggle = () => {setShow(!show)};
     const [turn, setTurn] = useState(false);
+    const history = useHistory();
 
     const handleOnClick = e => {
       e.preventDefault();
@@ -31,6 +32,11 @@ const Bargain = (props) => {
       handleToggle();
       setTurn(!turn);
     };
+
+    const handleCancelClick = e => {
+        props.withdrawOffer();
+        history.push('/garage');
+    }
     const { offers } = props.offer;
     return (
       <Container>
@@ -89,7 +95,7 @@ const Bargain = (props) => {
         <Button
           variant="danger"
           className="mt-3 mb-3"
-          //onClick={this.onCancelClick(this.offer.price)}
+          onClick={handleCancelClick}
         >
           Cancel Bargaining
         </Button>

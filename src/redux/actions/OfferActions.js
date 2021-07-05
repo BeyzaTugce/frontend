@@ -13,10 +13,10 @@ export const makeOffer = data => {
   };
 }
 
-export const withdrawOffer = id => {
+export const withdrawOffer = () => {
   return {
     type: "WITHDRAW_OFFER",
     // we need to send payload to reducer. (reducer needs that information to take care of WITHDRAW_OFFER operation)
-    payload: id,
+    //payload: id,
   };
 };
