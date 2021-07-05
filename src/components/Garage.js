@@ -9,6 +9,7 @@ import {
 import "./Garage.css";
 import GarageItem from "./GarageItem";
 import { withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const Garage = (props) => {
   const [userName, setUserName] = React.useState("");
@@ -19,36 +20,23 @@ const Garage = (props) => {
   const [garageEndDate, setGarageEndDate] = React.useState("");
   const [garageItems, setGarageItems] = React.useState([]);
 
-  //there should be some kind of code where it compares garageid of garage
-  // and garageid from the user (Which does not even exist yet)
-
-  const extractUser = () => {
-    if (!props.user) {
-      return;
-    }
-
-    setUserName(props.user.name);
-    setPostcode(props.user.postcode);
-    setDistrict(props.user.district);
-    setCity(props.user.city);
-  };
-
   const extractGarage = () => {
     if (!props.garage) {
       return;
     }
 
+    setUserName(props.garage.user.name)
+    setPostcode(props.garage.user.postcode)
+    setDistrict(props.garage.user.district)
+    setCity(props.garage.user.city)
     //will change the date later.
-    setGarageEndDate(props.garage.dateCreated);
-    setGarageItems(props.garage.items);
-  };
+    setGarageEndDate(props.garage.dateCreated)
+    setGarageItems(props.garage.items)
+  }
 
   useEffect(() => {
-    if (!props.new) {
-      extractUser();
-      extractGarage();
-    }
-  }, [props.user, props.garage, props.new]);
+    extractGarage();
+  }, [props.garage]);
 
   const renderedList = garageItems.map((garageItem) => {
     return (
@@ -168,5 +156,9 @@ might be useful for GarageItem
                             </div>
                         </ListGroupItem>
  */
+
+Garage.propTypes = {
+  garage: PropTypes.object,
+};
 
 export default withRouter(Garage);
