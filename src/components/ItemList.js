@@ -35,14 +35,13 @@ function ItemList(props) {
 
     return(
         <div>
-        {props.items.map(item => {return !item.item && !item.error && !props.newItem ? (
+            {(props.items.length === 0) ? <ItemComponent/> : props.items.map(item => {return !item.item && !item.error && !props.newItem ? (
                 <Loading />
             ) : item.error ? (
                 <div>error</div>
             ) : item.item ? (
                 <ItemComponent
                     item={item.item}
-                    onSave={onSave}
                     isLoggedIn={!!user.user}
                     //isAdmin={!!user.user ? user.user.role === "admin" : false}
                 />

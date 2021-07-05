@@ -79,7 +79,7 @@ const ItemCreation = (props) => {
         }
     }, [props.item, props.new]);
 
-    // triggers when the new parameter is changed and setts the edit mode to true
+    // triggers when the new parameter is changed and sets the edit mode to true
     useEffect(() => {
         if (props.new) {
             setEditMode(true);

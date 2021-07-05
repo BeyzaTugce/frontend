@@ -99,8 +99,6 @@ const GarageCreation = (props) => {
     };
 
 
-
-
     const getDate = (today) => {
         let day = new Date();
         if ( today){
@@ -180,7 +178,6 @@ const GarageCreation = (props) => {
 
     );
 }
-
 
 
 // attributes of props and their type
