@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { FormCheck, FormGroup, FormLabel, ListGroup } from "react-bootstrap";
+import {Button, FormCheck, FormGroup, FormLabel, ListGroup} from "react-bootstrap";
 import FormCheckInput from "react-bootstrap/FormCheckInput";
 import { Clock, PlusLg } from "react-bootstrap-icons";
 
@@ -74,11 +74,15 @@ const GarageCreation = (props) => {
     setShipmentType(e.target.value);
   };
 
-  const onAddItems = async (newItem) => {
-    await GarageService.addItem(props.garage._id, newItem);
-    let items = await GarageService.getItems(props.garage._id);
-    setItems(items);
-  };
+  const onCreate = (e) => {
+      e.preventDefault();
+      props.onCreate(packGarage());
+  }
+
+  const onAddItems = (newItem) => {
+    props.onAddItems(props.garage, newItem)
+    setItems(items)
+  }
 
   const onRemoveItems = async (removedItem) => {
     removedItem.preventDefault();
@@ -112,8 +116,8 @@ const GarageCreation = (props) => {
             <FormGroup style={{ marginTop: 60 }}>
               <div className="garageOptions">
                 <FormLabel>Garage Sale Options</FormLabel>
-                <FormCheck>
-                  <FormCheckInput isValid />
+                <FormCheck onClick={onChangeDiscount}>
+                  <FormCheckInput isValid/>
                   <FormCheck.Label>{`Discount for multiple item selection`}</FormCheck.Label>
                 </FormCheck>
                 <FormCheck>
@@ -151,24 +155,27 @@ const GarageCreation = (props) => {
           </div>
           <div
             className="d-inline-block"
-            style={{ paddingRight: 40, width: 600 }}
+            style={{ width: 800 }}
           >
             <ItemCreation
-            //items={itemList}
             />
           </div>
         </div>
+        <Button
+            className="d-flex align-content-end"
+            style={{marginLeft: 1065, marginTop:10}}
+            onClick={onCreate}
+        >Create</Button>
       </div>
     </div>
   );
 };
 
-// attributes of props and their type
 GarageCreation.propTypes = {
-  onSave: PropTypes.func.isRequired,
   onCreate: PropTypes.func.isRequired,
+  onAddItems: PropTypes.func.isRequired,
 
-  item: PropTypes.object,
+  newItem: PropTypes.object,
 };
 
 export default GarageCreation;

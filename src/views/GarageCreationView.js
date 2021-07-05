@@ -9,6 +9,9 @@ import {
   deleteGarage,
 } from "../redux/actions/GarageActions";
 import { getItem } from "../redux/actions";
+import GarageService from "../services/GarageService";
+import PropTypes from "prop-types";
+import GarageCreation from "../components/GarageCreation";
 
 /**
  * For register new users
@@ -53,15 +56,31 @@ function GarageCreationView(props) {
     props.history.push("/");
   };
 
-  /*const onAddItem = (item) => {
-        props.dispatch(addItem(item));
-    }
+  const onAddItems = async (garage, newItem) => {
+    await GarageService.addItem(garage._id, newItem);
+    let items = await GarageService.getItems(garage._id);
+  }
 
+  /*
     const onRemoveItem = (item) => {
         props.dispatch(deleteItem(item));
     }*/
 
-  return <GarageCreationComponent newItem={newItem} />;
+  return (
+      <GarageCreationComponent
+      newItem={newItem}
+      onCreate={onCreate}
+      onAddItems={onAddItems}
+    />
+  );
 }
+
+
+GarageCreationView.propTypes = {
+  onCreate: PropTypes.func.isRequired,
+  onAddItems: PropTypes.func.isRequired,
+
+  newItem: PropTypes.object,
+};
 
 export default connect()(withRouter(GarageCreationView));

@@ -25,7 +25,8 @@ import GarageItem from "../components/GarageItem";
 import { useHistory } from "react-router-dom";
 
 //import ItemComponent from "../components/ItemCreation";
-import { addItem } from "../redux/actions/ItemActions";
+import {addItem, deleteItem, getItem} from "../redux/actions/ItemActions";
+import GarageService from "../services/GarageService";
 
 /**
  * For register new users
@@ -65,6 +66,14 @@ function ItemView(props) {
     //setNewDate(input);
     if (!itemList.includes(input)) {
       setItemList([...itemList, input]);
+    }
+  };
+
+  const removeFromList = (itemId) => {
+    //setNewDate(input);
+    if (itemList.includes(getItem(itemId))) {
+      itemList.filter(item => item._id !== itemId);
+      setItemList([...itemList]);
     }
   };
 
@@ -108,22 +117,23 @@ function ItemView(props) {
     props.dispatch(addItem(packItem()));
   };
 
-  /* const onRemove = (pickup) => {
-      props.dispatch(deletePickUp(pickup._id))
-  }*/
+  const onRemove = (id) => {
+    removeFromList(id);
+    props.dispatch(deleteItem(id))
+  }
 
   const onCancel = () => {
     props.history.push("/");
   };
 
   return (
-    <div className="Item" style={{ paddingRight: 40, width: 600 }}>
-      <Button className="button-rounded" onClick={onCreate} type="save">
+    <div className="Item" style={{ paddingRight: 40, width: 800 }}>
+      <Button className="button-rounded" onClick={onCreate} type="save" style={{marginLeft: 200}}>
         <PlusLg></PlusLg>
       </Button>
       <FormLabel className="frame">Add Item</FormLabel>
       <ListGroup>
-        <ListGroupItem className="d-flex align-items-start">
+        <ListGroupItem className="d-flex align-items-start" style={{marginLeft: 200, paddingRight:100}}>
           <TabContainer id="left-tabs-example" defaultActiveKey="info">
             <Row>
               <Col sm={3}>
@@ -195,11 +205,10 @@ function ItemView(props) {
           </TabContainer>
         </ListGroupItem>
       </ListGroup>
-
-      <div>
+      <div style={{marginLeft: -380}}>
         <FormLabel className="addItems">Added Items</FormLabel>
       </div>
-      <div className="list-whole">
+      <div className="list-whole" style={{marginLeft: -380}}>
         <ListGroup>
           {itemList.map((item) => {
             return (
@@ -208,6 +217,7 @@ function ItemView(props) {
                 info={item.info}
                 price={item.price}
                 tags={item.tags}
+                onRemove={onRemove}
               />
             );
           })}

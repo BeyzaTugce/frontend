@@ -55,6 +55,7 @@ const GarageItem = (props) => {
           className="btn border-0"
           variant="dark"
           style={{ backgroundColor: "#85A582", width: 80 }}
+          onClick={props.onRemove}
         >
           Remove
         </Button>
