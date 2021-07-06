@@ -21,6 +21,11 @@ const getUser = () => {
         phone: userJson.phone,
         birthdate: userJson.birthdate,
         registeredDate: userJson.registeredDate,
+        gender: userJson.gender,
+        district: userJson.district,
+        postcode: userJson.postcode,
+        city: userJson.city,
+        correspondenceAddress: userJson.correspondenceAddress,
       },
     };
   }

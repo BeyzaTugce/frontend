@@ -42,6 +42,10 @@ const Signup = (props) => {
   const [phone, setPhone] = React.useState("");
   const [isAdmin, setIsAdmin] = React.useState(false);
   const [gender, setGender] = React.useState("");
+  const [correspondenceAddress, setcorrespondenceAddress] = React.useState("");
+  const [district, setDistrict] = React.useState("");
+  const [postcode, setPostcode] = React.useState("");
+  const [city, setCity] = React.useState("");
   const [birthdate, setBirthdate] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [password2, setPassword2] = React.useState("");
@@ -64,13 +68,38 @@ const Signup = (props) => {
       password,
       phone,
       birthdate,
-      registeredDate
+      registeredDate,
+      gender,
+      district,
+      postcode,
+      city,
+      correspondenceAddress
     );
-    history.push("/signup");
+    history.push("/garage");
   };
 
   const onChangeUsername = (e) => {
     setUsername(e.target.value);
+    setRegisterError("");
+  };
+
+  const onChangeAdress = (e) => {
+    setcorrespondenceAddress(e.target.value);
+    setRegisterError("");
+  };
+
+  const onChangeDistrict = (e) => {
+    setDistrict(e.target.value);
+    setRegisterError("");
+  };
+
+  const onChangePostcode = (e) => {
+    setPostcode(e.target.value);
+    setRegisterError("");
+  };
+
+  const onChangeCity= (e) => {
+    setCity(e.target.value);
     setRegisterError("");
   };
 
@@ -191,17 +220,18 @@ const Signup = (props) => {
                   <Form.Group as={Col}>
                     <Form.Label>Gender</Form.Label>
                     <Form.Control
-                      as="select"
-                      value={gender}
-                      onChange={onChangeGender}
-                      error={registerError !== ""}
-                      required
-                    >
-                      <option>m/f/d</option>
-                      <option>m</option>
-                      <option>f</option>
-                      <option>d</option>
-                    </Form.Control>
+                        as="select"
+                        className="my-1 mr-sm-2"
+                        id="inlineFormCustomSelectPref"
+                        onChange={onChangeGender}
+                        error={registerError !== ""}
+                        custom
+                      >
+                        <option value="m/f/d">Choose...</option>
+                       <option value="m">m</option>
+                       <option value="f">f</option>
+                       <option value="d">d</option>
+                  </Form.Control>
                   </Form.Group>
                 </Form.Row>
 
@@ -265,24 +295,43 @@ const Signup = (props) => {
                 {/* Address */}
                 <Form.Group controlId="signupAddress">
                   <Form.Label>Address</Form.Label>
-                  <Form.Control placeholder="Address line 1 (or Company name)"></Form.Control>
+                  <Form.Control placeholder="Address line 1 (or Company name)"
+                   value={correspondenceAddress}
+                   onChange={onChangeAdress}
+                   error={registerError !== ""}
+                   required
+                  ></Form.Control>
                 </Form.Group>
 
                 <Form.Row>
                   <Form.Group xs={8} as={Col}>
                     <Form.Label>Address 2</Form.Label>
-                    <Form.Control placeholder="Street and house number"></Form.Control>
+                    <Form.Control placeholder="Street and house number"
+                    
+                    value={district}
+                    onChange={onChangeDistrict}
+                    error={registerError !== ""}
+                    required></Form.Control>
                   </Form.Group>
                   <Form.Group as={Col}>
                     <Form.Label>Postcode</Form.Label>
-                    <Form.Control placeholder="80797"></Form.Control>
+                    <Form.Control placeholder="80797"
+                    value={postcode}
+                    onChange={onChangePostcode}
+                    error={registerError !== ""}
+                    
+                    ></Form.Control>
                   </Form.Group>
                 </Form.Row>
 
                 {/* City */}
                 <Form.Group controlId="signupCity">
                   <Form.Label>Town/City</Form.Label>
-                  <Form.Control placeholder="Munich"></Form.Control>
+                  <Form.Control placeholder="Munich"
+                                      value={city}
+                                      onChange={onChangeCity}
+                                      error={registerError !== ""}
+                  ></Form.Control>
                 </Form.Group>
 
                 {/* Checkbox for terms and Register button */}

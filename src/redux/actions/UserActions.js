@@ -36,7 +36,12 @@ export function register(
   password,
   phone,
   birthdate,
-  registeredDate
+  registeredDate,
+  gender,
+  district,
+  postcode,
+  city,
+  correspondenceAddress
 ) {
   function onSuccess(user) {
     return { type: "LOGIN_SUCCESS", user: user };
@@ -55,7 +60,12 @@ export function register(
         password,
         phone,
         birthdate,
-        registeredDate
+        registeredDate,
+        gender,
+        district,
+        postcode,
+        city,
+        correspondenceAddress
       );
       dispatch(onSuccess(resp.user));
     } catch (e) {

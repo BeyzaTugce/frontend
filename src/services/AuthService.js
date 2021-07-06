@@ -13,7 +13,12 @@ export default class AuthService {
     password,
     phone,
     birthdate,
-    registeredDate
+    registeredDate,
+    gender,
+    district,
+    postcode,
+    city,
+    correspondenceAddress
   ) {
     return new Promise((resolve, reject) => {
       HttpService.post(
@@ -27,6 +32,11 @@ export default class AuthService {
           phone: phone,
           birthdate: birthdate,
           registeredDate: registeredDate,
+          gender: gender,
+          district : district,
+          postcode : postcode,
+          city: city,
+          correspondenceAddress: correspondenceAddress,
         },
         function (data) {
           resolve(data);

@@ -27,7 +27,12 @@ function SignUpView(props) {
     password,
     phone,
     birthdate,
-    registeredDate
+    registeredDate,
+    gender,
+    district,
+    postcode,
+    city,
+    correspondenceAddress
   ) => {
     props.dispatch(
       register(
@@ -38,7 +43,12 @@ function SignUpView(props) {
         password,
         phone,
         birthdate,
-        registeredDate
+        registeredDate,
+        gender,
+        district,
+        postcode,
+        city,
+        correspondenceAddress
       )
     );
   };
