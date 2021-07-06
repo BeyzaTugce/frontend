@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Container, Button, ListGroup, ListGroupItem, Modal } from "react-bootstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
@@ -13,21 +13,27 @@ import {
   withdrawOffer,
 } from "../redux/actions/OfferActions";
 import { withRouter } from "react-router-dom";
-import OfferModal from "./Offer";
 
 const Bargain = (props) => {
     const [show, setShow] = useState(false);
     const [offer, setOffer] = useState({ price: 10 });
     const handleToggle = () => {setShow(!show)};
     const [turn, setTurn] = useState(false);
+    const [offerHistory, setOfferHistory] = useState([]);
     const history = useHistory();
 
     const handleOnClick = e => {
       e.preventDefault();
-      const newOffer = {price: offer.price};
-      console.log(newOffer);
+      setOfferHistory(offerHistory => [...offerHistory, offer.price]);
+      const newOffer = {
+          price: offer.price,
+          offerHistory: offerHistory,
+          sellerUserName: "aaa",
+          buyerUserName: "bbb"
+        };
       // Add item via addItem action
       props.makeOffer(newOffer);
+      
       // Close modal
       handleToggle();
       setTurn(!turn);
@@ -40,12 +46,15 @@ const Bargain = (props) => {
     const { offers } = props.offer;
     return (
       <Container>
+            <Button className="mr-5" variant="success" size="lg">
+                Accept Offer
+            </Button>
             {turn ? (
-            <Button variant="success" onClick={handleToggle}>
+            <Button className="mr-5" variant="primary" size="lg" onClick={handleToggle}>
                 New Offer
             </Button>
             ) : (
-            <Button variant="dark" onClick={handleToggle}>
+            <Button className="mr-5" variant="dark" size="lg" onClick={handleToggle}>
                 New Offer
             </Button>
             )}
@@ -54,7 +63,7 @@ const Bargain = (props) => {
         </Button> */}
         <Modal show={show} onHide={handleToggle}>
             <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
+            <Modal.Title>Please select your offer</Modal.Title>
             </Modal.Header>
             <Modal.Body>
             <div>
@@ -78,7 +87,8 @@ const Bargain = (props) => {
                 }}
                 axis="x"
                 x={offer.price}
-                xmin={20}
+                xmin={offerHistory && offerHistory[offerHistory.length-1]}
+                xmax={100}
                 onChange={({ x }) => setOffer(offer => ({ ...offer, price: x }))}
                 />
             </div>
@@ -87,28 +97,30 @@ const Bargain = (props) => {
             <Button variant="secondary" onClick={handleToggle}>
                 Cancel
             </Button>
-            <Button variant="primary" onClick={handleOnClick}>
-                Make Offer
+            <Button variant="primary" 
+            onClick={(e) => { if (window.confirm(`Please confirm your offer for selected product(s): ${offer.price}€`)) handleOnClick(e) } }>
+                    Make Offer
             </Button>
             </Modal.Footer>
         </Modal>
         <Button
           variant="danger"
           className="mt-3 mb-3"
-          onClick={handleCancelClick}
+          onClick={(e) => { if (window.confirm(`Are you sure you want to cancel bargain process?`)) handleCancelClick(e) } }
+          size="lg"
         >
-          Cancel Bargaining
+          Cancel Bargain
         </Button>
         <ListGroup>
           <TransitionGroup className="offers">
             {offers.map(({ id, price }) => (
               <CSSTransition key={id} timeout={1000} classNames="fade">
                 {turn ? (
-                  <Button variant="success" size="lg" block>
+                  <Button variant="success" className="btn btn-warning btn-circle btn-xl mt-4 mb-3" block>
                     {price}
                   </Button>
                 ) : (
-                  <Button variant="dark" size="lg" block>
+                  <Button variant="dark" className="btn btn-warning btn-circle btn-xl mt-4 mb-3" block>
                     {price}
                   </Button>
                 )}

@@ -1,6 +1,5 @@
 const initialState = {
-    offers: [
-  ],
+    offers: []
 };
   
 export default function offerReducer(state=initialState, action) {
