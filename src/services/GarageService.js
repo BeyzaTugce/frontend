@@ -116,4 +116,19 @@ export default class GarageService {
       );
     });
   }
+
+  
+  static getSeller(garageId) {
+    return new Promise((resolve, reject) => {
+      HttpService.get(
+        `${GarageService.baseURL()}/seller/${garageId}`,
+        function (data) {
+          resolve(data);
+        },
+        function (textStatus) {
+          reject(textStatus);
+        }
+      );
+    });
+  }
 }

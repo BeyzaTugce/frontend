@@ -91,3 +91,25 @@ export const getGarage = (id) => {
     }
   };
 };
+
+export const getSeller = (id) => {
+  function onSuccess(seller) {
+    return { type: "GETSELLER_SUCCESS", seller: seller };
+  }
+  function onFailure(error) {
+    console.log("failed to load a garage", error);
+  }
+
+  return async (dispatch, getState) => {
+    try {
+     // let garage = await GarageService.getGarage(id);
+      let seller = await GarageService.getSeller(id);
+      
+     
+      
+      dispatch(onSuccess(seller));
+    } catch (e) {
+      onFailure(e);
+    }
+  };
+};

@@ -21,15 +21,15 @@ const Garage = (props) => {
   const [garageItems, setGarageItems] = React.useState([]);
 
   const extractGarage = () => {
-    if (!props.garage) {
-
+    if (!props.garage && !props.seller) {
+          
       return;
     }
     
-    setUserName(user.firstname)
-    setPostcode(user.postcode)
-    setDistrict(props.garage.user.district)
-    setCity(props.garage.user.city)
+    /*setUserName(props.seller.firstname)
+    setPostcode(props.seller.postcode)
+    setDistrict(props.seller.district)
+    setCity(props.seller.city)*/
     //will change the date later.
     setGarageEndDate(props.garage.dateCreated)
     setGarageItems(props.garage.items)
@@ -37,7 +37,9 @@ const Garage = (props) => {
 
   useEffect(() => {
     extractGarage();
-  }, [props.garage]);
+  }, [props.garage] , [props.seller]);
+
+
 
   const renderedList = garageItems.map((garageItem) => {
     return (
@@ -160,6 +162,7 @@ might be useful for GarageItem
 
 Garage.propTypes = {
   garage: PropTypes.object,
+  seller: PropTypes.object,
 };
 
 export default withRouter(Garage);
