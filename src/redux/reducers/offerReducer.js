@@ -1,20 +1,8 @@
 const initialState = {
-  offers: [
-    {
-      price: 575,
-    },
-    {
-      price: 576,
-    },
-    {
-      price: 577,
-    },
-    {
-      price: 579,
-    },
+    offers: [
   ],
 };
-
+  
 export default function offerReducer(state=initialState, action) {
   switch (action.type) {
     case "GET_OFFERHISTORY":
@@ -22,10 +10,7 @@ export default function offerReducer(state=initialState, action) {
     case "MAKE_OFFER":
       return { ...state, offers: [action.payload, ...state.offers]};
     case "WITHDRAW_OFFER":
-      return {
-        ...state,
-        offers: state.offers.filter((offer) => offer.id !== action.payload),
-      };
+      return { ...state, offers: []};
     default:
       return state;
   }
