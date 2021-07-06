@@ -7,24 +7,31 @@ function GarageView(props) {
   let {match, getGarage, getSeller} = props;
 
   const garage = useSelector((state) => state.garage);
-  const seller = useSelector((state) => state.user);
+  const seller = useSelector((state) => state.seller);
 
   useEffect(() => {
     let garageId = match.params.id;
     getGarage(garageId);
-    getSeller(garageId);
-   // document.write(props.seller.firstname);
+    //getSeller(garageId);
   }, [match.params]);
 
-  return garage.error ? (
-      <div>error</div>
-  ) : garage.garage ? (
-      <Garage
-          garage={garage.garage}
-          seller= {seller}
-          //isLoggedIn={!!user.user}
-      />
-  ) : null;
+  
+  useEffect(() => {
+    let garageId = match.params.id;
+    getSeller(garageId);
+    //document.write(seller.seller.firstname);
+  }, [match.params]);
+
+  return (
+
+    <Garage
+    garage={garage.garage}
+    seller= {garage.seller}
+    //isLoggedIn={!!user.user}
+/>
+  );
+
+
 }
 
 export default connect(null, { getGarage, getSeller })(

@@ -21,8 +21,7 @@ const Garage = (props) => {
   const [garageItems, setGarageItems] = React.useState([]);
 
   const extractGarage = () => {
-    if (!props.garage && !props.seller) {
-          
+    if (!props.garage ) {
       return;
     }
     
@@ -37,7 +36,25 @@ const Garage = (props) => {
 
   useEffect(() => {
     extractGarage();
-  }, [props.garage] , [props.seller]);
+  }, [props.garage] );
+  useEffect(() => {
+    extractSeller();
+  }, [props.seller] );
+
+
+  const extractSeller = () => {
+    if (!props.seller ) {
+      //document.write("deneme");
+      return;
+    }
+    
+    setUserName(props.seller.firstname)
+    setPostcode(props.seller.postcode)
+    setDistrict(props.seller.district)
+    setCity(props.seller.city)
+    //will change the date later.
+
+  }
 
 
 

@@ -2,7 +2,7 @@ export default function garage(state = {}, action) {
   switch (action.type) {
     case "GETGARAGES_SUCCESS":
       return { garages: action.garages };
-      case "GETSELLER_SUCCESS":
+    case "GETSELLER_SUCCESS":
         return { seller: action.seller };
     case "GETGARAGE_SUCCESS":
       return { garage: action.garage };

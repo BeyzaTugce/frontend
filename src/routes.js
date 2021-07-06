@@ -16,44 +16,44 @@ const routes = [
   {
     path: "/Header",
     component: MainPageView,
-    exact: true,
+
   },
   {
     path: "/garage/:id",
     component: GarageView,
-    exact: true,
+
   },
   {
     path: "/mygarage",
     component: GarageCreationView,
-    exact: true,
+
   },
   {
     path: "/signup",
     component: SignUpView,
-    exact: true,
+
   },
   {
     path: "/login",
     component: UserLoginView,
-    exact: true,
+
   },
   {
     path: "/delivery",
     component: DeliveryView,
-    exact: true,
+
   },
 
   {
     path: "/adminsignup",
     component: AdminSignUpView,
-    exact: true,
+    
   },
 
   {
     path: "/bargain",
     component: BargainView,
-    exact: true,
+  
   },
  /* {
     path: "/item",

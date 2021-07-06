@@ -94,6 +94,7 @@ export const getGarage = (id) => {
 
 export const getSeller = (id) => {
   function onSuccess(seller) {
+   // document.write(seller.firstname);
     return { type: "GETSELLER_SUCCESS", seller: seller };
   }
   function onFailure(error) {
