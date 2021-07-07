@@ -20,19 +20,23 @@ const Bargain = (props) => {
     const handleToggle = () => {setShow(!show)};
     const [turn, setTurn] = useState(false);
     const [offerHistory, setOfferHistory] = useState([]);
-    const { paramsId } = useParams();
+    const paramsId = props.match.params.id
     // useEffect((e) => {
     //     props.getOfferHistory(paramsId);
     //   }, []);
     //props.getOfferHistory(paramsId);
+    let getValues = true;
     const history = useHistory();
     const { offers } = props.offer;
-    //const { offerHistoryv2 } = props.offer.offerHistory;
-
+    useEffect(() => {
+      props.getOfferHistory(paramsId);
+      getValues = false;
+    }, [] );
     const handleOnClick = e => {
       e.preventDefault();
       setOfferHistory(offerHistory => [...offerHistory, enterOffer.price]);
       const newOffer = {
+          id: uuid(),
           price: enterOffer.price,
           offerHistory: [...offerHistory, enterOffer.price],
           sellerUserName: "aaa",
@@ -104,7 +108,7 @@ const Bargain = (props) => {
                 }}
                 axis="x"
                 x={enterOffer.price}
-                xmin={offerHistory && offerHistory[offerHistory.length-1]}
+                xmin={offerHistory[offerHistory.length-1]}
                 xmax={100}
                 onChange={({ x }) => setEnterOffer(offer => ({ ...offer, price: x }))}
                 />
@@ -130,8 +134,8 @@ const Bargain = (props) => {
         </Button>
         <ListGroup>
           <TransitionGroup className="offers">
-            {offers.map(({id, price}) => (
-              <CSSTransition key={id} timeout={1000} classNames="fade">
+            {offers.offerHistory && offers.offerHistory.map((price, index) => (
+              <CSSTransition key={index} timeout={1000} classNames="fade">
                 {turn ? (
                   <Button variant="success" className="btn btn-warning btn-circle btn-xl mt-4 mb-3" block>
                     {price}
@@ -153,11 +157,13 @@ const Bargain = (props) => {
 Bargain.propTypes = {
   getOfferHistory: PropTypes.func.isRequired,
   makeOffer: PropTypes.func.isRequired,
-  offer: PropTypes.object.isRequired,
+  withdrawOffer: PropTypes.func.isRequired,
+  offer: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
   offer: state.offer,
+  offers: state.offer.offers
 });
 
 // this.props.withdrawOffer, this.props.getOfferHistory, ...
