@@ -170,8 +170,6 @@ const GarageCreation = (props) => {
 
 GarageCreation.propTypes = {
   onCreate: PropTypes.func.isRequired,
-  onAddItems: PropTypes.func.isRequired,
-
   newItem: PropTypes.object,
 };
 

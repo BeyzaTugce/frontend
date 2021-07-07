@@ -17,20 +17,24 @@ const Garage = (props) => {
   const [district, setDistrict] = React.useState("");
   const [city, setCity] = React.useState("");
   const [garageEndDate, setGarageEndDate] = React.useState("");
-  const [garageItems, setGarageItems] = React.useState([]);
+  //const [garageItems, setGarageItems] = React.useState([]);
 
   const extractGarage = () => {
     if (!props.garage ) {
       return;
     }
-    
-    /*setUserName(props.seller.firstname)
-    setPostcode(props.seller.postcode)
-    setDistrict(props.seller.district)
-    setCity(props.seller.city)*/
     //will change the date later.
     setGarageEndDate(props.garage.dateCreated)
-    setGarageItems(props.garage.items)
+    //setGarageItems(props.garage.items)
+  }
+
+  const extractItems = () => {
+    if (!props.items ) {
+      return;
+    }
+    //will change the date later.
+    //setGarageEndDate(props.garage.dateCreated)
+    //setGarageItems(props.garage.items)
   }
 
   useEffect(() => {
@@ -40,6 +44,10 @@ const Garage = (props) => {
   useEffect(() => {
     extractSeller();
   }, [props.seller] );
+
+  useEffect(() => {
+    extractItems();
+  }, [props.items] );
 
 
   const extractSeller = () => {
@@ -52,14 +60,14 @@ const Garage = (props) => {
     setPostcode(props.seller.postcode)
     setDistrict(props.seller.district)
     setCity(props.seller.city)
-    setGarageItems(JSON.parse(JSON.stringify(props.items)));
+    //setGarageItems(JSON.parse(JSON.stringify(props.items)));
     //will change the date later.
-
   }
 
 
+ const items = [];
 
-  const renderedList = garageItems.map((garageItem) => {
+  const renderedList = items.map((garageItem) => {
     return (
       <GarageItem
         name={garageItem.name}

@@ -69,10 +69,10 @@ function ItemView(props) {
     }
   };
 
-  const removeFromList = (itemId) => {
+  const removeFromList = (input) => {
     //setNewDate(input);
-    if (itemList.includes(getItem(itemId))) {
-      itemList.filter(item => item._id !== itemId);
+    if (itemList.includes(input)) {
+      itemList.filter(item => item._id !== input._id);
       setItemList([...itemList]);
     }
   };
@@ -117,9 +117,10 @@ function ItemView(props) {
     props.dispatch(addItem(packItem()));
   };
 
-  const onRemove = (id) => {
-    removeFromList(id);
-    props.dispatch(deleteItem(id))
+  const onRemove = (e) => {
+    e.preventDefault();
+    removeFromList(e);
+    props.dispatch(deleteItem(e))
   }
 
   const onCancel = () => {
@@ -226,5 +227,9 @@ function ItemView(props) {
     </div>
   );
 }
+
+ItemView.prototypes = {
+  onRemove : PropTypes.func.isRequired,
+};
 
 export default connect()(withRouter(ItemView));

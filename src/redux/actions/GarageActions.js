@@ -124,6 +124,7 @@ export function getItems(id) {
   return async (dispatch) => {
     try {
       let items = await GarageService.getItems(id);
+      console.log("action:"+items);
       dispatch(onSuccess(items));
     } catch (e) {
       onFailure(e);

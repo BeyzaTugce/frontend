@@ -18,7 +18,7 @@ import GarageCreation from "../components/GarageCreation";
  * @param {props} props
  */
 function GarageCreationView(props) {
-  //const garages = useSelector((state) => state.garages);
+  const garage = useSelector((state) => state.garage);
   const user = useSelector((state) => state.user);
   const items = useSelector((state) => state.items);
   //const selectedItem = useSelector((state) => state.item);
@@ -69,6 +69,7 @@ function GarageCreationView(props) {
   return (
       <GarageCreationComponent
       newItem={newItem}
+      garage={garage.garage}
       onCreate={onCreate}
       onAddItems={onAddItems}
     />
@@ -79,7 +80,7 @@ function GarageCreationView(props) {
 GarageCreationView.propTypes = {
   onCreate: PropTypes.func.isRequired,
   onAddItems: PropTypes.func.isRequired,
-
+  garage: PropTypes.object,
   newItem: PropTypes.object,
 };
 

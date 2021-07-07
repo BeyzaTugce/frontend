@@ -44,6 +44,7 @@ export default class HttpService {
     }
 
     try {
+      console.log("HTTP:"+url);
       let resp = await fetch(url, {
         method: "GET",
         headers: header,

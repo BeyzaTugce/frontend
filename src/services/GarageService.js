@@ -88,10 +88,10 @@ export default class GarageService {
     });
   }
 
-  static getItems(garageId) {
+  static getItems(id) {
     return new Promise((resolve, reject) => {
       HttpService.get(
-        `${GarageService.baseURL()}/item`,
+        `${GarageService.baseURL()}/item/${id}`,
         function (data) {
           resolve(data);
         },
@@ -99,9 +99,11 @@ export default class GarageService {
           reject(textStatus);
         }
       );
+      console.log("GARAGESERVICE:"+GarageService.baseURL()+"/item/"+id);
     });
   }
 
+  //TODO: Do no use that anymore instead add items directly to the item endpoint
   static addItem(garageId, item) {
     return new Promise((resolve, reject) => {
       HttpService.post(
