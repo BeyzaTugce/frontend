@@ -104,7 +104,7 @@ export const getSeller = (id) => {
   return async (dispatch, getState) => {
     try {
      // let garage = await GarageService.getGarage(id);
-      let seller = await GarageService.getSeller(id);
+      let seller = await GarageService.readSeller(id);
       dispatch(onSuccess(seller));
     } catch (e) {
       onFailure(e);
@@ -123,8 +123,7 @@ export function getItems(id) {
   }
   return async (dispatch) => {
     try {
-      let items = await GarageService.getItems(id);
-      console.log("action:"+items);
+      let items = await GarageService.readItems(id);
       dispatch(onSuccess(items));
     } catch (e) {
       onFailure(e);

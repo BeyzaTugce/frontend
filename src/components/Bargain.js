@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import { Container, Button, ListGroup, ListGroupItem, Modal } from "react-bootstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { v4 as uuid } from "uuid";
@@ -16,24 +16,30 @@ import { withRouter } from "react-router-dom";
 
 const Bargain = (props) => {
     const [show, setShow] = useState(false);
-    const [offer, setOffer] = useState({ price: 10 });
+    const [enterOffer, setEnterOffer] = useState({ price: 10 });
     const handleToggle = () => {setShow(!show)};
     const [turn, setTurn] = useState(false);
     const [offerHistory, setOfferHistory] = useState([]);
+    const { paramsId } = useParams();
+    // useEffect((e) => {
+    //     props.getOfferHistory(paramsId);
+    //   }, []);
+    //props.getOfferHistory(paramsId);
     const history = useHistory();
+    const { offers } = props.offer;
+    //const { offerHistoryv2 } = props.offer.offerHistory;
 
     const handleOnClick = e => {
       e.preventDefault();
-      setOfferHistory(offerHistory => [...offerHistory, offer.price]);
+      setOfferHistory(offerHistory => [...offerHistory, enterOffer.price]);
       const newOffer = {
-          price: offer.price,
-          offerHistory: offerHistory,
+          price: enterOffer.price,
+          offerHistory: [...offerHistory, enterOffer.price],
           sellerUserName: "aaa",
           buyerUserName: "bbb"
         };
       // Add item via addItem action
       props.makeOffer(newOffer);
-      
       // Close modal
       handleToggle();
       setTurn(!turn);
@@ -43,7 +49,18 @@ const Bargain = (props) => {
         props.withdrawOffer();
         history.push('/garage');
     }
-    const { offers } = props.offer;
+
+    // useEffect(() => {
+    //     let {id} = props.match.params;
+    //     props.getOfferHistory(id);
+        // const newOffer = {
+        //     price: offer.price,
+        //     offerHistory: [...offerHistory, offer.price],
+        //     sellerUserName: "aaa",
+        //     buyerUserName: "bbb"
+        //   };
+        // props.makeOffer(newOffer);
+    // }) 
     return (
       <Container>
             <Button className="mr-5" variant="success" size="lg">
@@ -67,7 +84,7 @@ const Bargain = (props) => {
             </Modal.Header>
             <Modal.Body>
             <div>
-                ({offer.price})
+                ({enterOffer.price})
                 {/* <Slider axis="x" x={state.x} onChange={setState} /> */}
                 <Slider
                 styles={{
@@ -86,10 +103,10 @@ const Bargain = (props) => {
                     },
                 }}
                 axis="x"
-                x={offer.price}
+                x={enterOffer.price}
                 xmin={offerHistory && offerHistory[offerHistory.length-1]}
                 xmax={100}
-                onChange={({ x }) => setOffer(offer => ({ ...offer, price: x }))}
+                onChange={({ x }) => setEnterOffer(offer => ({ ...offer, price: x }))}
                 />
             </div>
             </Modal.Body>
@@ -98,7 +115,7 @@ const Bargain = (props) => {
                 Cancel
             </Button>
             <Button variant="primary" 
-            onClick={(e) => { if (window.confirm(`Please confirm your offer for selected product(s): ${offer.price}€`)) handleOnClick(e) } }>
+            onClick={(e) => { if (window.confirm(`Please confirm your offer for selected product(s): ${enterOffer.price}€`)) handleOnClick(e) } }>
                     Make Offer
             </Button>
             </Modal.Footer>
@@ -113,7 +130,7 @@ const Bargain = (props) => {
         </Button>
         <ListGroup>
           <TransitionGroup className="offers">
-            {offers.map(({ id, price }) => (
+            {offers.map(({id, price}) => (
               <CSSTransition key={id} timeout={1000} classNames="fade">
                 {turn ? (
                   <Button variant="success" className="btn btn-warning btn-circle btn-xl mt-4 mb-3" block>
