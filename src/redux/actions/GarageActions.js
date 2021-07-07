@@ -123,7 +123,7 @@ export function getItems(id) {
   }
   return async (dispatch) => {
     try {
-      let items = await GarageService.getItems(id);
+      let items = await GarageService.readItems(id);
       dispatch(onSuccess(items));
     } catch (e) {
       onFailure(e);
