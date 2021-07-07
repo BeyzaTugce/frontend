@@ -120,7 +120,7 @@ const GarageCreation = (props) => {
                   <FormCheckInput isValid/>
                   <FormCheck.Label>{`Discount for multiple item selection`}</FormCheck.Label>
                 </FormCheck>
-                <FormCheck>
+                <FormCheck onClick={onChangeBargain}>
                   <FormCheckInput isValid />
                   <FormCheck.Label>{`Bargain offers`}</FormCheck.Label>
                 </FormCheck>
@@ -129,11 +129,11 @@ const GarageCreation = (props) => {
             <FormGroup>
               <div className="garageOptions">
                 <FormLabel>Delivery</FormLabel>
-                <FormCheck>
+                <FormCheck onClick={onChangeShipmentType}>
                   <FormCheckInput isValid />
                   <FormCheck.Label>{`Shipment`}</FormCheck.Label>
                 </FormCheck>
-                <FormCheck>
+                <FormCheck onClick={onChangeShipmentType}>
                   <FormCheckInput isValid />
                   <FormCheck.Label>{`Pick-up`}</FormCheck.Label>
                 </FormCheck>
@@ -153,10 +153,7 @@ const GarageCreation = (props) => {
               </FormGroup>
             </div>
           </div>
-          <div
-            className="d-inline-block"
-            style={{ width: 800 }}
-          >
+          <div className="d-inline-block" style={{ width: 800 }}>
             <ItemCreation
             />
           </div>

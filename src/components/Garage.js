@@ -16,7 +16,6 @@ const Garage = (props) => {
   const [postcode, setPostcode] = React.useState("");
   const [district, setDistrict] = React.useState("");
   const [city, setCity] = React.useState("");
-  const user = useSelector((state) => state.user);
   const [garageEndDate, setGarageEndDate] = React.useState("");
   const [garageItems, setGarageItems] = React.useState([]);
 
@@ -37,6 +36,7 @@ const Garage = (props) => {
   useEffect(() => {
     extractGarage();
   }, [props.garage] );
+
   useEffect(() => {
     extractSeller();
   }, [props.seller] );
@@ -52,6 +52,7 @@ const Garage = (props) => {
     setPostcode(props.seller.postcode)
     setDistrict(props.seller.district)
     setCity(props.seller.city)
+    setGarageItems(JSON.parse(JSON.stringify(props.items)));
     //will change the date later.
 
   }

@@ -105,12 +105,47 @@ export const getSeller = (id) => {
     try {
      // let garage = await GarageService.getGarage(id);
       let seller = await GarageService.getSeller(id);
-      
-     
-      
       dispatch(onSuccess(seller));
     } catch (e) {
       onFailure(e);
     }
   };
 };
+
+export function getItems(id) {
+  function onSuccess(items) {
+    return { type: "GETITEMSS_SUCCESS", items: items };
+  }
+  // when the backend call was failed
+  function onFailure(error) {
+    // error handling
+    console.log("failed to get the items", error);
+  }
+  return async (dispatch) => {
+    try {
+      let items = await GarageService.getItems(id);
+      dispatch(onSuccess(items));
+    } catch (e) {
+      onFailure(e);
+    }
+  };
+}
+
+export function addItem(garageId, item) {
+  function onSuccess() {
+    return { type: "ADDITEM_SUCCESS" };
+  }
+  function onFailure(error) {
+    console.log("add item failure", error);
+  }
+
+  return async (dispatch) => {
+    try {
+      await GarageService.addItem(garageId, item);
+      dispatch(onSuccess());
+    } catch (e) {
+      onFailure(e);
+    }
+  };
+}
+

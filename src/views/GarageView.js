@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { connect, useSelector } from "react-redux";
 import Garage from "../components/Garage";
-import { getGarage, getSeller } from "../redux/actions/GarageActions";
+import { getGarage, getSeller, getItems } from "../redux/actions/GarageActions";
 
 function GarageView(props) {
-  let {match, getGarage, getSeller} = props;
+  let {match, getGarage, getSeller, getItems} = props;
 
   const garage = useSelector((state) => state.garage);
   const seller = useSelector((state) => state.seller);
@@ -22,18 +22,25 @@ function GarageView(props) {
     //document.write(seller.seller.firstname);
   }, [match.params]);
 
+  useEffect(() => {
+    let garageId = match.params.id;
+    getItems(garageId);
+    //document.write(seller.seller.firstname);
+  }, [match.params]);
+
   return (
 
     <Garage
-    garage={garage.garage}
-    seller= {garage.seller}
-    //isLoggedIn={!!user.user}
-/>
+      garage={garage.garage}
+      seller= {garage.seller}
+      items={garage.items}
+      //isLoggedIn={!!user.user}
+    />
   );
 
 
 }
 
-export default connect(null, { getGarage, getSeller })(
+export default connect(null, { getGarage, getSeller, getItems })(
     GarageView
 );

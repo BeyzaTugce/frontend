@@ -91,7 +91,7 @@ export default class GarageService {
   static getItems(garageId) {
     return new Promise((resolve, reject) => {
       HttpService.get(
-        `${GarageService.baseURL()}/item/${garageId}`,
+        `${GarageService.baseURL()}/item`,
         function (data) {
           resolve(data);
         },
@@ -105,7 +105,7 @@ export default class GarageService {
   static addItem(garageId, item) {
     return new Promise((resolve, reject) => {
       HttpService.post(
-        `${GarageService.baseURL()}/item/${garageId}`,
+        `${GarageService.baseURL()}/item`,
         { item: item },
         function (data) {
           resolve(data);
