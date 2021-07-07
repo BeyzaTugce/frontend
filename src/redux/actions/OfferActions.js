@@ -1,17 +1,23 @@
 //import BargainService from "../../services/BargainService";
+import axios from 'axios';
 
-export const getOfferHistory = () => {
-  return {
-    type: "GET_OFFERHISTORY",
-  };
-}
+const baseURL = "http://localhost:4000/bargain"
+
+export const getOfferHistory = (id) => dispatch => {
+    axios.get(`${baseURL}/${id}`)
+        .then(res => 
+            dispatch({
+                type: "GET_OFFERHISTORY",
+                payload: res.data
+            })) 
+};
 
 export const makeOffer = data => {
   return {
     type: "MAKE_OFFER",
     payload: data,
   };
-}
+};
 
 export const withdrawOffer = () => {
   return {
