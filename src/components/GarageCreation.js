@@ -7,9 +7,9 @@ import { Clock, PlusLg } from "react-bootstrap-icons";
 import "./GarageCreation.css";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
-import GarageService from "../services/GarageService";
 import ItemCreation from "../views/ItemView";
 import GarageItem from "./GarageItem";
+import garage from "../redux/reducers/garageReducer";
 //import ItemList from "./ItemList";
 
 const GarageCreation = (props) => {
@@ -20,7 +20,7 @@ const GarageCreation = (props) => {
   const [discount, setDiscount] = React.useState("");
   const [bargain, setBargain] = React.useState("");
   const [shipmentType, setShipmentType] = React.useState("");
-  const [items, setItems] = React.useState([]);
+  //const [items, setItems] = React.useState([]);
 
   // for extracting the attributes of the given garage to the appropriate state variables
   const extractGarage = () => {
@@ -32,7 +32,7 @@ const GarageCreation = (props) => {
     setDiscount(props.garage.discount);
     setBargain(props.garage.bargain);
     setShipmentType(props.garage.shipmentType);
-    setItems(JSON.parse(JSON.stringify(props.garage.items)));
+    //setItems(JSON.parse(JSON.stringify(props.garage.items)));
   };
 
   // creating a object with all relevant data to update or create a changed garage
@@ -46,17 +46,13 @@ const GarageCreation = (props) => {
     back.discount = discount;
     back.bargain = bargain;
     back.shipmentType = shipmentType;
-    back.items = items;
+    //back.items = items;
 
     return back;
   };
 
   // indicates whether the garage can be changed
   const [editMode, setEditMode] = React.useState(null);
-
-  const onChangeDateCreated = (e) => {
-    setDateCreated(e.target.value);
-  };
 
   const onChangeIsPromoted = (e) => {
     setIsPromoted(e.target.value);
@@ -78,24 +74,6 @@ const GarageCreation = (props) => {
       e.preventDefault();
       props.onCreate(packGarage());
   }
-
-  const onAddItems = (newItem) => {
-    props.onAddItems(props.garage, newItem)
-    setItems(items)
-  }
-
-  const onRemoveItems = async (removedItem) => {
-    removedItem.preventDefault();
-    let items = await GarageService.getItems(props.garage._id);
-    await items.deleteItem(removedItem);
-    setItems(items);
-    //setItems.filter(item => item !== removedItem._id);
-  };
-
-  const onRemoveGarage = (garage) => {
-    garage.preventDefault();
-    setItems([...setItems]);
-  };
 
   const getDate = (today) => {
     let day = new Date();
@@ -155,6 +133,7 @@ const GarageCreation = (props) => {
           </div>
           <div className="d-inline-block" style={{ width: 800 }}>
             <ItemCreation
+                garage={props.garage}
             />
           </div>
         </div>

@@ -38,6 +38,7 @@ function ItemView(props) {
   const history = useHistory();
   const [itemList, setItemList] = useState([]);
 
+  const [itemGarage, setItemGarage] = React.useState("");
   const [itemTitle, setItemTitle] = React.useState("");
   const [itemInfo, setItemInfo] = React.useState("");
   const [itemTags, setItemTags] = React.useState([]);
@@ -48,6 +49,8 @@ function ItemView(props) {
     if (!props.item) {
       return;
     }
+
+    setItemGarage(props.garage.id);
     setItemTitle(props.item.itemTitle);
     setItemInfo(props.item.itemInfo);
     setItemTags(props.item.itemTags);
@@ -102,6 +105,7 @@ function ItemView(props) {
       ...props.item,
     };
 
+    back.garageId = itemGarage;
     back.name = itemTitle;
     back.price = itemPrice;
     back.tags = itemTags;

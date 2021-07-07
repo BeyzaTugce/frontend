@@ -8,6 +8,7 @@ import {
   changeGarage,
   deleteGarage,
 } from "../redux/actions/GarageActions";
+import {deleteItem} from "../redux/actions";
 import { getItem } from "../redux/actions";
 import GarageService from "../services/GarageService";
 import PropTypes from "prop-types";
@@ -19,7 +20,6 @@ import GarageCreation from "../components/GarageCreation";
  */
 function GarageCreationView(props) {
   const garage = useSelector((state) => state.garage);
-  const user = useSelector((state) => state.user);
   const items = useSelector((state) => state.items);
   //const selectedItem = useSelector((state) => state.item);
 
@@ -45,7 +45,7 @@ function GarageCreationView(props) {
   };
 
   const onRemove = (garage) => {
-    props.dispatch(deleteGarage(garage._id));
+    props.dispatch(deleteGarage(garage.id));
   };
 
   const onChange = (newGarage) => {
@@ -56,10 +56,6 @@ function GarageCreationView(props) {
     props.history.push("/");
   };
 
-  const onAddItems = async (garage, newItem) => {
-    await GarageService.addItem(garage._id, newItem);
-    let items = await GarageService.getItems(garage._id);
-  }
 
   /*
     const onRemoveItem = (item) => {
@@ -68,10 +64,9 @@ function GarageCreationView(props) {
 
   return (
       <GarageCreationComponent
-      newItem={newItem}
-      garage={garage.garage}
-      onCreate={onCreate}
-      onAddItems={onAddItems}
+        newItem={newItem}
+        garage={garage.garage}
+        onCreate={onCreate}
     />
   );
 }
@@ -79,7 +74,7 @@ function GarageCreationView(props) {
 
 GarageCreationView.propTypes = {
   onCreate: PropTypes.func.isRequired,
-  onAddItems: PropTypes.func.isRequired,
+  onRemoveItem: PropTypes.func.isRequired,
   garage: PropTypes.object,
   newItem: PropTypes.object,
 };

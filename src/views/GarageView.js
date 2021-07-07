@@ -8,7 +8,7 @@ function GarageView(props) {
 
   const garage = useSelector((state) => state.garage);
 
-  const seller = useSelector((state) => state.seller);
+  const user = useSelector((state) => state.user);
 
   //const items = useSelector((state) => state.items);
 

@@ -100,7 +100,7 @@ const Header = (props) => {
           <Nav.Link href="#cart">
             <Cart3 size={28} />
           </Nav.Link>
-          <Nav.Link href="/garage">
+          <Nav.Link href="/mygarage">
             <House size={28} />
           </Nav.Link>
           <NavDropdown alignRight title={<PersonCircle size={28} />}>

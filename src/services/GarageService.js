@@ -1,8 +1,12 @@
 import HttpService from "./HttpService";
+import ItemService from "./ItemService";
 
 export default class GarageService {
   static baseURL() {
     return "http://localhost:4000/garage";
+  }
+  static baseURLItem() {
+    return "http://localhost:4000/item";
   }
 
   static getGarages() {
@@ -88,7 +92,7 @@ export default class GarageService {
     });
   }
 
-  static getItems(id) {
+  static readItems(id) {
     return new Promise((resolve, reject) => {
       HttpService.get(
         `${GarageService.baseURL()}/item/${id}`,
@@ -104,10 +108,12 @@ export default class GarageService {
   }
 
   //TODO: Do no use that anymore instead add items directly to the item endpoint
-  static addItem(garageId, item) {
+  static addItem(item) {
+    item.id = Math.floor(Math.random() * 100000000 + 1).toString();
+
     return new Promise((resolve, reject) => {
       HttpService.post(
-        `${GarageService.baseURL()}/item`,
+        `${GarageService.baseURLItem()}`,
         { item: item },
         function (data) {
           resolve(data);
@@ -120,7 +126,7 @@ export default class GarageService {
   }
 
   
-  static getSeller(garageId) {
+  static readSeller(garageId) {
     return new Promise((resolve, reject) => {
       HttpService.get(
         `${GarageService.baseURL()}/seller/${garageId}`,
