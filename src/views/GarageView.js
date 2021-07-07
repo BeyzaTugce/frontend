@@ -30,7 +30,7 @@ function GarageView(props) {
     let garageId = match.params.id;
     getItems(garageId);
     //document.write(seller.seller.firstname);
-  }, [garage.items, match.params]);
+  }, [match.params]);
 
 
   return (
