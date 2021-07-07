@@ -118,7 +118,7 @@ export default class GarageService {
   }
 
   
-  static getSeller(garageId) {
+  static readSeller(garageId) {
     return new Promise((resolve, reject) => {
       HttpService.get(
         `${GarageService.baseURL()}/seller/${garageId}`,
