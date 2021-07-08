@@ -34,9 +34,9 @@ function GarageView(props) {
 
 
   return (
-
     <Garage
       garage={garage.garage}
+      user={user.user}
       seller= {garage.seller}
       items={garage.items}
       //isLoggedIn={!!user.user}

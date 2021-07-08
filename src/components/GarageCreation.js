@@ -24,6 +24,8 @@ const GarageCreation = (props) => {
   const [shipmentType, setShipmentType] = React.useState("");
   //const [items, setItems] = React.useState([]);
 
+
+  let deliveryChecked = null;
   // for extracting the attributes of the given garage to the appropriate state variables
   const extractGarage = () => {
     if (!props.garage) {
@@ -46,7 +48,7 @@ const GarageCreation = (props) => {
     back.user = user.user._id;
    // back.dateCreated = dateCreated;
    // back.isPromoted = isPromoted;
-   // back.discount = discount;
+    //back.discount = discount;
     //back.bargain = bargain;
     back.shipmentType = shipmentType;
     //back.items = items;
@@ -63,21 +65,33 @@ const GarageCreation = (props) => {
 
   const onChangeDiscount = (e) => {
     setDiscount(e.target.value);
+    //console.log(e.target.checked);
   };
 
   const onChangeBargain = (e) => {
     setBargain(e.target.value);
+    console.log("bargain");
+
   };
 
   const onChangeShipment = (e) => {
+    //deliveryChecked = e.target.checked;
+    //setShipmentType(e.target.checked);
+    //console.log("shipment");
+    //let isChecked = e.target.checked;
+    //console.log("ship:"+isChecked);
     setShipmentType("Shipment");
     document.write(shipmentType);
-   
+
   };
   const onChangePickUp = (e) => {
+    //deliveryChecked = e.target.checked;
+    //setShipmentType(e.target.checked);
+    //console.log("pickup"+deliveryChecked);
     setShipmentType("PickUp");
-      document.write(shipmentType);
-   
+    document.write(shipmentType);
+
+
   };
 
   const onCreate = (e) => {
@@ -118,7 +132,7 @@ const GarageCreation = (props) => {
               <div className="garageOptions">
                 <FormLabel>Delivery</FormLabel>
                 <FormCheck onClick={onChangeShipment}>
-                  <FormCheckInput isValid />
+                  <FormCheckInput isValid/>
                   <FormCheck.Label>{`Shipment`}</FormCheck.Label>
                 </FormCheck>
                 <FormCheck onClick={onChangePickUp}>

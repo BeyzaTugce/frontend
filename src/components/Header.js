@@ -56,6 +56,7 @@ const Header = (props) => {
     props.history.push("/");
   };
 
+
   //TODO: Change the logo to .svg
   //TODO: Find a better icon for Garage
   //TODO: Colors?
@@ -97,9 +98,17 @@ const Header = (props) => {
           <Nav.Link href="#cart">
             <Cart3 size={28} />
           </Nav.Link>
-          <Nav.Link href="/mygarage">
-            <House size={28} />
-          </Nav.Link>
+          {user.user == null ? (
+              <Nav.Link href="/yourgarage">
+                <House size={28} />
+              </Nav.Link>
+          ) : (
+              <Nav.Link href="/garage">
+                <House size={28} />
+              </Nav.Link>
+              )
+          }
+
           <NavDropdown alignRight title={<PersonCircle size={28} />}>
           {user.user == null ? (
                   <div>

@@ -20,6 +20,8 @@ const Garage = (props) => {
 
   const [garageItems, setGarageItems] = React.useState([]);
 
+  //const user = useSelector((state) => state.user);
+
   const extractGarage = () => {
     if (!props.garage ) {
       return;
@@ -89,7 +91,10 @@ const Garage = (props) => {
           className="jumbotron jumbotron-fluid bg-white"
           style={{ marginBottom: -10 }}
         >
-          <h1 className="display-5 text-center">{userName}'s Garage</h1>
+          {props.seller === props.user ?
+              <h1 className="display-5 text-center">My Garage</h1> :
+              <h1 className="display-5 text-center">{userName}'s Garage</h1>
+          }
           <em>
             <p
               className="lead text-black-50 text-sm-center"
@@ -100,44 +105,46 @@ const Garage = (props) => {
             </p>
           </em>
         </div>
-        <div className="select-all-button-field" style={{ paddingInline: 50 }}>
-          <Button
-            className="btn select-all-button"
-            variant="light"
-            style={{ color: "black", borderColor: "lightgray" }}
-          >
-            <div style={{ fontSize: 14 }}>Select all</div>
-          </Button>
-        </div>
-        <div className="list-whole w-100" style={{ paddingInline: 50 }}>
-          <ListGroup>{renderedList}</ListGroup>
-
-          <div
-            className="price-info-text text-center"
-            style={{ marginTop: 25, marginBottom: 25 }}
-          >
-            <div className="total-price-text">Total price: €60</div>
-            <div className="saving-text">Saving: €10</div>
-            <div className="amount-to-pay-text">Amount to Pay: €50</div>
-            <div className="promotional-sentence-text text-danger">
-              You can save up to 10% by choosing 1 more item!
-            </div>
+        <div>
+          <div className="select-all-button-field" style={{ paddingInline: 50 }}>
+            <Button
+                className="btn select-all-button"
+                variant="light"
+                style={{ color: "black", borderColor: "lightgray" }}
+            >
+              <div style={{ fontSize: 14 }}>Select all</div>
+            </Button>
           </div>
-          <div className="bargain-buy-buttons d-flex align-items-center justify-content-center">
-            <Button
-              className="btn border-0"
-              variant="dark"
-              style={{ backgroundColor: "#A282A5", marginRight: 8 }}
+          <div className="list-whole w-100" style={{ paddingInline: 50 }}>
+            <ListGroup>{renderedList}</ListGroup>
+
+            <div
+                className="price-info-text text-center"
+                style={{ marginTop: 25, marginBottom: 25 }}
             >
-              Bargain for Selected Items
-            </Button>
-            <Button
-              className="btn border-0 text-white"
-              variant="light"
-              style={{ backgroundColor: "#85A582" }}
-            >
-              Buy Selected Items
-            </Button>
+              <div className="total-price-text">Total price: €60</div>
+              <div className="saving-text">Saving: €10</div>
+              <div className="amount-to-pay-text">Amount to Pay: €50</div>
+              <div className="promotional-sentence-text text-danger">
+                You can save up to 10% by choosing 1 more item!
+              </div>
+            </div>
+            <div className="bargain-buy-buttons d-flex align-items-center justify-content-center">
+              <Button
+                  className="btn border-0"
+                  variant="dark"
+                  style={{ backgroundColor: "#A282A5", marginRight: 8 }}
+              >
+                Bargain for Selected Items
+              </Button>
+              <Button
+                  className="btn border-0 text-white"
+                  variant="light"
+                  style={{ backgroundColor: "#85A582" }}
+              >
+                Buy Selected Items
+              </Button>
+            </div>
           </div>
         </div>
       </span>
@@ -190,6 +197,7 @@ might be useful for GarageItem
 Garage.propTypes = {
   garage: PropTypes.object,
   seller: PropTypes.object,
+  user: PropTypes.object,
 };
 
 export default withRouter(Garage);

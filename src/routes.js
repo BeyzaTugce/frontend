@@ -8,6 +8,7 @@ import DeliveryView from "./views/DeliveryView";
 import AdminSignUpView from "./views/AdminSignUpView";
 import ItemView from "./views/ItemView";
 import BargainView from "./views/BargainView";
+import VisitorView from "./views/VisitorView";
 import OrderDetailsView from "./views/OrderDetailsView";
 
 // routes within the movie database example app
@@ -17,49 +18,43 @@ const routes = [
   {
     path: "/Header",
     component: MainPageView,
-
   },
   {
     path: "/garage/:id",
     component: GarageView,
-
   },
   {
-    path: "/mygarage",
+    path: "/garage",
     component: GarageCreationView,
-
   },
   {
     path: "/signup",
     component: SignUpView,
-
   },
   {
     path: "/login",
     component: UserLoginView,
-
   },
   {
     path: "/delivery",
     component: DeliveryView,
-
   },
 
   {
     path: "/adminsignup",
     component: AdminSignUpView,
-    
   },
-
   {
     path: "/bargain/:id",
     component: BargainView,
-  
   },
   {
-    path: "/orderdetails/:id",
+    path: "/yourgarage",
+    component: VisitorView,
+  },
+  {
+    path: "/order",
     component: OrderDetailsView,
-
   },
  /* {
     path: "/item",
