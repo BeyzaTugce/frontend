@@ -75,7 +75,7 @@ const Signup = (props) => {
       city,
       correspondenceAddress
     );
-    history.push("/garage");
+    history.push("/");
   };
 
   const onChangeUsername = (e) => {

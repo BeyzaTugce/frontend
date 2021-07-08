@@ -17,6 +17,7 @@ import "./Header.css";
 import { connect, useSelector } from "react-redux";
 import logo from "../views/logo.png";
 import { logout } from "../redux/actions";
+import {getGarageByUser} from "../redux/actions/GarageActions"
 import CategoryBar from "./CategoryBar";
 
 /*const useStyles = makeStyles((theme) => ({
@@ -37,6 +38,7 @@ const Header = (props) => {
   //const classes = useStyles();
   //const [menuAnchor, setMenuAnchor] = React.useState(null);
   const user = useSelector((state) => state.user);
+
 
   const history = useHistory();
 
@@ -102,11 +104,13 @@ const Header = (props) => {
               <Nav.Link href="/yourgarage">
                 <House size={28} />
               </Nav.Link>
-          ) : (
+          ) : (getGarageByUser(user.user._id) == null) ? (
               <Nav.Link href="/garage">
                 <House size={28} />
               </Nav.Link>
-              )
+              ) : <Nav.Link href="/delivery">
+            <House size={28} />
+          </Nav.Link>
           }
 
           <NavDropdown alignRight title={<PersonCircle size={28} />}>

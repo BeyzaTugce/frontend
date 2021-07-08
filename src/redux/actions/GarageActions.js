@@ -1,4 +1,5 @@
 import GarageService from "../../services/GarageService";
+import garage from "../reducers/garageReducer";
 
 export function getGarages() {
   function onSuccess(garages) {
@@ -148,4 +149,25 @@ export function addItem(garageId, item) {
     }
   };
 }
+
+export const getGarageByUser = (id) => {
+  function onSuccess(garage) {
+    // document.write(seller.firstname);
+    return { type: "GETGARAGE_SUCCESS", garage: garage };
+  }
+  function onFailure(error) {
+    console.log("failed to load a garage", error);
+  }
+
+  return async (dispatch, getState) => {
+    try {
+      document.write("actiondayız");
+      // let garage = await GarageService.getGarage(id);
+      let garage = await GarageService.readGarageByUser(id);
+      dispatch(onSuccess(garage));
+    } catch (e) {
+      onFailure(e);
+    }
+  };
+};
 

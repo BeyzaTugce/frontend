@@ -30,9 +30,9 @@ function OrderDetailsView(props) {
 
     return (
         <OrderDetails
-            order={order.order}
-            seller= {order.seller}
-            items={order.items}
+            //order={order.order}
+            //seller= {order.seller}
+            //items={order.items}
             //isLoggedIn={!!user.user}
         />
     );

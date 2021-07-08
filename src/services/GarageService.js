@@ -139,4 +139,19 @@ export default class GarageService {
       );
     });
   }
+
+  static readGarageByUser(userId) {
+    return new Promise((resolve, reject) => {
+      HttpService.get(
+          `${GarageService.baseURL()}/${userId}`,
+          function (data) {
+            resolve(data);
+          },
+          function (textStatus) {
+            reject(textStatus);
+          }
+      );
+    });
+  }
+
 }
