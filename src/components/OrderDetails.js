@@ -22,32 +22,62 @@ const OrderDetails = (props) => {
     const [paymentMethod, setPaymentMethod] = React.useState("Not specified");
     const [totalwoTax, setTotalwoTax] = React.useState(0);
     const [tax, setTax] = React.useState(0);
-    const [items, setItems] = React.useState([]);
+    //const [items, setItems] = React.useState([]);
 
     const totalPrice = () => {
         let price = totalwoTax+tax;
         return price;
     }
 
-    /*
-    const extractGarage = () => {
-        if (!props.garage) {
-
+    const extractOrder = () => {
+        if (!props.order ) {
             return;
         }
 
-        setUserName(user.firstname)
-        setPostcode(user.postcode)
-        setDistrict(props.garage.user.district)
-        setCity(props.garage.user.city)
-        //will change the date later.
-        setGarageEndDate(props.garage.dateCreated)
-        setGarageItems(props.garage.items)
+        setStatus(props.order.enum);
+        setOrderDate(props.order.ordered);
+        setMethod(props.order.method);
+        if (method == "Delivery"){
+            setAddress(props.order.ship_to);
+        }
+        //not sure about shipped cause what will we do if it's pick-up?
+        setDate(props.order.shipped);
+        setTotalwoTax(props.order.total);
+        //setGarageItems(props.garage.items)
+    }
+
+    //will get the items from purchase.
+    const extractItems = () => {
+        if (!props.items ) {
+            return;
+        }
+        //setGarageItems(props.purchase.items)
     }
 
     useEffect(() => {
-        extractGarage();
-    }, [props.garage]);
+        extractOrder();
+    }, [props.order] );
+
+    useEffect(() => {
+        extractSeller();
+    }, [props.seller] );
+
+    useEffect(() => {
+        extractItems();
+    }, [props.items] );
+
+
+    const extractSeller = () => {
+        if (!props.seller ) {
+            return;
+        }
+
+        if (method == "Pick-Up"){
+            setAddress(props.seller.address);
+        }
+    }
+
+    const items = [];
 
     const renderedList = items.map((garageItem) => {
         return (
@@ -60,11 +90,6 @@ const OrderDetails = (props) => {
             />
         );
     });
-     */
-
-    const renderedList = () => {
-
-    }
 
     return (
         <div className="OrderDetails">
@@ -125,6 +150,10 @@ const OrderDetails = (props) => {
 };
 
 OrderDetails.propTypes = {
+    order: PropTypes.object,
+    seller: PropTypes.object,
+    user: PropTypes.object,
+    //items: PropTypes.object,
 };
 
 export default withRouter(OrderDetails);
