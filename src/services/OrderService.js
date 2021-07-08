@@ -108,7 +108,7 @@ export default class OrderService {
         });
     }
 
-    static readSeller(garageId) {
+    static readSeller(orderId) {
         return new Promise((resolve, reject) => {
             HttpService.get(
                 `${OrderService.baseURL()}/seller/${orderId}`,
