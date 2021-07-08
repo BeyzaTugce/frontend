@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 import ItemCreation from "../views/ItemView";
 import GarageItem from "./GarageItem";
 import garage from "../redux/reducers/garageReducer";
+import {addGarage} from "../redux/actions";
 //import ItemList from "./ItemList";
 
 const GarageCreation = (props) => {
@@ -148,7 +149,7 @@ const GarageCreation = (props) => {
 };
 
 GarageCreation.propTypes = {
-  onCreate: PropTypes.func.isRequired,
+  //onCreate: PropTypes.func.isRequired,
   newItem: PropTypes.object,
 };
 

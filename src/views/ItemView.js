@@ -27,6 +27,7 @@ import { useHistory } from "react-router-dom";
 //import ItemComponent from "../components/ItemCreation";
 import {addItem, deleteItem, getItem} from "../redux/actions/ItemActions";
 import GarageService from "../services/GarageService";
+import garage from "../redux/reducers/garageReducer";
 
 /**
  * For register new users
@@ -50,7 +51,7 @@ function ItemView(props) {
       return;
     }
 
-    setItemGarage(props.garage.id);
+    //setItemGarage(props.item.itemGarage);
     setItemTitle(props.item.itemTitle);
     setItemInfo(props.item.itemInfo);
     setItemTags(props.item.itemTags);
@@ -75,7 +76,7 @@ function ItemView(props) {
   const removeFromList = (input) => {
     //setNewDate(input);
     if (itemList.includes(input)) {
-      itemList.filter(item => item._id !== input._id);
+      itemList.filter(item => item.id !== input.id);
       setItemList([...itemList]);
     }
   };
@@ -105,7 +106,7 @@ function ItemView(props) {
       ...props.item,
     };
 
-    back.garageId = itemGarage;
+    //back.garageId = itemGarage;
     back.name = itemTitle;
     back.price = itemPrice;
     back.tags = itemTags;
@@ -218,11 +219,11 @@ function ItemView(props) {
           {itemList.map((item) => {
             return (
               <GarageItem
-                name={item.name}
-                info={item.info}
-                price={item.price}
-                tags={item.tags}
-                onRemove={onRemove}
+                  name={item.name}
+                  info={item.info}
+                  price={item.price}
+                  tags={item.tags}
+                  onRemove={onRemove}
               />
             );
           })}

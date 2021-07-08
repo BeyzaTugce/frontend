@@ -8,9 +8,6 @@ import {
   changeGarage,
   deleteGarage,
 } from "../redux/actions/GarageActions";
-import {deleteItem} from "../redux/actions";
-import { getItem } from "../redux/actions";
-import GarageService from "../services/GarageService";
 import PropTypes from "prop-types";
 import GarageCreation from "../components/GarageCreation";
 
@@ -27,18 +24,10 @@ function GarageCreationView(props) {
   const [newItem, setNewItem] = React.useState(false);
 
   useEffect(() => {
-    // get id of item from URL
-    let itemId = props.match.params.id;
-
-    // check if a new item is created
-    if (itemId === "new") {
-      // proceed with an empty element
-      setNewItem(true);
-    } else {
-      // trigger item load from backend
-      props.dispatch(getItem(itemId));
+    if (garage.garage) {
+      props.history.push("/");
     }
-  }, [props.match.params]);
+  }, [garage, props.history]);
 
   const onCreate = (garage) => {
     props.dispatch(addGarage(garage));

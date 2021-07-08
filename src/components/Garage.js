@@ -17,7 +17,8 @@ const Garage = (props) => {
   const [district, setDistrict] = React.useState("");
   const [city, setCity] = React.useState("");
   const [garageEndDate, setGarageEndDate] = React.useState("");
-  //const [garageItems, setGarageItems] = React.useState([]);
+
+  const [garageItems, setGarageItems] = React.useState([]);
 
   const extractGarage = () => {
     if (!props.garage ) {
