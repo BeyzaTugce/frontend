@@ -10,12 +10,13 @@ import PropTypes from "prop-types";
 import ItemCreation from "../views/ItemView";
 import GarageItem from "./GarageItem";
 import garage from "../redux/reducers/garageReducer";
+import { connect, useSelector } from "react-redux";
 import {addGarage} from "../redux/actions";
 //import ItemList from "./ItemList";
 
 const GarageCreation = (props) => {
   const history = useHistory();
-
+  const user = useSelector((state) => state.user);
   const [dateCreated, setDateCreated] = React.useState("");
   const [isPromoted, setIsPromoted] = React.useState("");
   const [discount, setDiscount] = React.useState("");
@@ -42,10 +43,11 @@ const GarageCreation = (props) => {
       ...props.garage,
     };
 
-    back.dateCreated = dateCreated;
-    back.isPromoted = isPromoted;
-    back.discount = discount;
-    back.bargain = bargain;
+    back.user = user.user._id;
+   // back.dateCreated = dateCreated;
+   // back.isPromoted = isPromoted;
+   // back.discount = discount;
+    //back.bargain = bargain;
     back.shipmentType = shipmentType;
     //back.items = items;
 
@@ -67,8 +69,15 @@ const GarageCreation = (props) => {
     setBargain(e.target.value);
   };
 
-  const onChangeShipmentType = (e) => {
-    setShipmentType(e.target.value);
+  const onChangeShipment = (e) => {
+    setShipmentType("Shipment");
+    document.write(shipmentType);
+   
+  };
+  const onChangePickUp = (e) => {
+    setShipmentType("PickUp");
+      document.write(shipmentType);
+   
   };
 
   const onCreate = (e) => {
@@ -108,11 +117,11 @@ const GarageCreation = (props) => {
             <FormGroup>
               <div className="garageOptions">
                 <FormLabel>Delivery</FormLabel>
-                <FormCheck onClick={onChangeShipmentType}>
+                <FormCheck onClick={onChangeShipment}>
                   <FormCheckInput isValid />
                   <FormCheck.Label>{`Shipment`}</FormCheck.Label>
                 </FormCheck>
-                <FormCheck onClick={onChangeShipmentType}>
+                <FormCheck onClick={onChangePickUp}>
                   <FormCheckInput isValid />
                   <FormCheck.Label>{`Pick-up`}</FormCheck.Label>
                 </FormCheck>

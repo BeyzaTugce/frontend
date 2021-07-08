@@ -36,11 +36,8 @@ import CategoryBar from "./CategoryBar";
 const Header = (props) => {
   //const classes = useStyles();
   //const [menuAnchor, setMenuAnchor] = React.useState(null);
+  const user = useSelector((state) => state.user);
 
-  const user = useSelector((state) => {
-    // return the currnetly logged in user from redux store
-    return state.user;
-  });
   const history = useHistory();
 
   const onClickLogin = () => {
@@ -104,8 +101,12 @@ const Header = (props) => {
             <House size={28} />
           </Nav.Link>
           <NavDropdown alignRight title={<PersonCircle size={28} />}>
-            <NavDropdown.Item onClick={onClickLogin}>Login</NavDropdown.Item>
-            <NavDropdown.Item onClick={onClickLogout}>Logout</NavDropdown.Item>
+          {user.user == null ? (
+                  <div>
+                   <NavDropdown.Item onClick={onClickLogin}>Login</NavDropdown.Item>
+                  </div>
+                ) :  <div> 
+                  <NavDropdown.Item onClick={onClickLogout}>Logout</NavDropdown.Item> </div> }
           </NavDropdown>
         </Nav>
       </Navbar>
