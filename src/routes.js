@@ -8,6 +8,7 @@ import DeliveryView from "./views/DeliveryView";
 import AdminSignUpView from "./views/AdminSignUpView";
 import ItemView from "./views/ItemView";
 import BargainView from "./views/BargainView";
+import OrderDetailsView from "./views/OrderDetailsView";
 
 // routes within the movie database example app
 // used for routing
@@ -54,6 +55,11 @@ const routes = [
     path: "/bargain/:id",
     component: BargainView,
   
+  },
+  {
+    path: "/orderdetails/:id",
+    component: OrderDetailsView,
+
   },
  /* {
     path: "/item",
