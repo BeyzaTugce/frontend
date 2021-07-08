@@ -1,7 +1,6 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {Button, FormCheck, FormGroup, FormLabel, ListGroup} from "react-bootstrap";
-import FormCheckInput from "react-bootstrap/FormCheckInput";
+import {Button, FormCheck, FormGroup, FormLabel, ListGroup, Alert} from "react-bootstrap";
 import { Clock, PlusLg } from "react-bootstrap-icons";
 
 import "./GarageCreation.css";
@@ -17,25 +16,35 @@ import {addGarage} from "../redux/actions";
 const GarageCreation = (props) => {
   const history = useHistory();
   const user = useSelector((state) => state.user);
-  const [dateCreated, setDateCreated] = React.useState("");
-  const [isPromoted, setIsPromoted] = React.useState("");
-  const [discount, setDiscount] = React.useState("");
-  const [bargain, setBargain] = React.useState("");
-  const [shipmentType, setShipmentType] = React.useState("");
-  //const [items, setItems] = React.useState([]);
+  //const [dateCreated, setDateCreated] = useState("");
+  const [isPromoted, setIsPromoted] = useState(false);
+  const [discount, setDiscount] = useState(false);
+  const [bargain, setBargain] = useState(false);
+  const [shipment, setShipment] = useState(false);
+  const [pickup, setPickup] = useState(false);
+  //const [items, setItems] = useState([]);
+
+  const [disabled, setDisabled] = useState(false);
+
+  React.useEffect(() => {
+    if (shipment || pickup) 
+      setDisabled(false);
+    else 
+      setDisabled(true);
+  }, [shipment, pickup]);
 
 
-  let deliveryChecked = null;
   // for extracting the attributes of the given garage to the appropriate state variables
   const extractGarage = () => {
     if (!props.garage) {
       return;
     }
-    setDateCreated(props.garage.dateCreated);
+    //setDateCreated(props.garage.dateCreated);
     setIsPromoted(props.garage.isPromoted);
     setDiscount(props.garage.discount);
     setBargain(props.garage.bargain);
-    setShipmentType(props.garage.shipmentType);
+    setShipment(props.garage.shipment);
+    setPickup(props.garage.pickup);
     //setItems(JSON.parse(JSON.stringify(props.garage.items)));
   };
 
@@ -48,9 +57,10 @@ const GarageCreation = (props) => {
     back.user = user.user._id;
    // back.dateCreated = dateCreated;
    // back.isPromoted = isPromoted;
-    //back.discount = discount;
-    //back.bargain = bargain;
-    back.shipmentType = shipmentType;
+    back.discount = discount;
+    back.bargain = bargain;
+    back.pickup = pickup;
+    back.shipment = shipment;
     //back.items = items;
 
     return back;
@@ -60,38 +70,23 @@ const GarageCreation = (props) => {
   const [editMode, setEditMode] = React.useState(null);
 
   const onChangeIsPromoted = (e) => {
-    setIsPromoted(e.target.value);
+    setIsPromoted(e.target.checked);
   };
 
   const onChangeDiscount = (e) => {
-    setDiscount(e.target.value);
-    //console.log(e.target.checked);
+    setDiscount(e.target.checked);
   };
 
   const onChangeBargain = (e) => {
-    setBargain(e.target.value);
-    console.log("bargain");
-
+    setBargain(e.target.checked);
   };
 
   const onChangeShipment = (e) => {
-    //deliveryChecked = e.target.checked;
-    //setShipmentType(e.target.checked);
-    //console.log("shipment");
-    //let isChecked = e.target.checked;
-    //console.log("ship:"+isChecked);
-    setShipmentType("Shipment");
-    document.write(shipmentType);
+    setShipment(e.target.checked);
 
   };
   const onChangePickUp = (e) => {
-    //deliveryChecked = e.target.checked;
-    //setShipmentType(e.target.checked);
-    //console.log("pickup"+deliveryChecked);
-    setShipmentType("PickUp");
-    document.write(shipmentType);
-
-
+    setPickup(e.target.checked);
   };
 
   const onCreate = (e) => {
@@ -117,28 +112,48 @@ const GarageCreation = (props) => {
           <div className="d-inline-block">
             <FormGroup style={{ marginTop: 60 }}>
               <div className="garageOptions">
-                <FormLabel>Garage Sale Options</FormLabel>
-                <FormCheck onClick={onChangeDiscount}>
-                  <FormCheckInput isValid/>
-                  <FormCheck.Label>{`Discount for multiple item selection`}</FormCheck.Label>
-                </FormCheck>
-                <FormCheck onClick={onChangeBargain}>
-                  <FormCheckInput isValid />
-                  <FormCheck.Label>{`Bargain offers`}</FormCheck.Label>
-                </FormCheck>
+                <FormLabel className="labels">Garage Sale Options</FormLabel>
+                <div>
+                  <label>
+                    Discount for multiple item selection
+                    <input className="ml-2"
+                      name="discount"
+                      type="checkbox"
+                      onChange={onChangeDiscount} />
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    Bargain offers
+                    <input className="ml-2"
+                      name="bargain"
+                      type="checkbox"
+                      onChange={onChangeBargain} />
+                  </label>
+                </div>
               </div>
             </FormGroup>
             <FormGroup>
               <div className="garageOptions">
-                <FormLabel>Delivery</FormLabel>
-                <FormCheck onClick={onChangeShipment}>
-                  <FormCheckInput isValid/>
-                  <FormCheck.Label>{`Shipment`}</FormCheck.Label>
-                </FormCheck>
-                <FormCheck onClick={onChangePickUp}>
-                  <FormCheckInput isValid />
-                  <FormCheck.Label>{`Pick-up`}</FormCheck.Label>
-                </FormCheck>
+                <FormLabel className="labels">Delivery</FormLabel>
+                <div>
+                  <label>
+                    Shipment
+                    <input className="ml-2"
+                      name="shipment"
+                      type="checkbox"
+                      onChange={onChangeShipment} />
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    Pick-up
+                    <input className="ml-2"
+                      name="pick-up"
+                      type="checkbox"
+                      onChange={onChangePickUp} />
+                  </label>
+                </div>
               </div>
             </FormGroup>
             <div
@@ -161,11 +176,32 @@ const GarageCreation = (props) => {
             />
           </div>
         </div>
+        {disabled ? 
+          <Alert className="mb-5 mt-5" variant="danger">
+            <Alert.Heading>Please select at least one delivery option to create your garage!</Alert.Heading>
+          </Alert>
+        :<p></p>
+        }
+
+        {disabled ?
         <Button
             className="d-flex align-content-end"
+            variant="secondary"
+            size="lg"
             style={{marginLeft: 1065, marginTop:10}}
+            disabled={disabled}
             onClick={onCreate}
         >Create</Button>
+        :
+        <Button
+            className="d-flex align-content-end"
+            variant="success"
+            size="lg"
+            style={{marginLeft: 1065, marginTop:10}}
+            disabled={disabled}
+            onClick={onCreate}
+        >Create</Button>
+        }
       </div>
     </div>
   );
