@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { Container, Button, ListGroup, ListGroupItem, Modal } from "react-bootstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import { v4 as uuid } from "uuid";
 import "./Bargain.css";
 import { PropTypes } from "prop-types";
 import { connect, useSelector } from "react-redux";
@@ -11,6 +10,7 @@ import {
   getOfferHistory,
   makeOffer,
   withdrawOffer,
+  setOffersLoading,
 } from "../redux/actions/OfferActions";
 import { withRouter } from "react-router-dom";
 
@@ -19,31 +19,37 @@ const Bargain = (props) => {
     const [enterOffer, setEnterOffer] = useState({ price: 10 });
     const handleToggle = () => {setShow(!show)};
     const [turn, setTurn] = useState(false);
-    const [offerHistory, setOfferHistory] = useState([]);
+    const [thisOfferHistory, setThisOfferHistory] = useState([]);
     const paramsId = props.match.params.id
-    // useEffect((e) => {
-    //     props.getOfferHistory(paramsId);
-    //   }, []);
-    //props.getOfferHistory(paramsId);
-    let getValues = true;
     const history = useHistory();
     const { offers } = props.offer;
+    let offersArray = {
+      ...offers.offerHistory
+    }  
+    let lastOffer = 0;
+    //const { loading } = props.loading;
+
     useEffect(() => {
+      //console.log(offersArray);
       props.getOfferHistory(paramsId);
-      getValues = false;
-    }, [] );
+      
+      //lastOffer = offers.offerHistory[offers.offerHistory.length - 1];
+    }, [props.loading]);
+
+
     const handleOnClick = e => {
       e.preventDefault();
-      setOfferHistory(offerHistory => [...offerHistory, enterOffer.price]);
+      //setThisOfferHistory(thisOfferHistory => [...thisOfferHistory, enterOffer.price]);
       const newOffer = {
-          id: uuid(),
+          //id: uuid(),
           price: enterOffer.price,
-          offerHistory: [...offerHistory, enterOffer.price],
+          offerHistory: [...thisOfferHistory, enterOffer.price],
           sellerUserName: "aaa",
           buyerUserName: "bbb"
         };
       // Add item via addItem action
       props.makeOffer(newOffer);
+      //setThisOfferHistory(...thisOfferHistory, enterOffer.price)
       // Close modal
       handleToggle();
       setTurn(!turn);
@@ -54,17 +60,6 @@ const Bargain = (props) => {
         history.push('/garage');
     }
 
-    // useEffect(() => {
-    //     let {id} = props.match.params;
-    //     props.getOfferHistory(id);
-        // const newOffer = {
-        //     price: offer.price,
-        //     offerHistory: [...offerHistory, offer.price],
-        //     sellerUserName: "aaa",
-        //     buyerUserName: "bbb"
-        //   };
-        // props.makeOffer(newOffer);
-    // }) 
     return (
       <Container>
             <Button className="mr-5" variant="success" size="lg">
@@ -108,7 +103,7 @@ const Bargain = (props) => {
                 }}
                 axis="x"
                 x={enterOffer.price}
-                xmin={offerHistory[offerHistory.length-1]}
+                xmin={offersArray[offersArray.length-1]}
                 xmax={100}
                 onChange={({ x }) => setEnterOffer(offer => ({ ...offer, price: x }))}
                 />
@@ -158,12 +153,13 @@ Bargain.propTypes = {
   getOfferHistory: PropTypes.func.isRequired,
   makeOffer: PropTypes.func.isRequired,
   withdrawOffer: PropTypes.func.isRequired,
+  setOffersLoading: PropTypes.func.isRequired,
   offer: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
   offer: state.offer,
-  offers: state.offer.offers
+  loading: state.loading
 });
 
 // this.props.withdrawOffer, this.props.getOfferHistory, ...
@@ -171,6 +167,7 @@ export default connect(mapStateToProps, {
   getOfferHistory,
   makeOffer,
   withdrawOffer,
+  setOffersLoading,
 })(withRouter(Bargain));
 
 // export default Offer;
