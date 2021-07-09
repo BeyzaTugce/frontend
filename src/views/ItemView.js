@@ -124,8 +124,8 @@ function ItemView(props) {
 
   const onRemove = (e) => {
     e.preventDefault();
-    removeFromList(e);
-    props.dispatch(deleteItem(e))
+    removeFromList(packItem());
+    props.dispatch(deleteItem(packItem()))
   }
 
   const onCancel = () => {
@@ -224,6 +224,8 @@ function ItemView(props) {
                   price={item.price}
                   tags={item.tags}
                   onRemove={onRemove}
+                  //garage={props.garage}
+                  //user={props.user}
               />
             );
           })}
@@ -235,6 +237,8 @@ function ItemView(props) {
 
 ItemView.prototypes = {
   onRemove : PropTypes.func.isRequired,
+  garage: PropTypes.object,
+  user: PropTypes.object,
 };
 
 export default connect()(withRouter(ItemView));

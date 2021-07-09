@@ -22,9 +22,10 @@ const GarageCreation = (props) => {
   const [bargain, setBargain] = useState(false);
   const [shipment, setShipment] = useState(false);
   const [pickup, setPickup] = useState(false);
-  //const [items, setItems] = useState([]);
-
   const [disabled, setDisabled] = useState(false);
+
+  const [garageId, setGarageId] = useState("");
+
 
   React.useEffect(() => {
     if (shipment || pickup) 
@@ -94,6 +95,12 @@ const GarageCreation = (props) => {
       props.onCreate(packGarage());
   }
 
+  const onClickDisplayMyGarage = (e) => {
+    e.preventDefault();
+    //props.onClickDisplayMyGarage(props.garage.id);
+  }
+
+
   const getDate = (today) => {
     let day = new Date();
     if (today) {
@@ -107,6 +114,7 @@ const GarageCreation = (props) => {
   return (
     <div>
       <h1 className="myGarage text-center">My Garage</h1>
+      <Button onClick={onClickDisplayMyGarage}>Go To MyGarage</Button>
       <div className="w-100" style={{ paddingInline: 50 }}>
         <div className="d-flex justify-content-between">
           <div className="d-inline-block">

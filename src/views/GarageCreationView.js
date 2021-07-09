@@ -40,6 +40,10 @@ function GarageCreationView(props) {
     props.dispatch(addGarage(garage));
   };
 
+  const onClickDisplayMyGarage = (id) => {
+    props.history.push("/"+id);
+  }
+
   const onRemove = (garage) => {
     props.dispatch(deleteGarage(garage.id));
   };
@@ -58,11 +62,14 @@ function GarageCreationView(props) {
         props.dispatch(deleteItem(item));
     }*/
 
+  console.log(garage.garage);
+
   return (
       <GarageCreationComponent
         newItem={newItem}
         garage={garage.garage}
         onCreate={onCreate}
+        onClickDisplayMyGarage={onClickDisplayMyGarage}
     />
   );
 }
@@ -73,6 +80,7 @@ GarageCreationView.propTypes = {
   onRemoveItem: PropTypes.func.isRequired,
   garage: PropTypes.object,
   newItem: PropTypes.object,
+  onClickDisplayMyGarage: PropTypes.func.isRequired,
 };
 
 export default connect()(withRouter(GarageCreationView));

@@ -104,13 +104,11 @@ const Header = (props) => {
               <Nav.Link href="/yourgarage">
                 <House size={28} />
               </Nav.Link>
-          ) : (getGarageByUser(user.user._id) == null) ? (
+          ) : (
               <Nav.Link href="/garage">
                 <House size={28} />
               </Nav.Link>
-              ) : <Nav.Link href="/delivery">
-            <House size={28} />
-          </Nav.Link>
+              )
           }
 
           <NavDropdown alignRight title={<PersonCircle size={28} />}>

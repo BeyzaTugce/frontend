@@ -107,24 +107,6 @@ export default class GarageService {
     });
   }
 
-  //TODO: Do no use that anymore instead add items directly to the item endpoint
-  static addItem(item) {
-    item.id = Math.floor(Math.random() * 100000000 + 1).toString();
-
-    return new Promise((resolve, reject) => {
-      HttpService.post(
-        `${GarageService.baseURLItem()}`,
-        { item: item },
-        function (data) {
-          resolve(data);
-        },
-        function (textStatus) {
-          reject(textStatus);
-        }
-      );
-    });
-  }
-
   
   static readSeller(garageId) {
     return new Promise((resolve, reject) => {

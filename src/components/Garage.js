@@ -20,7 +20,6 @@ const Garage = (props) => {
 
   const [garageItems, setGarageItems] = React.useState([]);
 
-  //const user = useSelector((state) => state.user);
 
   const extractGarage = () => {
     if (!props.garage ) {
@@ -28,16 +27,23 @@ const Garage = (props) => {
     }
     //will change the date later.
     setGarageEndDate(props.garage.dateCreated)
-    //setGarageItems(props.garage.items)
+  }
+
+  const extractSeller = () => {
+    if (!props.seller ) {
+      return;
+    }
+    setUserName(props.seller.firstname)
+    setPostcode(props.seller.postcode)
+    setDistrict(props.seller.district)
+    setCity(props.seller.city)
   }
 
   const extractItems = () => {
     if (!props.items ) {
       return;
     }
-    //will change the date later.
-    //setGarageEndDate(props.garage.dateCreated)
-    //setGarageItems(props.garage.items)
+    setGarageItems(props.items.items);
   }
 
   useEffect(() => {
@@ -53,24 +59,7 @@ const Garage = (props) => {
   }, [props.items] );
 
 
-  const extractSeller = () => {
-    if (!props.seller ) {
-      //document.write("deneme");
-      return;
-    }
-    
-    setUserName(props.seller.firstname)
-    setPostcode(props.seller.postcode)
-    setDistrict(props.seller.district)
-    setCity(props.seller.city)
-    //setGarageItems(JSON.parse(JSON.stringify(props.items)));
-    //will change the date later.
-  }
-
-
- const items = [];
-
-  const renderedList = items.map((garageItem) => {
+  const renderedList = garageItems.map((garageItem) => {
     return (
       <GarageItem
         name={garageItem.name}
@@ -198,6 +187,7 @@ Garage.propTypes = {
   garage: PropTypes.object,
   seller: PropTypes.object,
   user: PropTypes.object,
+  items: PropTypes.object,
 };
 
 export default withRouter(Garage);
