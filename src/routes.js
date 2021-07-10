@@ -53,7 +53,7 @@ const routes = [
     component: VisitorView,
   },
   {
-    path: "/order",
+    path: "/order/:id",
     component: OrderDetailsView,
   },
  /* {

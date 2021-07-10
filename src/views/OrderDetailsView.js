@@ -13,24 +13,15 @@ function OrderDetailsView(props) {
     useEffect(() => {
         let orderId = match.params.id;
         getOrder(orderId);
-        //getSeller(orderId);
-    }, [match.params]);
-
-    useEffect(() => {
-        let orderId = match.params.id;
         getSeller(orderId);
-        //document.write(seller.seller.firstname);
-    }, [match.params]);
-
-    useEffect(() => {
-        let orderId = match.params.id;
-        getItems(orderId);
-        //document.write(seller.seller.firstname);
+        //getItems(orderId);
     }, [match.params]);
 
     return (
         <OrderDetails
-            order={order}
+            //TODO: Solve the problem here!!
+            //order={order.order}
+            //user={user.user}
             //seller= {order.seller}
             //items={order.items}
             //isLoggedIn={!!user.user}

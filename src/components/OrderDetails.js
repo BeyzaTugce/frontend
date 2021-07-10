@@ -1,10 +1,6 @@
 import React, { useEffect } from "react";
 import {
-    Button,
-    FormCheck,
-    Image,
     ListGroup,
-    ListGroupItem,
 } from "react-bootstrap";
 import "./OrderDetails.css";
 import GarageItem from "./GarageItem";
@@ -43,7 +39,6 @@ const OrderDetails = (props) => {
         //not sure about shipped cause what will we do if it's pick-up?
         setDate(props.order.shipped);
         setTotalwoTax(props.order.total);
-        //setGarageItems(props.garage.items)
     }
 
     //will get the items from purchase.
@@ -52,6 +47,17 @@ const OrderDetails = (props) => {
             return;
         }
         //setGarageItems(props.purchase.items)
+    }
+
+    const extractSeller = () => {
+        if (!props.seller ) {
+            return;
+        }
+
+        setSellerName(props.seller.firstname)
+        if (method == "Pick-Up"){
+            setAddress(props.seller.address);
+        }
     }
 
     useEffect(() => {
@@ -65,17 +71,6 @@ const OrderDetails = (props) => {
     useEffect(() => {
         extractItems();
     }, [props.items] );
-
-
-    const extractSeller = () => {
-        if (!props.seller ) {
-            return;
-        }
-
-        if (method == "Pick-Up"){
-            setAddress(props.seller.address);
-        }
-    }
 
     const items = [];
 
