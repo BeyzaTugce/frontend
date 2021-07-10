@@ -20,7 +20,7 @@ const BargainView = props => {
     //console.log(offersArray);
     props.getOfferHistory(props.match.params.id);
     //lastOffer = offers.offerHistory[offers.offerHistory.length - 1];
-  }, [props.loading]);
+  }, [props.offer.offers]);
   
   return (
     <BargainComponent />

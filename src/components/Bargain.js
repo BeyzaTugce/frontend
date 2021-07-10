@@ -23,10 +23,7 @@ const Bargain = (props) => {
     const paramsId = props.match.params.id
     const history = useHistory();
     const { offers } = props.offer;
-    let offersArray = {
-      ...offers.offerHistory
-    }  
-    let lastOffer = 0;
+    let offersArray = offers.offerHistory;
     //const { loading } = props.loading;
 
     // useEffect(() => {
@@ -104,7 +101,7 @@ const Bargain = (props) => {
                 }}
                 axis="x"
                 x={enterOffer.price}
-                xmin={offersArray[offersArray.length-1]}
+                xmin={offersArray && offersArray[offersArray.length-1]}
                 xmax={100}
                 onChange={({ x }) => setEnterOffer(offer => ({ ...offer, price: x }))}
                 />
