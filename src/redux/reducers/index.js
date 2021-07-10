@@ -5,6 +5,7 @@ import garage from "./garageReducer";
 import items from "./itemReducer";
 import offer from "./offerReducer";
 import pickup from "./pickupReducer";
+import order from "./orderReducer";
 
 export default combineReducers({
   user,
@@ -12,5 +13,6 @@ export default combineReducers({
   garage,
   items,
   offer,
-  pickup,
+  order,
+  pickup
 });
