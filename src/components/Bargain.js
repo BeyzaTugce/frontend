@@ -29,12 +29,12 @@ const Bargain = (props) => {
     let lastOffer = 0;
     //const { loading } = props.loading;
 
-    useEffect(() => {
-      //console.log(offersArray);
-      props.getOfferHistory(paramsId);
+    // useEffect(() => {
+    //   //console.log(offersArray);
+    //   props.getOfferHistory(paramsId);
       
-      //lastOffer = offers.offerHistory[offers.offerHistory.length - 1];
-    }, [props.loading]);
+    //   //lastOffer = offers.offerHistory[offers.offerHistory.length - 1];
+    // }, [props.loading]);
 
 
     const handleOnClick = e => {
@@ -48,7 +48,7 @@ const Bargain = (props) => {
           buyerUserName: "bbb"
         };
       // Add item via addItem action
-      props.makeOffer(newOffer);
+      props.makeOffer(paramsId, newOffer);
       //setThisOfferHistory(...thisOfferHistory, enterOffer.price)
       // Close modal
       handleToggle();
@@ -56,8 +56,9 @@ const Bargain = (props) => {
     };
 
     const handleCancelClick = e => {
-        props.withdrawOffer();
-        history.push('/garage');
+      e.preventDefault();
+      props.withdrawOffer(paramsId);
+      history.push('/garage');
     }
 
     return (

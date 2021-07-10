@@ -15,8 +15,7 @@ export const getOfferHistory = id => dispatch => {
           })) 
 };
 
-export const makeOffer = (offer) => dispatch => {
-    let id = 27;
+export const makeOffer = (id, offer) => dispatch => {
     axios
         .post(`${baseURL}/${id}`, offer)
         .then(res => 
@@ -26,12 +25,14 @@ export const makeOffer = (offer) => dispatch => {
           }))
 };
 
-export const withdrawOffer = () => {
-  return {
-    type: "WITHDRAW_OFFER",
-    // we need to send payload to reducer. (reducer needs that information to take care of WITHDRAW_OFFER operation)
-    //payload: id,
-  };
+export const withdrawOffer = id => dispatch => {
+    axios
+        .delete(`${baseURL}/${id}`)
+        .then(res =>
+          dispatch({
+            type: "WITHDRAW_OFFER",
+            payload: res.id
+          }))
 };
 
 export const setOffersLoading = () => {
