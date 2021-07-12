@@ -7,18 +7,21 @@ import GarageItem from "./GarageItem";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect, useSelector } from "react-redux";
+import user from "../redux/reducers/userReducer";
 
 const OrderDetails = (props) => {
     const [sellerName, setSellerName] = React.useState(" ");
     const [status, setStatus] = React.useState("New");
     const [orderDate, setOrderDate] = React.useState(" ");
     const [method, setMethod] = React.useState("Delivery");
-    const [date, setDate] = React.useState("Not specified");
-    const [address, setAddress] = React.useState("Not specified");
+    const [shipDate, setShipDate] = React.useState("Not specified");
+    const [pickUpDate, setPickUpDate] = React.useState("Not specified");
+    const [pickUpAddress, setPickUpAddress] = React.useState("Not specified");
+    const [shipAddress, setShipAddress] = React.useState("Not specified");
     const [paymentMethod, setPaymentMethod] = React.useState("Not specified");
     const [totalwoTax, setTotalwoTax] = React.useState(0);
     const [tax, setTax] = React.useState(0);
-    //const [items, setItems] = React.useState([]);
+    const [items, setItems] = React.useState([]);
 
     const totalPrice = () => {
         let price = totalwoTax+tax;
@@ -33,12 +36,12 @@ const OrderDetails = (props) => {
         setStatus(props.order.enum);
         setOrderDate(props.order.ordered);
         setMethod(props.order.method);
-        if (method == "Delivery"){
-            setAddress(props.order.ship_to);
-        }
-        //not sure about shipped cause what will we do if it's pick-up?
-        setDate(props.order.shipped);
+        setShipAddress(props.order.shipAddress);
+        setPickUpAddress(props.order.pickUpAddress);
+        setPickUpDate(props.order.pickUpDate);
+        setShipDate(props.order.shipDate);
         setTotalwoTax(props.order.total);
+        setTax(props.order.brokerageFee);
     }
 
     //will get the items from purchase.
@@ -46,7 +49,7 @@ const OrderDetails = (props) => {
         if (!props.items ) {
             return;
         }
-        //setGarageItems(props.purchase.items)
+        setItems(props.order.items)
     }
 
     const extractSeller = () => {
@@ -54,25 +57,14 @@ const OrderDetails = (props) => {
             return;
         }
 
-        setSellerName(props.seller.firstname)
-        if (method == "Pick-Up"){
-            setAddress(props.seller.address);
-        }
+        setSellerName(props.seller.firstname);
     }
 
     useEffect(() => {
         extractOrder();
-    }, [props.order] );
-
-    useEffect(() => {
         extractSeller();
-    }, [props.seller] );
-
-    useEffect(() => {
         extractItems();
-    }, [props.items] );
-
-    const items = [];
+    }, [props.order, props.seller, props.items] );
 
     const renderedList = items.map((garageItem) => {
         return (
@@ -110,8 +102,16 @@ const OrderDetails = (props) => {
                               <div className="address">{method} Address: </div>
                           </div>
                           <div className="delivery-pickup-values">
-                              <div className="date">{date}</div>
-                              <div className="address text-wrap">{address}</div>
+                              <div className="date">
+                                  {method === "Delivery" ?
+                                      <div>{shipDate}</div> :
+                                      <div>{pickUpDate}</div>
+                                  }</div>
+                              <div className="address text-wrap">
+                                  {method === "Delivery" ?
+                                      <div>{shipAddress}</div> :
+                                      <div>{pickUpAddress}</div>
+                                  }</div>
                           </div>
                       </div>
                       <div className="payment-details d-flex justify-content-start w-50">
@@ -123,9 +123,9 @@ const OrderDetails = (props) => {
                           </div>
                           <div className="payment-detail-values">
                               <div className="payment-method">{paymentMethod}</div>
-                              <div className="price-before-tax">{totalwoTax}</div>
-                              <div className="tax">{tax}</div>
-                              <div className="total-price">{totalPrice()}</div>
+                              <div className="price-before-tax">€{totalwoTax}</div>
+                              <div className="tax">€{tax}</div>
+                              <div className="total-price">€{totalPrice()}</div>
                           </div>
                       </div>
                   </div>
@@ -148,7 +148,7 @@ OrderDetails.propTypes = {
     order: PropTypes.object,
     seller: PropTypes.object,
     user: PropTypes.object,
-    //items: PropTypes.object,
+    items: PropTypes.object,
 };
 
 export default withRouter(OrderDetails);

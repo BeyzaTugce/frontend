@@ -8,7 +8,7 @@ function OrderDetailsView(props) {
 
     const order = useSelector((state) => state.order);
     const user = useSelector((state) => state.user);
-    //const items = useSelector((state) => state.items);
+    const items = useSelector((state) => state.items);
 
     useEffect(() => {
         let orderId = match.params.id;
@@ -21,7 +21,6 @@ function OrderDetailsView(props) {
 
     return (
         <OrderDetails
-            //TODO: Solve the problem here!!
             order={order.order}
             user={user.user}
             seller= {order.seller}
