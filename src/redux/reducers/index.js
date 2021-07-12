@@ -6,6 +6,7 @@ import items from "./itemReducer";
 import offer from "./offerReducer";
 import pickup from "./pickupReducer";
 import order from "./orderReducer";
+import auth from "./authReducer";
 
 export default combineReducers({
   user,
@@ -14,5 +15,6 @@ export default combineReducers({
   items,
   offer,
   order,
-  pickup
+  pickup,
+  auth
 });

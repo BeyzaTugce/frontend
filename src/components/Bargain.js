@@ -101,7 +101,7 @@ const Bargain = (props) => {
                 }}
                 axis="x"
                 x={enterOffer.price}
-                xmin={offersArray && offersArray[offersArray.length-1]}
+                xmin={offersArray && (offersArray[offersArray.length-1]+1)}
                 xmax={100}
                 onChange={({ x }) => setEnterOffer(offer => ({ ...offer, price: x }))}
                 />

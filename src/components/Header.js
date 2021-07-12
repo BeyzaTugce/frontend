@@ -127,10 +127,10 @@ const Header = (props) => {
 };
 
 // attributes of props and their type
-Header.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  anchor: PropTypes.element,
-  open: PropTypes.bool.isRequired,
-};
+// Header.propTypes = {
+//   //onClose: PropTypes.func.isRequired,
+//   anchor: PropTypes.element,
+//   open: PropTypes.bool.isRequired,
+// };
 
 export default connect()(withRouter(Header));
