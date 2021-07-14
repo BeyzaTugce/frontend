@@ -65,6 +65,8 @@ const Garage = (props) => {
         info={garageItem.info}
         tags={garageItem.tags}
         price={garageItem.price}
+        button1Name={"Buy"}
+        button2Name={"Bargain"}
         //image={garageItem.image}
       />
     );

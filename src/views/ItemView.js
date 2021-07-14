@@ -221,6 +221,8 @@ function ItemView(props) {
                   price={item.price}
                   tags={item.tags}
                   onRemove={onRemove}
+                  button1Name={"Edit"}
+                  button2Name={"Remove"}
               />
             );
           })}

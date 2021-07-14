@@ -1,10 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form, FormCheck, Image, ListGroupItem } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 
 const GarageItem = (props) => {
   // const items = useSelector((state) => state.items);
+  const [button1Name, setButton1Name] = useState("");
+  const [button2Name, setButton2Name] = useState("");
+  useEffect(() => {
+    setButton1Name(button1Name)
+    setButton2Name(button2Name)
+}, [] );
 
   return (
     <ListGroupItem
@@ -30,9 +36,6 @@ const GarageItem = (props) => {
           {" "}
           {props.name}{" "}
         </div>
-        <div className="item-price" type="price" fullWidth required>
-          {props.price} €
-        </div>
         <div
           className="item-tags text-black-50"
           style={{ fontSize: 14 }}
@@ -47,12 +50,13 @@ const GarageItem = (props) => {
         </div>
       </div>
       <div className="justify-content-end d-inline-flex align-items-center justify-content-end">
+      <div className="item-price" style={{marginRight:15}}>€{props.price}</div>
         <Button
           className="btn border-0"
           variant="dark"
           style={{ backgroundColor: "#85A582", width: 80, marginRight: 10 }}
         >
-          Edit
+          {props.button1Name}
         </Button>
         <Button
           className="btn border-0"
@@ -60,7 +64,7 @@ const GarageItem = (props) => {
           style={{ backgroundColor: "#85A582", width: 80 }}
           onClick={props.onRemove}
         >
-          Remove
+          {props.button2Name}
         </Button>
       </div>
     </ListGroupItem>
@@ -69,7 +73,7 @@ const GarageItem = (props) => {
 
 GarageItem.propTypes = {
   item: PropTypes.object,
-  new: PropTypes.bool,
+  new: PropTypes.bool
 };
 
 export default GarageItem;
