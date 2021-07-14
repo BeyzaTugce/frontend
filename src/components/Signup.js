@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Jumbotron, Form, Button } from "react-bootstrap";
-
+import { connect } from 'react-redux';
+import { registerNew } from "../redux/actions/AuthActions";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 import { Typography, FormControlLabel, Checkbox } from "@material-ui/core";
@@ -31,10 +32,13 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(1),
   },
 }));
-const Signup = (props) => {
+const Signup = ({
+  isAuthenticated,
+  registerNew
+}) => {
   const history = useHistory();
   const classes = useStyles();
-  const registeredDate = new Date();
+  //const registeredDate = new Date();
   const [username, setUsername] = React.useState("");
   const [firstname, setFirstname] = React.useState("");
   const [surname, setSurname] = React.useState("");
@@ -58,9 +62,14 @@ const Signup = (props) => {
     else setDisabled(true);
   }, [password, confirmPassword]);
 
+  const onCancel = () => {
+    history.push("/");
+  };
+
   const onRegister = (e) => {
     e.preventDefault();
-    props.onRegister(
+    // Create user object
+    const user = {
       email,
       username,
       firstname,
@@ -68,15 +77,23 @@ const Signup = (props) => {
       password,
       phone,
       birthdate,
-      registeredDate,
+      //registeredDate,
       gender,
       district,
       postcode,
       city,
       correspondenceAddress
-    );
-    history.push("/");
+    };
+
+    // Attempt to register
+    registerNew(user);
   };
+
+  useEffect(() => {
+    if(isAuthenticated) {
+      history.push("/garage")
+    }
+  }, [isAuthenticated])
 
   const onChangeUsername = (e) => {
     setUsername(e.target.value);
@@ -351,7 +368,7 @@ const Signup = (props) => {
                 >
                   <Button
                     className={classes.signUpButton}
-                    onClick={props.onCancel}
+                    onClick={onCancel}
                   >
                     Cancel
                   </Button>
@@ -380,4 +397,10 @@ const Signup = (props) => {
     </div>
   );
 };
-export default Signup;
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { registerNew })(
+  Signup
+);

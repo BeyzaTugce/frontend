@@ -11,54 +11,54 @@ import { register } from "../redux/actions/UserActions";
  * @param {props} props
  */
 function SignUpView(props) {
-  const user = useSelector((state) => state.user);
+  // const user = useSelector((state) => state.user);
 
-  useEffect(() => {
-    if (user.user) {
-      props.history.push("/");
-    }
-  }, [user, props.history]);
+  // // useEffect(() => {
+  // //   if (user.user) {
+  // //     props.history.push("/");
+  // //   }
+  // // }, [user, props.history]);
 
-  const onRegister = (
-    email,
-    username,
-    firstname,
-    surname,
-    password,
-    phone,
-    birthdate,
-    registeredDate,
-    gender,
-    district,
-    postcode,
-    city,
-    correspondenceAddress
-  ) => {
-    props.dispatch(
-      register(
-        email,
-        username,
-        firstname,
-        surname,
-        password,
-        phone,
-        birthdate,
-        registeredDate,
-        gender,
-        district,
-        postcode,
-        city,
-        correspondenceAddress
-      )
-    );
-  };
+  // const onRegister = (
+  //   email,
+  //   username,
+  //   firstname,
+  //   surname,
+  //   password,
+  //   phone,
+  //   birthdate,
+  //   registeredDate,
+  //   gender,
+  //   district,
+  //   postcode,
+  //   city,
+  //   correspondenceAddress
+  // ) => {
+  //   props.dispatch(
+  //     register(
+  //       email,
+  //       username,
+  //       firstname,
+  //       surname,
+  //       password,
+  //       phone,
+  //       birthdate,
+  //       registeredDate,
+  //       gender,
+  //       district,
+  //       postcode,
+  //       city,
+  //       correspondenceAddress
+  //     )
+  //   );
+  // };
 
-  const onCancel = () => {
-    props.history.push("/");
-  };
+  // const onCancel = () => {
+  //   props.history.push("/");
+  // };
 
   return (
-    <SignUpComponent user={user} onRegister={onRegister} onCancel={onCancel} />
+    <SignUpComponent/>
   );
 }
 

@@ -12,11 +12,8 @@ import { Provider } from "react-redux";
 const App = () => {
   //const dispact = useDispatch();
   useEffect(() => {
-    store.dispatch(loadUser());
-  }, []);
-  // set document title
-  useEffect(() => {
     document.title = "MyGarage";
+    store.dispatch(loadUser());
   }, []);
 
   // create store for redux
@@ -32,8 +29,8 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <Router>
-        <div className="wrapper">
+      <div className="wrapper">
+        <Router>
           <React.Fragment>
             <Header />
             <Switch>
@@ -42,8 +39,8 @@ const App = () => {
               ))}
             </Switch>
           </React.Fragment>
-        </div>
-      </Router>
+        </Router>
+      </div>
     </Provider>
   );
 };

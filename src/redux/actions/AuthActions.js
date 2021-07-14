@@ -5,17 +5,106 @@ const baseURL = "http://localhost:4000/auth"
 export const loadUser = () => (dispatch, getState) => {
     dispatch({ type: "USER_LOADING" });
 
-    axios.get(`${baseURL}/user`, tokenConfig(getState))
-        .then(res => dispatch({
-            type: "USER_LOADED",
-            payload: res.data
-        }))
-        .catch(err => {
-            dispatch({
-                type: "AUTH_ERROR"
-            });
+    axios
+      .get(`${baseURL}/user`, tokenConfig(getState))
+      .then(res => dispatch({
+          type: "USER_LOADED",
+          payload: res.data
         })
+      )
+      .catch(() => {
+          dispatch({
+          type: "AUTH_ERROR"
+          });
+      })
 }
+
+// Register User
+export const registerNew = ({   
+    email,
+    username,
+    firstname,
+    surname,
+    password,
+    phone,
+    birthdate,
+    //registeredDate,
+    gender,
+    district,
+    postcode,
+    city,
+    correspondenceAddress }) => (dispatch) => {
+    // Headers
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+  
+    // Request body
+    const body = JSON.stringify({   
+        email,
+        username,
+        firstname,
+        surname,
+        password,
+        phone,
+        birthdate,
+        //registeredDate,
+        gender,
+        district,
+        postcode,
+        city,
+        correspondenceAddress });
+  
+    axios
+      .post(`${baseURL}/register`, body, config)
+      .then(res =>
+        dispatch({
+          type: "REGISTER_SUCCESS",
+          payload: res.data
+        })
+      )
+      .catch(() => {
+        dispatch({
+          type: "REGISTER_FAIL"
+        });
+      });
+};
+
+// Login User
+export const loginNew = ({ email, password }) => (dispatch) => {
+  // Headers
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  // Request body
+  const body = JSON.stringify({ email, password });
+
+  axios
+    .post(`${baseURL}/login`, body, config)
+    .then(res =>
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: res.data
+      })
+    )
+    .catch(() => {
+      dispatch({
+        type: "LOGIN_FAIL"
+      });
+    });
+};
+
+// Logout User
+export const logoutNew = () => {
+  return {
+    type: "LOGOUT_SUCCESS"
+  };
+};
 
 export const tokenConfig = getState => {
     const token = getState().auth.token;
@@ -31,3 +120,6 @@ export const tokenConfig = getState => {
 
     return config;
 };
+
+
+  

@@ -1,21 +1,26 @@
 import React, { useEffect } from "react";
 import { Container, Row, Col, Jumbotron, Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import { connect } from 'react-redux';
+import { loginNew } from "../redux/actions/AuthActions";
 
-const Login = (props) => {
+const Login = ({
+  isAuthenticated,
+  loginNew
+}) => {
   const [username, setUsername] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [loginError, setLoginError] = React.useState("");
   const history = useHistory();
 
-  useEffect(() => {
-    if (props.user.error) {
-      setLoginError(props.user.error);
-    } else {
-      setLoginError("");
-    }
-  }, [props.user]);
+  // useEffect(() => {
+  //   if (props.user.error) {
+  //     setLoginError(props.user.error);
+  //   } else {
+  //     setLoginError("");
+  //   }
+  // }, [props.user]);
 
   const handleSignupClick = () => {
     history.push("/signup");
@@ -23,8 +28,17 @@ const Login = (props) => {
 
   const onLogin = (e) => {
     e.preventDefault();
-    props.onLogin(email, password);
+    const user = { email, password };
+
+    // Attempt to login
+    loginNew(user);
   };
+
+  useEffect(() => {
+    if(isAuthenticated) {
+      history.push("/garage")
+    }
+  }, [isAuthenticated])
 
   const onChangeEmail = (e) => {
     setEmail(e.target.value);
@@ -106,4 +120,10 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { loginNew })(
+  Login
+);

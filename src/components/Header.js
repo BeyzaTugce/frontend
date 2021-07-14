@@ -16,7 +16,8 @@ import { Cart3, House, PersonCircle, Search } from "react-bootstrap-icons";
 import "./Header.css";
 import { connect, useSelector } from "react-redux";
 import logo from "../views/logo.png";
-import { logout } from "../redux/actions";
+import { logoutNew } from "../redux/actions/AuthActions";
+import store from '../redux/store';
 import {getGarageByUser} from "../redux/actions/GarageActions"
 import CategoryBar from "./CategoryBar";
 
@@ -34,10 +35,10 @@ import CategoryBar from "./CategoryBar";
  * Navigation bar of the app
  * @param {props} props
  */
-const Header = (props) => {
+const Header = ({ auth }) => {
   //const classes = useStyles();
   //const [menuAnchor, setMenuAnchor] = React.useState(null);
-  const user = useSelector((state) => state.user);
+  const { isAuthenticated, user } = auth;
 
 
   const history = useHistory();
@@ -46,18 +47,17 @@ const Header = (props) => {
     // close this menu
     // props.onClose();
     // navigate to the login page
-    props.history.push("/login");
+    history.push("/login");
   };
 
   const onClickLogout = () => {
     // trigger redux logout action
-    props.dispatch(logout());
+    store.dispatch(logoutNew());
     // close this menu
     // props.onClose();
     // navigate to the home page
-    props.history.push("/");
+    history.push("/");
   };
-
 
   //TODO: Change the logo to .svg
   //TODO: Find a better icon for Garage
@@ -97,10 +97,18 @@ const Header = (props) => {
           </Form>
         </Nav>
         <Nav className="justify-content-end">
+          {isAuthenticated ? (
+              <Nav.Link>
+                <span className="navbar-text mr-3">
+                  <strong>{user ? `Welcome ${user.username}` : ''}</strong>
+                </span>
+              </Nav.Link>
+          ) : ("")
+          }
           <Nav.Link href="#cart">
             <Cart3 size={28} />
           </Nav.Link>
-          {user.user == null ? (
+          {!isAuthenticated ? (
               <Nav.Link href="/yourgarage">
                 <House size={28} />
               </Nav.Link>
@@ -112,7 +120,7 @@ const Header = (props) => {
           }
 
           <NavDropdown alignRight title={<PersonCircle size={28} />}>
-          {user.user == null ? (
+          {!isAuthenticated ? (
                   <div>
                    <NavDropdown.Item onClick={onClickLogin}>Login</NavDropdown.Item>
                   </div>
@@ -126,11 +134,14 @@ const Header = (props) => {
   );
 };
 
-// attributes of props and their type
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+// //attributes of props and their type
 // Header.propTypes = {
 //   //onClose: PropTypes.func.isRequired,
-//   anchor: PropTypes.element,
-//   open: PropTypes.bool.isRequired,
+//   auth: PropTypes.object.isRequired
 // };
 
-export default connect()(withRouter(Header));
+export default connect(mapStateToProps, null)(withRouter(Header));
