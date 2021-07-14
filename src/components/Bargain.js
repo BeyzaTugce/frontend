@@ -129,14 +129,18 @@ const Bargain = (props) => {
           <TransitionGroup className="offers">
             {offers.offerHistory && offers.offerHistory.map((price, index) => (
               <CSSTransition key={index} timeout={1000} classNames="fade">
-                {turn ? (
-                  <Button variant="success" className="btn btn-warning btn-circle btn-xl mt-4 mb-3" block>
-                    {price}
-                  </Button>
+                {(index%2) ? (
+                    <div className="d-inline-flex w-100 justify-content-end">
+                        <Button variant="success" className="btn float-right" style={{width:250}} block>
+                            {price}
+                        </Button>
+                    </div>
                 ) : (
-                  <Button variant="dark" className="btn btn-warning btn-circle btn-xl mt-4 mb-3" block>
-                    {price}
-                  </Button>
+                    <div className="d-inline-flex w-100 justify-content-start">
+                        <Button variant="dark" className="btn" style={{width:250}} block>
+                            {price}
+                        </Button>
+                    </div>
                 )}
               </CSSTransition>
             ))}
