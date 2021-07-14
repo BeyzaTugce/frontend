@@ -15,7 +15,7 @@ import {addGarage} from "../redux/actions";
 
 const GarageCreation = (props) => {
   const history = useHistory();
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.auth.user);
 
   //const [dateCreated, setDateCreated] = useState("");
   const [isPromoted, setIsPromoted] = useState(false);
@@ -46,7 +46,7 @@ const GarageCreation = (props) => {
       ...props.garage,
     };
 
-    back.user = user.user._id;
+    back.user = user._id;
    // back.dateCreated = dateCreated;
    // back.isPromoted = isPromoted;
     back.discount = discount;
