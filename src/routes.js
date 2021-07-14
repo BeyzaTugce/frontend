@@ -10,6 +10,7 @@ import ItemView from "./views/ItemView";
 import BargainView from "./views/BargainView";
 import VisitorView from "./views/VisitorView";
 import OrderDetailsView from "./views/OrderDetailsView";
+import Search from "./components/Search";
 
 // routes within the movie database example app
 // used for routing
@@ -56,6 +57,10 @@ const routes = [
     path: "/order/:id",
     component: OrderDetailsView,
   },
+  {
+    path: "/search",
+    component: Search,
+  }
  /* {
     path: "/item",
     component: ItemView,
