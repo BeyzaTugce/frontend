@@ -26,8 +26,6 @@ import { useHistory } from "react-router-dom";
 
 //import ItemComponent from "../components/ItemCreation";
 import {addItem, deleteItem, getItem} from "../redux/actions/ItemActions";
-import GarageService from "../services/GarageService";
-import garage from "../redux/reducers/garageReducer";
 
 /**
  * For register new users
@@ -35,11 +33,10 @@ import garage from "../redux/reducers/garageReducer";
  */
 
 function ItemView(props) {
-  const user = useSelector((state) => state.user);
   const history = useHistory();
   const [itemList, setItemList] = useState([]);
 
-  const [itemGarage, setItemGarage] = React.useState("");
+  //const [itemGarage, setItemGarage] = React.useState(ObjectId);
   const [itemTitle, setItemTitle] = React.useState("");
   const [itemInfo, setItemInfo] = React.useState("");
   const [itemTags, setItemTags] = React.useState([]);
@@ -51,7 +48,7 @@ function ItemView(props) {
       return;
     }
 
-    //setItemGarage(props.item.itemGarage);
+    //setItemGarage(props.item.garageId);
     setItemTitle(props.item.itemTitle);
     setItemInfo(props.item.itemInfo);
     setItemTags(props.item.itemTags);
@@ -224,8 +221,6 @@ function ItemView(props) {
                   price={item.price}
                   tags={item.tags}
                   onRemove={onRemove}
-                  //garage={props.garage}
-                  //user={props.user}
               />
             );
           })}

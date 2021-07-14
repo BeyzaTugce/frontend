@@ -18,25 +18,25 @@ export default class AuthService {
     district,
     postcode,
     city,
-    correspondenceAddress
+    correspondenceAddress,
   ) {
     return new Promise((resolve, reject) => {
       HttpService.post(
         `${AuthService.baseURL()}/register`,
         {
-          email: email,
-          username: username,
-          firstname: firstname,
-          surname: surname,
-          password: password,
-          phone: phone,
-          birthdate: birthdate,
-          registeredDate: registeredDate,
-          gender: gender,
-          district : district,
-          postcode : postcode,
-          city: city,
-          correspondenceAddress: correspondenceAddress,
+            email: email,
+            username: username,
+            firstname: firstname,
+            surname: surname,
+            password: password,
+            phone: phone,
+            birthdate: birthdate,
+            registeredDate: registeredDate,
+            gender: gender,
+            district : district,
+            postcode : postcode,
+            city: city,
+            correspondenceAddress: correspondenceAddress,
         },
         function (data) {
           resolve(data);

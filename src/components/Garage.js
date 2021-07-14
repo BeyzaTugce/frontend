@@ -10,14 +10,13 @@ import "./Garage.css";
 import GarageItem from "./GarageItem";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
-import { connect, useSelector } from "react-redux";
 const Garage = (props) => {
+
   const [userName, setUserName] = React.useState("");
   const [postcode, setPostcode] = React.useState("");
   const [district, setDistrict] = React.useState("");
   const [city, setCity] = React.useState("");
   const [garageEndDate, setGarageEndDate] = React.useState("");
-
   const [garageItems, setGarageItems] = React.useState([]);
 
 
@@ -66,7 +65,7 @@ const Garage = (props) => {
         info={garageItem.info}
         tags={garageItem.tags}
         price={garageItem.price}
-        image={garageItem.image}
+        //image={garageItem.image}
       />
     );
   });

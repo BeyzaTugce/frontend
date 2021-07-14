@@ -30,6 +30,9 @@ const GarageItem = (props) => {
           {" "}
           {props.name}{" "}
         </div>
+        <div className="item-price" type="price" fullWidth required>
+          {props.price} €
+        </div>
         <div
           className="item-tags text-black-50"
           style={{ fontSize: 14 }}

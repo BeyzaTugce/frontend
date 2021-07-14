@@ -1,5 +1,4 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, {useEffect} from "react";
 import { withRouter } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import {
@@ -18,7 +17,7 @@ import { connect, useSelector } from "react-redux";
 import logo from "../views/logo.png";
 import { logoutNew } from "../redux/actions/AuthActions";
 import store from '../redux/store';
-import {getGarageByUser} from "../redux/actions/GarageActions"
+import {getGarages} from "../redux/actions/GarageActions"
 import CategoryBar from "./CategoryBar";
 
 /*const useStyles = makeStyles((theme) => ({
@@ -35,13 +34,35 @@ import CategoryBar from "./CategoryBar";
  * Navigation bar of the app
  * @param {props} props
  */
-const Header = ({ auth }) => {
+const Header = ({ auth }, props) => {
   //const classes = useStyles();
   //const [menuAnchor, setMenuAnchor] = React.useState(null);
   const { isAuthenticated, user } = auth;
-
+  const garage = useSelector((state) => state.garage);
+  const [allGarages, setAllGarages] = React.useState([]);
 
   const history = useHistory();
+
+  useEffect(() => {
+    store.dispatch(getGarages());
+    setAllGarages(garage.garages);
+    //console.log(allGarages);
+  }, [garage.garages] );
+
+  //g.user == user.user._id
+
+  //console.log(allGarages);
+  //const mygarage = allGarages.filter(obj => obj.user == user.user._id);
+  /*for(let obj in JSON.stringify(allGarages)) {
+    console.log(obj);
+  }*/
+
+  //console.log("user:"+user.user._id);
+  //console.log("garages:"+garages.garages);
+  getGarages();
+  //garages.garages.filter(garage => garage.user.user._id != user.user._id);
+
+
 
   const onClickLogin = () => {
     // close this menu

@@ -17,28 +17,20 @@ import GarageCreation from "../components/GarageCreation";
  */
 function GarageCreationView(props) {
   const garage = useSelector((state) => state.garage);
-  const items = useSelector((state) => state.items);
-  const user = useSelector((state) => state.user);
-  //const selectedItem = useSelector((state) => state.item);
-
-  // state variable of this functional component
   const [newItem, setNewItem] = React.useState(false);
 
- // document.write(user.user.district);
 
   useEffect(() => {
     if (garage.garage) {
       props.history.push("/");
     }
-  }, [garage, props.history]);
+  }, [props.history]);
 
 
-  
-  // creating a object with all relevant data to update or create a changed garage
-  
   const onCreate = (garage) => {
     props.dispatch(addGarage(garage));
   };
+
 
   const onClickDisplayMyGarage = (id) => {
     props.history.push("/"+id);
@@ -61,8 +53,6 @@ function GarageCreationView(props) {
     const onRemoveItem = (item) => {
         props.dispatch(deleteItem(item));
     }*/
-
-  console.log(garage.garage);
 
   return (
       <GarageCreationComponent

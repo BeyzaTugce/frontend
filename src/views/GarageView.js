@@ -7,11 +7,7 @@ function GarageView(props) {
   let {match, getGarage, getSeller, getItems} = props;
 
   const garage = useSelector((state) => state.garage);
-
   const user = useSelector((state) => state.user);
-
-  //const items = useSelector((state) => state.items);
-
 
   useEffect(() => {
     let garageId = match.params.id;

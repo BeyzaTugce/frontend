@@ -5,9 +5,6 @@ export default class GarageService {
   static baseURL() {
     return "http://localhost:4000/garage";
   }
-  static baseURLItem() {
-    return "http://localhost:4000/item";
-  }
 
   static getGarages() {
     return new Promise(async (resolve, reject) => {
@@ -125,7 +122,7 @@ export default class GarageService {
   static readGarageByUser(userId) {
     return new Promise((resolve, reject) => {
       HttpService.get(
-          `${GarageService.baseURL()}/${userId}`,
+          `${GarageService.baseURL()}/user/${userId}`,
           function (data) {
             resolve(data);
           },

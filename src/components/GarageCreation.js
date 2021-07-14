@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Button, FormCheck, FormGroup, FormLabel, ListGroup, Alert} from "react-bootstrap";
 import { Clock, PlusLg } from "react-bootstrap-icons";
@@ -16,6 +16,7 @@ import {addGarage} from "../redux/actions";
 const GarageCreation = (props) => {
   const history = useHistory();
   const user = useSelector((state) => state.user);
+
   //const [dateCreated, setDateCreated] = useState("");
   const [isPromoted, setIsPromoted] = useState(false);
   const [discount, setDiscount] = useState(false);
@@ -23,16 +24,6 @@ const GarageCreation = (props) => {
   const [shipment, setShipment] = useState(false);
   const [pickup, setPickup] = useState(false);
   const [disabled, setDisabled] = useState(false);
-
-  const [garageId, setGarageId] = useState("");
-
-
-  React.useEffect(() => {
-    if (shipment || pickup) 
-      setDisabled(false);
-    else 
-      setDisabled(true);
-  }, [shipment, pickup]);
 
 
   // for extracting the attributes of the given garage to the appropriate state variables
@@ -62,10 +53,21 @@ const GarageCreation = (props) => {
     back.bargain = bargain;
     back.pickup = pickup;
     back.shipment = shipment;
-    //back.items = items;
 
     return back;
   };
+
+  useEffect(() => {
+    extractGarage();
+  }, [props.garage] );
+
+  useEffect(() => {
+    if (shipment || pickup)
+      setDisabled(false);
+    else
+      setDisabled(true);
+  }, [shipment, pickup]);
+
 
   // indicates whether the garage can be changed
   const [editMode, setEditMode] = React.useState(null);
@@ -95,11 +97,6 @@ const GarageCreation = (props) => {
       props.onCreate(packGarage());
   }
 
-  const onClickDisplayMyGarage = (e) => {
-    e.preventDefault();
-    //props.onClickDisplayMyGarage(props.garage.id);
-  }
-
 
   const getDate = (today) => {
     let day = new Date();
@@ -114,7 +111,6 @@ const GarageCreation = (props) => {
   return (
     <div>
       <h1 className="myGarage text-center">My Garage</h1>
-      <Button onClick={onClickDisplayMyGarage}>Go To MyGarage</Button>
       <div className="w-100" style={{ paddingInline: 50 }}>
         <div className="d-flex justify-content-between">
           <div className="d-inline-block">
@@ -187,10 +183,8 @@ const GarageCreation = (props) => {
         {disabled ? 
           <Alert className="mb-5 mt-5" variant="danger">
             <Alert.Heading>Please select at least one delivery option to create your garage!</Alert.Heading>
-          </Alert>
-        :<p></p>
+          </Alert> : <p></p>
         }
-
         {disabled ?
         <Button
             className="d-flex align-content-end"
@@ -218,6 +212,7 @@ const GarageCreation = (props) => {
 GarageCreation.propTypes = {
   //onCreate: PropTypes.func.isRequired,
   newItem: PropTypes.object,
+  garage: PropTypes.object,
 };
 
 export default GarageCreation;

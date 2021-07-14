@@ -41,7 +41,7 @@ export function register(
   district,
   postcode,
   city,
-  correspondenceAddress
+  correspondenceAddress,
 ) {
   function onSuccess(user) {
     return { type: "LOGIN_SUCCESS", user: user };
@@ -53,19 +53,19 @@ export function register(
   return async (dispatch) => {
     try {
       let resp = await AuthService.register(
-        email,
-        username,
-        firstname,
-        surname,
-        password,
-        phone,
-        birthdate,
-        registeredDate,
-        gender,
-        district,
-        postcode,
-        city,
-        correspondenceAddress
+          email,
+          username,
+          firstname,
+          surname,
+          password,
+          phone,
+          birthdate,
+          registeredDate,
+          gender,
+          district,
+          postcode,
+          city,
+          correspondenceAddress,
       );
       dispatch(onSuccess(resp.user));
     } catch (e) {
