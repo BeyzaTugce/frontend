@@ -23,7 +23,8 @@ const Bargain = (props) => {
     const paramsId = props.match.params.id
     const history = useHistory();
     const { offers } = props.offer;
-    let offersArray = offers.offerHistory;
+    let offersArray = offers?.offerHistory;
+
     //const { loading } = props.loading;
 
     // useEffect(() => {
@@ -101,7 +102,7 @@ const Bargain = (props) => {
                 }}
                 axis="x"
                 x={enterOffer.price}
-                xmin={offersArray && (offersArray[offersArray.length-1]+1)}
+                xmin={(offersArray && (offersArray[offersArray.length-1]+1)) || 10}
                 xmax={100}
                 onChange={({ x }) => setEnterOffer(offer => ({ ...offer, price: x }))}
                 />
@@ -127,7 +128,7 @@ const Bargain = (props) => {
         </Button>
         <ListGroup>
           <TransitionGroup className="offers">
-            {offers.offerHistory && offers.offerHistory.map((price, index) => (
+            {offers?.offerHistory?.map((price, index) => (
               <CSSTransition key={index} timeout={1000} classNames="fade">
                 {(index%2) ? (
                     <div className="d-inline-flex w-100 justify-content-end">
