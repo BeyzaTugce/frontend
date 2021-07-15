@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
 import {
   Button,
-  FormCheck,
   Image,
   ListGroup,
-  ListGroupItem,
 } from "react-bootstrap";
 import "./Garage.css";
 import GarageItem from "./GarageItem";
@@ -55,7 +53,7 @@ const Garage = (props) => {
 
   useEffect(() => {
     extractItems();
-  }, [props.items] );
+  }, [props.items.items] );
 
 
   const renderedList = garageItems.map((garageItem) => {

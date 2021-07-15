@@ -6,10 +6,11 @@ import GarageCreationComponent from "../components/GarageCreation";
 import {
   addGarage,
   changeGarage,
-  deleteGarage,
+  deleteGarage, getGarages,
 } from "../redux/actions/GarageActions";
 import PropTypes from "prop-types";
 import GarageCreation from "../components/GarageCreation";
+import store from "../redux/store";
 
 /**
  * For register new users
@@ -18,6 +19,9 @@ import GarageCreation from "../components/GarageCreation";
 function GarageCreationView(props) {
   const garage = useSelector((state) => state.garage);
   const [newItem, setNewItem] = React.useState(false);
+  const [garageCreated, setGarageCreated] = React.useState(false);
+  const [allGarages, setAllGarages] = React.useState([]);
+
 
 
   useEffect(() => {
@@ -26,15 +30,21 @@ function GarageCreationView(props) {
     }
   }, [props.history]);
 
+  useEffect(() => {
+    store.dispatch(getGarages());
+    setAllGarages(garage.garages);
+    console.log(JSON.stringify(allGarages));
+  }, [garage.garages] );
 
-  const onCreate = (garage) => {
-    props.dispatch(addGarage(garage));
+
+  const onCreate = (newGarage) => {
+    props.dispatch(addGarage(newGarage));
+    setGarageCreated(true);
+    console.log("garage view?:"+garageCreated);
+    //props.history.push("/"+garage.id);
   };
 
-
-  const onClickDisplayMyGarage = (id) => {
-    props.history.push("/"+id);
-  }
+  //console.log("garage view?:"+garage.garage.id);
 
   const onRemove = (garage) => {
     props.dispatch(deleteGarage(garage.id));
@@ -49,6 +59,8 @@ function GarageCreationView(props) {
   };
 
 
+
+
   /*
     const onRemoveItem = (item) => {
         props.dispatch(deleteItem(item));
@@ -59,8 +71,8 @@ function GarageCreationView(props) {
         newItem={newItem}
         garage={garage.garage}
         onCreate={onCreate}
-        onClickDisplayMyGarage={onClickDisplayMyGarage}
-    />
+        garageCreated={garageCreated}
+      />
   );
 }
 
@@ -70,7 +82,7 @@ GarageCreationView.propTypes = {
   onRemoveItem: PropTypes.func.isRequired,
   garage: PropTypes.object,
   newItem: PropTypes.object,
-  onClickDisplayMyGarage: PropTypes.func.isRequired,
+  garageCreated: PropTypes.bool,
 };
 
 export default connect()(withRouter(GarageCreationView));

@@ -1,17 +1,15 @@
 import React, {useEffect, useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {Button, FormCheck, FormGroup, FormLabel, ListGroup, Alert} from "react-bootstrap";
-import { Clock, PlusLg } from "react-bootstrap-icons";
+import {Button, FormGroup, FormLabel, Alert} from "react-bootstrap";
+import { Clock } from "react-bootstrap-icons";
 
 import "./GarageCreation.css";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
-import ItemCreation from "../views/ItemView";
-import GarageItem from "./GarageItem";
-import garage from "../redux/reducers/garageReducer";
+import ItemCreation from "./ItemCreation";
 import { connect, useSelector } from "react-redux";
-import {addGarage} from "../redux/actions";
-//import ItemList from "./ItemList";
+import GarageCreatedPopUp from "./GarageCreatedPopUp";
+import garage from "../redux/reducers/garageReducer";
 
 const GarageCreation = (props) => {
   const history = useHistory();
@@ -24,20 +22,25 @@ const GarageCreation = (props) => {
   const [shipment, setShipment] = useState(false);
   const [pickup, setPickup] = useState(false);
   const [disabled, setDisabled] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
+  console.log("creation comp:"+props.garageCreated);
+
+
+  const togglePopup = () => {
+    setIsOpen(!isOpen);
+  }
 
   // for extracting the attributes of the given garage to the appropriate state variables
   const extractGarage = () => {
     if (!props.garage) {
       return;
     }
-    //setDateCreated(props.garage.dateCreated);
     setIsPromoted(props.garage.isPromoted);
     setDiscount(props.garage.discount);
     setBargain(props.garage.bargain);
     setShipment(props.garage.shipment);
     setPickup(props.garage.pickup);
-    //setItems(JSON.parse(JSON.stringify(props.garage.items)));
   };
 
   // creating a object with all relevant data to update or create a changed garage
@@ -45,9 +48,7 @@ const GarageCreation = (props) => {
     let back = {
       ...props.garage,
     };
-
     back.user = user._id;
-   // back.dateCreated = dateCreated;
    // back.isPromoted = isPromoted;
     back.discount = discount;
     back.bargain = bargain;
@@ -93,8 +94,11 @@ const GarageCreation = (props) => {
   };
 
   const onCreate = (e) => {
-      e.preventDefault();
-      props.onCreate(packGarage());
+    e.preventDefault();
+    props.onCreate(packGarage());
+    console.log("user create comp:"+packGarage().user);
+
+    //togglePopup();
   }
 
 
@@ -177,6 +181,7 @@ const GarageCreation = (props) => {
           <div className="d-inline-block" style={{ width: 800 }}>
             <ItemCreation
                 garage={props.garage}
+                garageCreated={props.garageCreated}
             />
           </div>
         </div>
@@ -213,6 +218,7 @@ GarageCreation.propTypes = {
   //onCreate: PropTypes.func.isRequired,
   newItem: PropTypes.object,
   garage: PropTypes.object,
+  garageCreated: PropTypes.bool,
 };
 
 export default GarageCreation;

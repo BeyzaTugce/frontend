@@ -6,7 +6,7 @@ import SignUpView from "./views/SignUpView";
 import UserLoginView from "./views/UserLoginView";
 import DeliveryView from "./views/DeliveryView";
 import AdminSignUpView from "./views/AdminSignUpView";
-import ItemView from "./views/ItemView";
+import ItemView from "./components/ItemCreation";
 import BargainView from "./views/BargainView";
 import VisitorView from "./views/VisitorView";
 import OrderDetailsView from "./views/OrderDetailsView";

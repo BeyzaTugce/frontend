@@ -35,8 +35,6 @@ import CategoryBar from "./CategoryBar";
  * @param {props} props
  */
 const Header = ({ auth }, props) => {
-  //const classes = useStyles();
-  //const [menuAnchor, setMenuAnchor] = React.useState(null);
   const { isAuthenticated, user } = auth;
   const garage = useSelector((state) => state.garage);
   const [allGarages, setAllGarages] = React.useState([]);
@@ -46,8 +44,8 @@ const Header = ({ auth }, props) => {
   useEffect(() => {
     store.dispatch(getGarages());
     setAllGarages(garage.garages);
-    //console.log(allGarages);
-  }, [] );
+    console.log(allGarages);
+  }, [props.history] );
 
   //g.user == user.user._id
 
@@ -58,8 +56,8 @@ const Header = ({ auth }, props) => {
   }*/
 
   //console.log("user:"+user.user._id);
-  //console.log("garages:"+garages.garages);
-  getGarages();
+  //console.log("garages:"+garage.garages);
+  //getGarages();
   //garages.garages.filter(garage => garage.user.user._id != user.user._id);
 
 

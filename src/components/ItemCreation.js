@@ -20,7 +20,7 @@ import {
 } from "react-bootstrap";
 import { PlusLg } from "react-bootstrap-icons";
 import PropTypes from "prop-types";
-import GarageItem from "../components/GarageItem";
+import GarageItem from "./GarageItem";
 
 import { useHistory } from "react-router-dom";
 
@@ -32,7 +32,7 @@ import {addItem, deleteItem, getItem} from "../redux/actions/ItemActions";
  * @param {props} props
  */
 
-function ItemView(props) {
+function ItemCreation(props) {
   const history = useHistory();
   const [itemList, setItemList] = useState([]);
 
@@ -42,6 +42,7 @@ function ItemView(props) {
   const [itemTags, setItemTags] = React.useState([]);
   const [itemPrice, setItemPrice] = React.useState("");
   const [itemImage, setItemImage] = React.useState([]);
+
 
   const extractItem = () => {
     if (!props.item) {
@@ -62,6 +63,13 @@ function ItemView(props) {
       extractItem();
     }
   }, [props.user, props.item, props.new]);
+
+
+  /*useEffect(() => {
+    if (props.garageCreated){
+      packItem();
+    }
+  }, [props.garageCreated, props.item]);*/
 
   const addToList = (input) => {
     //setNewDate(input);
@@ -103,7 +111,13 @@ function ItemView(props) {
       ...props.item,
     };
 
-    //back.garageId = itemGarage;
+    if (!props.garageCreated){
+      back.garageId = null;
+    }
+    else{
+      back.garageId = props.garage.id;
+    }
+    //back.garageId = props.garage.id;
     back.name = itemTitle;
     back.price = itemPrice;
     back.tags = itemTags;
@@ -113,10 +127,19 @@ function ItemView(props) {
     return back;
   };
 
+  const onMyGarage = () => {
+    console.log("item?:"+props.garageCreated);
+    if (props.garageCreated){
+      //props.history.push("/"+props.garage.id)
+
+      props.dispatch(addItem(packItem()));
+    }
+  }
+
   const onCreate = (e) => {
     e.preventDefault();
     addToList(packItem());
-    props.dispatch(addItem(packItem()));
+    //props.history.push("/");
   };
 
   const onRemove = (e) => {
@@ -129,12 +152,17 @@ function ItemView(props) {
     props.history.push("/");
   };
 
+
+
   return (
     <div className="Item" style={{ paddingRight: 40, width: 800 }}>
       <Button className="button-rounded" onClick={onCreate} type="save" style={{marginLeft: 200}}>
         <PlusLg></PlusLg>
       </Button>
       <FormLabel className="frame">Add Item</FormLabel>
+      <Button className="button-rounded" onClick={onMyGarage} type="save" style={{marginRight: -200}}>
+        Go to My Garage!
+      </Button>
       <ListGroup>
         <ListGroupItem className="d-flex align-items-start" style={{marginLeft: 200, paddingRight:100}}>
           <TabContainer id="left-tabs-example" defaultActiveKey="info">
@@ -232,10 +260,10 @@ function ItemView(props) {
   );
 }
 
-ItemView.prototypes = {
+ItemCreation.prototypes = {
   onRemove : PropTypes.func.isRequired,
   garage: PropTypes.object,
   user: PropTypes.object,
 };
 
-export default connect()(withRouter(ItemView));
+export default connect()(withRouter(ItemCreation));
