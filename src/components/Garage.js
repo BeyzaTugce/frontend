@@ -16,6 +16,11 @@ const Garage = (props) => {
   const [city, setCity] = React.useState("");
   const [garageEndDate, setGarageEndDate] = React.useState("");
   const [garageItems, setGarageItems] = React.useState([]);
+  const [totalPrice, setTotalPrice] = React.useState(0);
+  const [numSelectedItems, setNumSelectedItems] = React.useState(0);
+  const [discount, setDiscount] = React.useState(false);
+  const [saving, setSaving] = React.useState(0);
+  const [amountToPay, setAmountToPay] = React.useState(0);
 
 
   const extractGarage = () => {
@@ -24,6 +29,7 @@ const Garage = (props) => {
     }
     //will change the date later.
     setGarageEndDate(props.garage.dateCreated)
+    setDiscount(props.garage.discount)
   }
 
   const extractSeller = () => {
@@ -53,8 +59,16 @@ const Garage = (props) => {
 
   useEffect(() => {
     extractItems();
-  }, [props.items.items] );
+  }, [props.items] );
 
+  useEffect(() => {
+    if(numSelectedItems>1 & discount){
+      setSaving(totalPrice/5);
+    } else {
+      setSaving(0);
+    }
+    setAmountToPay(totalPrice-saving);
+  }, );
 
   const renderedList = garageItems.map((garageItem) => {
     return (
@@ -66,9 +80,21 @@ const Garage = (props) => {
         button1Name={"Buy"}
         button2Name={"Bargain"}
         //image={garageItem.image}
+        onClickSelect={() =>
+         {
+           setTotalPrice(totalPrice+garageItem.price);
+           setNumSelectedItems(numSelectedItems+1);
+         }
+        }
+        onClickDeselect={() =>
+        {
+          setTotalPrice(totalPrice-garageItem.price);
+          setNumSelectedItems(numSelectedItems-1);
+        }}
       />
     );
   });
+
 
   //TODO: "Select All" button color
   //TODO: Bargain and buy buttons do not light up when clicked.
@@ -110,9 +136,9 @@ const Garage = (props) => {
                 className="price-info-text text-center"
                 style={{ marginTop: 25, marginBottom: 25 }}
             >
-              <div className="total-price-text">Total price: €60</div>
-              <div className="saving-text">Saving: €10</div>
-              <div className="amount-to-pay-text">Amount to Pay: €50</div>
+              <div className="total-price-text">Total price: €{totalPrice}</div>
+              {discount ? <div className="saving-text">Saving: €{saving}</div> : ""}
+              <div className="amount-to-pay-text">Amount to Pay: €{amountToPay}</div>
               <div className="promotional-sentence-text text-danger">
                 You can save up to 10% by choosing 1 more item!
               </div>

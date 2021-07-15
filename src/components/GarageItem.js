@@ -7,10 +7,28 @@ const GarageItem = (props) => {
   // const items = useSelector((state) => state.items);
   const [button1Name, setButton1Name] = useState("");
   const [button2Name, setButton2Name] = useState("");
+  //const [selectedItems, setSelectedItems] = useState(0);
+
   useEffect(() => {
     setButton1Name(button1Name)
     setButton2Name(button2Name)
+    /*
+    if(selectedItems>1){
+      props.onMultipleItems();
+    }
+
+     */
 }, [] );
+
+  const onCheckboxClick = (e) => {
+    if (e.target.checked) {
+      props.onClickSelect();
+      //setSelectedItems(selectedItems+1);
+    } else {
+      props.onClickDeselect();
+      //setSelectedItems(selectedItems-1);
+    }
+  };
 
   return (
     <ListGroupItem
@@ -21,6 +39,7 @@ const GarageItem = (props) => {
         type="checkbox"
         id="item-checkbox"
         style={{ marginInline: 17, marginRight: 30 }}
+        onClick={onCheckboxClick}
       />
       <div
         className="img-container d-flex align-items-center"
