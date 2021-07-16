@@ -5,12 +5,19 @@ import {
   ListGroup,
 } from "react-bootstrap";
 import "./Garage.css";
+
+import { useHistory } from "react-router-dom";
 import GarageItem from "./GarageItem";
+import { connect, useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 const Garage = (props) => {
+  const history = useHistory();
+
+  const loggedInUser = useSelector((state) => state.auth.user);
 
   const [userName, setUserName] = React.useState("");
+  const [sellerId, setSellerId] = React.useState(0);
   const [postcode, setPostcode] = React.useState("");
   const [district, setDistrict] = React.useState("");
   const [city, setCity] = React.useState("");
@@ -22,6 +29,12 @@ const Garage = (props) => {
   const [saving, setSaving] = React.useState(0);
   const [amountToPay, setAmountToPay] = React.useState(0);
 
+  const [creationDate, setCreationDate] = React.useState(new Date());
+  const [buyer, setBuyer] = React.useState("");
+  const [purchaseSeller, setPurchaseSeller] = React.useState("");
+  const [purchasedGarage, setPurchaseGarage] = React.useState("");
+  const [price, setPurchasePrice] = React.useState(0);
+
 
   const extractGarage = () => {
     if (!props.garage ) {
@@ -31,17 +44,52 @@ const Garage = (props) => {
     setGarageEndDate(props.garage.dateCreated)
     setDiscount(props.garage.discount)
   }
+  const extractPurchase = () => {
+    if (!props.purchase) {
+      return;
+    }
+    setCreationDate(props.purchase.creationDate);
+    setBuyer(props.purchase.buyer);
+    setPurchaseSeller(props.purchase.seller);
+    setPurchaseGarage(props.purchase.garageId);
+    setPurchasePrice(props.purchase.price);
+   // setPurchaseStatus(props.purchase.purchaseStatus);
+  //  setSelectedItemList(props.purchase.selectedItemList);
+  };
+
+  const packPurchase = () => {
+    let back = {
+      ...props.purchase,
+    };
+
+    back.creationDate = creationDate;
+    back.buyer = loggedInUser._id;
+    back.seller = sellerId;
+    back.garageId = "60f0a0185e5d6771ee6d97db";
+    back.price = totalPrice;
+   // back.selectedItemList = location;
+
+    return back;
+  };
+
+  const addPurchase = (e) => {
+    e.preventDefault();
+    props.onCreatePurchase(packPurchase());
+    history.push("/bargain");
+  };
 
   const extractSeller = () => {
     if (!props.seller ) {
       return;
     }
+    setSellerId(props.seller._id)
     setUserName(props.seller.firstname)
     setPostcode(props.seller.postcode)
     setDistrict(props.seller.district)
     setCity(props.seller.city)
   }
 
+ 
   const extractItems = () => {
     if (!props.items ) {
       return;
@@ -55,11 +103,19 @@ const Garage = (props) => {
 
   useEffect(() => {
     extractSeller();
+    //setPurchaseSeller(props.seller._id);
   }, [props.seller] );
 
   useEffect(() => {
     extractItems();
   }, [props.items] );
+
+  useEffect(() => {
+    if (!props.new) {
+      //extractUser();
+      extractPurchase();
+    }
+  }, [props.purchase, props.new]);
 
   useEffect(() => {
     if(numSelectedItems>1 & discount){
@@ -148,6 +204,7 @@ const Garage = (props) => {
                   className="btn border-0"
                   variant="dark"
                   style={{ backgroundColor: "#A282A5", marginRight: 8 }}
+                  onClick={addPurchase}
               >
                 Bargain for Selected Items
               </Button>
@@ -210,9 +267,11 @@ might be useful for GarageItem
 
 Garage.propTypes = {
   garage: PropTypes.object,
+  purchase: PropTypes.object,
+  onCreatePurchase: PropTypes.func.isRequired,
   seller: PropTypes.object,
-  user: PropTypes.object,
+  loggedInUser: PropTypes.object,
   items: PropTypes.object,
 };
 
-export default withRouter(Garage);
+export default connect()(withRouter(Garage));

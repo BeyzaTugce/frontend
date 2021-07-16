@@ -15,6 +15,7 @@ import {
 import { withRouter } from "react-router-dom";
 
 const Bargain = (props) => {
+  const user = useSelector((state) => state.user);
     const [show, setShow] = useState(false);
     const [enterOffer, setEnterOffer] = useState({ price: 10 });
     const handleToggle = () => {setShow(!show)};
@@ -42,8 +43,8 @@ const Bargain = (props) => {
           //id: uuid(),
           price: enterOffer.price,
           offerHistory: [...thisOfferHistory, enterOffer.price],
-          sellerUserName: "aaa",
-          buyerUserName: "bbb"
+          seller: "60e4228a88f6974fb4d1a44c",
+          buyer: user.user,
         };
       // Add item via addItem action
       props.makeOffer(paramsId, newOffer);
