@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Image,
@@ -28,19 +28,19 @@ const Garage = (props) => {
   const [discount, setDiscount] = React.useState(false);
   const [saving, setSaving] = React.useState(0);
   const [amountToPay, setAmountToPay] = React.useState(0);
-
+  const [purchaseSeller, setPurchaseSeller] = React.useState("");
+  const [purchaseGarage, setPurchaseGarage] = React.useState("");
   const [creationDate, setCreationDate] = React.useState(new Date());
   const [buyer, setBuyer] = React.useState("");
-  const [purchaseSeller, setPurchaseSeller] = React.useState("");
-  const [purchasedGarage, setPurchaseGarage] = React.useState("");
   const [price, setPurchasePrice] = React.useState(0);
-
+  const [garageId, setGarageId] = React.useState("");
 
   const extractGarage = () => {
     if (!props.garage ) {
       return;
     }
     //will change the date later.
+    setGarageId(props.garage._id)
     setGarageEndDate(props.garage.dateCreated)
     setDiscount(props.garage.discount)
   }
@@ -65,9 +65,9 @@ const Garage = (props) => {
     back.creationDate = creationDate;
     back.buyer = loggedInUser._id;
     back.seller = sellerId;
-    back.garageId = "60f0a0185e5d6771ee6d97db";
+    back.garageId = garageId;
     back.price = totalPrice;
-   // back.selectedItemList = location;
+    back.selectedItemList = selectedItemList;
 
     return back;
   };
@@ -103,7 +103,6 @@ const Garage = (props) => {
 
   useEffect(() => {
     extractSeller();
-    //setPurchaseSeller(props.seller._id);
   }, [props.seller] );
 
   useEffect(() => {
@@ -126,6 +125,21 @@ const Garage = (props) => {
     setAmountToPay(totalPrice-saving);
   }, );
 
+  const [selectedItemList, setSelectedItemList] = useState([]);
+
+  const addToSelected = (input) => {
+    if (!selectedItemList.includes(input)) {
+        setSelectedItemList([...selectedItemList, input]);
+    }
+  };
+
+  const removeFromSelected = (input) => {
+    if (selectedItemList.includes(input)) {
+        let filteredArray = selectedItemList.filter(item => item !== input)
+        setSelectedItemList(filteredArray);
+    }
+  };
+
   const renderedList = garageItems.map((garageItem) => {
     return (
       <GarageItem
@@ -140,12 +154,14 @@ const Garage = (props) => {
          {
            setTotalPrice(totalPrice+garageItem.price);
            setNumSelectedItems(numSelectedItems+1);
+           addToSelected(garageItem);
          }
         }
         onClickDeselect={() =>
         {
           setTotalPrice(totalPrice-garageItem.price);
           setNumSelectedItems(numSelectedItems-1);
+          removeFromSelected(garageItem);
         }}
       />
     );
