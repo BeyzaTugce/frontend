@@ -71,17 +71,20 @@ export default class PurchaseService {
   }
 
   static createPurchase(purchase) {
-    purchase.id = Math.floor(Math.random() * 100000000 + 1).toString();
-
+   // purchase._id = Math.floor(Math.random() * 100000000 + 1).toString();
     return new Promise((resolve, reject) => {
       HttpService.post(
         `${PurchaseService.baseURL()}`,
         purchase,
         function (data) {
-          resolve(data);
+          if (data !== undefined || Object.keys(data).length !== 0) {
+            resolve(data);
+          } else {
+            reject("Error while retrieving purchase");
+          }
         },
-        function (status) {
-          reject(status);
+        function (textStatus) {
+          reject(textStatus);
         }
       );
     });

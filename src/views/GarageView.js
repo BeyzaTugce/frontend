@@ -9,10 +9,13 @@ import { addPurchase } from "../redux/actions/PurchaseActions";
 function GarageView(props) {
   
   let {match, getGarage, getSeller, getItems ,addPurchase} = props;
-
+  const [purchaseId, setPurchaseId] = React.useState();
+  
+  const [returnPurchase, setReturnPurchase] = React.useState();
   const garage = useSelector((state) => state.garage);
   const user = useSelector((state) => state.user);
-
+  const purchase = useSelector((state) => state.purchase);
+ 
   useEffect(() => {
     let garageId = match.params.id;
     getGarage(garageId);
@@ -28,12 +31,16 @@ function GarageView(props) {
   useEffect(() => {
     let garageId = match.params.id;
     getItems(garageId);
-    //document.write(seller.seller.firstname);
+  
   }, [match.params]);
 
-  
-  const onCreatePurchase = (purchase) => {
-    addPurchase(purchase);
+
+  const onCreatePurchase = (purchased) => {
+   // setPurchaseId(addPurchase(purchase));
+    //console.log("purchase"+addPurchase(purchase));
+   addPurchase(purchased);
+   console.log("purchase"+purchase._id);
+  // console.log("pruchaseID "+purchase.pur);
   };
   return (
     <Garage
@@ -41,7 +48,9 @@ function GarageView(props) {
       user={user.user}
       seller= {garage.seller}
       items={garage.items}
+      purchase= {purchase.purchase}
       onCreatePurchase = {onCreatePurchase}
+      purchaseId= {purchase}
       //isLoggedIn={!!user.user}
     />
   );

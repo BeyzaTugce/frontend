@@ -11,6 +11,9 @@ import GarageItem from "./GarageItem";
 import { connect, useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
+import {getPurchases} from "../redux/actions/PurchaseActions";
+
+import { addPurchase } from "../redux/actions/PurchaseActions";
 const Garage = (props) => {
   const history = useHistory();
 
@@ -34,6 +37,9 @@ const Garage = (props) => {
   const [buyer, setBuyer] = React.useState("");
   const [price, setPurchasePrice] = React.useState(0);
   const [garageId, setGarageId] = React.useState("");
+  const [purchaseId, setPurchaseId] = React.useState("");
+  const [purID, setPurID] = React.useState(Math.floor(Math.random() * 100000000 + 1).toString());
+  const [purchases, setPurchases] = React.useState([]);
 
   const extractGarage = () => {
     if (!props.garage ) {
@@ -48,11 +54,13 @@ const Garage = (props) => {
     if (!props.purchase) {
       return;
     }
+   // setPurchaseId(props.purchase.purchaseId);
     setCreationDate(props.purchase.creationDate);
     setBuyer(props.purchase.buyer);
     setPurchaseSeller(props.purchase.seller);
     setPurchaseGarage(props.purchase.garageId);
     setPurchasePrice(props.purchase.price);
+    setPurchases(props.purchase.purchases);
    // setPurchaseStatus(props.purchase.purchaseStatus);
   //  setSelectedItemList(props.purchase.selectedItemList);
   };
@@ -61,7 +69,7 @@ const Garage = (props) => {
     let back = {
       ...props.purchase,
     };
-
+    //back.purchaseId = purID;
     back.creationDate = creationDate;
     back.buyer = loggedInUser._id;
     back.seller = sellerId;
@@ -73,11 +81,28 @@ const Garage = (props) => {
   };
 
   const addPurchase = (e) => {
+    
+  
     e.preventDefault();
+  
     props.onCreatePurchase(packPurchase());
-    history.push("/bargain");
+    
+    //props.dispatch(getPurchases());
+   //console.log(purchase.purchase._id);
+   // props.purchases.filter(p => p.seller == sellerId && p.buyer == loggedInUser._id).map(x => {purchaseId = x._id});
+    
+    //history.push(`../bargain/${purID}`);
   };
 
+
+  const trialFunction = (e) => {
+    
+  
+    e.preventDefault();
+   // console.log("pruchaseID "+purID);
+    
+    //history.push(`../bargain/${purID}`);
+  };
   const extractSeller = () => {
     if (!props.seller ) {
       return;
@@ -110,11 +135,11 @@ const Garage = (props) => {
   }, [props.items] );
 
   useEffect(() => {
-    if (!props.new) {
+  
       //extractUser();
       extractPurchase();
-    }
-  }, [props.purchase, props.new]);
+    
+  }, [props.purchase]);
 
   useEffect(() => {
     if(numSelectedItems>1 & discount){
@@ -234,6 +259,7 @@ const Garage = (props) => {
                   className="btn border-0 text-white"
                   variant="light"
                   style={{ backgroundColor: "#85A582" }}
+                  onClick={trialFunction}
               >
                 Buy Selected Items
               </Button>

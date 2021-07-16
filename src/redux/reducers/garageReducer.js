@@ -16,6 +16,8 @@ export default function garage(state = {}, action) {
       return { ...state };
     case "UPDATEGARAGE_SUCCESS":
       return { garage: action.garage };
+    /*case "ADDPURCHASE_SUCCESS":
+        return { ...state, purchase: action.purchase };*/
     default:
       return { garage: action.garage };
   }

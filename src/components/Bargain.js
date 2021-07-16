@@ -21,7 +21,7 @@ const Bargain = (props) => {
     const handleToggle = () => {setShow(!show)};
     const [turn, setTurn] = useState(false);
     const [thisOfferHistory, setThisOfferHistory] = useState([]);
-    const paramsId = props.match.params.id
+    const purchaseId = props.match.params.id
     const history = useHistory();
     const { offers } = props.offer;
     let offersArray = offers?.offerHistory;
@@ -47,7 +47,7 @@ const Bargain = (props) => {
           buyer: user.user,
         };
       // Add item via addItem action
-      props.makeOffer(paramsId, newOffer);
+      props.makeOffer(purchaseId, newOffer);
       //setThisOfferHistory(...thisOfferHistory, enterOffer.price)
       // Close modal
       handleToggle();
@@ -56,7 +56,7 @@ const Bargain = (props) => {
 
     const handleCancelClick = e => {
       e.preventDefault();
-      props.withdrawOffer(paramsId);
+      props.withdrawOffer(purchaseId);
       history.push('/garage');
     }
 
