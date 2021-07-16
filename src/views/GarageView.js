@@ -38,8 +38,9 @@ function GarageView(props) {
   const onCreatePurchase = (purchased) => {
    // setPurchaseId(addPurchase(purchase));
     //console.log("purchase"+addPurchase(purchase));
-   addPurchase(purchased);
-   console.log("purchase"+purchase._id);
+   
+      addPurchase(purchased);
+    
   // console.log("pruchaseID "+purchase.pur);
   };
   return (

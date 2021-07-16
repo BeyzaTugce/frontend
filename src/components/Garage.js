@@ -13,9 +13,9 @@ import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import {getPurchases} from "../redux/actions/PurchaseActions";
 
-import { addPurchase } from "../redux/actions/PurchaseActions";
 const Garage = (props) => {
   const history = useHistory();
+  const purchase = useSelector((state) => state.purchase);
 
   const loggedInUser = useSelector((state) => state.auth.user);
 
@@ -84,8 +84,14 @@ const Garage = (props) => {
     
   
     e.preventDefault();
-  
-    props.onCreatePurchase(packPurchase());
+    if(!purchase.purchase){
+       props.onCreatePurchase(packPurchase());
+      // addPurchase(e);
+      }
+    else {
+      console.log("purchase"+purchase.purchase._id);
+      history.push(`../bargain/${purchase.purchase._id}`)
+    }
     
     //props.dispatch(getPurchases());
    //console.log(purchase.purchase._id);
