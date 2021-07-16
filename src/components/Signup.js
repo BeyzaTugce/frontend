@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { registerNew } from "../redux/actions/AuthActions";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
-import { Typography, FormControlLabel, Checkbox } from "@material-ui/core";
 import { propTypes } from "react-bootstrap/esm/Image";
 
 const useStyles = makeStyles((theme) => ({
@@ -91,29 +90,37 @@ const Signup = ({
   }, [password, password2]);
 
   useEffect(() => {
-    if (!isEmpty(email)){
       if (!isEmail(email))
         setEmailRegisterError("Email is not in valid format!");
       else
-      setEmailRegisterError("");
-    }
-    else
-      setEmailRegisterError("Email can not be empty!");
+        setEmailRegisterError("");
+    
+    // else
+    //   setEmailRegisterError("Email can not be empty!");
   }, [email]);
 
-  useEffect(() => {
-    if (isEmpty(username))
-      setuserNameRegisterError("Username field can not be empty!");
-    else
-      setuserNameRegisterError("");
-  }, [username]);
+  // useEffect(() => {
+  //   if (isEmpty(username))
+  //     setuserNameRegisterError("Username field can not be empty!");
+  //   else
+  //     setuserNameRegisterError("");
+  // }, [username]);
 
   useEffect(() => {
-    if(passRegisterError ==! "" || emailRegisterError ==! "" || !isEmail(email))
+    if( !username || !password || !email || !firstname || !surname || !city || !district || !correspondenceAddress || !postcode ){
+      setRegisterError("Fields with (*) can not be empty")
+      setDisabled(true)
+    }
+    else
+      setRegisterError("")
+  }, [username, password, email, firstname, surname, city, district, correspondenceAddress, postcode])
+
+  useEffect(() => {
+    if( passRegisterError || emailRegisterError || registerError || !isEmail(email) )
       setDisabled(true)
     else
       setDisabled(false)
-  }, [password, password2, email])
+  }, [emailRegisterError, passRegisterError, registerError])
 
   const isEmail = (val) => {
     let regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -122,11 +129,12 @@ const Signup = ({
     return false
   }
 
-  const isEmpty = (val) => {
-    if(val == "")
-      return true
-    return false
-  }
+  // const isEmpty = (val) => {
+  //   if(val == "")
+  //     return true
+  //   return false
+  // }
+
   const isPassValid = (val) => {
     let regPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
     if(regPass.test(val))
@@ -185,7 +193,7 @@ const Signup = ({
 
   const onChangeUsername = (e) => {
     setUsername(e.target.value);
-    //setRegisterError("");
+    setRegisterError("");
   };
 
   const onChangeAdress = (e) => {
@@ -214,7 +222,7 @@ const Signup = ({
   };
   const onChangePhone = (e) => {
     setPhone(e.target.value);
-    setRegisterError("");
+    //setRegisterError("");
   };
   const onChangeSurname = (e) => {
     setSurname(e.target.value);
@@ -223,27 +231,27 @@ const Signup = ({
 
   const onChangeEmail = (e) => {
     setEmail(e.target.value);
-    //setEmailRegisterError("");
+    setRegisterError("");
   };
 
   const onChangePassword = (e) => {
     setPassword(e.target.value);
-    //setRegisterError("");
+    setRegisterError("");
   };
 
   const onChangeGender = (e) => {
     setGender(e.target.value);
-    setRegisterError("");
+    //setRegisterError("");
   };
 
   const onChangeBirthdate = (e) => {
     setBirthdate(e.target.value);
-    setPassRegisterError("");
+    //setPassRegisterError("");
   };
 
   const onChangePassword2 = (e) => {
     setPassword2(e.target.value);
-    setPassRegisterError("");
+    // setPassRegisterError("");
   };
 
   return (
@@ -260,7 +268,7 @@ const Signup = ({
               {msg ? <Alert variant="danger">{msg}</Alert> : null}
               <Form>
                 <Form.Group controlId="Username">
-                  <Form.Label>Username</Form.Label>
+                  <Form.Label>Username<strong>(*)</strong></Form.Label>
                   <Form.Row>
                     <Col>
                       <Form.Control
@@ -275,13 +283,13 @@ const Signup = ({
                   </Form.Row>
                   {userNameRegisterError !== "" ? (
                     <div className={classes.signUpRow}>
-                      <p class="text-danger"><strong>{emailRegisterError}</strong></p>
+                      <p class="text-danger"><strong>{userNameRegisterError}</strong></p>
                     </div>
                      ) : null}
                 </Form.Group>
                 {/* Name */}
                 <Form.Group controlId="signupName">
-                  <Form.Label>Name</Form.Label>
+                  <Form.Label>Name<strong>(*)</strong></Form.Label>
                   <Form.Row>
                     <Col>
                       <Form.Control
@@ -289,7 +297,7 @@ const Signup = ({
                         fullWidth
                         value={firstname}
                         onChange={onChangeFirstname}
-                        error={registerError !== ""}
+                        //error={registerError !== ""}
                         required
                       />
                     </Col>
@@ -299,7 +307,7 @@ const Signup = ({
                         fullWidth
                         value={surname}
                         onChange={onChangeSurname}
-                        error={registerError !== ""}
+                        //error={registerError !== ""}
                         required
                       />
                     </Col>
@@ -314,7 +322,7 @@ const Signup = ({
                       type="date"
                       value={birthdate}
                       onChange={onChangeBirthdate}
-                      error={registerError !== ""}
+                      //error={registerError !== ""}
                       required
                     />
                   </Form.Group>
@@ -325,7 +333,7 @@ const Signup = ({
                         className="my-1 mr-sm-2"
                         id="inlineFormCustomSelectPref"
                         onChange={onChangeGender}
-                        error={registerError !== ""}
+                        //error={registerError !== ""}
                         custom
                       >
                         <option value="m/f/d">Choose...</option>
@@ -339,7 +347,7 @@ const Signup = ({
                 {/* Email and Phone*/}
                 <Form.Row>
                   <Form.Group as={Col} controlId="signupEmail">
-                    <Form.Label>Email</Form.Label>
+                    <Form.Label>Email<strong>(*)</strong></Form.Label>
                     <Form.Control
                       type="email"
                       fullWidth
@@ -357,19 +365,19 @@ const Signup = ({
                       placeholder="Enter Phone Number"
                       value={phone}
                       onChange={onChangePhone}
-                      error={registerError !== ""}
+                      //error={registerError !== ""}
                       required
                     />
                   </Form.Group>
                 </Form.Row>
                 {emailRegisterError !== "" ? (
                     <div className={classes.signUpRow}>
-                      <Typography color="error">{emailRegisterError}</Typography>
+                      <p class="text-danger"><strong>{emailRegisterError}</strong></p>
                     </div>
                      ) : null}
                 {/* Password */}
                 <Form.Group controlId="signupPass">
-                  <Form.Label>Password</Form.Label>
+                  <Form.Label>Password<strong>(*)</strong></Form.Label>
                   <Form.Row>
                     <Col>
                       <Form.Control
@@ -404,7 +412,7 @@ const Signup = ({
 
                 {/* Address */}
                 <Form.Group controlId="signupAddress">
-                  <Form.Label>Address</Form.Label>
+                  <Form.Label>Address<strong>(*)</strong></Form.Label>
                   <Form.Control placeholder="Address line 1 (or Company name)"
                    value={correspondenceAddress}
                    onChange={onChangeAdress}
@@ -415,20 +423,20 @@ const Signup = ({
 
                 <Form.Row>
                   <Form.Group xs={8} as={Col}>
-                    <Form.Label>Address 2</Form.Label>
+                    <Form.Label>District<strong>(*)</strong></Form.Label>
                     <Form.Control placeholder="Street and house number"
                     
                     value={district}
                     onChange={onChangeDistrict}
-                    error={registerError !== ""}
+                    //error={registerError !== ""}
                     required></Form.Control>
                   </Form.Group>
                   <Form.Group as={Col}>
-                    <Form.Label>Postcode</Form.Label>
+                    <Form.Label>Postcode<strong>(*)</strong></Form.Label>
                     <Form.Control placeholder="80797"
                     value={postcode}
                     onChange={onChangePostcode}
-                    error={registerError !== ""}
+                    //error={registerError !== ""}
                     
                     ></Form.Control>
                   </Form.Group>
@@ -436,11 +444,11 @@ const Signup = ({
 
                 {/* City */}
                 <Form.Group controlId="signupCity">
-                  <Form.Label>Town/City</Form.Label>
+                  <Form.Label>Town/City<strong>(*)</strong></Form.Label>
                   <Form.Control placeholder="Munich"
-                                      value={city}
-                                      onChange={onChangeCity}
-                                      error={registerError !== ""}
+                                value={city}
+                                onChange={onChangeCity}
+                                //error={registerError !== ""}
                   ></Form.Control>
                 </Form.Group>
 
@@ -470,6 +478,11 @@ const Signup = ({
                     Register
                   </Button>
                 </div>
+                {registerError !== "" ? (
+                <div className={classes.signUpRow}>
+                  <p class="text-danger"><strong>{registerError}</strong></p>
+                </div>
+                  ) : null}
               </Form>
             </Jumbotron>
           </Col>

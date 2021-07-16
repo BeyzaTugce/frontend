@@ -3,7 +3,6 @@ import { Container, Row, Col, Jumbotron, Form, Button, Alert } from "react-boots
 import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
 import { loginNew } from "../redux/actions/AuthActions";
-import { Typography } from "@material-ui/core";
 
 const Login = ({
   isAuthenticated,
