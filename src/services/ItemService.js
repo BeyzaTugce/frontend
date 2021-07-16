@@ -86,4 +86,34 @@ export default class ItemService {
       );
     });
   }
+
+  //trial below here
+  static getItemBySearch(name) {
+    return new Promise((resolve, reject) => {
+      HttpService.get(`${ItemService.baseURL()}/search?name=${name}`, function (data) {
+        if (data != undefined || Object.keys(data).length !== 0) {
+          resolve(data);
+        }
+        else {
+          reject('Error while retrieving item');
+        }
+      }, function (textStatus) {
+        reject(textStatus);
+      });
+    });
+  }
+
+  static filterItem(itemIds, rating, price) {
+    return new Promise((resolve, reject) => {
+      HttpService.post(`${ItemService.baseURL()}/filter`, {
+        itemIds,
+        rating,
+        price
+      }, function (data) {
+        resolve(data);
+      }, function (textStatus) {
+        reject(textStatus);
+      });
+    });
+  }
 }

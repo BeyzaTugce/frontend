@@ -5,16 +5,15 @@ import {
     ListGroup,
 } from "react-bootstrap";
 import "./Search.css";
-import GarageItem from "./GarageItem";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect, useSelector } from "react-redux";
-import user from "../redux/reducers/userReducer";
 import {Clock, Star, StarFill} from "react-bootstrap-icons";
+import SearchItem from "./SearchItem";
 
 const Search = (props) => {
     /*
-    const [sellerName, setSellerName] = React.useState(" ");
+    const [items, setItems] = React.useState([]);
 
     const extractOrder = () => {
         if (!props.order ) {
@@ -28,14 +27,16 @@ const Search = (props) => {
         extractOrder();
     }, [props.order] );
 
-    const renderedList = items.map((garageItem) => {
+    const renderedList = items.map((item) => {
         return (
-            <GarageItem
-                name={garageItem.name}
-                info={garageItem.info}
-                tags={garageItem.tags}
-                price={garageItem.price}
-                image={garageItem.image}
+            <SearchItem
+                name={item.name}
+                info={item.info}
+                tags={item.tags}
+                price={item.price}
+                image={item.image}
+                seller={item.garage.seller}
+                endDate={item.garage.endDate}
             />
         );
     });
@@ -161,8 +162,23 @@ const Search = (props) => {
                       </div>
                   </div>
                   <div className="vertical-line" style={{height:"auto", width:1, backgroundColor: '#909090'}}/>
-                  <div className="list-whole w-100" style={{ paddingInline: 50, paddingTop:30 }}>
-                      <ListGroup>{}</ListGroup>
+                  <div className="list-whole" style={{ paddingInline: 30, paddingTop:30 }}>
+                      <ListGroup className="d-inline-block">
+                          <SearchItem
+                              name="some item"
+                              tags="tags"
+                              price="50"
+                              seller="Berke"
+                              endDate="10.10.2021"
+                          />
+                          <SearchItem
+                              name="some item"
+                              tags="tags"
+                              price="50"
+                              seller="Berke"
+                              endDate="10.10.2021"
+                          />
+                      </ListGroup>
                   </div>
               </div>
           </span>

@@ -209,11 +209,17 @@ const Garage = (props) => {
                 style={{ marginTop: 25, marginBottom: 25 }}
             >
               <div className="total-price-text">Total price: €{totalPrice}</div>
-              {discount ? <div className="saving-text">Saving: €{saving}</div> : ""}
-              <div className="amount-to-pay-text">Amount to Pay: €{amountToPay}</div>
-              <div className="promotional-sentence-text text-danger">
-                You can save up to 10% by choosing 1 more item!
-              </div>
+              {discount ?
+                  <div>
+                    <div className="saving-text">Saving: €{saving}</div>
+                    <div className="amount-to-pay-text">Amount to Pay: €{amountToPay}</div>
+                  </div>
+                  : ""}
+              {discount && numSelectedItems===1 ?
+                  <div className="promotional-sentence-text text-danger">
+                    You can save up to 10% by choosing 1 more item!
+                  </div> : ""
+              }
             </div>
             <div className="bargain-buy-buttons d-flex align-items-center justify-content-center">
               <Button

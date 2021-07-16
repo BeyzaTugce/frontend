@@ -91,3 +91,22 @@ export const getItem = (id) => {
     }
   };
 };
+
+//trial from down here
+export const getItemBySearch = (name) => {
+  function onSuccess(item) {
+    return { type: "GETITEM_SUCCESS", item: item };
+  }
+  function onFailure(error) {
+    console.log("failed to load a item", error);
+  }
+
+  return async (dispatch, getState) => {
+    try {
+      let item = await ItemService.getItemBySearch(name);
+      dispatch(onSuccess(item));
+    } catch (e) {
+      onFailure(e);
+    }
+  };
+};
