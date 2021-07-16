@@ -179,7 +179,7 @@ const Signup = ({
       setMsg(null);
     }
     if(isAuthenticated) {
-      history.push("/garage")
+      history.push("/")
     }
   }, [error, msg, isAuthenticated])
 

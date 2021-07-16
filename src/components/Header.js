@@ -43,27 +43,25 @@ const Header = ({ auth, props }) => {
 
   const history = useHistory();
 
-  /*useEffect(() => {
+  useEffect(() => {
     store.dispatch(getGarages());
-    setAllGarages(garage.garages);
-  }, [myGaragePath] );
+    //setAllGarages(garage.garages);
+  }, [] );
 
-  //console.log(garage.garages.garages.filter(g => g.user == user._id));
+  //console.log(garage.garages.garages.filter(g => g.user == user._id).length);
+  //garage.garages.garages.filter(g => g.user == user._id).map( g => {id = g._id});
 
-  let id = null;
-  garage.garages.garages.filter(g => g.user == user._id).map( g => {id = g._id});
-
+  let path = ""
   const onMyGarage = () => {
-    setMyGaragePath(!myGaragePath);
+    //setMyGaragePath(!myGaragePath);
     if (garage.garages.garages.filter(g => g.user == user._id).length === 0){
-      history.push("/garage");
+      //props.history.push("/garage");
+      path = "/garage"
     }
     else{
-      let id = null;
-      garage.garages.garages.filter(g => g.user == user._id).map( g => {id = g._id});
-      history.push("/garage/"+id);
+      garage.garages.garages.filter(g => g.user == user._id).map(  g => {path = "/garage"+g._id});
     }
-  };*/
+  };
 
   const onClickLogin = () => {
     // close this menu
@@ -134,10 +132,9 @@ const Header = ({ auth, props }) => {
               <Nav.Link href="/yourgarage">
                 <House size={28} />
               </Nav.Link>
-          ) :
-              <Nav.Link href="/garage">
-                <House size={28} />
-              </Nav.Link>
+          ) : <Nav.Link href="/garage">
+            <House size={28} />
+          </Nav.Link>
           }
 
           <NavDropdown alignRight title={<PersonCircle size={28} />}>

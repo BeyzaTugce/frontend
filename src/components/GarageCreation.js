@@ -29,11 +29,6 @@ const GarageCreation = (props) => {
   //const [id, setId] = React.useState(null);
 
 
-
-  //allGarages.filter( g => g.user == user._id);
-
-
-
   const togglePopup = () => {
     setIsOpen(!isOpen);
   }

@@ -70,14 +70,14 @@ function ItemCreation(props) {
 
 
   /*useEffect(() => {
-    if (props.garageCreated){
-      packItem();
+    if (!garage.garages){
+      props.dispatch(getGarages());
     }
-  }, [props.garageCreated, props.item]);*/
+  }, [props.garageCreated, garage.garages]);*/
 
   const addToList = (input) => {
     //setNewDate(input);
-    props.dispatch(getGarages());
+    //props.dispatch(getGarages());
     if (!itemList.includes(input)) {
       setItemList([...itemList, input]);
     }
@@ -112,6 +112,7 @@ function ItemCreation(props) {
   };
 
   const packItem = () => {
+    props.dispatch(getGarages());
     let back = {
       ...props.item,
     };
@@ -121,9 +122,9 @@ function ItemCreation(props) {
     }
     else{
       //console.log("itemcreation:"+garage.garages.garages.filter(g => g.user == user._id));
-      //console.log("itemcreation stringfy:"+JSON.stringify(garage.garages.garages.filter(g => g.user == user._id)));
+      console.log("itemcreation stringfy:"+JSON.stringify(garage.garages.garages.filter(g => g.user == user._id)));
       garage.garages.garages.filter(g => g.user == user._id).map(x => {back.garageId = x._id});
-      //back.garageId = id;
+      console.log(back.garageId);
     }
     back.name = itemTitle;
     back.price = itemPrice;
@@ -136,12 +137,12 @@ function ItemCreation(props) {
 
   const onMyGarage = () => {
     console.log("item?:"+props.garageCreated);
-    console.log("id?:"+props.newId);
 
     if (props.garageCreated){
       props.dispatch(addItem(packItem()));
+      console.log(packItem().garageId);
       garage.garages.garages.filter(g => g.user == user._id).map( g => {props.history.push("/garage/"+g._id)});
-      //console.log("garage view id?:"+id);
+      console.log("garage view:"+garage.garages.garages.filter(g => g.user == user._id));
 
       //props.history.push("/"+props.newId)
     }
@@ -162,7 +163,6 @@ function ItemCreation(props) {
   const onCancel = () => {
     props.history.push("/");
   };
-
 
 
   return (
