@@ -11,7 +11,7 @@ import {
   InputGroup,
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Cart3, House, PersonCircle, Search } from "react-bootstrap-icons";
+import {Cart3, House, PersonCircle, Search} from "react-bootstrap-icons";
 import "./Header.css";
 import { connect, useSelector } from "react-redux";
 import logo from "../views/logo.png";
@@ -34,33 +34,36 @@ import CategoryBar from "./CategoryBar";
  * Navigation bar of the app
  * @param {props} props
  */
-const Header = ({ auth }, props) => {
+const Header = ({ auth, props }) => {
   const { isAuthenticated, user } = auth;
+
   const garage = useSelector((state) => state.garage);
   const [allGarages, setAllGarages] = React.useState([]);
+  const [myGaragePath, setMyGaragePath] = React.useState(false);
 
   const history = useHistory();
 
-  useEffect(() => {
+  /*useEffect(() => {
     store.dispatch(getGarages());
     setAllGarages(garage.garages);
-    console.log(allGarages);
-  }, [] );
+  }, [myGaragePath] );
 
-  //g.user == user.user._id
+  //console.log(garage.garages.garages.filter(g => g.user == user._id));
 
-  //console.log(allGarages);
-  //const mygarage = allGarages.filter(obj => obj.user == user.user._id);
-  /*for(let obj in JSON.stringify(allGarages)) {
-    console.log(obj);
-  }*/
+  let id = null;
+  garage.garages.garages.filter(g => g.user == user._id).map( g => {id = g._id});
 
-  //console.log("user:"+user.user._id);
-  //console.log("garages:"+garage.garages);
-  //getGarages();
-  //garages.garages.filter(garage => garage.user.user._id != user.user._id);
-
-
+  const onMyGarage = () => {
+    setMyGaragePath(!myGaragePath);
+    if (garage.garages.garages.filter(g => g.user == user._id).length === 0){
+      history.push("/garage");
+    }
+    else{
+      let id = null;
+      garage.garages.garages.filter(g => g.user == user._id).map( g => {id = g._id});
+      history.push("/garage/"+id);
+    }
+  };*/
 
   const onClickLogin = () => {
     // close this menu
@@ -131,11 +134,10 @@ const Header = ({ auth }, props) => {
               <Nav.Link href="/yourgarage">
                 <House size={28} />
               </Nav.Link>
-          ) : (
+          ) :
               <Nav.Link href="/garage">
                 <House size={28} />
               </Nav.Link>
-              )
           }
 
           <NavDropdown alignRight title={<PersonCircle size={28} />}>
@@ -156,6 +158,7 @@ const Header = ({ auth }, props) => {
 const mapStateToProps = state => ({
   auth: state.auth
 });
+
 
 // //attributes of props and their type
 // Header.propTypes = {

@@ -26,6 +26,7 @@ import { useHistory } from "react-router-dom";
 
 //import ItemComponent from "../components/ItemCreation";
 import {addItem, deleteItem, getItem} from "../redux/actions/ItemActions";
+import {getGarages} from "../redux/actions/GarageActions";
 
 /**
  * For register new users
@@ -34,6 +35,9 @@ import {addItem, deleteItem, getItem} from "../redux/actions/ItemActions";
 
 function ItemCreation(props) {
   const history = useHistory();
+  const garage = useSelector((state) => state.garage);
+  const user = useSelector((state) => state.auth.user);
+
   const [itemList, setItemList] = useState([]);
 
   //const [itemGarage, setItemGarage] = React.useState(ObjectId);
@@ -73,6 +77,7 @@ function ItemCreation(props) {
 
   const addToList = (input) => {
     //setNewDate(input);
+    props.dispatch(getGarages());
     if (!itemList.includes(input)) {
       setItemList([...itemList, input]);
     }
@@ -115,9 +120,11 @@ function ItemCreation(props) {
       back.garageId = null;
     }
     else{
-      back.garageId = props.garage.id;
+      //console.log("itemcreation:"+garage.garages.garages.filter(g => g.user == user._id));
+      //console.log("itemcreation stringfy:"+JSON.stringify(garage.garages.garages.filter(g => g.user == user._id)));
+      garage.garages.garages.filter(g => g.user == user._id).map(x => {back.garageId = x._id});
+      //back.garageId = id;
     }
-    //back.garageId = props.garage.id;
     back.name = itemTitle;
     back.price = itemPrice;
     back.tags = itemTags;
@@ -129,10 +136,14 @@ function ItemCreation(props) {
 
   const onMyGarage = () => {
     console.log("item?:"+props.garageCreated);
-    if (props.garageCreated){
-      //props.history.push("/"+props.garage.id)
+    console.log("id?:"+props.newId);
 
+    if (props.garageCreated){
       props.dispatch(addItem(packItem()));
+      garage.garages.garages.filter(g => g.user == user._id).map( g => {props.history.push("/garage/"+g._id)});
+      //console.log("garage view id?:"+id);
+
+      //props.history.push("/"+props.newId)
     }
   }
 

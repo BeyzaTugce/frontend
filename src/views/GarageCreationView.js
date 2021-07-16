@@ -6,11 +6,9 @@ import GarageCreationComponent from "../components/GarageCreation";
 import {
   addGarage,
   changeGarage,
-  deleteGarage, getGarages,
+  deleteGarage, getGarages
 } from "../redux/actions/GarageActions";
 import PropTypes from "prop-types";
-import GarageCreation from "../components/GarageCreation";
-import store from "../redux/store";
 
 /**
  * For register new users
@@ -18,10 +16,28 @@ import store from "../redux/store";
  */
 function GarageCreationView(props) {
   const garage = useSelector((state) => state.garage);
+  const user = useSelector((state) => state.auth.user);
+
   const [newItem, setNewItem] = React.useState(false);
   const [garageCreated, setGarageCreated] = React.useState(false);
   const [allGarages, setAllGarages] = React.useState([]);
+  const [id, setId] = React.useState(null);
 
+  let createdGarage = null;
+
+  /*useEffect(() => {
+    props.dispatch(getGarages());
+    //setGarageCreated(true);
+    console.log("IN USE EFFECT"+garage.garages);
+    setAllGarages(garage.garages);
+  }, [garageCreated] );*/
+
+  //console.log("onCreate in view garage:"+garage.garages.garages);
+  //console.log("onCreate in view garage:"+JSON.stringify(allGarages.garages.filter(g => g.user == user._id)));
+  //garage.garages.garages.filter(g => g.user == user._id).map( g => {setId(g._id)});
+  //console.log("garage view?:"+garageCreated);
+
+  //console.log("onCreate in view:"+id);
 
 
   useEffect(() => {
@@ -30,21 +46,14 @@ function GarageCreationView(props) {
     }
   }, [props.history]);
 
-  useEffect(() => {
-    store.dispatch(getGarages());
-    setAllGarages(garage.garages);
-    console.log(JSON.stringify(allGarages));
-  }, [garage.garages] );
-
 
   const onCreate = (newGarage) => {
     props.dispatch(addGarage(newGarage));
+    //props.dispatch(getGarages());
     setGarageCreated(true);
-    console.log("garage view?:"+garageCreated);
-    //props.history.push("/"+garage.id);
+    console.log("garageCreated:"+garageCreated);
   };
 
-  //console.log("garage view?:"+garage.garage.id);
 
   const onRemove = (garage) => {
     props.dispatch(deleteGarage(garage.id));
@@ -58,20 +67,14 @@ function GarageCreationView(props) {
     props.history.push("/");
   };
 
-
-
-
-  /*
-    const onRemoveItem = (item) => {
-        props.dispatch(deleteItem(item));
-    }*/
-
   return (
       <GarageCreationComponent
         newItem={newItem}
         garage={garage.garage}
+        garages={garage.garages}
         onCreate={onCreate}
         garageCreated={garageCreated}
+        //newId={id}
       />
   );
 }
@@ -83,6 +86,11 @@ GarageCreationView.propTypes = {
   garage: PropTypes.object,
   newItem: PropTypes.object,
   garageCreated: PropTypes.bool,
+  createdGarage: PropTypes.object,
+  newId: PropTypes.string,
+  garages: PropTypes.object,
+  getgarages: PropTypes.func.isRequired,
+
 };
 
 export default connect()(withRouter(GarageCreationView));

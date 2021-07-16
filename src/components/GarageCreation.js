@@ -9,7 +9,9 @@ import PropTypes from "prop-types";
 import ItemCreation from "./ItemCreation";
 import { connect, useSelector } from "react-redux";
 import GarageCreatedPopUp from "./GarageCreatedPopUp";
-import garage from "../redux/reducers/garageReducer";
+import {getGarages} from "../redux/actions";
+import user from "../redux/reducers/userReducer";
+import store from "../redux/store";
 
 const GarageCreation = (props) => {
   const history = useHistory();
@@ -23,8 +25,13 @@ const GarageCreation = (props) => {
   const [pickup, setPickup] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  //console.log("creation comp:"+props.garageCreated);
+  //const [id, setId] = React.useState(null);
 
-  console.log("creation comp:"+props.garageCreated);
+
+
+  //allGarages.filter( g => g.user == user._id);
+
 
 
   const togglePopup = () => {
@@ -93,12 +100,10 @@ const GarageCreation = (props) => {
     setPickup(e.target.checked);
   };
 
+  //let newId = null;
   const onCreate = (e) => {
-    e.preventDefault();
+    //e.preventDefault();
     props.onCreate(packGarage());
-    console.log("user create comp:"+packGarage().user);
-
-    //togglePopup();
   }
 
 
@@ -111,6 +116,9 @@ const GarageCreation = (props) => {
     }
     return day.getDate() + "." + (day.getMonth() + 2) + "." + day.getFullYear();
   };
+
+  //console.log("garageid in creation:"+props.id);
+
 
   return (
     <div>
@@ -182,6 +190,8 @@ const GarageCreation = (props) => {
             <ItemCreation
                 garage={props.garage}
                 garageCreated={props.garageCreated}
+                //createdGarage={props.createdGarage}
+                //newId={props.id}
             />
           </div>
         </div>
