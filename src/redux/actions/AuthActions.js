@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { returnErrors } from './ErrorActions';
 
 const baseURL = "http://localhost:4000/auth"
 
@@ -12,11 +13,12 @@ export const loadUser = () => (dispatch, getState) => {
           payload: res.data
         })
       )
-      .catch(() => {
+      .catch(err => {
+          dispatch(returnErrors(err.response.data, err.response.status));
           dispatch({
-          type: "AUTH_ERROR"
-          });
-      })
+            type: "AUTH_ERROR"
+        });
+      });
 }
 
 // Register User
@@ -65,7 +67,8 @@ export const registerNew = ({
           payload: res.data
         })
       )
-      .catch(() => {
+      .catch((err) => {
+        dispatch(returnErrors(err.response.data, err.response.status, "REGISTER_FAIL"));
         dispatch({
           type: "REGISTER_FAIL"
         });
@@ -92,7 +95,10 @@ export const loginNew = ({ email, password }) => (dispatch) => {
         payload: res.data
       })
     )
-    .catch(() => {
+    .catch((err) => {
+      dispatch(
+        returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL')
+      );
       dispatch({
         type: "LOGIN_FAIL"
       });

@@ -1,18 +1,22 @@
-import React, { useEffect } from "react";
-import { Container, Row, Col, Jumbotron, Form, Button } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Container, Row, Col, Jumbotron, Form, Button, Alert } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { connect } from 'react-redux';
 import { loginNew } from "../redux/actions/AuthActions";
+import { Typography } from "@material-ui/core";
 
 const Login = ({
   isAuthenticated,
-  loginNew
+  loginNew,
+  error
 }) => {
-  const [username, setUsername] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [loginError, setLoginError] = React.useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const history = useHistory();
+  const [msg, setMsg] = useState(null);
+  const [emailRegisterError, setEmailRegisterError] = useState("");
+  const [disabled, setDisabled] = useState(false);
 
   // useEffect(() => {
   //   if (props.user.error) {
@@ -35,19 +39,54 @@ const Login = ({
   };
 
   useEffect(() => {
+    if(!isEmail(email) || isEmpty(email))
+      setDisabled(true)
+    else
+      setDisabled(false)
+  }, [email])
+
+  useEffect(() => {
+    // Check for register error
+    if (error.id === 'LOGIN_FAIL') {
+      setMsg(error.msg.msg);
+    } else {
+      setMsg(null);
+    }
     if(isAuthenticated) {
       history.push("/garage")
     }
-  }, [isAuthenticated])
+  }, [error, msg, isAuthenticated])
+
+  useEffect(() => {
+    if (!isEmpty(email)){
+      if (!isEmail(email))
+        setEmailRegisterError("Email is not in valid format!");
+      else
+      setEmailRegisterError("");
+    }
+    else
+      setEmailRegisterError("Email can not be empty!");
+  }, [email]);
+
+  const isEmail = (val) => {
+    let regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if(regEmail.test(val))
+      return true
+    return false
+  }
+
+  const isEmpty = (val) => {
+    if(val == "")
+      return true
+    return false
+  }
 
   const onChangeEmail = (e) => {
     setEmail(e.target.value);
-    setLoginError("");
   };
 
   const onChangePassword = (e) => {
     setPassword(e.target.value);
-    setLoginError("");
   };
 
   return (
@@ -67,11 +106,13 @@ const Login = ({
                     placeholder="Enter Email"
                     value={email}
                     onChange={onChangeEmail}
-                    error={loginError !== ""}
+                    error={emailRegisterError !== ""}
                   />
-                  <Form.Text className="text-muted">
-                    We'll never share your email with anyone else.
-                  </Form.Text>
+                  {emailRegisterError !== "" ? (
+                    <div>
+                      <p class="text-danger"><strong>{emailRegisterError}</strong></p>
+                    </div>
+                     ) : null}
                 </Form.Group>
 
                 {/* Password */}
@@ -82,31 +123,21 @@ const Login = ({
                     placeholder="Password"
                     value={password}
                     onChange={onChangePassword}
-                    error={loginError !== ""}
                   />
                 </Form.Group>
-                <Form.Group controlId="formBasicCheckbox">
-                  <Form.Check type="checkbox" label="Remember me" />
-                </Form.Group>
-                {loginError !== "" ? (
-                  <div>
-                    <Form.Text color="error">{loginError}</Form.Text>
-                  </div>
-                ) : null}
-                {/* Login and Signup buttons */}
+                {msg ? <Alert variant="danger">{msg}</Alert> : null}
 
                 <div>
                   <Button
-                    variant="contained"
-                    color="primary"
+                    variant="primary"
                     onClick={onLogin}
-                    disabled={email === "" || password === ""}
+                    disabled={disabled}
                     type="submit"
                   >
                     Login
                   </Button>
 
-                  <h3 className="mt-4"> Not Registered yet?</h3>
+                  <h4 className="mt-4"> Not Registered yet?</h4>
                   <Button onClick={handleSignupClick} variant="primary">
                     Signup
                   </Button>
@@ -121,7 +152,8 @@ const Login = ({
 };
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  error: state.error
 });
 
 export default connect(mapStateToProps, { loginNew })(

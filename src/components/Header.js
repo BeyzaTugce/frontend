@@ -45,7 +45,7 @@ const Header = ({ auth }, props) => {
     store.dispatch(getGarages());
     setAllGarages(garage.garages);
     console.log(allGarages);
-  }, [props.history] );
+  }, [] );
 
   //g.user == user.user._id
 

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Jumbotron, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Jumbotron, Form, Button, Alert } from "react-bootstrap";
 import { connect } from 'react-redux';
 import { registerNew } from "../redux/actions/AuthActions";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 import { Typography, FormControlLabel, Checkbox } from "@material-ui/core";
+import { propTypes } from "react-bootstrap/esm/Image";
 
 const useStyles = makeStyles((theme) => ({
   usersignUpRoot: {
@@ -34,33 +35,114 @@ const useStyles = makeStyles((theme) => ({
 }));
 const Signup = ({
   isAuthenticated,
-  registerNew
+  registerNew,
+  error
 }) => {
   const history = useHistory();
   const classes = useStyles();
   //const registeredDate = new Date();
-  const [username, setUsername] = React.useState("");
-  const [firstname, setFirstname] = React.useState("");
-  const [surname, setSurname] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [phone, setPhone] = React.useState("");
-  const [isAdmin, setIsAdmin] = React.useState(false);
-  const [gender, setGender] = React.useState("");
-  const [correspondenceAddress, setcorrespondenceAddress] = React.useState("");
-  const [district, setDistrict] = React.useState("");
-  const [postcode, setPostcode] = React.useState("");
+  const [username, setUsername] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [surname, setSurname] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [gender, setGender] = useState("");
+  const [correspondenceAddress, setcorrespondenceAddress] = useState("");
+  const [district, setDistrict] = useState("");
+  const [postcode, setPostcode] = useState("");
   const [city, setCity] = React.useState("");
-  const [birthdate, setBirthdate] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [password2, setPassword2] = React.useState("");
-  const [confirmPassword, setConfirmPassword] = React.useState("");
-  const [disabled, setDisabled] = React.useState(false);
-  const [registerError, setRegisterError] = React.useState("");
+  const [birthdate, setBirthdate] = useState("");
+  const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [disabled, setDisabled] = useState(false);
+  const [registerError, setRegisterError] = useState("");
+  const [passRegisterError, setPassRegisterError] = useState("");
+  const [emailRegisterError, setEmailRegisterError] = useState("");
+  const [userNameRegisterError, setuserNameRegisterError] = useState("");
+  const [msg, setMsg] = useState(null);
+  // useEffect(() => {
+  //   if (isEmpty(password)){
+  //     setPassRegisterError("Password can not be empty!");
+  //   }
 
-  React.useEffect(() => {
-    if (password === confirmPassword) setDisabled(false);
-    else setDisabled(true);
-  }, [password, confirmPassword]);
+  //   else if (password !== password2);
+  //     setPassRegisterError("Passwords do not match!");
+  // }, [password, password2]);
+  // setPassRegisterError("Password must include minimum eight characters, at least one uppercase letter, one lowercase letter and one number");
+  // if (password !== "" && password2 !== "") {
+  //   if (password.length < 6)
+  //     setPassRegisterError("Password must be at least 6 characters!");
+  //   if (password !== password2) {
+  //     setPassRegisterError("Passwords do not match!");
+  //   } else {
+  //     setPassRegisterError("");
+  //   }
+  // }
+
+  useEffect(() => {
+    if (!isPassValid(password))
+      setPassRegisterError("Password must include minimum eight characters, at least one uppercase letter, one lowercase letter and one number");
+    else if (!isPassMatch(password, password2))
+      setPassRegisterError("Passwords do not match");
+    else
+      setPassRegisterError("");
+  }, [password, password2]);
+
+  useEffect(() => {
+    if (!isEmpty(email)){
+      if (!isEmail(email))
+        setEmailRegisterError("Email is not in valid format!");
+      else
+      setEmailRegisterError("");
+    }
+    else
+      setEmailRegisterError("Email can not be empty!");
+  }, [email]);
+
+  useEffect(() => {
+    if (isEmpty(username))
+      setuserNameRegisterError("Username field can not be empty!");
+    else
+      setuserNameRegisterError("");
+  }, [username]);
+
+  useEffect(() => {
+    if(passRegisterError ==! "" || emailRegisterError ==! "" || !isEmail(email))
+      setDisabled(true)
+    else
+      setDisabled(false)
+  }, [password, password2, email])
+
+  const isEmail = (val) => {
+    let regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if(regEmail.test(val))
+      return true
+    return false
+  }
+
+  const isEmpty = (val) => {
+    if(val == "")
+      return true
+    return false
+  }
+  const isPassValid = (val) => {
+    let regPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    if(regPass.test(val))
+      return true
+    return false
+  };
+
+  const isPassMatch = (pass, pass2) => {
+    if (pass !== "" && pass2 !== "") {
+      if (pass !== pass2) {
+        return false;
+    }
+    return true;
+    }
+  };
+
 
   const onCancel = () => {
     history.push("/");
@@ -90,14 +172,20 @@ const Signup = ({
   };
 
   useEffect(() => {
+    // Check for register error
+    if (error.id === 'REGISTER_FAIL') {
+      setMsg(error.msg.msg);
+    } else {
+      setMsg(null);
+    }
     if(isAuthenticated) {
       history.push("/garage")
     }
-  }, [isAuthenticated])
+  }, [error, msg, isAuthenticated])
 
   const onChangeUsername = (e) => {
     setUsername(e.target.value);
-    setRegisterError("");
+    //setRegisterError("");
   };
 
   const onChangeAdress = (e) => {
@@ -135,12 +223,12 @@ const Signup = ({
 
   const onChangeEmail = (e) => {
     setEmail(e.target.value);
-    setRegisterError("");
+    //setEmailRegisterError("");
   };
 
   const onChangePassword = (e) => {
     setPassword(e.target.value);
-    setRegisterError("");
+    //setRegisterError("");
   };
 
   const onChangeGender = (e) => {
@@ -150,22 +238,12 @@ const Signup = ({
 
   const onChangeBirthdate = (e) => {
     setBirthdate(e.target.value);
-    setRegisterError("");
+    setPassRegisterError("");
   };
 
   const onChangePassword2 = (e) => {
     setPassword2(e.target.value);
-    setRegisterError("");
-  };
-
-  const onBlurPassword = (e) => {
-    if (password !== "" && password2 !== "") {
-      if (password !== password2) {
-        setRegisterError("Passwords do not match.");
-      } else {
-        setRegisterError("");
-      }
-    }
+    setPassRegisterError("");
   };
 
   return (
@@ -179,6 +257,7 @@ const Signup = ({
                 By registering to our platform, you can create your own garage
                 sale, also start bargaining for zillions of products.
               </p>
+              {msg ? <Alert variant="danger">{msg}</Alert> : null}
               <Form>
                 <Form.Group controlId="Username">
                   <Form.Label>Username</Form.Label>
@@ -189,11 +268,16 @@ const Signup = ({
                         fullWidth
                         value={username}
                         onChange={onChangeUsername}
-                        error={registerError !== ""}
+                        error={userNameRegisterError !== ""}
                         required
                       />
                     </Col>
                   </Form.Row>
+                  {userNameRegisterError !== "" ? (
+                    <div className={classes.signUpRow}>
+                      <p class="text-danger"><strong>{emailRegisterError}</strong></p>
+                    </div>
+                     ) : null}
                 </Form.Group>
                 {/* Name */}
                 <Form.Group controlId="signupName">
@@ -262,7 +346,7 @@ const Signup = ({
                       placeholder="Enter Email"
                       value={email}
                       onChange={onChangeEmail}
-                      error={registerError !== ""}
+                      error={emailRegisterError !== ""}
                       required
                     />
                   </Form.Group>
@@ -278,7 +362,11 @@ const Signup = ({
                     />
                   </Form.Group>
                 </Form.Row>
-
+                {emailRegisterError !== "" ? (
+                    <div className={classes.signUpRow}>
+                      <Typography color="error">{emailRegisterError}</Typography>
+                    </div>
+                     ) : null}
                 {/* Password */}
                 <Form.Group controlId="signupPass">
                   <Form.Label>Password</Form.Label>
@@ -289,8 +377,8 @@ const Signup = ({
                         fullWidth
                         value={password}
                         onChange={onChangePassword}
-                        error={registerError !== ""}
-                        onBlur={onBlurPassword}
+                        error={passRegisterError !== ""}
+                        onBlur={isPassValid}
                         type="password"
                         required
                       />
@@ -301,12 +389,17 @@ const Signup = ({
                         fullWidth
                         value={password2}
                         onChange={onChangePassword2}
-                        error={registerError !== ""}
-                        onBlur={onBlurPassword}
+                        error={passRegisterError !== ""}
+                        onBlur={isPassValid}
                         type="password"
                       />
                     </Col>
                   </Form.Row>
+                  {passRegisterError !== "" ? (
+                    <div className={classes.signUpRow}>
+                      <p className="text-danger"><strong>{passRegisterError}</strong></p>
+                    </div>
+                     ) : null}
                 </Form.Group>
 
                 {/* Address */}
@@ -352,17 +445,12 @@ const Signup = ({
                 </Form.Group>
 
                 {/* Checkbox for terms and Register button */}
-                <Form.Group controlId="signupCheckbox">
+                {/* <Form.Group controlId="signupCheckbox">
                   <Form.Check
                     type="checkbox"
                     label="I agree to the terms and conditions ..."
                   />
-                </Form.Group>
-                {registerError !== "" ? (
-                  <div className={classes.signUpRow}>
-                    <Typography color="error">{registerError}</Typography>
-                  </div>
-                ) : null}
+                </Form.Group> */}
                 <div
                   className={classes.signUpRow + " " + classes.signUpButtons}
                 >
@@ -374,16 +462,9 @@ const Signup = ({
                   </Button>
                   <Button
                     className={classes.signUpButton}
-                    variant="contained"
-                    color="primary"
+                    variant="primary"
                     onClick={onRegister}
-                    disabled={
-                      email === "" ||
-                      password === "" ||
-                      password2 === "" ||
-                      registerError !== "" ||
-                      password !== password2
-                    }
+                    disabled={disabled}
                     type="submit"
                   >
                     Register
@@ -398,7 +479,8 @@ const Signup = ({
   );
 };
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  error: state.error
 });
 
 export default connect(mapStateToProps, { registerNew })(
