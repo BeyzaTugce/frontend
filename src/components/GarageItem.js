@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, FormCheck, Image, ListGroupItem } from "react-bootstrap";
+import { Button, Form, FormCheck, Image, ListGroupItem, Alert } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 
@@ -7,6 +7,7 @@ const GarageItem = (props) => {
   // const items = useSelector((state) => state.items);
   const [button1Name, setButton1Name] = useState("");
   const [button2Name, setButton2Name] = useState("");
+  const [condition, setCondition] = useState(false);
   //const [selectedItems, setSelectedItems] = useState(0);
 
   useEffect(() => {
@@ -69,7 +70,7 @@ const GarageItem = (props) => {
         </div>
       </div>
       <div className="justify-content-end d-inline-flex align-items-center justify-content-end">
-      <div className="item-price" style={{marginRight:15}}>€{props.price}</div>
+      <div className="item-price" style={{"marginRight":15, "font-size":20}}><strong>€{props.price}</strong></div>
         <Button
           className="btn border-0"
           variant="dark"
@@ -77,14 +78,17 @@ const GarageItem = (props) => {
         >
           {props.button1Name}
         </Button>
-        <Button
+        {props.condition ?
+          <Button
           className="btn border-0"
           variant="dark"
           style={{ backgroundColor: "#85A582", width: 80 }}
           onClick={props.onRemove}
-        >
-          {props.button2Name}
-        </Button>
+          >
+            {props.button2Name}
+          </Button> : null
+        }
+
       </div>
     </ListGroupItem>
   );

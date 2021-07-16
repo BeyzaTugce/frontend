@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  Button,
-  Image,
-  ListGroup,
-} from "react-bootstrap";
+import { Button, Image, ListGroup,Alert } from "react-bootstrap";
 import "./Garage.css";
-
 import { useHistory } from "react-router-dom";
 import GarageItem from "./GarageItem";
 import { connect, useSelector } from "react-redux";
@@ -16,30 +11,31 @@ import {getPurchases} from "../redux/actions/PurchaseActions";
 const Garage = (props) => {
   const history = useHistory();
   const purchase = useSelector((state) => state.purchase);
-
   const loggedInUser = useSelector((state) => state.auth.user);
 
-  const [userName, setUserName] = React.useState("");
-  const [sellerId, setSellerId] = React.useState(0);
-  const [postcode, setPostcode] = React.useState("");
-  const [district, setDistrict] = React.useState("");
-  const [city, setCity] = React.useState("");
-  const [garageEndDate, setGarageEndDate] = React.useState("");
-  const [garageItems, setGarageItems] = React.useState([]);
-  const [totalPrice, setTotalPrice] = React.useState(0);
-  const [numSelectedItems, setNumSelectedItems] = React.useState(0);
-  const [discount, setDiscount] = React.useState(false);
-  const [saving, setSaving] = React.useState(0);
-  const [amountToPay, setAmountToPay] = React.useState(0);
-  const [purchaseSeller, setPurchaseSeller] = React.useState("");
-  const [purchaseGarage, setPurchaseGarage] = React.useState("");
-  const [creationDate, setCreationDate] = React.useState(new Date());
-  const [buyer, setBuyer] = React.useState("");
-  const [price, setPurchasePrice] = React.useState(0);
-  const [garageId, setGarageId] = React.useState("");
-  const [purchaseId, setPurchaseId] = React.useState("");
-  const [purID, setPurID] = React.useState(Math.floor(Math.random() * 100000000 + 1).toString());
-  const [purchases, setPurchases] = React.useState([]);
+
+  const [userName, setUserName] = useState("");
+  const [sellerId, setSellerId] = useState(0);
+  const [postcode, setPostcode] = useState("");
+  const [district, setDistrict] = useState("");
+  const [city, setCity] = useState("");
+  const [garageEndDate, setGarageEndDate] = useState("");
+  const [garageItems, setGarageItems] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [numSelectedItems, setNumSelectedItems] = useState(0);
+  const [discount, setDiscount] = useState(false);
+  const [saving, setSaving] = useState(0);
+  const [amountToPay, setAmountToPay] = useState(0);
+  const [purchaseSeller, setPurchaseSeller] = useState("");
+  const [purchaseGarage, setPurchaseGarage] = useState("");
+  const [creationDate, setCreationDate] = useState(new Date());
+  const [buyer, setBuyer] = useState("");
+  const [price, setPurchasePrice] = useState(0);
+  const [garageId, setGarageId] = useState("");
+  const [purchaseId, setPurchaseId] = useState("");
+  const [purID, setPurID] = useState(Math.floor(Math.random() * 100000000 + 1).toString());
+  const [purchases, setPurchases] = useState([]);
+  const [bargain, setBargain] = useState(false);
 
   const extractGarage = () => {
     if (!props.garage ) {
@@ -49,6 +45,7 @@ const Garage = (props) => {
     setGarageId(props.garage._id)
     setGarageEndDate(props.garage.dateCreated)
     setDiscount(props.garage.discount)
+    setBargain(props.garage.bargain)
   }
   const extractPurchase = () => {
     if (!props.purchase) {
@@ -92,7 +89,7 @@ const Garage = (props) => {
       console.log("purchase"+purchase.purchase._id);
       history.push(`../bargain/${purchase.purchase._id}`)
     }
-    
+  
     //props.dispatch(getPurchases());
    //console.log(purchase.purchase._id);
    // props.purchases.filter(p => p.seller == sellerId && p.buyer == loggedInUser._id).map(x => {purchaseId = x._id});
@@ -180,6 +177,7 @@ const Garage = (props) => {
         price={garageItem.price}
         button1Name={"Buy"}
         button2Name={"Bargain"}
+        condition={bargain}
         //image={garageItem.image}
         onClickSelect={() =>
          {
@@ -221,6 +219,9 @@ const Garage = (props) => {
               until {garageEndDate}
             </p>
           </em>
+          {!bargain ?
+            <Alert className="d-flex align-items-center justify-content-center" variant="info"><strong>Bargain option disabled by the seller</strong></Alert>
+            : "" }
         </div>
         <div>
           <div className="select-all-button-field" style={{ paddingInline: 50 }}>
@@ -243,7 +244,7 @@ const Garage = (props) => {
               {discount ?
                   <div>
                     <div className="saving-text">Saving: €{saving}</div>
-                    <div className="amount-to-pay-text">Amount to Pay: €{amountToPay}</div>
+                    <div className="amount-to-pay-text">Amount to Pay: <strong></strong>€{amountToPay}</div>
                   </div>
                   : ""}
               {discount && numSelectedItems===1 ?
@@ -253,6 +254,7 @@ const Garage = (props) => {
               }
             </div>
             <div className="bargain-buy-buttons d-flex align-items-center justify-content-center">
+            {bargain ?
               <Button
                   className="btn border-0"
                   variant="dark"
@@ -261,6 +263,8 @@ const Garage = (props) => {
               >
                 Bargain for Selected Items
               </Button>
+            : "" }
+
               <Button
                   className="btn border-0 text-white"
                   variant="light"
@@ -328,4 +332,8 @@ Garage.propTypes = {
   items: PropTypes.object,
 };
 
-export default connect()(withRouter(Garage));
+const mapStateToProps = (state) => ({
+  purchase: state.purchase,
+});
+
+export default connect(mapStateToProps, null)(withRouter(Garage));
