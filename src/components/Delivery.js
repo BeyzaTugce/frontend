@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Jumbotron, Form, Button } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import { DatePickerCalendar } from "react-nice-dates";
-import { connect, useSelector } from "react-redux";
 import { format } from "date-fns";
 import { useHistory } from "react-router-dom";
 import { enGB } from "date-fns/locale";
@@ -12,6 +11,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { getPurchase, changePurchase } from "../redux/actions/PurchaseActions";
 import store from '../redux/store';
 import { withRouter } from "react-router-dom";
+import { connect, useSelector } from "react-redux";
 
 const Delivery = (props) => {
   let { match, getPurchase } = props;
@@ -21,8 +21,7 @@ const Delivery = (props) => {
   const [pickUpError, setPickUpError] = React.useState("");
   const [location, setLocation] = React.useState("");
   const purchase = useSelector((state) => state.purchase);
-  const [buyerId, setBuyerId] = useState(0);
-  const [sellerId, setSellerId] = useState(0);
+  const [userType, setUserType] = useState("Unknown");
 
   const timeInputProps = useDateInput({
     date,
@@ -58,9 +57,21 @@ const Delivery = (props) => {
   useEffect(() => {
     let purchaseId = match.params.id;
     getPurchase(purchaseId);
-   
-    
   }, [match.params]);
+
+  useEffect(() => {
+    checkUser();
+  }, [match.params]);
+
+
+  const checkUser = () => { 
+    if (loggedInUser._id == purchase.purchase.seller) {
+        setUserType("Seller");
+    }
+    else if(loggedInUser._id == purchase.purchase.buyer){
+      setUserType("Buyer");
+    }
+  };
 
   const packPurchase = () => {
     let back = {
@@ -105,13 +116,13 @@ const Delivery = (props) => {
     e.preventDefault();
     props.onCreate(packPickUp());
     store.dispatch(changePurchase(packPurchase()));
-    history.push(`../order/${purchase.purchase._id}`)
+    history.push(`../payment/${purchase.purchase._id}`)
     
   };
 
   return (
     <div className="Delivery">
-     
+      { userType == "Seller" ? (
       <div>
         <Container
           className="contact-content debug-border"
@@ -185,7 +196,7 @@ const Delivery = (props) => {
             />
           </InputGroup>
         </Container>
-        </div>
+        </div> ):  userType == "Buyer" ? "This is buyer"  : "You are not a buyer or seller. Ne arıyon karşim burada "}
 
       <div className="buttons d-flex align-items-center justify-content-center">
         <Button
