@@ -86,7 +86,7 @@ const Garage = (props) => {
       // addPurchase(e);
       }
     else {
-      console.log("purchase"+purchase.purchase._id);
+      //console.log("purchase"+purchase.purchase._id);
       history.push(`../bargain/${purchase.purchase._id}`)
     }
   

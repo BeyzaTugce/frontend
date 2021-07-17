@@ -75,7 +75,7 @@ const Delivery = (props) => {
     back.selectedItemList = purchase.purchase.selectedItemList;
     back.method = purchase.purchase.method;
     back.purchaseStatus= purchase.purchase.purchaseStatus;
-    back.pickUpAdrees = location;
+    back.pickUpAddress = location;
    // back.pickUpDate = selectedDate;
     return back;
   };
