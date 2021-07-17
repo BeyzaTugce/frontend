@@ -58,7 +58,7 @@ export default class PurchaseService {
   static updatePurchase(purchase) {
     return new Promise((resolve, reject) => {
       HttpService.put(
-        `${this.baseURL()}/${purchase._id}`,
+        `${PurchaseService.baseURL()}`,
         purchase,
         function (data) {
           resolve(data);

@@ -57,3 +57,23 @@ export function getPurchases() {
     }
   };
 }
+export function changePurchase(changedPurchase) {
+ 
+    function onSuccess(purchase) {
+      console.log(changedPurchase);       
+        return { type: "UPDATEPURCHASE_SUCCESS", purchase: purchase };
+    }
+    function onFailure(error) {
+        console.log("change purchase failure", error);
+    }
+
+    return async (dispatch) => {
+        try {
+            let purchase = await PurchaseService.updatePurchase(changedPurchase);
+            dispatch(onSuccess(purchase));
+        } catch (e) {
+          //console.log("2");
+            onFailure(e);
+        }
+    };
+}

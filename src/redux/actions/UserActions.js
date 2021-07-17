@@ -147,3 +147,39 @@ export const getUser = (id) => {
     }
   };
 };
+
+export const getBuyer = (id) => {
+  function onSuccess(buyer) {
+    return { type: "GETBUYER_SUCCESS", buyer: buyer };
+  }
+  function onFailure(error) {
+    console.log("failed to load a user", error);
+  }
+
+  return async (dispatch, getState) => {
+    try {
+      let buyer = await AuthService.getUser(id);
+      dispatch(onSuccess(buyer));
+    } catch (e) {
+      onFailure(e);
+    }
+  };
+};
+
+export const getSeller = (id) => {
+  function onSuccess(seller) {
+    return { type: "GETSELLER_SUCCESS", seller: seller };
+  }
+  function onFailure(error) {
+    console.log("failed to load a user", error);
+  }
+
+  return async (dispatch, getState) => {
+    try {
+      let seller = await AuthService.getUser(id);
+      dispatch(onSuccess(seller));
+    } catch (e) {
+      onFailure(e);
+    }
+  };
+};

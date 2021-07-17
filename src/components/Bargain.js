@@ -13,11 +13,18 @@ import {
   setOffersLoading,
 } from "../redux/actions/OfferActions";
 import { withRouter } from "react-router-dom";
+import store from '../redux/store';
+import { getPurchase,changePurchase } from "../redux/actions/PurchaseActions";
+import { getSeller, getBuyer } from "../redux/actions/UserActions";
 
 const Bargain = (props) => {
   const user = useSelector((state) => state.user);
+  const purchase = useSelector((state) => state.purchase);
+  let {match, getPurchase} = props;
     const [show, setShow] = useState(false);
     const [enterOffer, setEnterOffer] = useState({ price: 10 });
+    const [seller, setSeller] = React.useState();
+    const [buyer, setBuyer] = React.useState();
     const handleToggle = () => {setShow(!show)};
     const [turn, setTurn] = useState(false);
     const [thisOfferHistory, setThisOfferHistory] = useState([]);
@@ -41,10 +48,9 @@ const Bargain = (props) => {
       //setThisOfferHistory(thisOfferHistory => [...thisOfferHistory, enterOffer.price]);
       const newOffer = {
           //id: uuid(),
+          purchaseId: match.params.id,
           price: enterOffer.price,
           offerHistory: [...thisOfferHistory, enterOffer.price],
-          seller: "60e4228a88f6974fb4d1a44c",
-          buyer: user.user,
         };
       // Add item via addItem action
       props.makeOffer(purchaseId, newOffer);
@@ -54,15 +60,46 @@ const Bargain = (props) => {
       setTurn(!turn);
     };
 
+
+    useEffect(() => {
+      let purchaseId = match.params.id;
+      getPurchase(purchaseId);
+      getSeller(purchase.purchase.seller);
+      getBuyer(purchase.purchase.buyer);
+     // document.write(seller.firstname);
+    }, [match.params]);
+
     const handleCancelClick = e => {
       e.preventDefault();
       props.withdrawOffer(purchaseId);
       history.push('/garage');
     }
 
+    const acceptOffer = (e) => {
+      e.preventDefault();
+      store.dispatch(changePurchase(packPurchase()));
+      history.push(`../delivery/${purchase.purchase._id}`)
+    }
+
+    const packPurchase = () => {
+      let back = {
+        ...props.purchase,
+      };
+      back._id =purchase.purchase._id;
+      back.creationDate = purchase.purchase.creationDate;
+      back.buyer = purchase.purchase.buyer;
+      back.seller = purchase.purchase.seller;
+      back.garageId = purchase.purchase.garageId;
+      back.price = offersArray[offersArray.length-1];
+      back.selectedItemList = purchase.purchase.selectedItemList;
+      back.purchaseStatus= "DeliveryScheduling";
+  
+      return back;
+    };
+
     return (
       <Container>
-            <Button className="mr-5" variant="success" size="lg">
+            <Button className="mr-5" variant="success" size="lg" onClick={acceptOffer}>
                 Accept Offer
             </Button>
             {turn ? (
@@ -133,6 +170,7 @@ const Bargain = (props) => {
               <CSSTransition key={index} timeout={1000} classNames="fade">
                 {(index%2) ? (
                     <div className="d-inline-flex w-100 justify-content-end">
+                      
                         <Button variant="success" className="btn float-right" style={{width:250}} block>
                             {price}
                         </Button>
@@ -172,7 +210,13 @@ export default connect(mapStateToProps, {
   makeOffer,
   withdrawOffer,
   setOffersLoading,
+  getPurchase,
+  changePurchase,
+
 })(withRouter(Bargain));
+
+
+
 
 // export default Offer;
 //export default connect()(withRouter(Bargain));

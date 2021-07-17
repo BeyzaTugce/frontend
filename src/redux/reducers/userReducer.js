@@ -50,6 +50,10 @@ export default function user(state = getUser(), action) {
       return { user: action.user };
     case "GETUSER_SUCCESS":
       return { user: action.user };
+    case "GETSELLER_SUCCESS":
+       return { seller: action.user };
+    case "GETBUYER_SUCCESS":
+       return { buyer: action.user };
     default:
       return state;
   }
