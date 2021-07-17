@@ -23,7 +23,7 @@ const Bargain = (props) => {
   const purchase = useSelector((state) => state.purchase);
   let {match, getPurchase} = props;
     const [show, setShow] = useState(false);
-    const [enterOffer, setEnterOffer] = useState({ price: 10 });
+    const [enterOffer, setEnterOffer] = useState({ price: Math.floor(purchase?.purchase?.price * 0.6) });
     const [seller, setSeller] = React.useState();
     const [buyer, setBuyer] = React.useState();
     const handleToggle = () => {setShow(!show)};
@@ -61,6 +61,8 @@ const Bargain = (props) => {
       handleToggle();
       setTurn(!turn);
       props.getOfferHistory(purchaseId);
+      props.loadBuyer(purchase?.purchase?.buyer);
+      props.loadSeller(purchase?.purchase?.seller);
     };
 
 
@@ -72,7 +74,7 @@ const Bargain = (props) => {
       props.loadSeller(purchase?.purchase?.seller);
 
      // document.write(seller.firstname);
-    }, [match.params]);
+    }, []);
     //console.log(purchase.purchase.seller);
     // loadBuyer("60edb706c917c34e50150ae0");
     // loadSeller("60f043471af3a3e352a4abf4");
@@ -148,7 +150,7 @@ const Bargain = (props) => {
                 }}
                 axis="x"
                 x={enterOffer.price}
-                xmin={(offersArray && (offersArray[offersArray.length-1]+1)) || 10}
+                xmin={(offersArray && (offersArray[offersArray.length-1]+1)) || Math.floor(purchase?.purchase?.price * 0.6)}
                 xmax={purchase?.purchase?.price}
                 onChange={({ x }) => setEnterOffer(offer => ({ ...offer, price: x }))}
                 />
