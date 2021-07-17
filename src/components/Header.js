@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { withRouter } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import {
@@ -38,12 +38,30 @@ const Header = ({ auth, props }) => {
   const { isAuthenticated, user } = auth;
 
   const garage = useSelector((state) => state.garage);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedTerm, setDebouncedTerm] = useState(searchTerm);
   const history = useHistory();
+
+  //Set search item with debouncing
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setDebouncedTerm(searchTerm);
+    }, 100);
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [searchTerm]);
+
 
   useEffect(() => {
     store.dispatch(getGarages());
   }, [] );
 
+  const onClickSearch = () => {
+    //event.preventDefault();
+    history.push(`/search?term=${debouncedTerm}`);
+    //props.onSearchSubmit(debouncedTerm);
+  };
 
   const onMyGarage = () => {
     store.dispatch(getGarages());
@@ -94,11 +112,14 @@ const Header = ({ auth, props }) => {
                 type="text"
                 className="form-control border border-right-0"
                 placeholder="Search for an item or a hashtag"
+                value={searchTerm}
+                onChange={e => setSearchTerm(e.target.value)}
               />
               <span className="input-group-append">
                 <Button
                   className="btn shadow-none border-left-0"
                   variant="light"
+                  onClick={onClickSearch}
                 >
                   <Search size={18} className="text-white my-lg-1" />
                 </Button>
