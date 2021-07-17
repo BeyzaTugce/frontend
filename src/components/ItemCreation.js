@@ -44,6 +44,7 @@ function ItemCreation(props) {
   const [itemTags, setItemTags] = React.useState([]);
   const [itemPrice, setItemPrice] = React.useState("");
   const [itemImage, setItemImage] = React.useState([]);
+  const [garageId, setGarageId] = React.useState([]);
 
 
   const extractItem = () => {
@@ -55,6 +56,7 @@ function ItemCreation(props) {
     setItemTags(props.item.itemTags);
     setItemPrice(props.item.itemPrice);
     setItemImage(props.item.itemImage);
+    setGarageId(props.item.garageId);
   };
 
   useEffect(() => {
@@ -73,9 +75,12 @@ function ItemCreation(props) {
   };
 
   const removeFromList = (input) => {
+    console.log("remove list itemcreation");
+
     if (itemList.includes(input)) {
-      itemList.filter(item => item.id !== input.id);
-      setItemList([...itemList]);
+      console.log("remove list input");
+
+      setItemList([...itemList.filter(item => item.id != input.id)]);
     }
   };
 
@@ -107,7 +112,7 @@ function ItemCreation(props) {
     };
 
     if (!props.garageCreated){
-      back.garageId = null;
+      back.garageId = garageId;
     }
     else{
       console.log("itemcreation stringfy:"+JSON.stringify(garage.garages.garages.filter(g => g.user == user._id)));
@@ -145,6 +150,7 @@ function ItemCreation(props) {
   const onRemove = (e) => {
     e.preventDefault();
     removeFromList(packItem());
+    console.log("onRemove itemcreation");
     props.dispatch(deleteItem(packItem()))
   }
 

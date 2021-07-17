@@ -38,44 +38,34 @@ const Header = ({ auth, props }) => {
   const { isAuthenticated, user } = auth;
 
   const garage = useSelector((state) => state.garage);
-  const [allGarages, setAllGarages] = React.useState([]);
-  const [myGaragePath, setMyGaragePath] = React.useState(false);
-
   const history = useHistory();
 
   useEffect(() => {
     store.dispatch(getGarages());
-    //setAllGarages(garage.garages);
   }, [] );
 
-  //console.log(garage.garages.garages.filter(g => g.user == user._id).length);
-  //garage.garages.garages.filter(g => g.user == user._id).map( g => {id = g._id});
 
-  let path = ""
   const onMyGarage = () => {
-    //setMyGaragePath(!myGaragePath);
+    store.dispatch(getGarages());
     if (garage.garages.garages.filter(g => g.user == user._id).length === 0){
-      //props.history.push("/garage");
-      path = "/garage"
+      history.push("/garage");
     }
     else{
-      garage.garages.garages.filter(g => g.user == user._id).map(  g => {path = "/garage"+g._id});
+      garage.garages.garages.filter(g => g.user == user._id).map(  g => {history.push("/garage/"+g._id)});
     }
   };
 
+  const onClickCreateGarage = () => {
+    history.push("/yourgarage");
+  };
+
   const onClickLogin = () => {
-    // close this menu
-    // props.onClose();
-    // navigate to the login page
     history.push("/login");
   };
 
   const onClickLogout = () => {
-    // trigger redux logout action
     store.dispatch(logoutNew());
-    // close this menu
     // props.onClose();
-    // navigate to the home page
     history.push("/");
   };
 
@@ -128,15 +118,15 @@ const Header = ({ auth, props }) => {
           <Nav.Link href="#cart">
             <Cart3 size={28} />
           </Nav.Link>
-          {!isAuthenticated ? (
-              <Nav.Link href="/yourgarage">
-                <House size={28} />
-              </Nav.Link>
-          ) : <Nav.Link href="/garage">
-            <House size={28} />
-          </Nav.Link>
-          }
 
+          <NavDropdown alignRight title={<House size={28} />}>
+            {!isAuthenticated ? (
+                <div>
+                  <NavDropdown.Item onClick={onClickCreateGarage}>SignUp</NavDropdown.Item>
+                </div>
+            ) :  <div>
+              <NavDropdown.Item onClick={onMyGarage}>MyGarage</NavDropdown.Item> </div> }
+          </NavDropdown>
           <NavDropdown alignRight title={<PersonCircle size={28} />}>
           {!isAuthenticated ? (
                   <div>
