@@ -9,6 +9,7 @@ import {
   deleteGarage, getGarages
 } from "../redux/actions/GarageActions";
 import PropTypes from "prop-types";
+import Header from "../components/Header";
 
 /**
  * For register new users
@@ -48,12 +49,15 @@ function GarageCreationView(props) {
   };
 
   return (
-      <GarageCreationComponent
-        newItem={newItem}
-        garage={garage.garage}
-        onCreate={onCreate}
-        garageCreated={garageCreated}
-      />
+      <div>
+        <Header/>
+        <GarageCreationComponent
+            newItem={newItem}
+            garage={garage.garage}
+            onCreate={onCreate}
+            garageCreated={garageCreated}
+        />
+      </div>
   );
 }
 

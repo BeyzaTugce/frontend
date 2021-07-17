@@ -84,7 +84,7 @@ const Header = ({ auth, props }) => {
   const onClickLogout = () => {
     store.dispatch(logoutNew());
     // props.onClose();
-    history.push("/");
+    history.push("/home");
   };
 
   //TODO: Change the logo to .svg
@@ -99,7 +99,7 @@ const Header = ({ auth, props }) => {
         sticky="top"
         className="header-navbar navbar fixed-top justify-content-between"
       >
-        <NavbarBrand href="/">
+        <NavbarBrand href="/home">
           <img
             src={logo}
             style={{ width: 200, marginTop: -7, marginBottom: -10 }}

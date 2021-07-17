@@ -9,6 +9,7 @@ import {
   withdrawOffer,
   setOffersLoading,
 } from "../redux/actions/OfferActions";
+import Header from "../components/Header";
 /**
  * For register new users
  * @param {props} props
@@ -23,7 +24,10 @@ const BargainView = props => {
   }, [props.offer.offers]);
   
   return (
-    <BargainComponent />
+      <div>
+        <Header/>
+        <BargainComponent />
+      </div>
     );
 }
 

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { connect, useSelector } from "react-redux";
 import OrderDetails from "../components/OrderDetails";
 import { getOrder, getSeller, getItems } from "../redux/actions/OrderActions";
+import Header from "../components/Header";
 
 function OrderDetailsView(props) {
     let {match, getOrder, getSeller, getItems} = props;
@@ -20,13 +21,16 @@ function OrderDetailsView(props) {
     }, [match.params]);
 
     return (
-        <OrderDetails
-            order={order.order}
-            user={user.user}
-            seller= {order.seller}
-            items={order.items}
-            isLoggedIn={!!user.user}
-        />
+        <div>
+            <Header/>
+            <OrderDetails
+                order={order.order}
+                user={user.user}
+                seller= {order.seller}
+                items={order.items}
+                isLoggedIn={!!user.user}
+            />
+        </div>
     );
 }
 

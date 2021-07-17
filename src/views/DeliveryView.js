@@ -4,6 +4,7 @@ import { connect, useSelector } from "react-redux";
 
 import DeliveryComponent from "../components/Delivery";
 import { addPickUp } from "../redux/actions/PickUpActions";
+import Header from "../components/Header";
 
 /**
  * For register new users
@@ -24,11 +25,14 @@ function DeliveryView(props) {
   };
 
   return (
-    <DeliveryComponent
-      onCreate={onCreate}
-      // onRemove = {onRemove}
-      onCancel={onCancel}
-    />
+      <div>
+        <Header/>
+        <DeliveryComponent
+            onCreate={onCreate}
+            // onRemove = {onRemove}
+            onCancel={onCancel}
+        />
+      </div>
   );
 }
 

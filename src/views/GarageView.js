@@ -6,6 +6,7 @@ import Garage from "../components/Garage";
 import { getGarage, getSeller, getItems } from "../redux/actions/GarageActions";
 
 import { addPurchase } from "../redux/actions/PurchaseActions";
+import Header from "../components/Header";
 function GarageView(props) {
   
   let {match, getGarage, getSeller, getItems ,addPurchase} = props;
@@ -45,16 +46,19 @@ function GarageView(props) {
   // console.log("pruchaseID "+purchase.pur);
   };
   return (
-    <Garage
-      garage={garage.garage}
-      user={user.user}
-      seller= {garage.seller}
-      items={garage.items}
-      purchase= {purchase.purchase}
-      onCreatePurchase = {onCreatePurchase}
-      purchaseId= {purchase}
-      //isLoggedIn={!!user.user}
-    />
+      <div>
+        <Header/>
+        <Garage
+            garage={garage.garage}
+            user={user.user}
+            seller= {garage.seller}
+            items={garage.items}
+            purchase= {purchase.purchase}
+            onCreatePurchase = {onCreatePurchase}
+            purchaseId= {purchase}
+            //isLoggedIn={!!user.user}
+        />
+      </div>
   );
 
 

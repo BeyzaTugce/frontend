@@ -32,7 +32,6 @@ const App = () => {
       <div className="wrapper">
         <Router>
           <React.Fragment>
-            <Header />
             <Switch>
               {routes.map((route, i) => (
                 <Route key={i} {...route} />

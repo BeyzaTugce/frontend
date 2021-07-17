@@ -5,6 +5,7 @@ import { connect, useSelector } from "react-redux";
 import AdminSignUpComponent from "../components/AdminSignUp";
 
 import { register } from "../redux/actions/AdminActions";
+import Header from "../components/Header";
 
 /**
  * For register new users
@@ -31,11 +32,14 @@ function AdminSignUpView(props) {
   };
 
   return (
-    <AdminSignUpComponent
-      admin={admin}
-      onRegister={onRegister}
-      onCancel={onCancel}
-    />
+      <div>
+        <Header/>
+        <AdminSignUpComponent
+            admin={admin}
+            onRegister={onRegister}
+            onCancel={onCancel}
+        />
+      </div>
   );
 }
 

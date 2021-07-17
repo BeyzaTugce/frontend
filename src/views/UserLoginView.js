@@ -4,6 +4,7 @@ import { connect, useSelector } from "react-redux";
 import LoginComponent from "../components/Login";
 
 import { login } from "../redux/actions/UserActions";
+import Header from "../components/Header";
 
 function UserLoginView(props) {
   // const user = useSelector((state) => state.user);
@@ -27,7 +28,10 @@ function UserLoginView(props) {
   // };
 
   return (
-    <LoginComponent/>
+      <div>
+        <Header/>
+        <LoginComponent/>
+      </div>
   );
 }
 

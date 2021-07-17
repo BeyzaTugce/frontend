@@ -1,12 +1,11 @@
-import MainPageView from "./components/CategoryBar";
-
+//import MainPageView from "./components/CategoryBar";
+import MainPageView from "./views/MainPageView";
 import GarageView from "./views/GarageView";
 import GarageCreationView from "./views/GarageCreationView";
 import SignUpView from "./views/SignUpView";
 import UserLoginView from "./views/UserLoginView";
 import DeliveryView from "./views/DeliveryView";
 import AdminSignUpView from "./views/AdminSignUpView";
-import ItemView from "./components/ItemCreation";
 import BargainView from "./views/BargainView";
 import VisitorView from "./views/VisitorView";
 import OrderDetailsView from "./views/OrderDetailsView";
@@ -17,7 +16,7 @@ import Search from "./components/Search";
 
 const routes = [
   {
-    path: "/Header",
+    path: "/home",
     component: MainPageView,
   },
   {

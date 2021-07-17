@@ -5,6 +5,7 @@ import { connect, useSelector } from "react-redux";
 import SignUpComponent from "../components/Signup";
 
 import { register } from "../redux/actions/UserActions";
+import Header from "../components/Header";
 
 /**
  * For register new users
@@ -58,7 +59,10 @@ function SignUpView(props) {
   // };
 
   return (
-    <SignUpComponent/>
+      <div>
+        <Header/>
+        <SignUpComponent/>
+      </div>
   );
 }
 

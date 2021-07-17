@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { connect, useSelector } from "react-redux";
 import Search from "../components/Search";
 import { getItem, getItems } from "../redux/actions/ItemActions";
+import Header from "../components/Header";
 
 function SearchView(props) {
     let {match, getItem, getItems} = props;
@@ -15,9 +16,10 @@ function SearchView(props) {
     }, [match.params]);
 
     return (
-        <Search
-            item={item.item}
-        />
+        <div>
+            <Header/>
+            <Search item={item.item}/>
+        </div>
     );
 
 
