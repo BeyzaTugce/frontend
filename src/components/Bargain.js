@@ -15,7 +15,7 @@ import {
 import { withRouter } from "react-router-dom";
 import store from '../redux/store';
 import { getPurchase,changePurchase } from "../redux/actions/PurchaseActions";
-import { getSeller, getBuyer } from "../redux/actions/UserActions";
+import { loadBuyer, loadSeller } from "../redux/actions/OfferActions";
 
 const Bargain = (props) => {
   const user = useSelector((state) => state.user);
@@ -64,11 +64,13 @@ const Bargain = (props) => {
     useEffect(() => {
       let purchaseId = match.params.id;
       getPurchase(purchaseId);
-      getSeller(purchase.purchase.seller);
-      getBuyer(purchase.purchase.buyer);
+      props.loadBuyer(purchase?.purchase?.buyer);
+      props.loadSeller(purchase?.purchase?.seller);
      // document.write(seller.firstname);
     }, [match.params]);
-
+    //console.log(purchase.purchase.seller);
+    // loadBuyer("60edb706c917c34e50150ae0");
+    // loadSeller("60f043471af3a3e352a4abf4");
     const handleCancelClick = e => {
       e.preventDefault();
       props.withdrawOffer(purchaseId);
@@ -90,6 +92,7 @@ const Bargain = (props) => {
       back.buyer = purchase.purchase.buyer;
       back.seller = purchase.purchase.seller;
       back.garageId = purchase.purchase.garageId;
+      back.method = purchase.purchase.method;
       back.price = offersArray[offersArray.length-1];
       back.selectedItemList = purchase.purchase.selectedItemList;
       back.purchaseStatus= "DeliveryScheduling";
@@ -196,6 +199,8 @@ Bargain.propTypes = {
   makeOffer: PropTypes.func.isRequired,
   withdrawOffer: PropTypes.func.isRequired,
   setOffersLoading: PropTypes.func.isRequired,
+  loadBuyer: PropTypes.func.isRequired,
+  loadSeller: PropTypes.func.isRequired,
   offer: PropTypes.object.isRequired
 };
 
@@ -212,6 +217,8 @@ export default connect(mapStateToProps, {
   setOffersLoading,
   getPurchase,
   changePurchase,
+  loadBuyer,
+  loadSeller
 
 })(withRouter(Bargain));
 
