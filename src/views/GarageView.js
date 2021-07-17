@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import { connect, useSelector } from "react-redux";
 
 import { withRouter } from "react-router-dom";
@@ -13,9 +13,10 @@ function GarageView(props) {
   
   const [returnPurchase, setReturnPurchase] = React.useState();
   const garage = useSelector((state) => state.garage);
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.auth);
   const purchase = useSelector((state) => state.purchase);
- 
+
+
   useEffect(() => {
     let garageId = match.params.id;
     getGarage(garageId);
@@ -31,8 +32,8 @@ function GarageView(props) {
   useEffect(() => {
     let garageId = match.params.id;
     getItems(garageId);
-  
   }, [match.params]);
+
 
 
   const onCreatePurchase = (purchased) => {

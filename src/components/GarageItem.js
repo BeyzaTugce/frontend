@@ -78,15 +78,24 @@ const GarageItem = (props) => {
         >
           {props.button1Name}
         </Button>
-        {props.condition ?
-          <Button
-          className="btn border-0"
-          variant="dark"
-          style={{ backgroundColor: "#85A582", width: 80 }}
-          onClick={props.onRemove}
-          >
+        {props.userView ?
+            <Button
+              className="btn border-0"
+              variant="dark"
+              style={{ backgroundColor: "#85A582", width: 80 }}
+              onClick={props.onRemove}
+            >
             {props.button2Name}
-          </Button> : null
+            </Button> :
+            props.condition ?
+                <Button
+                  className="btn border-0"
+                  variant="dark"
+                  style={{ backgroundColor: "#85A582", width: 80 }}
+                  onClick={props.onRemove}
+                >
+                  {props.button2Name}
+                </Button> : null
         }
 
       </div>

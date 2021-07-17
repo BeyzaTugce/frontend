@@ -168,7 +168,9 @@ const Garage = (props) => {
     }
   };
 
-  const renderedList = garageItems.map((garageItem) => {
+
+
+  const renderedListBuyer = garageItems.map((garageItem) => {
     return (
       <GarageItem
         name={garageItem.name}
@@ -178,7 +180,8 @@ const Garage = (props) => {
         button1Name={"Buy"}
         button2Name={"Bargain"}
         condition={bargain}
-        //image={garageItem.image}
+        userView={false}
+          //image={garageItem.image}
         onClickSelect={() =>
          {
            setTotalPrice(totalPrice+garageItem.price);
@@ -195,6 +198,38 @@ const Garage = (props) => {
       />
     );
   });
+
+  const renderedListUser = garageItems.map((garageItem) => {
+    return (
+        <GarageItem
+            name={garageItem.name}
+            info={garageItem.info}
+            tags={garageItem.tags}
+            price={garageItem.price}
+            button1Name={"Edit"}
+            button2Name={"Remove"}
+            condition={true}
+            userView={true}
+            //image={garageItem.image}
+            onClickSelect={() =>
+            {
+              setTotalPrice(totalPrice+garageItem.price);
+              setNumSelectedItems(numSelectedItems+1);
+              addToSelected(garageItem);
+            }
+            }
+            onClickDeselect={() =>
+            {
+              setTotalPrice(totalPrice-garageItem.price);
+              setNumSelectedItems(numSelectedItems-1);
+              removeFromSelected(garageItem);
+            }}
+        />
+    );
+  });
+
+  //console.log("seller:"+ JSON.stringify(props.garage.user));
+  //console.log("user:"+ JSON.stringify(props.user));
 
 
   //TODO: "Select All" button color
@@ -234,8 +269,10 @@ const Garage = (props) => {
             </Button>
           </div>
           <div className="list-whole w-100" style={{ paddingInline: 50 }}>
-            <ListGroup>{renderedList}</ListGroup>
-
+            {props.seller === props.user ?
+                <ListGroup>{renderedListBuyer}</ListGroup> :
+                <ListGroup>{renderedListUser}</ListGroup>
+            }
             <div
                 className="price-info-text text-center"
                 style={{ marginTop: 25, marginBottom: 25 }}

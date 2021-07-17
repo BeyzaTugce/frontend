@@ -39,8 +39,6 @@ function ItemCreation(props) {
   const user = useSelector((state) => state.auth.user);
 
   const [itemList, setItemList] = useState([]);
-
-  //const [itemGarage, setItemGarage] = React.useState(ObjectId);
   const [itemTitle, setItemTitle] = React.useState("");
   const [itemInfo, setItemInfo] = React.useState("");
   const [itemTags, setItemTags] = React.useState([]);
@@ -52,8 +50,6 @@ function ItemCreation(props) {
     if (!props.item) {
       return;
     }
-
-    //setItemGarage(props.item.garageId);
     setItemTitle(props.item.itemTitle);
     setItemInfo(props.item.itemInfo);
     setItemTags(props.item.itemTags);
@@ -69,22 +65,14 @@ function ItemCreation(props) {
   }, [props.user, props.item, props.new]);
 
 
-  /*useEffect(() => {
-    if (!garage.garages){
-      props.dispatch(getGarages());
-    }
-  }, [props.garageCreated, garage.garages]);*/
-
   const addToList = (input) => {
-    //setNewDate(input);
-    //props.dispatch(getGarages());
+    props.dispatch(getGarages());
     if (!itemList.includes(input)) {
       setItemList([...itemList, input]);
     }
   };
 
   const removeFromList = (input) => {
-    //setNewDate(input);
     if (itemList.includes(input)) {
       itemList.filter(item => item.id !== input.id);
       setItemList([...itemList]);
@@ -92,6 +80,7 @@ function ItemCreation(props) {
   };
 
   const onChangeItemTitle = (e) => {
+    props.dispatch(getGarages());
     setItemTitle(e.target.value);
   };
 
@@ -121,12 +110,13 @@ function ItemCreation(props) {
       back.garageId = null;
     }
     else{
-      //console.log("itemcreation:"+garage.garages.garages.filter(g => g.user == user._id));
       console.log("itemcreation stringfy:"+JSON.stringify(garage.garages.garages.filter(g => g.user == user._id)));
       garage.garages.garages.filter(g => g.user == user._id).map(x => {back.garageId = x._id});
       console.log(back.garageId);
     }
     back.name = itemTitle;
+    console.log(back.name);
+
     back.price = itemPrice;
     back.tags = itemTags;
     back.info = itemInfo;
@@ -139,19 +129,17 @@ function ItemCreation(props) {
     console.log("item?:"+props.garageCreated);
 
     if (props.garageCreated){
-      props.dispatch(addItem(packItem()));
-      console.log(packItem().garageId);
       garage.garages.garages.filter(g => g.user == user._id).map( g => {props.history.push("/garage/"+g._id)});
       console.log("garage view:"+garage.garages.garages.filter(g => g.user == user._id));
-
-      //props.history.push("/"+props.newId)
     }
   }
 
   const onCreate = (e) => {
     e.preventDefault();
     addToList(packItem());
-    //props.history.push("/");
+    if (props.garageCreated){
+      props.dispatch(addItem(packItem()))
+    }
   };
 
   const onRemove = (e) => {
@@ -167,11 +155,11 @@ function ItemCreation(props) {
 
   return (
     <div className="Item" style={{ paddingRight: 40, width: 800 }}>
-      <Button className="button-rounded" onClick={onCreate} type="save" style={{marginLeft: 200}}>
+      <Button className="button-rounded" onClick={onCreate} disabled={!props.garageCreated} type="save" style={{marginLeft: 200}}>
         <PlusLg></PlusLg>
       </Button>
       <FormLabel className="frame">Add Item</FormLabel>
-      <Button className="button-rounded" onClick={onMyGarage} type="save" style={{marginRight: -200}}>
+      <Button className="button-rounded" onClick={onMyGarage} disabled={!props.garageCreated} type="save" style={{marginLeft: 280}}>
         Go to My Garage!
       </Button>
       <ListGroup>
@@ -262,6 +250,8 @@ function ItemCreation(props) {
                   onRemove={onRemove}
                   button1Name={"Edit"}
                   button2Name={"Remove"}
+                  condition={true}
+                  userView={true}
               />
             );
           })}

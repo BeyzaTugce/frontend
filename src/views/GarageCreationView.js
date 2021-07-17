@@ -20,24 +20,6 @@ function GarageCreationView(props) {
 
   const [newItem, setNewItem] = React.useState(false);
   const [garageCreated, setGarageCreated] = React.useState(false);
-  const [allGarages, setAllGarages] = React.useState([]);
-  const [id, setId] = React.useState(null);
-
-  let createdGarage = null;
-
-  /*useEffect(() => {
-    props.dispatch(getGarages());
-    //setGarageCreated(true);
-    console.log("IN USE EFFECT"+garage.garages);
-    setAllGarages(garage.garages);
-  }, [garageCreated] );*/
-
-  //console.log("onCreate in view garage:"+garage.garages.garages);
-  //console.log("onCreate in view garage:"+JSON.stringify(allGarages.garages.filter(g => g.user == user._id)));
-  //garage.garages.garages.filter(g => g.user == user._id).map( g => {setId(g._id)});
-  //console.log("garage view?:"+garageCreated);
-
-  //console.log("onCreate in view:"+id);
 
 
   useEffect(() => {
@@ -49,11 +31,9 @@ function GarageCreationView(props) {
 
   const onCreate = (newGarage) => {
     props.dispatch(addGarage(newGarage));
-    //props.dispatch(getGarages());
     setGarageCreated(true);
     console.log("garageCreated:"+garageCreated);
   };
-
 
   const onRemove = (garage) => {
     props.dispatch(deleteGarage(garage.id));
@@ -71,10 +51,8 @@ function GarageCreationView(props) {
       <GarageCreationComponent
         newItem={newItem}
         garage={garage.garage}
-        garages={garage.garages}
         onCreate={onCreate}
         garageCreated={garageCreated}
-        //newId={id}
       />
   );
 }
@@ -86,11 +64,6 @@ GarageCreationView.propTypes = {
   garage: PropTypes.object,
   newItem: PropTypes.object,
   garageCreated: PropTypes.bool,
-  createdGarage: PropTypes.object,
-  newId: PropTypes.string,
-  garages: PropTypes.object,
-  getgarages: PropTypes.func.isRequired,
-
 };
 
 export default connect()(withRouter(GarageCreationView));
