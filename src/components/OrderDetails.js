@@ -35,11 +35,11 @@ const OrderDetails = (props) => {
 
         setStatus(props.order.enum);
         setOrderDate(props.order.ordered);
-        setMethod(props.order.method);
+        /*setMethod(props.order.method);
         setShipAddress(props.order.shipAddress);
         setPickUpAddress(props.order.pickUpAddress);
         setPickUpDate(props.order.pickUpDate);
-        setShipDate(props.order.shipDate);
+        setShipDate(props.order.shipDate);*/
         setTotalwoTax(props.order.total);
         setTax(props.order.brokerageFee);
     }

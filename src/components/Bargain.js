@@ -64,8 +64,8 @@ const Bargain = (props) => {
     useEffect(() => {
       let purchaseId = match.params.id;
       getPurchase(purchaseId);
-      getSeller(purchase.purchase.seller);
-      getBuyer(purchase.purchase.buyer);
+     // getSeller(purchase.purchase.seller);
+      //getBuyer(purchase.purchase.buyer);
      // document.write(seller.firstname);
     }, [match.params]);
 

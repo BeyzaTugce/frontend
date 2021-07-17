@@ -57,7 +57,7 @@ const Garage = (props) => {
     setPurchaseSeller(props.purchase.seller);
     setPurchaseGarage(props.purchase.garageId);
     setPurchasePrice(props.purchase.price);
-    setPurchases(props.purchase.purchases);
+   // setPurchases(props.purchase.purchases);
    // setPurchaseStatus(props.purchase.purchaseStatus);
   //  setSelectedItemList(props.purchase.selectedItemList);
   };
@@ -73,7 +73,7 @@ const Garage = (props) => {
     back.garageId = garageId;
     back.price = totalPrice;
     back.selectedItemList = selectedItemList;
-
+    back.method ="Delivery";
     return back;
   };
 
