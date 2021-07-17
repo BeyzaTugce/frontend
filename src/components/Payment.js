@@ -10,7 +10,7 @@ const Payment = (props) => {
           return actions.order.create({
             purchase_units: [{
               amount: {
-                currency_code: "EURO",
+                currency_code: "USD",
                 value: "0.01"
               }
             }],
