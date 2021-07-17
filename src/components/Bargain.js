@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { Container, Button, ListGroup, ListGroupItem, Modal } from "react-bootstrap";
+import { Container, Button, ListGroup, ListGroupItem, Modal, Alert } from "react-bootstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./Bargain.css";
 import { PropTypes } from "prop-types";
@@ -11,14 +11,15 @@ import {
   makeOffer,
   withdrawOffer,
   setOffersLoading,
+  loadBuyer, 
+  loadSeller
 } from "../redux/actions/OfferActions";
 import { withRouter } from "react-router-dom";
 import store from '../redux/store';
-import { getPurchase,changePurchase } from "../redux/actions/PurchaseActions";
-import { loadBuyer, loadSeller } from "../redux/actions/OfferActions";
+import { getPurchase, changePurchase } from "../redux/actions/PurchaseActions";
 
 const Bargain = (props) => {
-  const user = useSelector((state) => state.user);
+  const loggedInUser = useSelector((state) => state.auth.user);
   const purchase = useSelector((state) => state.purchase);
   let {match, getPurchase} = props;
     const [show, setShow] = useState(false);
@@ -28,9 +29,10 @@ const Bargain = (props) => {
     const handleToggle = () => {setShow(!show)};
     const [turn, setTurn] = useState(false);
     const [thisOfferHistory, setThisOfferHistory] = useState([]);
-    const purchaseId = props.match.params.id
+    const purchaseId = match.params.id;
     const history = useHistory();
     const { offers } = props.offer;
+    
     let offersArray = offers?.offerHistory;
 
     //const { loading } = props.loading;
@@ -58,13 +60,14 @@ const Bargain = (props) => {
       // Close modal
       handleToggle();
       setTurn(!turn);
+      props.getOfferHistory(purchaseId);
     };
 
 
     useEffect(() => {
-      let purchaseId = match.params.id;
+      let purchaseId = props.match.params.id;
       getPurchase(purchaseId);
-
+      props.getOfferHistory(purchaseId);
       props.loadBuyer(purchase?.purchase?.buyer);
       props.loadSeller(purchase?.purchase?.seller);
 
@@ -76,7 +79,7 @@ const Bargain = (props) => {
     const handleCancelClick = e => {
       e.preventDefault();
       props.withdrawOffer(purchaseId);
-      history.push('/garage');
+      history.push('/home');
     }
 
     const acceptOffer = (e) => {
@@ -146,7 +149,7 @@ const Bargain = (props) => {
                 axis="x"
                 x={enterOffer.price}
                 xmin={(offersArray && (offersArray[offersArray.length-1]+1)) || 10}
-                xmax={100}
+                xmax={purchase?.purchase?.price}
                 onChange={({ x }) => setEnterOffer(offer => ({ ...offer, price: x }))}
                 />
             </div>
@@ -169,8 +172,28 @@ const Bargain = (props) => {
         >
           Cancel Bargain
         </Button>
+
         <ListGroup>
           <TransitionGroup className="offers">
+            {offers?.buyer == loggedInUser ? (
+            <div className="d-flex w-100 justify-content-between mt-3">
+                <Alert variant="info" style={{"font-size":20, "text-align":"center", width:250}} block>
+                  <strong>{props.buyer?.username}</strong>
+                </Alert>
+                <Alert variant="danger" style={{"font-size":20, "text-align":"center", width:250}} block>
+                  <strong>{props.seller?.username}</strong>
+                </Alert>
+            </div>
+            ) : (
+            <div className="d-flex justify-content-between mt-3">
+                <Alert variant="danger" style={{"font-size":20,"text-align":"center", width:250}} block>
+                  <strong>{props.seller?.username}</strong>
+                </Alert>
+                <Alert variant="info" style={{"font-size":20, "text-align":"center", width:250}} block>
+                  <strong>{props.buyer?.username}</strong>
+                </Alert>
+            </div>
+            )}
             {offers?.offerHistory?.map((price, index) => (
               <CSSTransition key={index} timeout={1000} classNames="fade">
                 {(index%2) ? (
@@ -208,7 +231,9 @@ Bargain.propTypes = {
 
 const mapStateToProps = (state) => ({
   offer: state.offer,
-  loading: state.loading
+  loading: state.loading,
+  buyer: state.offer.buyer,
+  seller: state.offer.seller
 });
 
 // this.props.withdrawOffer, this.props.getOfferHistory, ...
