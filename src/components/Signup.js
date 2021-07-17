@@ -136,7 +136,7 @@ const Signup = ({
   // }
 
   const isPassValid = (val) => {
-    let regPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    const regPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!-_@#$%^&*?]{8,}$/;
     if(regPass.test(val))
       return true
     return false
@@ -187,7 +187,7 @@ const Signup = ({
       setMsg(null);
     }
     if(isAuthenticated) {
-      history.push("/")
+      history.push("/home")
     }
   }, [error, msg, isAuthenticated])
 

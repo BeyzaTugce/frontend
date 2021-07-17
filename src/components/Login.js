@@ -52,7 +52,7 @@ const Login = ({
       setMsg(null);
     }
     if(isAuthenticated) {
-      history.push("/garage")
+      history.push("/home")
     }
   }, [error, msg, isAuthenticated])
 
