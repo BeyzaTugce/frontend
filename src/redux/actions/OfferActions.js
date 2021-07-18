@@ -36,25 +36,25 @@ export const withdrawOffer = id => dispatch => {
           }))
 };
 
-export const loadBuyer = id => dispatch => {
-    axios
-        .get(`${otherURL}/buyerseller/${id}`)
-        .then(res => dispatch({
-            type: "LOAD_BUYER",
-            payload: res.data
-          })
-        )
-}
+// export const loadBuyer = id => dispatch => {
+//     axios
+//         .get(`${otherURL}/buyerseller/${id}`)
+//         .then(res => dispatch({
+//             type: "LOAD_BUYER",
+//             payload: res.data
+//           })
+//         )
+// }
 
-export const loadSeller = id => dispatch => {
-  axios
-      .get(`${otherURL}/buyerseller/${id}`)
-      .then(res => dispatch({
-          type: "LOAD_SELLER",
-          payload: res.data
-        })
-      )
-}
+// export const loadSeller = id => dispatch => {
+//   axios
+//       .get(`${otherURL}/buyerseller/${id}`)
+//       .then(res => dispatch({
+//           type: "LOAD_SELLER",
+//           payload: res.data
+//         })
+//       )
+// }
 
 export const setOffersLoading = () => {
   return {

@@ -11,17 +11,18 @@ import {
   makeOffer,
   withdrawOffer,
   setOffersLoading,
-  loadBuyer, 
-  loadSeller
+  // loadBuyer, 
+  // loadSeller
 } from "../redux/actions/OfferActions";
 import { withRouter } from "react-router-dom";
 import store from '../redux/store';
-import { getPurchase, changePurchase } from "../redux/actions/PurchaseActions";
+import { getPurchase, changePurchase, loadBuyer, loadSeller } from "../redux/actions/PurchaseActions";
+import GarageItem from "./GarageItem";
 
 const Bargain = (props) => {
   const loggedInUser = useSelector((state) => state.auth.user);
   const purchase = useSelector((state) => state.purchase);
-  let {match, getPurchase} = props;
+  let {match, getPurchase, loadBuyer, loadSeller} = props;
     const [show, setShow] = useState(false);
     const [enterOffer, setEnterOffer] = useState({ price: Math.floor(purchase?.purchase?.price * 0.6) });
     const [seller, setSeller] = React.useState();
@@ -61,8 +62,8 @@ const Bargain = (props) => {
       handleToggle();
       setTurn(!turn);
       props.getOfferHistory(purchaseId);
-      props.loadBuyer(purchase?.purchase?.buyer);
-      props.loadSeller(purchase?.purchase?.seller);
+      loadBuyer(purchase?.purchase?.buyer);
+      loadSeller(purchase?.purchase?.seller);
     };
 
 
@@ -70,8 +71,8 @@ const Bargain = (props) => {
       let purchaseId = props.match.params.id;
       getPurchase(purchaseId);
       props.getOfferHistory(purchaseId);
-      props.loadBuyer(purchase?.purchase?.buyer);
-      props.loadSeller(purchase?.purchase?.seller);
+      loadBuyer(purchase?.purchase?.buyer);
+      loadSeller(purchase?.purchase?.seller);
 
      // document.write(seller.firstname);
     }, []);
@@ -106,6 +107,17 @@ const Bargain = (props) => {
   
       return back;
     };
+
+    const renderedListItem = purchase.purchase?.selectedItemList.map((item) => {
+      return (
+          <GarageItem
+              name={item.name}
+              info={item.info}
+              tags={item.tags}
+              price={item.price}
+          />
+      );
+    });
 
     return (
       <Container>
@@ -174,7 +186,7 @@ const Bargain = (props) => {
         >
           Cancel Bargain
         </Button>
-
+        <ListGroup>{renderedListItem}</ListGroup>       
         <ListGroup>
           <TransitionGroup className="offers">
             {offers?.buyer == loggedInUser ? (
@@ -226,8 +238,6 @@ Bargain.propTypes = {
   makeOffer: PropTypes.func.isRequired,
   withdrawOffer: PropTypes.func.isRequired,
   setOffersLoading: PropTypes.func.isRequired,
-  loadBuyer: PropTypes.func.isRequired,
-  loadSeller: PropTypes.func.isRequired,
   offer: PropTypes.object.isRequired
 };
 
