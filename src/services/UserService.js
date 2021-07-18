@@ -1,4 +1,5 @@
 import HttpService from "./HttpService";
+import AuthService from "./AuthService";
 
 export default class UserService {
   static baseURL() {
@@ -33,6 +34,42 @@ export default class UserService {
         function (textStatus) {
           reject(textStatus);
         }
+      );
+    });
+  }
+
+  static getBuyer(id) {
+    return new Promise(async (resolve, reject) => {
+      await HttpService.get(
+          `${this.baseURL()}/buyerseller/${id}`,
+          function (data) {
+            if (data !== undefined || Object.keys(data).length !== 0) {
+              resolve(data);
+            } else {
+              reject("Error while retrieving user");
+            }
+          },
+          function (textStatus) {
+            reject(textStatus);
+          }
+      );
+    });
+  }
+
+  static getSeller(id) {
+    return new Promise(async (resolve, reject) => {
+      await HttpService.get(
+          `${this.baseURL()}/buyerseller/${id}`,
+          function (data) {
+            if (data !== undefined || Object.keys(data).length !== 0) {
+              resolve(data);
+            } else {
+              reject("Error while retrieving user");
+            }
+          },
+          function (textStatus) {
+            reject(textStatus);
+          }
       );
     });
   }

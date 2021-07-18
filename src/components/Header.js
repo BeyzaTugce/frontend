@@ -19,16 +19,8 @@ import { logoutNew } from "../redux/actions/AuthActions";
 import store from '../redux/store';
 import {getGarages} from "../redux/actions/GarageActions"
 import CategoryBar from "./CategoryBar";
+import {getPurchases} from "../redux/actions/PurchaseActions";
 
-/*const useStyles = makeStyles((theme) => ({
-    toolbar: {
-        flexGrow: 1,
-    },
-    title: {
-        flexGrow: 1,
-        paddingLeft: theme.spacing(1),
-    },
-}));*/
 
 /**
  * Navigation bar of the app
@@ -37,6 +29,8 @@ import CategoryBar from "./CategoryBar";
 const Header = ({auth}) => {
   const { isAuthenticated, user } = auth;
   const garage = useSelector((state) => state.garage);
+  const purchase = useSelector((state) => state.purchase);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedTerm, setDebouncedTerm] = useState(searchTerm);
   const history = useHistory();
@@ -53,15 +47,32 @@ const Header = ({auth}) => {
 
   useEffect(() => {
     store.dispatch(getGarages());
+    store.dispatch(getPurchases());
   }, [] );
+
+  store.dispatch(getGarages());
 
   const onMyGarage = () => {
     store.dispatch(getGarages());
-    if (garage.garages.garages.filter(g => g.user == user._id).length === 0){
+    if (!garage.garages.garages.filter(g => g.user == user._id)){
       history.push("/garage");
     }
     else{
       garage.garages.garages.filter(g => g.user == user._id).map(  g => {history.push("/garage/"+g._id)});
+    }
+  };
+
+  const onMyPurchases = () => {
+    store.dispatch(getPurchases());
+    console.log("purchases:"+JSON.stringify((purchase.purchases)));
+    //console.log("buyer:"+JSON.stringify(purchase.purchases.purchases.filter(p => p.buyer == user._id)));
+    //purchase.purchases.purchases.filter(p => p.buyer == user._id).map( p => {history.push("/bargain/"+p._id)});
+
+    //history.push("/mypurchase");
+    if (!purchase.purchases.purchases.filter(p => p.buyer == user._id)) {
+    }
+    else {
+      purchase.purchases.purchases.filter(p => p.buyer == user._id).map( p => {history.push("/bargain/"+p._id)});
     }
   };
 
@@ -138,8 +149,11 @@ const Header = ({auth}) => {
                 <div>
                   <NavDropdown.Item onClick={onClickCreateGarage}>SignUp</NavDropdown.Item>
                 </div>
-            ) :  <div>
-              <NavDropdown.Item onClick={onMyGarage}>MyGarage</NavDropdown.Item> </div> }
+            ) : <div>
+              <NavDropdown.Item onClick={onMyGarage}>MyGarage</NavDropdown.Item>
+              <NavDropdown.Item onClick={onMyPurchases}>MyPurchases</NavDropdown.Item>
+            </div>
+            }
           </NavDropdown>
           <NavDropdown alignRight title={<PersonCircle size={28} />}>
           {!isAuthenticated ? (

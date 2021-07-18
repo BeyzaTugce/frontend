@@ -1,4 +1,7 @@
 import PurchaseService from "../../services/PurchaseService";
+import axios from 'axios';
+
+const otherURL = "http://localhost:4000/auth"
 
 export function addPurchase(purchase) {
   function onSuccess(returnedPurchase) {
@@ -76,4 +79,24 @@ export function changePurchase(changedPurchase) {
             onFailure(e);
         }
     };
+}
+
+export const loadBuyer = id => dispatch => {
+  axios
+      .get(`${otherURL}/buyerseller/${id}`)
+      .then(res => dispatch({
+          type: "LOAD_BUYER",
+          payload: res.data
+        })
+      )
+}
+
+export const loadSeller = id => dispatch => {
+  axios
+    .get(`${otherURL}/buyerseller/${id}`)
+    .then(res => dispatch({
+        type: "LOAD_SELLER",
+        payload: res.data
+      })
+    )
 }

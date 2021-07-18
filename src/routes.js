@@ -12,7 +12,7 @@ import OrderDetailsView from "./views/OrderDetailsView";
 import Search from "./components/Search";
 import Payment from "./components/Payment";
 import SearchView from "./views/SearchView";
-
+import PurchaseView from "./views/PurchaseView";
 // routes within the movie database example app
 // used for routing
 
@@ -65,7 +65,7 @@ const routes = [
   {
     path: "/payment",
     component: Payment,
-  }
+  },
  /* {
     path: "/item",
     component: ItemView,

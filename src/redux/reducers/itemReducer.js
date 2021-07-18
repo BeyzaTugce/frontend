@@ -1,7 +1,7 @@
 export default function itemReducer(state = {}, action) {
   switch (action.type) {
     case "GETITEMS_SUCCESS":
-      return { item: action.item };
+      return { items: action.items };
     case "DELETEITEM_SUCCESS":
       return { item: action.item };
     case "ADDITEM_SUCCESS":
