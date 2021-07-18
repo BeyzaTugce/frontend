@@ -41,7 +41,7 @@ function ItemCreation(props) {
   const [itemList, setItemList] = useState([]);
   const [itemTitle, setItemTitle] = React.useState("");
   const [itemInfo, setItemInfo] = React.useState("");
-  const [itemTags, setItemTags] = React.useState([]);
+  const [itemTags, setItemTags] = React.useState("");
   const [itemPrice, setItemPrice] = React.useState("");
   const [itemImage, setItemImage] = React.useState([]);
   const [garageId, setGarageId] = React.useState([]);
@@ -94,6 +94,7 @@ function ItemCreation(props) {
   };
 
   const onChangeItemTags = (e) => {
+    console.log(e.target.value);
     setItemTags(e.target.value);
   };
 
@@ -120,10 +121,8 @@ function ItemCreation(props) {
       console.log(back.garageId);
     }
     back.name = itemTitle;
-    console.log(back.name);
-
     back.price = itemPrice;
-    back.tags = itemTags;
+    back.tags = itemTags.split(" ");
     back.info = itemInfo;
     back.image = itemImage;
 

@@ -138,7 +138,7 @@ export const getUser = (id) => {
     console.log("failed to load a user", error);
   }
 
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     try {
       let user = await AuthService.getUser(id);
       dispatch(onSuccess(user));
@@ -156,9 +156,9 @@ export const getBuyer = (id) => {
     console.log("failed to load a user", error);
   }
 
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     try {
-      let buyer = await AuthService.getUser(id);
+      let buyer = await UserService.getBuyer(id);
       dispatch(onSuccess(buyer));
     } catch (e) {
       onFailure(e);
@@ -174,9 +174,9 @@ export const getSeller = (id) => {
     console.log("failed to load a user", error);
   }
 
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     try {
-      let seller = await AuthService.getUser(id);
+      let seller = await UserService.getSeller(id);
       dispatch(onSuccess(seller));
     } catch (e) {
       onFailure(e);

@@ -61,12 +61,9 @@ const GarageItem = (props) => {
           style={{ fontSize: 14 }}
           type="name"
           fullWidth
-          //value={props.tags.map(tag => {return "#"+tag})}
           required
-          // > {props.tags.map(tag => {return "#"+tag})} </div>
         >
-          {" "}
-          {props.tags}{" "}
+          {props.tags.map(tag => "#"+tag+" ")}
         </div>
       </div>
       <div className="justify-content-end d-inline-flex align-items-center justify-content-end">

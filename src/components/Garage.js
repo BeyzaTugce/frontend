@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Button, Image, ListGroup,Alert } from "react-bootstrap";
-import "./Garage.css";
 import { useHistory } from "react-router-dom";
 import GarageItem from "./GarageItem";
 import { connect, useSelector } from "react-redux";
@@ -78,8 +77,6 @@ const Garage = (props) => {
   };
 
   const addPurchase = (e) => {
-    
-  
     e.preventDefault();
     if(!purchase.purchase){
        props.onCreatePurchase(packPurchase());
@@ -87,6 +84,7 @@ const Garage = (props) => {
       }
     else {
       //console.log("purchase"+purchase.purchase._id);
+
       history.push(`../bargain/${purchase.purchase._id}`)
     }
   

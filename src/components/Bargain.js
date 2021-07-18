@@ -35,6 +35,19 @@ const Bargain = (props) => {
     
     let offersArray = offers?.offerHistory;
 
+    //let purchaseId = props.match.params.id;
+    getPurchase(purchaseId);
+    console.log(purchase.purchase);
+
+
+    useEffect(() => {
+
+        props.getOfferHistory(purchaseId);
+        props.loadBuyer(purchase?.purchase?.buyer);
+        props.loadSeller(purchase?.purchase?.seller);
+        // document.write(seller.firstname);
+    }, [match.params]);
+
     //const { loading } = props.loading;
 
     // useEffect(() => {
@@ -66,15 +79,6 @@ const Bargain = (props) => {
     };
 
 
-    useEffect(() => {
-      let purchaseId = props.match.params.id;
-      getPurchase(purchaseId);
-      props.getOfferHistory(purchaseId);
-      props.loadBuyer(purchase?.purchase?.buyer);
-      props.loadSeller(purchase?.purchase?.seller);
-
-     // document.write(seller.firstname);
-    }, []);
     //console.log(purchase.purchase.seller);
     // loadBuyer("60edb706c917c34e50150ae0");
     // loadSeller("60f043471af3a3e352a4abf4");
