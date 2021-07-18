@@ -6,6 +6,7 @@ import { getItems, getItem } from "../redux/actions/ItemActions";
 import Header from "../components/Header";
 import store from "../redux/store";
 import SearchItem from "../components/SearchItem";
+import {isElement} from "react-dom/test-utils";
 
 function SearchView(props) {
     //let {match, getItem, getItems} = props;
@@ -27,12 +28,13 @@ function SearchView(props) {
             if (filterItem(item,searchTerm)){
                 return (
                     <SearchItem
+                        key={item._id}
                         name={item.name}
                         info={item.info}
                         tags={item.tags}
                         price={item.price}
                         garageId={item.garageId}
-                    />)
+                    />);
             }
     });
 
@@ -40,6 +42,7 @@ function SearchView(props) {
         <div>
             <Header />
             <Search
+                items={items}
                 searchTerm={searchTerm}
                 foundItems={foundItems}
             />

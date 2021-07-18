@@ -8,14 +8,13 @@ const SearchItem = (props) => {
     useEffect(() => {
     }, [] );
 
-    //TODO: border on top
     return (
         <ListGroupItem
             className="d-inline-flex align-items-center justify-content-between border"
             style={{ borderColor: "#85A582"}}
         >
             <div className="content flex-fill text-center">
-                <div className="item-name" type="name" fullWidth required style={{ fontSize: 18, fontWeight:"bold" }}>
+                <div className="item-name" type="name" required style={{ fontSize: 18, fontWeight:"bold" }}>
                     {" "}
                     {props.name}{" "}
                 </div>
