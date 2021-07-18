@@ -9,9 +9,11 @@ import "react-nice-dates/build/style.css";
 import { useDateInput } from "react-nice-dates";
 import InputGroup from "react-bootstrap/InputGroup";
 import { getPurchase, changePurchase } from "../redux/actions/PurchaseActions";
-import store from '../redux/store';
+import store from "../redux/store";
 import { withRouter } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
+import ToggleButton from "react-bootstrap/ToggleButton";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
 
 const Delivery = (props) => {
   let { match, getPurchase } = props;
@@ -22,6 +24,8 @@ const Delivery = (props) => {
   const [location, setLocation] = React.useState("");
   const purchase = useSelector((state) => state.purchase);
   const [userType, setUserType] = useState("Unknown");
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [radioValue, setRadioValue] = React.useState("fasd");
 
   const timeInputProps = useDateInput({
     date,
@@ -34,25 +38,25 @@ const Delivery = (props) => {
 
   const addDate = (input) => {
     //setNewDate(input);
-    
+
     if (!newDate.includes(input)) {
       setNewDate([...newDate, input]);
     }
   };
   // for extracting the attributes of the given garage to the appropriate state variables
-  const extractPickUp = () => {
+  /* const extractPickUp = () => {
     if (!props.pickup) {
       return;
     }
     setLocation(props.pickup.availableDates);
     setNewDate(props.pickup.pickupLocation);
-  };
-  useEffect(() => {
+  };*/
+  /*useEffect(() => {
     if (!props.new) {
       //extractUser();
       extractPickUp();
     }
-  }, [props.user, props.pickup, props.new]);
+  }, [props.user, props.pickup, props.new]);*/
 
   useEffect(() => {
     let purchaseId = match.params.id;
@@ -63,12 +67,10 @@ const Delivery = (props) => {
     checkUser();
   }, [match.params]);
 
-
-  const checkUser = () => { 
+  const checkUser = () => {
     if (loggedInUser._id == purchase.purchase.seller) {
-        setUserType("Seller");
-    }
-    else if(loggedInUser._id == purchase.purchase.buyer){
+      setUserType("Seller");
+    } else if (loggedInUser._id == purchase.purchase.buyer) {
       setUserType("Buyer");
     }
   };
@@ -77,32 +79,35 @@ const Delivery = (props) => {
     let back = {
       ...props.purchase,
     };
-    back._id =purchase.purchase._id;
+    back._id = purchase.purchase._id;
     back.creationDate = purchase.purchase.creationDate;
     back.buyer = purchase.purchase.buyer;
     back.seller = purchase.purchase.seller;
     back.garageId = purchase.purchase.garageId;
-    back.price =purchase.purchase.price;
+    back.price = purchase.purchase.price;
     back.selectedItemList = purchase.purchase.selectedItemList;
     back.method = purchase.purchase.method;
-    back.purchaseStatus= purchase.purchase.purchaseStatus;
-    back.pickUpAddress = location;
-   // back.pickUpDate = selectedDate;
+    back.purchaseStatus = purchase.purchase.purchaseStatus;
+
+    if (userType == "Seller") {
+      back.availableDates = newDate;
+      back.pickupLocation = location;
+    } else if (userType == "Buyer") {
+      back.pickUpDate = selectedDate;
+    }
     return back;
   };
 
-
   // creating a object with all relevant data to update or create a changed garage
-  const packPickUp = () => {
+  /* const packPickUp = () => {
     let back = {
       ...props.pickup,
     };
    // back.purchaseId =  match.params.id;
-    back.availableDates = newDate;
-    back.pickupLocation = location;
+    
 
     return back;
-  };
+  };*/
 
   const onChangeLocation = (e) => {
     setLocation(e.target.value);
@@ -114,89 +119,128 @@ const Delivery = (props) => {
 
   const addPickUp = (e) => {
     e.preventDefault();
-    props.onCreate(packPickUp());
+    //   props.onCreate(packPickUp());
     store.dispatch(changePurchase(packPurchase()));
-    history.push(`../payment/${purchase.purchase._id}`)
-    
+    history.push(`../payment/${purchase.purchase._id}`);
+  };
+
+  const dateSelection = (e) => {
+    e.preventDefault();
+    setSelectedDate(e.target.value);
   };
 
   return (
     <div className="Delivery">
-      { userType == "Seller" ? (
-      <div>
-        <Container
-          className="contact-content debug-border"
-          style={{ display: "align-items-middle" }}
-        >
-          <Row>
-            <Col>
-              <div className="input-container">
-                <div>
-                  <h4>Please select available dates and times for pick-up</h4>
-                  <DatePickerCalendar
-                    date={date}
-                    onDateChange={setDate}
-                    locale={enGB}
-                    format="dd/MM/yyyy"
-                  >
-                    {({ inputProps, focused }) => (
-                      <input
-                        className={"input" + (focused ? " -focused" : "")}
-                        style={{ width: 150 }}
-                        {...inputProps}
-                      />
-                    )}
-                  </DatePickerCalendar>
-                  <input
-                    className="input"
-                    style={{ marginLeft: 16, width: 80 }}
-                    {...timeInputProps}
-                  />
-                  <Button
-                    className="btn border-0"
-                    variant="dark"
-                    style={{ backgroundColor: "#A282A5", marginRight: 8 }}
-                    onClick={() => {
-                      addDate(date);
-                    }}
-                  >
-                    Add
-                  </Button>
+      {userType == "Seller" ? (
+        <div>
+          <Container
+            className="contact-content debug-border"
+            style={{ display: "align-items-middle" }}
+          >
+            <Row>
+              <Col>
+                <div className="input-container">
+                  <div>
+                    <h4>Please select available dates and times for pick-up</h4>
+                    <DatePickerCalendar
+                      date={date}
+                      onDateChange={setDate}
+                      locale={enGB}
+                      format="dd/MM/yyyy"
+                    >
+                      {({ inputProps, focused }) => (
+                        <input
+                          className={"input" + (focused ? " -focused" : "")}
+                          style={{ width: 150 }}
+                          {...inputProps}
+                        />
+                      )}
+                    </DatePickerCalendar>
+                    <input
+                      className="input"
+                      style={{ marginLeft: 16, width: 80 }}
+                      {...timeInputProps}
+                    />
+                    <Button
+                      className="btn border-0"
+                      variant="dark"
+                      style={{ backgroundColor: "#A282A5", marginRight: 8 }}
+                      onClick={() => {
+                        addDate(date);
+                      }}
+                    >
+                      Add
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            </Col>
-            <Col>
-              <h4>Selected Dates</h4>
-              <p>
-                {newDate.map((item) => {
-                  return (
-                    <li>
-                      {item
-                        ? format(item, "dd MMM yyyy HH:mm", { locale: enGB })
-                        : ""}
-                    </li>
-                  );
-                })}
-              </p>
-            </Col>
-          </Row>
-          <InputGroup>
-            <InputGroup.Prepend>
-              <InputGroup.Text>Location</InputGroup.Text>
-            </InputGroup.Prepend>
-            <Form.Control
-              as="textarea"
-              aria-label="With textarea"
-              placeholder="Enter pick-up location"
-              fullWidth
-              value={location}
-              onChange={onChangeLocation}
-              //error={pickUpError !== ""}
-              required
-            />
-          </InputGroup>
-        </Container>
-        </div> ):  userType == "Buyer" ? "This is buyer"  : "You are not a buyer or seller. Ne arıyon karşim burada "}
+              </Col>
+              <Col>
+                <h4>Selected Dates</h4>
+                <p>
+                  {newDate.map((item) => {
+                    return (
+                      <li>
+                        {item
+                          ? format(item, "dd MMM yyyy HH:mm", { locale: enGB })
+                          : ""}
+                      </li>
+                    );
+                  })}
+                </p>
+              </Col>
+            </Row>
+            <InputGroup>
+              <InputGroup.Prepend>
+                <InputGroup.Text>Location</InputGroup.Text>
+              </InputGroup.Prepend>
+              <Form.Control
+                as="textarea"
+                aria-label="With textarea"
+                placeholder="Enter pick-up location"
+                fullWidth
+                value={location}
+                onChange={onChangeLocation}
+                //error={pickUpError !== ""}
+                required
+              />
+            </InputGroup>
+          </Container>
+        </div>
+      ) : userType == "Buyer" ? (
+        <div>
+          <Container
+            className="contact-content debug-border"
+            style={{ display: "align-items-middle" }}
+          >
+            <Row>
+              <Col>
+                <h4>Please Select a Date</h4>
+                <p>
+                  <ButtonGroup toggle>
+                    {purchase.purchase.availableDates.map((item) => (
+                      <td>
+                        <ToggleButton
+                          type="radio"
+                          //name={item}
+                          value={item}
+                          checked={selectedDate === item}
+                          onChange={(e) =>
+                            setSelectedDate(e.currentTarget.value)
+                          }
+                        >
+                          {item}
+                        </ToggleButton>{" "}
+                      </td>
+                    ))}
+                  </ButtonGroup>
+                </p>
+              </Col>
+            </Row>
+          </Container>
+        </div>
+      ) : (
+        "You are not a buyer or seller. Ne arıyon karşim burada "
+      )}
 
       <div className="buttons d-flex align-items-center justify-content-center">
         <Button
