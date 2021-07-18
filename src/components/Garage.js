@@ -37,7 +37,8 @@ const Garage = (props) => {
   const [purID, setPurID] = useState(Math.floor(Math.random() * 100000000 + 1).toString());
   const [purchases, setPurchases] = useState([]);
   const [bargain, setBargain] = useState(false);
-  const [buy, setBuy] = useState(false);
+  let buy = false;
+  let bargainOption= false;
 
   const extractGarage = () => {
     if (!props.garage ) {
@@ -84,14 +85,13 @@ const Garage = (props) => {
 
   const buyFunction = (e) => {
     e.preventDefault();
-    setBuy(true);
-    //if(buy == true) // Bu 80. satırda purchaseStatusun değişmesi için ama 3. tıklamada gidiyor bu sefer bu olmayınca 80 e girmiyor
+    buy = true;
     addPurchase(e);
   
   };
   const bargainFunction = (e) => {
     e.preventDefault();
-    setBargain(true);
+    bargainOption = true;
     addPurchase(e);
    
   };
@@ -105,7 +105,7 @@ const Garage = (props) => {
     else {
       if(buy == true)
          history.push(`../delivery/${purchase.purchase._id}`)
-      else if(bargain == true)
+      else if(bargainOption == true)
         history.push(`../bargain/${purchase.purchase._id}`)
     }
   };
