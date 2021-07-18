@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Button, Image, ListGroup,Alert } from "react-bootstrap";
+import {Button, FormGroup, FormLabel,ListGroup, Alert} from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import GarageItem from "./GarageItem";
 import { connect, useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import {getPurchases} from "../redux/actions/PurchaseActions";
+import garage from "../redux/reducers/garageReducer";
 
 const Garage = (props) => {
   const history = useHistory();
@@ -27,6 +28,7 @@ const Garage = (props) => {
   const [amountToPay, setAmountToPay] = useState(0);
   const [purchaseSeller, setPurchaseSeller] = useState("");
   const [purchaseGarage, setPurchaseGarage] = useState("");
+  const [selectedMethod, setSelectedMethod] = useState("");
   const [creationDate, setCreationDate] = useState(new Date());
   const [buyer, setBuyer] = useState("");
   const [price, setPurchasePrice] = useState(0);
@@ -72,7 +74,7 @@ const Garage = (props) => {
     back.garageId = garageId;
     back.price = totalPrice;
     back.selectedItemList = selectedItemList;
-    back.method ="Delivery";
+    back.method = selectedMethod;
     return back;
   };
 
@@ -123,8 +125,22 @@ const Garage = (props) => {
     setGarageItems(props.items.items);
   }
 
+  const getMethod = () => {
+    if (!props.garage ) {
+      return;
+    }
+    if(props.garage.shipment == true){
+      if(props.garage.pickup == true){
+        setSelectedMethod("Both") 
+      }
+      else setSelectedMethod("Shipment");
+    }
+    else setSelectedMethod("PickUp");
+  }
+
   useEffect(() => {
     extractGarage();
+    getMethod();
   }, [props.garage] );
 
   useEffect(() => {
