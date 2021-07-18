@@ -54,11 +54,11 @@ const Header = ({auth}) => {
 
   const onMyGarage = () => {
     store.dispatch(getGarages());
-    if (!garage.garages.garages.filter(g => g.user == user._id)){
+    if (!garage.garages.garages.filter(g => g.user === user._id)){
       history.push("/garage");
     }
     else{
-      garage.garages.garages.filter(g => g.user == user._id).map(  g => {history.push("/garage/"+g._id)});
+      garage.garages.garages.filter(g => g.user === user._id).map(  g => {history.push("/garage/"+g._id)});
     }
   };
 
