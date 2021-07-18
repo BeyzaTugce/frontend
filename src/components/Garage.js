@@ -37,6 +37,7 @@ const Garage = (props) => {
   const [purID, setPurID] = useState(Math.floor(Math.random() * 100000000 + 1).toString());
   const [purchases, setPurchases] = useState([]);
   const [bargain, setBargain] = useState(false);
+  const [buy, setBuy] = useState(false);
 
   const extractGarage = () => {
     if (!props.garage ) {
@@ -75,19 +76,37 @@ const Garage = (props) => {
     back.price = totalPrice;
     back.selectedItemList = selectedItemList;
     back.method = selectedMethod;
+    if(buy == true)
+       back.purchaseStatus = "DeliveryScheduling";
     return back;
   };
+
+
+  const buyFunction = (e) => {
+    e.preventDefault();
+    setBuy(true);
+    //if(buy == true) // Bu 80. satırda purchaseStatusun değişmesi için ama 3. tıklamada gidiyor bu sefer bu olmayınca 80 e girmiyor
+    addPurchase(e);
+  
+  };
+  const bargainFunction = (e) => {
+    e.preventDefault();
+    setBargain(true);
+    addPurchase(e);
+   
+  };
+
 
   const addPurchase = (e) => {
     e.preventDefault();
     if(!purchase.purchase){
        props.onCreatePurchase(packPurchase());
-      // addPurchase(e);
       }
     else {
-      //console.log("purchase"+purchase.purchase._id);
-
-      history.push(`../bargain/${purchase.purchase._id}`)
+      if(buy == true)
+         history.push(`../delivery/${purchase.purchase._id}`)
+      else if(bargain == true)
+        history.push(`../bargain/${purchase.purchase._id}`)
     }
   };
 
@@ -300,7 +319,7 @@ const Garage = (props) => {
                   className="btn border-0"
                   variant="dark"
                   style={{ backgroundColor: "#A282A5", marginRight: 8 }}
-                  onClick={addPurchase}
+                  onClick={bargainFunction}
               >
                 Bargain for Selected Items
               </Button>
@@ -310,7 +329,7 @@ const Garage = (props) => {
                   className="btn border-0 text-white"
                   variant="light"
                   style={{ backgroundColor: "#85A582" }}
-                  onClick={trialFunction}
+                  onClick={buyFunction}
               >
                 Buy Selected Items
               </Button>

@@ -49,7 +49,7 @@ const Bargain = (props) => {
     useEffect(() => {
       let purchaseId = match.params.id;
       getPurchase(purchaseId);
-      //history.push(`../bargain/${purchase.purchase._id}`)
+      history.push(`../bargain/${purchase.purchase._id}`)
       
     }, [offerCount]);
   
@@ -83,14 +83,12 @@ const Bargain = (props) => {
       e.preventDefault();
       //setThisOfferHistory(thisOfferHistory => [...thisOfferHistory, enterOffer.price]);
       props.makeOffer(purchaseId, packOffer());
-     
-    
       //setThisOfferHistory(...thisOfferHistory, enterOffer.price)
       // Close modal
       handleToggle();
       setTurn(!turn);
       setOfferCount(offerCount + 1 );
-     history.push(`../bargain/${purchase.purchase._id}`)
+     //history.push(`../bargain/${purchase.purchase._id}`)
     
     };
 
