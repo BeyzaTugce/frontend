@@ -89,23 +89,13 @@ const Garage = (props) => {
 
       history.push(`../bargain/${purchase.purchase._id}`)
     }
-  
-    //props.dispatch(getPurchases());
-   //console.log(purchase.purchase._id);
-   // props.purchases.filter(p => p.seller == sellerId && p.buyer == loggedInUser._id).map(x => {purchaseId = x._id});
-    
-    //history.push(`../bargain/${purID}`);
   };
 
 
   const trialFunction = (e) => {
-    
-  
     e.preventDefault();
-   // console.log("pruchaseID "+purID);
-    
-    //history.push(`../bargain/${purID}`);
   };
+
   const extractSeller = () => {
     if (!props.seller ) {
       return;

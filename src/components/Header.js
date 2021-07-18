@@ -19,7 +19,6 @@ import { logoutNew } from "../redux/actions/AuthActions";
 import store from '../redux/store';
 import {getGarages} from "../redux/actions/GarageActions"
 import CategoryBar from "./CategoryBar";
-import {getPurchases} from "../redux/actions/PurchaseActions";
 
 
 /**
@@ -47,33 +46,27 @@ const Header = ({auth}) => {
 
   useEffect(() => {
     store.dispatch(getGarages());
-    store.dispatch(getPurchases());
   }, [] );
 
- // store.dispatch(getGarages());
-
+  //store.dispatch(getGarages());
   const onMyGarage = () => {
     store.dispatch(getGarages());
-    if (garage.garages.garages.filter(g => g.user === user._id).length === 0){
+    if (garage?.garages?.garages?.filter(g => g.user === user._id).length === 0){
       history.push("/garage");
     }
     else{
-      garage.garages.garages.filter(g => g.user === user._id).map(  g => {history.push("/garage/"+g._id)});
+      garage?.garages?.garages?.filter(g => g.user === user._id).map(  g => {history.push("/garage/"+g._id)});
     }
   };
 
   const onMyPurchases = () => {
-    store.dispatch(getPurchases());
-    console.log("purchases:"+JSON.stringify((purchase.purchases)));
-    //console.log("buyer:"+JSON.stringify(purchase.purchases.purchases.filter(p => p.buyer == user._id)));
-    //purchase.purchases.purchases.filter(p => p.buyer == user._id).map( p => {history.push("/bargain/"+p._id)});
 
-    //history.push("/mypurchase");
-    if (!purchase.purchases.purchases.filter(p => p.buyer == user._id)) {
+    history.push("/mypurchase");
+    /*if (!purchase.purchases.purchases.filter(p => p.buyer == user._id)) {
     }
     else {
       purchase.purchases.purchases.filter(p => p.buyer == user._id).map( p => {history.push("/bargain/"+p._id)});
-    }
+    }*/
   };
 
   const onClickCreateGarage = () => {
@@ -174,12 +167,5 @@ const mapStateToProps = state => ({
   auth: state.auth,
 
 });
-
-
-// //attributes of props and their type
-// Header.propTypes = {
-//   //onClose: PropTypes.func.isRequired,
-//   auth: PropTypes.object.isRequired
-// };
 
 export default connect(mapStateToProps, null)(withRouter(Header));

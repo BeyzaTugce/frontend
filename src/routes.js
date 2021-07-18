@@ -66,10 +66,10 @@ const routes = [
     path: "/payment",
     component: Payment,
   },
-  /*{
+  {
     path: "/mypurchase",
     component: PurchaseView,
-  },*/
+  },
  /* {
     path: "/item",
     component: ItemView,

@@ -49,7 +49,7 @@ const Bargain = (props) => {
     useEffect(() => {
       let purchaseId = match.params.id;
       getPurchase(purchaseId);
-      history.push(`../bargain/${purchase.purchase._id}`)
+      //history.push(`../bargain/${purchase.purchase._id}`)
       
     }, [offerCount]);
   

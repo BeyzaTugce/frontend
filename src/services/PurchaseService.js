@@ -89,4 +89,33 @@ export default class PurchaseService {
       );
     });
   }
+
+  static readSeller(purchaseId) {
+    return new Promise((resolve, reject) => {
+      HttpService.get(
+          `${PurchaseService.baseURL()}/seller/${purchaseId}`,
+          function (data) {
+            resolve(data);
+          },
+          function (textStatus) {
+            reject(textStatus);
+          }
+      );
+    });
+  }
+
+  static readBuyer(purchaseId) {
+    return new Promise((resolve, reject) => {
+      HttpService.get(
+          `${PurchaseService.baseURL()}/buyer/${purchaseId}`,
+          function (data) {
+            resolve(data);
+          },
+          function (textStatus) {
+            reject(textStatus);
+          }
+      );
+    });
+  }
+
 }
