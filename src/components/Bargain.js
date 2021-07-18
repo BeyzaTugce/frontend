@@ -36,6 +36,19 @@ const Bargain = (props) => {
     
     let offersArray = offers?.offerHistory;
 
+    //let purchaseId = props.match.params.id;
+    getPurchase(purchaseId);
+    console.log(purchase.purchase);
+
+
+    useEffect(() => {
+
+        props.getOfferHistory(purchaseId);
+        props.loadBuyer(purchase?.purchase?.buyer);
+        props.loadSeller(purchase?.purchase?.seller);
+        // document.write(seller.firstname);
+    }, [match.params]);
+
     //const { loading } = props.loading;
 
     // useEffect(() => {
