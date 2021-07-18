@@ -30,14 +30,9 @@ const SearchItem = (props) => {
                     {" "}
                     {props.tags}{" "}
                 </div>
-                <div
-                    className="img-container d-flex align-items-center"
-                    style={{
-                        width: 200,
-                        height: 200,
-                        textAlign: "center",
-                    }}
-                ></div>
+                <div className="img-container d-flex align-items-center"
+                     style={{width: 200, height: 200, textAlign: "center",}}
+                />
                 <div className="garage-name">At {props.seller}'s Garage</div>
                 <div className="garage-name">Ends on {props.endDate}</div>
                 <div className="item-price" style={{ fontWeight:"bold" }}>€{props.price}</div>
