@@ -2,9 +2,8 @@ import React, { useEffect } from "react";
 import {
     Button,
     FormGroup, FormLabel,
-    ListGroup,
+    ListGroup, Navbar,
 } from "react-bootstrap";
-import "./Search.css";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect, useSelector } from "react-redux";
@@ -43,10 +42,10 @@ const Search = (props) => {
      */
 
     return (
-        <div className="OrderDetails">
+        <div>
           <span>
               <div className="d-flex">
-                  <div className="p-2 flex-shrink-1">
+                  <div className="p-2 flex-shrink-1 " style={{backgroundColor: '#F8F8F8'}}>
                       <div className="d-inline-block text-center">
                           <FormGroup style={{ marginTop: 20 }}>
                               <div className="filterOptions">
@@ -69,62 +68,70 @@ const Search = (props) => {
                                   </div>
                                   <div style={{marginBottom:-20}}>
                                       <label>
-                                          <Button className="ml-2 "
-                                                  name="4-stars"
-                                                  onChange={""}
-                                                  variant="contained"
-                                                  color="primary">
-                                              <StarFill />
-                                              <StarFill />
-                                              <StarFill />
-                                              <StarFill />
-                                              <Star />
-                                          </Button>
+                                          <div>
+                                              <Button className="ml-2 "
+                                                      name="4-stars"
+                                                      onChange={""}
+                                                      variant="contained"
+                                                      color="primary">
+                                                  <StarFill />
+                                                  <StarFill />
+                                                  <StarFill />
+                                                  <StarFill />
+                                                  <Star /> & Up
+                                              </Button>
+                                          </div>
                                       </label>
                                   </div>
                                   <div style={{marginBottom:-20}}>
                                       <label>
-                                          <Button className="ml-2 "
-                                                  name="3-stars"
-                                                  onChange={""}
-                                                  variant="contained"
-                                                  color="primary">
-                                              <StarFill />
-                                              <StarFill />
-                                              <StarFill />
-                                              <Star />
-                                              <Star />
-                                          </Button>
+                                          <div>
+                                              <Button className="ml-2 "
+                                                      name="4-stars"
+                                                      onChange={""}
+                                                      variant="contained"
+                                                      color="primary">
+                                                  <StarFill />
+                                                  <StarFill />
+                                                  <StarFill />
+                                                  <Star />
+                                                  <Star /> & Up
+                                              </Button>
+                                          </div>
                                       </label>
                                   </div>
                                   <div style={{marginBottom:-20}}>
                                       <label>
-                                          <Button className="ml-2 "
-                                                  name="2-stars"
-                                                  onChange={""}
-                                                  variant="contained"
-                                                  color="primary">
-                                              <StarFill />
-                                              <StarFill />
-                                              <Star />
-                                              <Star />
-                                              <Star />
-                                          </Button>
+                                          <div>
+                                              <Button className="ml-2 "
+                                                      name="4-stars"
+                                                      onChange={""}
+                                                      variant="contained"
+                                                      color="primary">
+                                                  <StarFill />
+                                                  <StarFill />
+                                                  <Star />
+                                                  <Star />
+                                                  <Star /> & Up
+                                              </Button>
+                                          </div>
                                       </label>
                                   </div>
                                   <div>
                                       <label>
-                                          <Button className="ml-2 "
-                                                  name="1-star"
-                                                  onChange={""}
-                                                  variant="contained"
-                                                  color="primary">
-                                              <StarFill />
-                                              <Star />
-                                              <Star />
-                                              <Star />
-                                              <Star />
-                                          </Button>
+                                          <div>
+                                              <Button className="ml-2 "
+                                                      name="4-stars"
+                                                      onChange={""}
+                                                      variant="contained"
+                                                      color="primary">
+                                                  <StarFill />
+                                                  <Star />
+                                                  <Star />
+                                                  <Star />
+                                                  <Star /> & Up
+                                              </Button>
+                                          </div>
                                       </label>
                                   </div>
                               </div>
@@ -161,24 +168,26 @@ const Search = (props) => {
                               </div>
                       </div>
                   </div>
-                  <div className="vertical-line" style={{height:"auto", width:1, backgroundColor: '#909090'}}/>
-                  <div className="list-whole" style={{ paddingInline: 30, paddingTop:30 }}>
-                      <ListGroup className="d-inline-block">
-                          <SearchItem
-                              name="some item"
-                              tags="tags"
-                              price="50"
-                              seller="Berke"
-                              endDate="10.10.2021"
-                          />
-                          <SearchItem
-                              name="some item"
-                              tags="tags"
-                              price="50"
-                              seller="Berke"
-                              endDate="10.10.2021"
-                          />
-                      </ListGroup>
+                  <div className="w-100">
+                      <Navbar className="results-for w-100" style={{backgroundColor: '#F8F8F8'}}>Results for {props.searchTerm}</Navbar>
+                      <div className="list-whole" style={{ paddingInline: 30, paddingTop:30 }}>
+                          <ListGroup className="d-inline-block">
+                              <SearchItem
+                                  name="some item"
+                                  tags="tags"
+                                  price="50"
+                                  seller="Berke"
+                                  endDate="10.10.2021"
+                              />
+                              <SearchItem
+                                  name="some item"
+                                  tags="tags"
+                                  price="50"
+                                  seller="Berke"
+                                  endDate="10.10.2021"
+                              />
+                          </ListGroup>
+                      </div>
                   </div>
               </div>
           </span>

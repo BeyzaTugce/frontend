@@ -34,9 +34,8 @@ import CategoryBar from "./CategoryBar";
  * Navigation bar of the app
  * @param {props} props
  */
-const Header = ({ auth, props }) => {
+const Header = ({auth}) => {
   const { isAuthenticated, user } = auth;
-
   const garage = useSelector((state) => state.garage);
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedTerm, setDebouncedTerm] = useState(searchTerm);
@@ -52,16 +51,9 @@ const Header = ({ auth, props }) => {
     };
   }, [searchTerm]);
 
-
   useEffect(() => {
     store.dispatch(getGarages());
   }, [] );
-
-  const onClickSearch = () => {
-    //event.preventDefault();
-    history.push(`/search?term=${debouncedTerm}`);
-    //props.onSearchSubmit(debouncedTerm);
-  };
 
   const onMyGarage = () => {
     store.dispatch(getGarages());
@@ -113,13 +105,14 @@ const Header = ({ auth, props }) => {
                 className="form-control border border-right-0"
                 placeholder="Search for an item or a hashtag"
                 value={searchTerm}
-                onChange={e => setSearchTerm(e.target.value)}
+                onChange={
+                  e => {setSearchTerm(e.target.value)}}
               />
               <span className="input-group-append">
                 <Button
                   className="btn shadow-none border-left-0"
                   variant="light"
-                  onClick={onClickSearch}
+                  href={`/search?term=${debouncedTerm}`}
                 >
                   <Search size={18} className="text-white my-lg-1" />
                 </Button>
@@ -164,7 +157,8 @@ const Header = ({ auth, props }) => {
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+
 });
 
 

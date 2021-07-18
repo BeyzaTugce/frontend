@@ -11,7 +11,7 @@ const SearchItem = (props) => {
     //TODO: border on top
     return (
         <ListGroupItem
-            className="d-inline-flex align-items-center justify-content-between"
+            className="d-inline-flex align-items-center justify-content-between border"
             style={{ borderColor: "#85A582"}}
         >
             <div className="content flex-fill text-center">
