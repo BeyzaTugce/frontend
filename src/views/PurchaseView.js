@@ -6,6 +6,7 @@ import {Button, FormLabel} from "react-bootstrap";
 import {getPurchaseSeller, getPurchaseBuyer} from "../redux/actions/PurchaseActions";
 import Header from "../components/Header";
 import GarageItem from "../components/GarageItem";
+import ListItem from "../components/ListItem";
 
 const PurchaseView = (props) => {
 
@@ -47,29 +48,23 @@ const PurchaseView = (props) => {
                 <Button onClick={onClickGetSeller}>Go To My Sales</Button><br/><br/>
                 {purchase?.purchases?.purchases?.filter(p => p.seller == user._id).map( p => p.selectedItemList.map( (item) => {
                     return (
-                    <GarageItem
+                    <ListItem
                     name={item.name}
                     info={item.info}
                     tags={item.tags}
                     price={item.price}
-                    button1Name={"Buy"}
-                    button2Name={"Bargain"}
-                    condition={true}
-                    userView={true}
+                    garageId={item.garageId}
                     />
                     )}))} <br/><br/>
                 <Button onClick={onClickGetBuyer}>Go To My Orders</Button><br/><br/>
                 {purchase?.purchases?.purchases?.filter(p => p.buyer == user._id).map( p => p.selectedItemList.map( (item) => {
                     return (
-                        <GarageItem
+                        <ListItem
                             name={item.name}
                             info={item.info}
                             tags={item.tags}
                             price={item.price}
-                            button1Name={"Buy"}
-                            button2Name={"Bargain"}
-                            condition={true}
-                            userView={true}
+                            garageId={item.garageId}
                         />
                     )}))}
             </div>
