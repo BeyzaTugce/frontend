@@ -1,5 +1,6 @@
 //import BargainService from "../../services/BargainService";
 import axios from 'axios';
+import OfferService from "../../services/OfferService";
 
 const baseURL = "http://localhost:4000/bargain"
 const otherURL = "http://localhost:4000/auth"
@@ -16,6 +17,29 @@ export const getOfferHistory = id => dispatch => {
           })) 
 };
 
+/*export const getOfferHistory = id => dispatch =>{
+  dispatch(setOffersLoading());
+  function onSuccess(offer) {
+    return { type: "GET_OFFERHISTORY",
+    loading: false, offer: offer };
+  }
+  function onFailure(error) {
+    console.log("failed to load a offer", error);
+  }
+
+  return async (dispatch, getState) => {
+    try {
+      console.log("denemeler");
+      let offer = await OfferService.getOffer(id);
+      console.log("denemelewqr");
+      dispatch(onSuccess(offer));
+    } catch (e) {
+      onFailure(e);
+    }
+  };
+};*/
+/*
+
 export const makeOffer = (id, offer) => dispatch => {
     axios
         .post(`${baseURL}/${id}`, offer)
@@ -24,7 +48,26 @@ export const makeOffer = (id, offer) => dispatch => {
             type: "MAKE_OFFER",
             payload: res.data
           }))
-};
+};*/
+export function makeOffer(id, offer) {
+
+  function onSuccess() {
+    return { type: "MAKE_OFFER" };
+  }
+  function onFailure(error) {
+    console.log("add offer failure", error);
+  }
+
+  return async (dispatch) => {
+    try {
+      await OfferService.createOffer(id, offer);
+      dispatch(onSuccess());
+    } catch (e) {
+      onFailure(e);
+    }
+  };
+}
+
 
 export const withdrawOffer = id => dispatch => {
     axios

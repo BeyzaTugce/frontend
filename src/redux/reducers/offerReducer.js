@@ -5,18 +5,18 @@ const initialState = {
     seller: null
 };
   
-export default function offerReducer(state=initialState, action) {
+export default function offerReducer(state = {}, action) {
   switch (action.type) {
     case "GET_OFFERHISTORY":
       //console.log(action.payload.offerHistory);
       if(action.payload)
-        return { ...state, offers: action.payload};
-      return { ...state, offers: []}
+        return { ...state, offer: action.payload};
+      return { ...state, offer: []}
     case "MAKE_OFFER":
       //console.log(action.payload);
-      return { ...state, offers: action.payload};
+      return { ...state, offer: action.payload};
     case "WITHDRAW_OFFER":
-      return { ...state, offers: []};
+      return { ...state, offer: []};
     case "OFFERS_LOADING":
       return { ...state, loading: true}
     case "LOAD_BUYER":

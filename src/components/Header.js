@@ -50,7 +50,7 @@ const Header = ({auth}) => {
     store.dispatch(getPurchases());
   }, [] );
 
-  store.dispatch(getGarages());
+ // store.dispatch(getGarages());
 
   const onMyGarage = () => {
     store.dispatch(getGarages());

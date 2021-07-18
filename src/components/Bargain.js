@@ -22,6 +22,7 @@ import GarageItem from "./GarageItem";
 const Bargain = (props) => {
   const loggedInUser = useSelector((state) => state.auth.user);
   const purchase = useSelector((state) => state.purchase);
+  const offer = useSelector((state) => state.offer);
   let {match, getPurchase, loadBuyer, loadSeller} = props;
     const [show, setShow] = useState(false);
     const [enterOffer, setEnterOffer] = useState({ price: Math.floor(purchase?.purchase?.price * 0.6) });
@@ -32,23 +33,29 @@ const Bargain = (props) => {
     const [thisOfferHistory, setThisOfferHistory] = useState([]);
     const purchaseId = match.params.id;
     const history = useHistory();
-    const { offers } = props.offer;
-    
-    let offersArray = offers?.offerHistory;
+    const [offerCount, setOfferCount] = useState(0);
+   // const { offers } = props.offer;
+   //const [offersArray, setOffersArray] = React.useState(offer?.offerHistory);
+ 
 
     //let purchaseId = props.match.params.id;
-    getPurchase(purchaseId);
-    console.log(purchase.purchase);
-
 
     useEffect(() => {
-
-        props.getOfferHistory(purchaseId);
-        props.loadBuyer(purchase?.purchase?.buyer);
-        props.loadSeller(purchase?.purchase?.seller);
-        // document.write(seller.firstname);
+      let purchaseId = match.params.id;
+      getPurchase(purchaseId);
+      
     }, [match.params]);
 
+    useEffect(() => {
+      let purchaseId = match.params.id;
+      getPurchase(purchaseId);
+      history.push(`../bargain/${purchase.purchase._id}`)
+      
+    }, [offerCount]);
+  
+   // props.getOfferHistory(purchaseId);
+
+   // console.log("purchaseId"+purchaseId+ "newOffer "+  );
     //const { loading } = props.loading;
 
     // useEffect(() => {
@@ -59,36 +66,44 @@ const Bargain = (props) => {
     // }, [props.loading]);
 
 
+    const packOffer = () => {
+      let back = {
+        ...props.offer,
+      };
+      //back.purchaseId = purID;
+
+      back.purchaseId= match.params.id;
+      back.price=  enterOffer.price;
+      back.offerHistory = [...thisOfferHistory, enterOffer.price];
+      
+      return back;
+    };
+    let offersArray = offer?.offerHistory;
     const handleOnClick = e => {
       e.preventDefault();
       //setThisOfferHistory(thisOfferHistory => [...thisOfferHistory, enterOffer.price]);
-      const newOffer = {
-          //id: uuid(),
-          purchaseId: match.params.id,
-          price: enterOffer.price,
-          offerHistory: [...thisOfferHistory, enterOffer.price],
-        };
-      // Add item via addItem action
-      props.makeOffer(purchaseId, newOffer);
+      props.makeOffer(purchaseId, packOffer());
+     
+    
       //setThisOfferHistory(...thisOfferHistory, enterOffer.price)
       // Close modal
       handleToggle();
       setTurn(!turn);
-      props.getOfferHistory(purchaseId);
-      loadBuyer(purchase?.purchase?.buyer);
-      loadSeller(purchase?.purchase?.seller);
+      setOfferCount(offerCount + 1 );
+     history.push(`../bargain/${purchase.purchase._id}`)
+    
     };
 
 
+    
     useEffect(() => {
-      let purchaseId = props.match.params.id;
-      getPurchase(purchaseId);
-      props.getOfferHistory(purchaseId);
-      loadBuyer(purchase?.purchase?.buyer);
-      loadSeller(purchase?.purchase?.seller);
-
-     // document.write(seller.firstname);
-    }, []);
+      if(!props.offers){
+        props.getOfferHistory(purchaseId);
+        props.loadBuyer(purchase?.purchase?.buyer);
+        props.loadSeller(purchase?.purchase?.seller);
+      }
+      // document.write(seller.firstname);
+  }, [offerCount]);
     //console.log(purchase.purchase.seller);
     // loadBuyer("60edb706c917c34e50150ae0");
     // loadSeller("60f043471af3a3e352a4abf4");
@@ -202,7 +217,7 @@ const Bargain = (props) => {
         <ListGroup>{renderedListItem}</ListGroup>       
         <ListGroup>
           <TransitionGroup className="offers">
-            {offers?.buyer == loggedInUser ? (
+            {offer?.buyer == loggedInUser ? (
             <div className="d-flex w-100 justify-content-between mt-3">
                 <Alert variant="info" style={{"font-size":20, "text-align":"center", width:250}} block>
                   <strong>{props.buyer?.username}</strong>
@@ -221,7 +236,7 @@ const Bargain = (props) => {
                 </Alert>
             </div>
             )}
-            {offers?.offerHistory?.map((price, index) => (
+            {offer?.offer?.offerHistory?.map((price, index) => (
               <CSSTransition key={index} timeout={1000} classNames="fade">
                 {(index%2) ? (
                     <div className="d-inline-flex w-100 justify-content-end">
