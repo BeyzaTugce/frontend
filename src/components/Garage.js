@@ -37,6 +37,8 @@ const Garage = (props) => {
   const [purID, setPurID] = useState(Math.floor(Math.random() * 100000000 + 1).toString());
   const [purchases, setPurchases] = useState([]);
   const [bargain, setBargain] = useState(false);
+  const [isMyGarage, setIsMyGarage] = useState(false);
+
   let buy = false;
   let bargainOption= false;
 
@@ -176,6 +178,13 @@ const Garage = (props) => {
     setAmountToPay(totalPrice-saving);
   }, );
 
+  useEffect(() => {
+    setIsMyGarage(loggedInUser?._id == purchaseSeller?._id);
+    console.log(loggedInUser?._id);
+    console.log(purchaseSeller?._id);
+    console.log(isMyGarage)
+  }, [packPurchase])
+
   const [selectedItemList, setSelectedItemList] = useState([]);
 
   const addToSelected = (input) => {
@@ -264,7 +273,7 @@ const Garage = (props) => {
           className="jumbotron jumbotron-fluid bg-white"
           style={{ marginBottom: -10 }}
         >
-          {props.seller === props.user ?
+          {isMyGarage ?
               <h1 className="display-5 text-center">My Garage</h1> :
               <h1 className="display-5 text-center">{userName}'s Garage</h1>
           }
@@ -313,27 +322,36 @@ const Garage = (props) => {
                   </div> : ""
               }
             </div>
-            <div className="bargain-buy-buttons d-flex align-items-center justify-content-center">
-            {bargain ?
-              <Button
-                  className="btn border-0"
-                  variant="dark"
-                  style={{ backgroundColor: "#A282A5", marginRight: 8 }}
-                  onClick={bargainFunction}
-              >
-                Bargain for Selected Items
-              </Button>
-            : "" }
-
-              <Button
-                  className="btn border-0 text-white"
-                  variant="light"
-                  style={{ backgroundColor: "#85A582" }}
-                  onClick={buyFunction}
-              >
-                Buy Selected Items
-              </Button>
-            </div>
+            {isMyGarage ? "" : bargain ? 
+                  <div className="bargain-buy-buttons d-flex align-items-center justify-content-center">
+                      <Button
+                      className="btn border-0"
+                      variant="dark"
+                      style={{ backgroundColor: "#A282A5", marginRight: 8 }}
+                      onClick={addPurchase}
+                      > 
+                        Bargain for Selected Items
+                      </Button>
+                      <Button
+                      className="btn border-0 text-white"
+                      variant="light"
+                      style={{ backgroundColor: "#85A582" }}
+                      onClick={trialFunction}
+                      >
+                        Buy Selected Items
+                      </Button> 
+                  </div>  
+                     : 
+                  <div className="bargain-buy-buttons d-flex align-items-center justify-content-center">        
+                      <Button
+                      className="btn border-0 text-white"
+                      variant="light"
+                      style={{ backgroundColor: "#85A582" }}
+                      onClick={trialFunction}
+                      >
+                      Buy Selected Items
+                      </Button>
+                  </div>}
           </div>
         </div>
       </span>
