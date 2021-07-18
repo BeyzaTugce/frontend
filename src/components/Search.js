@@ -172,20 +172,7 @@ const Search = (props) => {
                       <Navbar className="results-for w-100" style={{backgroundColor: '#F8F8F8'}}>Results for {props.searchTerm}</Navbar>
                       <div className="list-whole" style={{ paddingInline: 30, paddingTop:30 }}>
                           <ListGroup className="d-inline-block">
-                              <SearchItem
-                                  name="some item"
-                                  tags="tags"
-                                  price="50"
-                                  seller="Berke"
-                                  endDate="10.10.2021"
-                              />
-                              <SearchItem
-                                  name="some item"
-                                  tags="tags"
-                                  price="50"
-                                  seller="Berke"
-                                  endDate="10.10.2021"
-                              />
+                              {props.foundItems}
                           </ListGroup>
                       </div>
                   </div>

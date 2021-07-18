@@ -4,50 +4,44 @@ import { connect, useSelector } from "react-redux";
 import Search from "../components/Search";
 import { getItems, getItem } from "../redux/actions/ItemActions";
 import Header from "../components/Header";
+import store from "../redux/store";
 import SearchItem from "../components/SearchItem";
 
 function SearchView(props) {
     //let {match, getItem, getItems} = props;
     const [searchTerm, setSearchTerm] = useState("");
-    //const items = useSelector((state) => state.items);
+    const items = useSelector((state) => state.items);
 
     useEffect(() => {
         const params = new URLSearchParams(props.location.search);
         setSearchTerm(params.get('term'));
+        store.dispatch(getItems());
     }, []);
 
-    /*
-    useEffect(() => {
-        items.map(item => {
-            let itemId = match.params.id;
-            getItem(itemId);
-        });
-    }, [match.params]);
-
-    const filterItems = (item, searchTerm) => {
-        return item.name.includes(searchTerm) || item.tags.map((tag) => {
-            tag.includes(searchTerm)
-        })
+    const filterItem = (item, searchTerm) => {
+        return item.name.includes(searchTerm) || item.tags.includes(searchTerm)
     };
 
-    const chosenItems = items.filter(filterItems(searchTerm)).map(item => {
-        return (
-            <SearchItem
-            name={item.name}
-            info={item.info}
-            tags={item.tags}
-            price={item.price}
-            user={item.garageId.user}
-            endDate={item.garageId.dateCreated}
-            />)
+    const foundItems =
+        items?.items?.items.map(item => {
+            if (filterItem(item,searchTerm)){
+                return (
+                    <SearchItem
+                        name={item.name}
+                        info={item.info}
+                        tags={item.tags}
+                        price={item.price}
+                        garageId={item.garageId}
+                    />)
+            }
     });
-     */
 
     return (
         <div>
             <Header />
             <Search
                 searchTerm={searchTerm}
+                foundItems={foundItems}
             />
         </div>
     );
