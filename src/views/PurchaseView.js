@@ -57,3 +57,4 @@ const PurchaseView = (props) => {
 
 export default connect(null, { getPurchases, loadBuyer, loadSeller})(withRouter(
     PurchaseView));
+

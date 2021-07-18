@@ -54,7 +54,7 @@ const Header = ({auth}) => {
 
   const onMyGarage = () => {
     store.dispatch(getGarages());
-    if (!garage.garages.garages.filter(g => g.user === user._id)){
+    if (garage.garages.garages.filter(g => g.user === user._id).length === 0){
       history.push("/garage");
     }
     else{
@@ -151,7 +151,7 @@ const Header = ({auth}) => {
                 </div>
             ) : <div>
               <NavDropdown.Item onClick={onMyGarage}>MyGarage</NavDropdown.Item>
-              <NavDropdown.Item onClick={onMyPurchases}>MyPurchases</NavDropdown.Item>
+              <NavDropdown.Item onClick={onMyPurchases}>MyPurchase</NavDropdown.Item>
             </div>
             }
           </NavDropdown>
