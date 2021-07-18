@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+
+import React, { useState, useEffect } from "react";
 import {
     ListGroup,
 } from "react-bootstrap";
@@ -8,26 +9,69 @@ import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect, useSelector } from "react-redux";
 import user from "../redux/reducers/userReducer";
+import { Container, Row, Col, Jumbotron, Form, Button } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import { getPurchase, changePurchase } from "../redux/actions/PurchaseActions";
+
 
 const OrderDetails = (props) => {
     const [sellerName, setSellerName] = React.useState(" ");
     const [status, setStatus] = React.useState("New");
-    const [orderDate, setOrderDate] = React.useState(" ");
-    const [method, setMethod] = React.useState("Delivery");
+    const [orderDate, setOrderDate] = React.useState("");
+    const [method, setMethod] = React.useState("");
     const [shipDate, setShipDate] = React.useState("Not specified");
-    const [pickUpDate, setPickUpDate] = React.useState("Not specified");
+    const [pickUpDate, setPickUpDate] = React.useState("");
     const [pickUpAddress, setPickUpAddress] = React.useState("Not specified");
     const [shipAddress, setShipAddress] = React.useState("Not specified");
     const [paymentMethod, setPaymentMethod] = React.useState("Not specified");
     const [totalwoTax, setTotalwoTax] = React.useState(0);
-    const [tax, setTax] = React.useState(0);
+    const [price, setPrice] = React.useState(0);
+    const [tax, setTax] = React.useState(5);
     const [items, setItems] = React.useState([]);
 
-    const totalPrice = () => {
-        let price = totalwoTax+tax;
-        return price;
-    }
+    const purchase = useSelector((state) => state.purchase);
+    const loggedInUser = useSelector((state) => state.auth.user);
 
+    const [userType, setUserType] = useState("Unknown");
+  let { match, getPurchase } = props;
+  const history = useHistory();
+  useEffect(() => {
+    let purchaseId = match.params.id;
+    getPurchase(purchaseId);
+  }, []);
+
+  useEffect(() => {
+    checkUser();
+}, [loggedInUser]);
+
+const checkUser = () => {
+  if(loggedInUser != null){
+    if (loggedInUser._id == purchase.purchase.seller) {
+      setUserType("Seller");
+    } else if (loggedInUser._id == purchase.purchase.buyer) {
+      setUserType("Buyer");
+    }
+  }
+};
+
+  useEffect(() => {
+
+    setPickUpAddress(purchase.purchase.pickUpAddress);
+    setPrice(purchase.purchase.price +tax);
+    setTotalwoTax(purchase.purchase.price);
+    setItems(purchase.purchase.selectedItemList);
+    setOrderDate(purchase.purchase.creationDate);
+    setMethod(purchase.purchase.method);
+    setPickUpDate(purchase.purchase.pickUpDate);
+    setPickUpAddress(purchase.purchase.pickUpAddress);
+    setShipAddress(purchase.purchase.shipAddress);
+    //setMethod(purchase.purchase.method);
+   // setPickUpAddress(purchase.purchase.pickUpAddress);
+
+  }, [purchase.purchase != null]);
+
+
+/*
     const extractOrder = () => {
         if (!props.order ) {
             return;
@@ -40,16 +84,16 @@ const OrderDetails = (props) => {
         setPickUpAddress(props.order.pickUpAddress);
         setPickUpDate(props.order.pickUpDate);
         setShipDate(props.order.shipDate);*/
-        setTotalwoTax(props.order.total);
+      /*  setTotalwoTax(props.order.total);
         setTax(props.order.brokerageFee);
-    }
+    }*/
 
     //will get the items from purchase.
     const extractItems = () => {
-        if (!props.items ) {
+        if (!purchase.purchase.selectedItemList ) {
             return;
         }
-        setItems(props.order.items)
+        setItems(purchase.purchase.selectedItemList)
     }
 
     const extractSeller = () => {
@@ -61,7 +105,7 @@ const OrderDetails = (props) => {
     }
 
     useEffect(() => {
-        extractOrder();
+       // extractOrder();
         extractSeller();
         extractItems();
     }, [props.order, props.seller, props.items] );
@@ -109,23 +153,22 @@ const OrderDetails = (props) => {
                                   }</div>
                               <div className="address text-wrap">
                                   {method === "Delivery" ?
-                                      <div>{shipAddress}</div> :
-                                      <div>{pickUpAddress}</div>
+                                      <div>{pickUpAddress}</div> :
+                                      <div>{shipAddress}</div>
                                   }</div>
                           </div>
                       </div>
                       <div className="payment-details d-flex justify-content-start w-50">
                           <div className="payment-detail-labels text-right" style={{paddingRight:5}}>
-                              <div className="payment-method">Payment Method: </div>
+                             
                               <div className="price-before-tax">Price before Tax: </div>
                               <div className="tax">Tax: </div>
                               <div className="total-price">Total Price: </div>
                           </div>
                           <div className="payment-detail-values">
-                              <div className="payment-method">{paymentMethod}</div>
                               <div className="price-before-tax">€{totalwoTax}</div>
                               <div className="tax">€{tax}</div>
-                              <div className="total-price">€{totalPrice()}</div>
+                              <div className="total-price">€{price}</div>
                           </div>
                       </div>
                   </div>
@@ -150,5 +193,11 @@ OrderDetails.propTypes = {
     user: PropTypes.object,
     items: PropTypes.object,
 };
-
-export default withRouter(OrderDetails);
+const mapStateToProps = (state) => ({
+    purchase: state.purchase,
+  });
+  export default connect(mapStateToProps, {
+    getPurchase,
+    changePurchase,
+  })(withRouter(OrderDetails));
+  

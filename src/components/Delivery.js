@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Jumbotron, Form, Button } from "react-bootstrap";
+
+import { FormGroup, FormLabel,ListGroup, Alert} from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import { DatePickerCalendar } from "react-nice-dates";
 import { format } from "date-fns";
@@ -9,6 +11,7 @@ import "react-nice-dates/build/style.css";
 import { useDateInput } from "react-nice-dates";
 import InputGroup from "react-bootstrap/InputGroup";
 import { getPurchase, changePurchase } from "../redux/actions/PurchaseActions";
+import { getGarage } from "../redux/actions/GarageActions";
 import store from "../redux/store";
 import { withRouter } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
@@ -24,6 +27,7 @@ const Delivery = (props) => {
   const [location, setLocation] = React.useState("");
   const purchase = useSelector((state) => state.purchase);
   const [userType, setUserType] = useState("Unknown");
+  const [methodType, setMethodType] = useState("Unknown");
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [radioValue, setRadioValue] = React.useState("fasd");
 
@@ -64,16 +68,33 @@ const Delivery = (props) => {
   }, [match.params]);
 
   useEffect(() => {
-    checkUser();
-  }, [match.params]);
+      checkUser();
+  }, [purchase.purchase]);
+
+  useEffect(() => {
+    checkMethod();
+}, [loggedInUser]);
 
   const checkUser = () => {
-    if (loggedInUser._id == purchase.purchase.seller) {
-      setUserType("Seller");
-    } else if (loggedInUser._id == purchase.purchase.buyer) {
-      setUserType("Buyer");
+    if(loggedInUser != null){
+      if (loggedInUser._id == purchase.purchase.seller) {
+        setUserType("Seller");
+      } else if (loggedInUser._id == purchase.purchase.buyer) {
+        setUserType("Buyer");
+      }
     }
   };
+
+  const checkMethod = () => {
+    if(purchase.purchase != null){ 
+        setMethodType(purchase.purchase.method);
+    }
+  };
+
+  useEffect(() => {
+    let garageId = purchase.purchase.garage;
+    getGarage(garageId);
+  }, [purchase.purchase != null]);
 
   const packPurchase = () => {
     let back = {
@@ -86,7 +107,7 @@ const Delivery = (props) => {
     back.garageId = purchase.purchase.garageId;
     back.price = purchase.purchase.price;
     back.selectedItemList = purchase.purchase.selectedItemList;
-    back.method = purchase.purchase.method;
+    
     back.purchaseStatus = purchase.purchase.purchaseStatus;
 
     if (userType == "Seller") {
@@ -94,6 +115,7 @@ const Delivery = (props) => {
       back.pickupLocation = location;
     } else if (userType == "Buyer") {
       back.pickUpDate = selectedDate;
+      back.method = methodType;
     }
     return back;
   };
@@ -113,21 +135,22 @@ const Delivery = (props) => {
     setLocation(e.target.value);
     setPickUpError("");
   };
-  const onRemovePickUp = (pickup) => {
+  /*const onRemovePickUp = (pickup) => {
     pickup.preventDefault();
-  };
+  };*/
 
   const addPickUp = (e) => {
     e.preventDefault();
     //   props.onCreate(packPickUp());
     store.dispatch(changePurchase(packPurchase()));
-    history.push(`../payment/${purchase.purchase._id}`);
+    if (userType == "Seller") {
+      history.push(`../order/${purchase.purchase._id}`);
+    } else if (userType == "Buyer") {
+      history.push(`../payment/${purchase.purchase._id}`);
+    }
+   
   };
 
-  const dateSelection = (e) => {
-    e.preventDefault();
-    setSelectedDate(e.target.value);
-  };
 
   return (
     <div className="Delivery">
@@ -235,11 +258,48 @@ const Delivery = (props) => {
                   </ButtonGroup>
                 </p>
               </Col>
+              
+              {methodType == "Both" ? (
+                <Col>
+                <h4>Please Select a Delivery Method</h4>
+                <p>
+                <FormGroup>
+              <div className="deliveryOptions">
+                <FormLabel className="labels">Delivery</FormLabel>
+                <div>
+                  <label>
+                    Shipment
+                    <input className="ml-2"
+                      name="Shipment"
+                      value="Shipment"
+                      type="radio"
+                      onChange={(e) =>
+                        setMethodType(e.currentTarget.value)
+                      } />
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    Pick-up
+                    <input className="ml-2"
+                      name="PickUp"
+                      value="PickUp"
+                      type="radio"
+                      onChange={(e) =>
+                        setMethodType(e.currentTarget.value)
+                      } />
+                  </label>
+                </div>
+              </div>
+            </FormGroup>
+                </p>
+                </Col> ): "Delivery will be "+ methodType }
+             
             </Row>
           </Container>
         </div>
       ) : (
-        "You are not a buyer or seller. Ne arıyon karşim burada "
+        "You are not a buyer or seller. Check if you are logged in"
       )}
 
       <div className="buttons d-flex align-items-center justify-content-center">
