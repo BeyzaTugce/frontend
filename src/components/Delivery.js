@@ -216,7 +216,7 @@ const Delivery = (props) => {
               <Col>
                 <h4>Please Select a Date</h4>
                 <p>
-                  <ButtonGroup toggle>
+                <ButtonGroup vertical={true} style={{ marginTop: 100, width: 150}}>
                     {purchase.purchase.availableDates.map((item) => (
                       <td>
                         <ToggleButton
@@ -229,7 +229,7 @@ const Delivery = (props) => {
                           }
                         >
                           {item}
-                        </ToggleButton>{" "}
+                        </ToggleButton>
                       </td>
                     ))}
                   </ButtonGroup>
