@@ -33,6 +33,7 @@ const Garage = (props) => {
   const [buyer, setBuyer] = useState("");
   const [price, setPurchasePrice] = useState(0);
   const [garageId, setGarageId] = useState("");
+  const [shipAddress, setShipmentAddress] = useState("");
   const [purchaseId, setPurchaseId] = useState("");
   const [purID, setPurID] = useState(Math.floor(Math.random() * 100000000 + 1).toString());
   const [purchases, setPurchases] = useState([]);
@@ -79,6 +80,7 @@ const Garage = (props) => {
     back.price = totalPrice;
     back.selectedItemList = selectedItemList;
     back.method = selectedMethod;
+    back.shipAddress = shipAddress;
     if(buy == true)
        back.purchaseStatus = "DeliveryScheduling";
     return back;
@@ -104,11 +106,12 @@ const Garage = (props) => {
     if(!purchase.purchase){
        props.onCreatePurchase(packPurchase());
       }
+      
     else {
       if(buy == true)
          history.push(`../delivery/${purchase.purchase._id}`)
       else if(bargainOption == true)
-        history.push(`../bargain/${purchase.purchase._id}`)
+          history.push(`../bargain/${purchase.purchase._id}`)
     }
   };
 
@@ -142,9 +145,14 @@ const Garage = (props) => {
     }
     if(props.garage.shipment == true){
       if(props.garage.pickup == true){
-        setSelectedMethod("Both") 
+        setSelectedMethod("Both");
+        setShipmentAddress(loggedInUser.correspondenceAddress + loggedInUser.district + loggedInUser.city);
       }
-      else setSelectedMethod("Shipment");
+      else {
+        setSelectedMethod("Shipment");
+        setShipmentAddress(loggedInUser.correspondenceAddress + loggedInUser.district + loggedInUser.city);
+        
+      }
     }
     else setSelectedMethod("PickUp");
   }
@@ -328,7 +336,7 @@ const Garage = (props) => {
                       className="btn border-0"
                       variant="dark"
                       style={{ backgroundColor: "#A282A5", marginRight: 8 }}
-                      onClick={addPurchase}
+                      onClick={bargainFunction}
                       > 
                         Bargain for Selected Items
                       </Button>
@@ -336,7 +344,7 @@ const Garage = (props) => {
                       className="btn border-0 text-white"
                       variant="light"
                       style={{ backgroundColor: "#85A582" }}
-                      onClick={trialFunction}
+                      onClick={buyFunction}
                       >
                         Buy Selected Items
                       </Button> 

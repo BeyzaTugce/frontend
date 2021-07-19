@@ -43,7 +43,7 @@ const checkUser = () => {
     back.price = purchase.purchase.price;
     back.selectedItemList = purchase.purchase.selectedItemList;
     back.method = purchase.purchase.method;
-    back.purchaseStatus = purchase.purchase.purchaseStatus;
+    back.purchaseStatus = "Order";
     back.availableDates = purchase.purchase.availableDates;
     back.pickupLocation = purchase.purchase.pickupLocation;
     back.pickUpDate = purchase.purchase.pickUpDate;
