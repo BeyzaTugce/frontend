@@ -23,6 +23,7 @@ const GarageCreation = (props) => {
   const [pickup, setPickup] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  let garageCreated = false;
 
 
   const togglePopup = () => {
@@ -94,7 +95,11 @@ const GarageCreation = (props) => {
   //let newId = null;
   const onCreate = (e) => {
     //e.preventDefault();
-    props.onCreate(packGarage());
+    if(garageCreated == false ){
+       props.onCreate(packGarage());
+       garageCreated = true;
+       setDisabled(true);
+    }
   }
 
 
