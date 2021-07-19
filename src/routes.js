@@ -11,9 +11,9 @@ import VisitorView from "./views/VisitorView";
 import OrderDetailsView from "./views/OrderDetailsView";
 import Search from "./components/Search";
 import Payment from "./components/Payment";
+import ImageView from "./components/Image";
 import SearchView from "./views/SearchView";
 import PurchaseView from "./views/PurchaseView";
-import ItemDetailsView from "./views/ItemDetailsView";
 // routes within the movie database example app
 // used for routing
 
@@ -72,10 +72,9 @@ const routes = [
     component: PurchaseView,
   },
   {
-    path: "/item/:id",
-    component: ItemDetailsView,
+    path: "/image",
+    component: ImageView,
   },
-
  /* {
     path: "/item",
     component: ItemView,

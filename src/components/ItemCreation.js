@@ -21,6 +21,7 @@ import {
 import { PlusLg } from "react-bootstrap-icons";
 import PropTypes from "prop-types";
 import GarageItem from "./GarageItem";
+import ImageComponent from "./Image";
 
 import { useHistory } from "react-router-dom";
 
@@ -181,6 +182,8 @@ function ItemCreation(props) {
                   </Nav.Item>
                   <Nav.Item>
                     <Nav.Link eventKey="image">Upload Image</Nav.Link>
+                    <ImageComponent 
+                     > </ImageComponent>
                   </Nav.Item>
                 </Nav>
               </Col>
