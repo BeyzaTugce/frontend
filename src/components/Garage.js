@@ -246,6 +246,7 @@ const Garage = (props) => {
             info={garageItem.info}
             tags={garageItem.tags}
             price={garageItem.price}
+            itemId={garageItem._id}
             button1Name={"Edit"}
             button2Name={"Remove"}
             condition={true}

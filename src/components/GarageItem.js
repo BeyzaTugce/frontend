@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form, FormCheck, Image, ListGroupItem, Alert } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const GarageItem = (props) => {
@@ -10,6 +10,8 @@ const GarageItem = (props) => {
   const [condition, setCondition] = useState(false);
   //const [selectedItems, setSelectedItems] = useState(0);
 
+  const history = useHistory();
+  
   useEffect(() => {
     setButton1Name(button1Name)
     setButton2Name(button2Name)
@@ -31,10 +33,15 @@ const GarageItem = (props) => {
     }
   };
 
+  const onClickItemDetail = () => {
+    history.push("/item/"+props.itemId);
+  }
+
   return (
     <ListGroupItem
       className="d-inline-flex align-items-center justify-content-between"
       style={{ borderColor: "#85A582" }}
+      onClick={onClickItemDetail}
     >
       <FormCheck
         type="checkbox"

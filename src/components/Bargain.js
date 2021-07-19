@@ -16,7 +16,14 @@ import {
 } from "../redux/actions/OfferActions";
 import { withRouter } from "react-router-dom";
 import store from '../redux/store';
-import { getPurchase, changePurchase, loadBuyer, loadSeller } from "../redux/actions/PurchaseActions";
+import {
+    getPurchase,
+    changePurchase,
+    loadBuyer,
+    loadSeller,
+    getPurchaseBuyer,
+    getPurchaseSeller
+} from "../redux/actions/PurchaseActions";
 import GarageItem from "./GarageItem";
 import ListItem from "./ListItem";
 
@@ -24,7 +31,7 @@ const Bargain = (props) => {
   const loggedInUser = useSelector((state) => state.auth.user);
   const purchase = useSelector((state) => state.purchase);
   const offer = useSelector((state) => state.offer);
-  let {match, getPurchase, loadBuyer, loadSeller} = props;
+  let {match, getPurchase, getPurchaseBuyer, getPurchaseSeller} = props;
     const [show, setShow] = useState(false);
     const [enterOffer, setEnterOffer] = useState({ price: Math.floor(purchase?.purchase?.price * 0.6) });
     const [seller, setSeller] = React.useState();
@@ -44,7 +51,8 @@ const Bargain = (props) => {
     useEffect(() => {
       let purchaseId = match.params.id;
       getPurchase(purchaseId);
-      
+      getPurchaseBuyer(purchaseId);
+      getPurchaseSeller(purchaseId);
     }, [match.params]);
 
     useEffect(() => {
@@ -93,8 +101,6 @@ const Bargain = (props) => {
     
     };
 
-
-    
     useEffect(() => {
       if(!props.offers){
         props.getOfferHistory(purchaseId);
@@ -278,15 +284,16 @@ const mapStateToProps = (state) => ({
 
 // this.props.withdrawOffer, this.props.getOfferHistory, ...
 export default connect(mapStateToProps, {
-  getOfferHistory,
-  makeOffer,
-  withdrawOffer,
-  setOffersLoading,
-  getPurchase,
-  changePurchase,
-  loadBuyer,
-  loadSeller
-
+    getOfferHistory,
+    makeOffer,
+    withdrawOffer,
+    setOffersLoading,
+    getPurchase,
+    changePurchase,
+    loadBuyer,
+    loadSeller,
+    getPurchaseBuyer,
+    getPurchaseSeller
 })(withRouter(Bargain));
 
 

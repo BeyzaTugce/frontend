@@ -8,7 +8,6 @@ import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import ItemCreation from "./ItemCreation";
 import { connect, useSelector } from "react-redux";
-import GarageCreatedPopUp from "./GarageCreatedPopUp";
 
 
 const GarageCreation = (props) => {
@@ -23,12 +22,8 @@ const GarageCreation = (props) => {
   const [pickup, setPickup] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  let garageCreated = false;
+  const [isCreated, setIsCreated] = useState(false);
 
-
-  const togglePopup = () => {
-    setIsOpen(!isOpen);
-  }
 
   // for extracting the attributes of the given garage to the appropriate state variables
   const extractGarage = () => {
@@ -62,7 +57,7 @@ const GarageCreation = (props) => {
   }, [props.garage] );
 
   useEffect(() => {
-    if (shipment || pickup)
+    if ( (shipment || pickup) && !isCreated)
       setDisabled(false);
     else
       setDisabled(true);
@@ -92,13 +87,12 @@ const GarageCreation = (props) => {
     setPickup(e.target.checked);
   };
 
-  //let newId = null;
   const onCreate = (e) => {
     //e.preventDefault();
-    if(garageCreated == false ){
-       props.onCreate(packGarage());
-       garageCreated = true;
-       setDisabled(true);
+    if (!isCreated){
+      setIsCreated(true);
+      props.onCreate(packGarage());
+      setDisabled(true);
     }
   }
 
@@ -184,15 +178,15 @@ const GarageCreation = (props) => {
             <ItemCreation
                 garage={props.garage}
                 garageCreated={props.garageCreated}
-                //createdGarage={props.createdGarage}
-                //newId={props.id}
             />
           </div>
         </div>
-        {disabled ? 
+        {disabled && !isCreated ?
           <Alert className="mb-5 mt-5" variant="danger">
             <Alert.Heading>Please select at least one delivery option to create your garage!</Alert.Heading>
-          </Alert> : <p></p>
+          </Alert> : (isCreated ? <Alert className="mb-5 mt-5" variant="danger">
+              <Alert.Heading>You have successfully created your garage! Let's add some items!</Alert.Heading>
+            </Alert> : <p></p>)
         }
         {disabled ?
         <Button

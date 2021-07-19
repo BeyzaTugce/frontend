@@ -55,7 +55,7 @@ const PurchaseView = (props) => {
                                 tags={item.tags}
                                 price={item.price}
                                 garageId={item.garageId}
-                                username={item.username}
+                                username={"Me"}
                             />
                             <br/>
                         </div>
