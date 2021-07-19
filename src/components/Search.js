@@ -15,22 +15,10 @@ const Search = (props) => {
     const [maxPrice, setMaxPrice] = React.useState(99999);
     const [minStars, setMinStars] = React.useState(0);
 
-    /*
-
-    const extractOrder = () => {
-        if (!props.order ) {
-            return;
-        }
-
-        setStatus(props.order.enum);
-    }
-
     useEffect(() => {
-        extractOrder();
-    }, [props.order] );
-     */
+    }, );
 
-    const filtering =
+    let filtering =
         props.foundItems?.map(item => {
             if (item?.key != null &&
                 item.props.price>=minPrice && item.props.price<=maxPrice){
@@ -41,26 +29,20 @@ const Search = (props) => {
                         tags={item.props.tags}
                         price={item.props.price}
                         garageId={item.props.garageId}
+                        username={item.props.username}
                     />);
             }
         });
 
     const onChangeMinPrice = (e) => {
-        const timerId = setTimeout(() => {
-            setMinPrice(e.target.value);
-        }, 1000);
-        return () => {
-            clearTimeout(timerId);
-        };
+        setMinPrice(e.target.value);
     };
-
     const onChangeMaxPrice = (e) => {
-        const timerId = setTimeout(() => {
-            setMaxPrice(e.target.value);
-        }, 1000);
-        return () => {
-            clearTimeout(timerId);
-        };
+        setMaxPrice(e.target.value);
+
+        if (e.target.value === '') {
+            setMaxPrice(99999);
+        }
     };
 
     const onClick4Stars = (e) => {
@@ -88,14 +70,13 @@ const Search = (props) => {
     };
 
     const onClickPriceUp = (e) => {
-        props.foundItems
-            .sort((a, b) => a.props.price > b.props.price ? 1 : -1)
-
-        //sorting function
+        filtering = filtering.sort((a, b) => a.props.price > b.props.price ? 1 : -1);
+        console.log(filtering);
     };
 
     const onClickPriceDown = (e) => {
-        //sorting function
+        filtering = filtering.sort((a, b) => a.props.price < b.props.price ? 1 : -1);
+        console.log(filtering);
     };
 
     const onClickRatingUp = (e) => {
@@ -111,10 +92,10 @@ const Search = (props) => {
           <span>
               <div className="d-flex">
                   <div className="p-2 flex-shrink-1 " style={{backgroundColor: '#F8F8F8'}}>
-                      <div className="d-inline-block text-center">
+                      <div className="d-inline-block">
                           <FormGroup style={{ marginTop: 20 }}>
-                              <div className="filterOptions">
-                                  <FormLabel className="label-filter">Filter</FormLabel>
+                              <div className="filterOptions text-center">
+                                  <FormLabel className="label-filter font-weight-bold">Filter</FormLabel>
                                   <div>
                                       <label className="text-nowrap">
                                           €
@@ -123,19 +104,19 @@ const Search = (props) => {
                                                  type="Number"
                                                  onChange={onChangeMinPrice}
                                                  style={{width:60}}
+                                                 min="0"
                                           />
                                       </label>
                                       <label className="text-nowrap">
                                           -€
                                           <input
                                                  name="max-price"
+                                                 min="0"
                                                  type="Number"
                                                  onChange={onChangeMaxPrice}
                                                  style={{width:60}}
                                           />
                                       </label>
-                                  </div>
-                                  <div>
                                   </div>
                                   <div style={{marginBottom:-20}}>
                                       <label>
@@ -207,17 +188,21 @@ const Search = (props) => {
                                   </div>
                               </div>
                           </FormGroup>
-                          <FormLabel className="label-sort">Sort</FormLabel>
-                              <div className="SortOptions text-nowrap">
+                          <div className="label-sort text-center font-weight-bold">Sort</div>
+                              <div className="SortOptions text-nowrap text-right">
                                   <div>
                                       <label>
                                           Garage Deadline
                                           <Button className="ml-2 "
                                                   name="garage-deadline-button-up"
+                                                  variant="contained"
+                                                  color="primary"
                                                   onClick={onClickGarageDeadlineUp}>
                                               <ArrowUp/>
                                           </Button>
                                           <Button className="ml-2 "
+                                                  variant="contained"
+                                                  color="primary"
                                                   name="garage-deadline-button-down"
                                                   onClick={onClickGarageDeadlineDown}>
                                               <ArrowDown/>
@@ -228,13 +213,17 @@ const Search = (props) => {
                                       <label>
                                           Price
                                           <Button className="ml-2 "
+                                                  variant="contained"
+                                                  color="primary"
                                                   name="price-button-up"
-                                                  onChange={onClickPriceUp}>
+                                                  onClick={onClickPriceUp}>
                                               <ArrowUp/>
                                           </Button>
                                           <Button className="ml-2 "
+                                                  variant="contained"
+                                                  color="primary"
                                                   name="price-button-down"
-                                                  onChange={onClickPriceDown}>
+                                                  onClick={onClickPriceDown}>
                                               <ArrowDown/>
                                           </Button>
                                       </label>
@@ -243,13 +232,17 @@ const Search = (props) => {
                                       <label>
                                           Rating
                                           <Button className="ml-2 "
+                                                  variant="contained"
+                                                  color="primary"
                                                   name="rating-button-up"
-                                                  onChange={onClickRatingUp}>
+                                                  onClick={onClickRatingUp}>
                                               <ArrowUp/>
                                           </Button>
                                           <Button className="ml-2 "
+                                                  variant="contained"
+                                                  color="primary"
                                                   name="rating-button-down"
-                                                  onChange={onClickRatingDown}>
+                                                  onClick={onClickRatingDown}>
                                               <ArrowDown/>
                                           </Button>
                                       </label>
@@ -258,7 +251,7 @@ const Search = (props) => {
                       </div>
                   </div>
                   <div className="w-100">
-                      <Navbar className="results-for w-100" style={{backgroundColor: '#F8F8F8'}}>Results for {props.searchTerm}</Navbar>
+                      <Navbar className="results-for w-100" style={{backgroundColor: '#F8F8F8'}}>Results for "{props.searchTerm}"</Navbar>
                       <div className="list-whole" style={{ paddingInline: 30, paddingTop:30 }}>
                           <ListGroup className="d-inline-block">
                               {filtering}
