@@ -107,8 +107,7 @@ const Delivery = (props) => {
     back.garageId = purchase.purchase.garageId;
     back.price = purchase.purchase.price;
     back.selectedItemList = purchase.purchase.selectedItemList;
-    
-    back.purchaseStatus = purchase.purchase.purchaseStatus;
+    back.purchaseStatus = "Payment";
 
     if (userType == "Seller") {
       back.availableDates = newDate;
