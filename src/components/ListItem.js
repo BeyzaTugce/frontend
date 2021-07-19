@@ -12,16 +12,21 @@ const ListItem = (props) => {
     return (
         <ListGroupItem
             className="d-inline-flex align-items-center justify-content-between"
-            style={{ borderColor: "#85A582" }}
+            style={{ borderColor: "#85A582", width: 1000}}
         >
             <div
                 className="img-container d-flex align-items-center"
                 style={{
                     width: 100,
                     height: 100,
+                    textAlign: "center",
+                    marginRight: 30,
                 }}
             ></div>
             <div className="name-and-tags flex-fill">
+                <div className="item-name" type="name" fullWidth required>
+                    <strong>By {props.username}</strong>
+                </div>
                 <div className="item-name" type="name" fullWidth required>
                     {props.name}
                 </div>

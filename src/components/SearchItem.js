@@ -2,11 +2,20 @@ import React, { useEffect, useState } from "react";
 import { Button, Form, FormCheck, Image, ListGroupItem } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
+import { useHistory } from "react-router-dom";
+
 
 const SearchItem = (props) => {
 
+    const history = useHistory();
+
     useEffect(() => {
     }, [] );
+
+    const onClickGoToGarage = () => {
+        history.push("/garage/"+props.garageId);
+    }
+
 
     return (
         <ListGroupItem
@@ -15,8 +24,7 @@ const SearchItem = (props) => {
         >
             <div className="content flex-fill text-center">
                 <div className="item-name" type="name" required style={{ fontSize: 18, fontWeight:"bold" }}>
-                    {" "}
-                    {props.name}{" "}
+                    {props.name}
                 </div>
                 <div
                     className="item-tags text-black-50"
@@ -26,8 +34,7 @@ const SearchItem = (props) => {
                     required
                     // > {props.tags.map(tag => {return "#"+tag})} </div>
                 >
-                    {" "}
-                    {props.tags}{" "}
+                    {props.tags}
                 </div>
                 <div className="img-container d-flex align-items-center"
                      style={{width: 200, height: 200, textAlign: "center",}}
@@ -35,6 +42,7 @@ const SearchItem = (props) => {
                 <div className="garage-name">At {props.seller}'s Garage</div>
                 <div className="garage-name">Ends on {props.endDate}</div>
                 <div className="item-price" style={{ fontWeight:"bold" }}>€{props.price}</div>
+                <Button style={{marginTop: 10}} onClick={onClickGoToGarage}>Select</Button>
             </div>
         </ListGroupItem>
     );

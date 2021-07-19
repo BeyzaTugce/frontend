@@ -34,7 +34,6 @@ import {getGarages} from "../redux/actions/GarageActions";
  */
 
 function ItemCreation(props) {
-  const history = useHistory();
   const garage = useSelector((state) => state.garage);
   const user = useSelector((state) => state.auth.user);
 
@@ -45,6 +44,8 @@ function ItemCreation(props) {
   const [itemPrice, setItemPrice] = React.useState("");
   const [itemImage, setItemImage] = React.useState([]);
   const [garageId, setGarageId] = React.useState([]);
+  const [userName, setUserName] = React.useState([]);
+
 
 
   const extractItem = () => {
@@ -57,6 +58,7 @@ function ItemCreation(props) {
     setItemPrice(props.item.itemPrice);
     setItemImage(props.item.itemImage);
     setGarageId(props.item.garageId);
+    setUserName(props.item.userName);
   };
 
   useEffect(() => {
@@ -116,25 +118,21 @@ function ItemCreation(props) {
       back.garageId = garageId;
     }
     else{
-      console.log("itemcreation stringfy:"+JSON.stringify(garage.garages.garages.filter(g => g.user == user._id)));
       garage.garages.garages.filter(g => g.user == user._id).map(x => {back.garageId = x._id});
-      console.log(back.garageId);
     }
     back.name = itemTitle;
     back.price = itemPrice;
     back.tags = itemTags.split(" ");
     back.info = itemInfo;
     back.image = itemImage;
+    back.username = user.username;
 
     return back;
   };
 
   const onMyGarage = () => {
-    console.log("item?:"+props.garageCreated);
-
     if (props.garageCreated){
       garage.garages.garages.filter(g => g.user == user._id).map( g => {props.history.push("/garage/"+g._id)});
-      console.log("garage view:"+garage.garages.garages.filter(g => g.user == user._id));
     }
   }
 
@@ -152,10 +150,6 @@ function ItemCreation(props) {
     console.log("onRemove itemcreation");
     props.dispatch(deleteItem(packItem()))
   }
-
-  const onCancel = () => {
-    props.history.push("/");
-  };
 
 
   return (

@@ -48,24 +48,32 @@ const PurchaseView = (props) => {
                 <Button onClick={onClickGetSeller}>Go To My Sales</Button><br/><br/>
                 {purchase?.purchases?.purchases?.filter(p => p.seller == user._id).map( p => p.selectedItemList.map( (item) => {
                     return (
-                    <ListItem
-                    name={item.name}
-                    info={item.info}
-                    tags={item.tags}
-                    price={item.price}
-                    garageId={item.garageId}
-                    />
+                        <div>
+                            <ListItem
+                                name={item.name}
+                                info={item.info}
+                                tags={item.tags}
+                                price={item.price}
+                                garageId={item.garageId}
+                                username={item.username}
+                            />
+                            <br/>
+                        </div>
                     )}))} <br/><br/>
                 <Button onClick={onClickGetBuyer}>Go To My Orders</Button><br/><br/>
                 {purchase?.purchases?.purchases?.filter(p => p.buyer == user._id).map( p => p.selectedItemList.map( (item) => {
                     return (
-                        <ListItem
-                            name={item.name}
-                            info={item.info}
-                            tags={item.tags}
-                            price={item.price}
-                            garageId={item.garageId}
-                        />
+                        <div>
+                            <ListItem
+                                name={item.name}
+                                info={item.info}
+                                tags={item.tags}
+                                price={item.price}
+                                garageId={item.garageId}
+                                username={item.username}
+                            />
+                            <br/>
+                        </div>
                     )}))}
             </div>
 

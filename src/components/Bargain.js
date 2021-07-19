@@ -18,6 +18,7 @@ import { withRouter } from "react-router-dom";
 import store from '../redux/store';
 import { getPurchase, changePurchase, loadBuyer, loadSeller } from "../redux/actions/PurchaseActions";
 import GarageItem from "./GarageItem";
+import ListItem from "./ListItem";
 
 const Bargain = (props) => {
   const loggedInUser = useSelector((state) => state.auth.user);
@@ -136,11 +137,12 @@ const Bargain = (props) => {
 
     const renderedListItem = purchase.purchase?.selectedItemList.map((item) => {
       return (
-          <GarageItem
+          <ListItem
               name={item.name}
               info={item.info}
               tags={item.tags}
               price={item.price}
+              garageId={item.garageId}
           />
       );
     });
