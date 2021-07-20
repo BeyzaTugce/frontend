@@ -49,7 +49,7 @@ const Bargain = (props) => {
     useEffect(() => {
       let purchaseId = match.params.id;
       getPurchase(purchaseId);
-      history.push(`../bargain/${purchase.purchase._id}`)
+      //history.push(`../bargain/${purchase.purchase._id}`)
       
     }, [offerCount]);
   
@@ -88,8 +88,8 @@ const Bargain = (props) => {
       handleToggle();
       setTurn(!turn);
       setOfferCount(offerCount + 1 );
-     //history.push(`../bargain/${purchase.purchase._id}`)
-    
+     history.push(`../bargain/${purchase.purchase._id}`)
+
     };
 
 
