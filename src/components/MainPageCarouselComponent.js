@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
-import { Button, ListGroupItem } from "react-bootstrap";
+import {Button, Carousel} from "react-bootstrap";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
+import logo from "../views/logo.png";
 
 
-const SearchItem = (props) => {
+const MainPageCarouselComponent = (props) => {
 
     const history = useHistory();
 
@@ -17,7 +18,7 @@ const SearchItem = (props) => {
 
 
     return (
-        <ListGroupItem
+        <Carousel.Item
             className="d-inline-flex align-items-center justify-content-between border"
             style={{ borderColor: "#85A582"}}
         >
@@ -28,10 +29,6 @@ const SearchItem = (props) => {
                 <div
                     className="item-tags text-black-50"
                     type="name"
-                    fullWidth
-                    //value={props.tags.map(tag => {return "#"+tag})}
-                    required
-                    // > {props.tags.map(tag => {return "#"+tag})} </div>
                 >
                     {props.tags.map( tag => {return "#"+tag+" "})}
                 </div>
@@ -43,12 +40,12 @@ const SearchItem = (props) => {
                 <div className="item-price" style={{ fontWeight:"bold" }}>€{props.price}</div>
                 <Button style={{marginTop: 10}} onClick={onClickGoToGarage}>Select</Button>
             </div>
-        </ListGroupItem>
+        </Carousel.Item>
     );
 };
 
-SearchItem.propTypes = {
+MainPageCarouselComponent.propTypes = {
     item: PropTypes.object,
 };
 
-export default SearchItem;
+export default MainPageCarouselComponent;
