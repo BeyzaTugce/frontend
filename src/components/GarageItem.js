@@ -11,7 +11,7 @@ const GarageItem = (props) => {
   //const [selectedItems, setSelectedItems] = useState(0);
 
   const history = useHistory();
-  
+
   useEffect(() => {
     setButton1Name(button1Name)
     setButton2Name(button2Name)
@@ -41,7 +41,7 @@ const GarageItem = (props) => {
     <ListGroupItem
       className="d-inline-flex align-items-center justify-content-between"
       style={{ borderColor: "#85A582" }}
-      onClick={onClickItemDetail}
+      //onClick={onClickItemDetail}
     >
       <FormCheck
         type="checkbox"
@@ -75,33 +75,35 @@ const GarageItem = (props) => {
       </div>
       <div className="justify-content-end d-inline-flex align-items-center justify-content-end">
       <div className="item-price" style={{"marginRight":15, "font-size":20}}><strong>€{props.price}</strong></div>
-        <Button
-          className="btn border-0"
-          variant="dark"
-          style={{ backgroundColor: "#85A582", width: 80, marginRight: 10 }}
-        >
-          {props.button1Name}
-        </Button>
         {props.userView ?
-            <Button
-              className="btn border-0"
-              variant="dark"
-              style={{ backgroundColor: "#85A582", width: 80 }}
-              onClick={props.onRemove}
-            >
-            {props.button2Name}
-            </Button> :
-            props.condition ?
-                <Button
+            <div>
+              <Button
+                  className="btn border-0"
+                  variant="dark"
+                  style={{ backgroundColor: "#85A582", width: 80, marginRight:10}}
+                  onClick={onClickItemDetail}
+              >
+                {props.button1Name}
+              </Button>
+              <Button
                   className="btn border-0"
                   variant="dark"
                   style={{ backgroundColor: "#85A582", width: 80 }}
                   onClick={props.onRemove}
-                >
-                  {props.button2Name}
-                </Button> : null
+              >
+                {props.button2Name}
+              </Button>
+            </div>
+            :
+            <Button
+                className="btn border-0"
+                variant="dark"
+                style={{ backgroundColor: "#85A582", width: 80 }}
+                onClick={onClickItemDetail}
+            >
+              {props.button1Name}
+            </Button>
         }
-
       </div>
     </ListGroupItem>
   );

@@ -208,6 +208,9 @@ const Garage = (props) => {
     }
   };
 
+  const removeGarage = () => {
+    props.onRemoveGarage();
+  }
 
 
   const renderedListBuyer = garageItems.map((garageItem) => {
@@ -217,9 +220,8 @@ const Garage = (props) => {
         info={garageItem.info}
         tags={garageItem.tags}
         price={garageItem.price}
-        button1Name={"Buy"}
-        button2Name={"Bargain"}
-        condition={bargain}
+        itemId={garageItem._id}
+        button1Name={"Details"}
         userView={false}
           //image={garageItem.image}
         onClickSelect={() =>
@@ -247,9 +249,8 @@ const Garage = (props) => {
             tags={garageItem.tags}
             price={garageItem.price}
             itemId={garageItem._id}
-            button1Name={"Edit"}
+            button1Name={"Details"}
             button2Name={"Remove"}
-            condition={true}
             userView={true}
             //image={garageItem.image}
             onClickSelect={() =>
@@ -310,9 +311,9 @@ const Garage = (props) => {
             </Button>
           </div>
           <div className="list-whole w-100" style={{ paddingInline: 50 }}>
-            {props.seller === props.user ?
-                <ListGroup>{renderedListBuyer}</ListGroup> :
-                <ListGroup>{renderedListUser}</ListGroup>
+            {isMyGarage ?
+                <ListGroup>{renderedListUser}</ListGroup> :
+                <ListGroup>{renderedListBuyer}</ListGroup>
             }
             <div
                 className="price-info-text text-center"

@@ -23,7 +23,7 @@ class UploadComponent extends React.Component {
         onChange={this.onDrop}
         imgExtension={this.props.imgExtension}
         maxFileSize={this.props.maxFileSize}
-        defaultImages={this.props.defaultImages}
+        //defaultImages={this.props.defaultImages}
       />
     );
   }

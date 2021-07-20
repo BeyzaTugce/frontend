@@ -78,12 +78,9 @@ function ItemCreation(props) {
   };
 
   const removeFromList = (input) => {
-    console.log("remove list itemcreation");
-
     if (itemList.includes(input)) {
-      console.log("remove list input");
-
-      setItemList([...itemList.filter(item => item.id != input.id)]);
+      let filteredArray = itemList.filter(item => item !== input)
+      setItemList(filteredArray);
     }
   };
 
@@ -155,15 +152,15 @@ function ItemCreation(props) {
 
   return (
     <div className="Item" style={{ paddingRight: 40, width: 800 }}>
-      <Button className="button-rounded" onClick={onCreate} disabled={!props.garageCreated} type="save" style={{marginLeft: 200}}>
+      <Button className="button-rounded" onClick={onCreate} disabled={!props.garageCreated} type="save" style={{marginLeft: 150}}>
         <PlusLg></PlusLg>
       </Button>
       <FormLabel className="frame">Add Item</FormLabel>
-      <Button className="button-rounded" onClick={onMyGarage} disabled={!props.garageCreated} type="save" style={{marginLeft: 280}}>
+      <Button className="button-rounded" onClick={onMyGarage} disabled={!props.garageCreated} type="save" style={{marginLeft: 320}}>
         Go to My Garage!
       </Button>
       <ListGroup>
-        <ListGroupItem className="d-flex align-items-start" style={{marginLeft: 200, paddingRight:100}}>
+        <ListGroupItem className="d-flex align-items-start" style={{marginLeft: 120, paddingRight:30}}>
           <TabContainer id="left-tabs-example" defaultActiveKey="info">
             <Row>
               <Col sm={3}>
@@ -181,9 +178,8 @@ function ItemCreation(props) {
                     <Nav.Link eventKey="tag">Tags</Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
-                    <Nav.Link eventKey="image">Upload Image</Nav.Link>
-                    <ImageComponent 
-                     > </ImageComponent>
+                    <Nav.Link eventKey="image">Upload Image
+                    </Nav.Link>
                   </Nav.Item>
                 </Nav>
               </Col>
@@ -197,7 +193,7 @@ function ItemCreation(props) {
                       value={itemTitle}
                       onChange={onChangeItemTitle}
                       required
-                      style={{ marginLeft: 15 }}
+                      style={{ marginLeft: 60 }}
                     />
                   </TabPane>
                   <TabPane eventKey="info">
@@ -208,7 +204,7 @@ function ItemCreation(props) {
                       value={itemInfo}
                       onChange={onChangeItemInfo}
                       required
-                      style={{ marginLeft: 15, marginTop: 75 }}
+                      style={{ marginLeft: 60, marginTop: 70 }}
                     />
                   </TabPane>
                   <TabPane eventKey="price">
@@ -218,7 +214,7 @@ function ItemCreation(props) {
                       fullWidth
                       value={itemPrice}
                       onChange={onChangeItemPrice}
-                      style={{ marginLeft: 15, marginTop: 130 }}
+                      style={{ marginLeft: 60, marginTop: 125 }}
                     />
                   </TabPane>
                   <TabPane eventKey="tag">
@@ -228,8 +224,13 @@ function ItemCreation(props) {
                       fullWidth
                       value={itemTags}
                       onChange={onChangeItemTags}
-                      style={{ marginLeft: 15, marginTop: 170 }}
+                      style={{ marginLeft: 60, marginTop: 165 }}
                     />
+                  </TabPane>
+                  <TabPane eventKey="image">
+                    <div style={{ marginLeft: 60, marginTop: 200 }}>
+                      <ImageComponent />
+                    </div>
                   </TabPane>
                 </TabContent>
               </Col>
@@ -250,9 +251,8 @@ function ItemCreation(props) {
                   price={item.price}
                   tags={item.tags}
                   onRemove={onRemove}
-                  button1Name={"Edit"}
+                  button1Name={"Details"}
                   button2Name={"Remove"}
-                  condition={true}
                   userView={true}
               />
             );

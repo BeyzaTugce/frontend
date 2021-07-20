@@ -28,7 +28,7 @@ const PurchaseView = (props) => {
 
         //TODO:purchase.seller state ine yazıyor ama anlık data çekilemiyor state den
         //purchase.purchases.purchases.filter(p => p.seller == user._id).map( p => getPurchaseSeller(p.seller));
-        purchase.purchases.purchases.filter(p => p.seller == user._id).map( p => props.history.push("../bargain/"+p._id));
+        purchase?.purchases?.purchases?.filter(p => p.seller == user._id).map( p => props.history.push("../bargain/"+p._id));
     }
 
     const onClickGetBuyer = () => {
@@ -36,7 +36,7 @@ const PurchaseView = (props) => {
 
         //TODO:purchase.buyer state ine yazıyor ama anlık data çekilemiyor state den
         //purchase.purchases.purchases.filter(p => p.buyer == user._id).map( p => getPurchaseBuyer(p.buyer));
-        purchase.purchases.purchases.filter(p => p.buyer == user._id).map( p => props.history.push("../bargain/"+p._id));
+        purchase?.purchases?.purchases?.filter(p => p.buyer == user._id).map( p => props.history.push("../bargain/"+p._id));
     }
 
 

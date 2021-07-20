@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import { withRouter } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
 
@@ -17,7 +17,6 @@ import Header from "../components/Header";
  */
 function GarageCreationView(props) {
   const garage = useSelector((state) => state.garage);
-  const user = useSelector((state) => state.auth.user);
 
   const [newItem, setNewItem] = React.useState(false);
   const [garageCreated, setGarageCreated] = React.useState(false);
@@ -25,7 +24,7 @@ function GarageCreationView(props) {
 
   useEffect(() => {
     if (garage.garage) {
-      props.history.push("/");
+      props.history.push("/home");
     }
   }, [props.history]);
 
@@ -36,16 +35,14 @@ function GarageCreationView(props) {
     console.log("garageCreated:"+garageCreated);
   };
 
-  const onRemove = (garage) => {
-    props.dispatch(deleteGarage(garage.id));
-  };
-
   const onChange = (newGarage) => {
     props.dispatch(changeGarage(newGarage));
   };
 
   const onCancel = () => {
-    props.history.push("/");
+    console.log("cancel:"+garage?._id);
+    props.dispatch(deleteGarage(garage?.garage?._id));
+    props.history.push("/home");
   };
 
   return (
@@ -55,6 +52,7 @@ function GarageCreationView(props) {
             newItem={newItem}
             garage={garage.garage}
             onCreate={onCreate}
+            onCancel={onCancel}
             garageCreated={garageCreated}
         />
       </div>
@@ -64,6 +62,7 @@ function GarageCreationView(props) {
 
 GarageCreationView.propTypes = {
   onCreate: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
   onRemoveItem: PropTypes.func.isRequired,
   garage: PropTypes.object,
   newItem: PropTypes.object,

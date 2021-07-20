@@ -3,7 +3,7 @@ import { connect, useSelector } from "react-redux";
 
 import { withRouter } from "react-router-dom";
 import Garage from "../components/Garage";
-import { getGarage, getSeller, getItems } from "../redux/actions/GarageActions";
+import {getGarage, getSeller, getItems, deleteGarage} from "../redux/actions/GarageActions";
 
 import { addPurchase } from "../redux/actions/PurchaseActions";
 import Header from "../components/Header";
@@ -17,21 +17,19 @@ function GarageView(props) {
   const user = useSelector((state) => state.auth);
   const purchase = useSelector((state) => state.purchase);
 
+  let garageId = match.params.id;
 
   useEffect(() => {
-    let garageId = match.params.id;
     getGarage(garageId);
     //getSeller(garageId);
   }, [match.params]);
   
   useEffect(() => {
-    let garageId = match.params.id;
     getSeller(garageId);
     //document.write(seller.seller.firstname);
   }, [match.params]);
 
   useEffect(() => {
-    let garageId = match.params.id;
     getItems(garageId);
   }, [match.params]);
 
@@ -40,6 +38,11 @@ function GarageView(props) {
   const onCreatePurchase = (purchased) => {
       addPurchase(purchased);
   };
+
+  const onRemoveGarage = () => {
+    deleteGarage(garageId);
+  }
+
   return (
       <div>
         <Header/>
@@ -50,6 +53,7 @@ function GarageView(props) {
             items={garage.items}
             purchase= {purchase.purchase}
             onCreatePurchase = {onCreatePurchase}
+            onRemoveGarage={onRemoveGarage}
             purchaseId= {purchase}
             //isLoggedIn={!!user.user}
         />
@@ -59,5 +63,5 @@ function GarageView(props) {
 
 }
 
-export default connect(null, { getGarage, getSeller, getItems, addPurchase })(withRouter(
+export default connect(null, { getGarage, getSeller, getItems, addPurchase, deleteGarage })(withRouter(
     GarageView));

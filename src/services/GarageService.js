@@ -39,10 +39,10 @@ export default class GarageService {
     });
   }
 
-  static deleteGarage(garage) {
+  static deleteGarage(garageId) {
     return new Promise((resolve, reject) => {
       HttpService.remove(
-        `${GarageService.baseURL()}/${garage._id}`,
+        `${GarageService.baseURL()}/${garageId}`,
         function (data) {
           if (data.message !== undefined) {
             resolve(data.message);

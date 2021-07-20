@@ -96,6 +96,10 @@ const GarageCreation = (props) => {
     }
   }
 
+  const onCancel = () => {
+    props.onCancel();
+  }
+
 
   const getDate = (today) => {
     let day = new Date();
