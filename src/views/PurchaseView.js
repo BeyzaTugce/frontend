@@ -26,17 +26,51 @@ const PurchaseView = (props) => {
     const onClickGetSeller = () => {
         getPurchases();
 
-        //TODO:purchase.seller state ine yazıyor ama anlık data çekilemiyor state den
         //purchase.purchases.purchases.filter(p => p.seller == user._id).map( p => getPurchaseSeller(p.seller));
-        purchase?.purchases?.purchases?.filter(p => p.seller == user._id).map( p => props.history.push("../bargain/"+p._id));
+        purchase?.purchases?.purchases?.filter(p => p.seller == user._id).map( p => {
+            switch(p.purchaseStatus){
+                case "WaitForAcceptance":
+                    props.history.push("../bargain/"+p._id)
+                    break
+                case "DeliveryScheduling":
+                    props.history.push("../delivery/"+p._id)
+                    break
+                case "DeliveryScheduled":
+                    props.history.push("../order/"+p._id)
+                    break
+                case "Payment":
+                    props.history.push("../order/"+p._id)
+                    break
+                case "Order":
+                    props.history.push("../order/"+p._id)
+                    break
+            }}
+        );
     }
 
     const onClickGetBuyer = () => {
         getPurchases();
 
-        //TODO:purchase.buyer state ine yazıyor ama anlık data çekilemiyor state den
         //purchase.purchases.purchases.filter(p => p.buyer == user._id).map( p => getPurchaseBuyer(p.buyer));
-        purchase?.purchases?.purchases?.filter(p => p.buyer == user._id).map( p => props.history.push("../bargain/"+p._id));
+        purchase?.purchases?.purchases?.filter(p => p.buyer == user._id).map( p => {
+            switch(p.purchaseStatus){
+                case "WaitForAcceptance":
+                    props.history.push("../bargain/"+p._id)
+                    break
+                case "DeliveryScheduling":
+                    props.history.push("../delivery/"+p._id)
+                    break
+                case "DeliveryScheduled":
+                    props.history.push("../delivery/"+p._id)
+                    break
+                case "Payment":
+                    props.history.push("../payment/"+p._id)
+                    break
+                case "Order":
+                    props.history.push("../order/"+p._id)
+                    break
+            }}
+        );
     }
 
 
@@ -56,6 +90,7 @@ const PurchaseView = (props) => {
                                 price={item.price}
                                 garageId={item.garageId}
                                 username={"Me"}
+                                status={p.purchaseStatus}
                             />
                             <br/>
                         </div>

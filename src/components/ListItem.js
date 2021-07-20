@@ -41,6 +41,7 @@ const ListItem = (props) => {
                 </div>
             </div>
             <div className="justify-content-end d-inline-flex align-items-center justify-content-end" style={{marginLeft: 40}}>
+                <div className="purchase-status" style={{"marginRight":30, "font-size":20}}><strong>{props.purchaseStatus}</strong></div>
                 <div className="item-price" style={{"marginRight":30, "font-size":20}}><strong>€{props.price}</strong></div>
                 <Button
                     className="btn border-0"

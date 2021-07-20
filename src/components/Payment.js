@@ -24,9 +24,9 @@ const Payment = (props) => {
 
 const checkUser = () => {
   if(loggedInUser != null){
-    if (loggedInUser._id == purchase.purchase.seller) {
+    if (loggedInUser._id === purchase?.purchase?.seller) {
       setUserType("Seller");
-    } else if (loggedInUser._id == purchase.purchase.buyer) {
+    } else if (loggedInUser._id === purchase?.purchase?.buyer) {
       setUserType("Buyer");
     }
   }

@@ -26,72 +26,53 @@ const Bargain = (props) => {
   let {match, getPurchase, loadBuyer, loadSeller} = props;
     const [show, setShow] = useState(false);
     const [enterOffer, setEnterOffer] = useState({ price: Math.floor(purchase?.purchase?.price * 0.6) });
-    const [seller, setSeller] = React.useState();
-    const [buyer, setBuyer] = React.useState();
     const handleToggle = () => {setShow(!show)};
     const [turn, setTurn] = useState(false);
     const [thisOfferHistory, setThisOfferHistory] = useState([]);
     const purchaseId = match.params.id;
     const history = useHistory();
     const [offerCount, setOfferCount] = useState(0);
-   // const { offers } = props.offer;
-   //const [offersArray, setOffersArray] = React.useState(offer?.offerHistory);
- 
 
-    //let purchaseId = props.match.params.id;
+
 
     useEffect(() => {
       let purchaseId = match.params.id;
       getPurchase(purchaseId);
+        props.loadBuyer(purchase?.purchase?.buyer);
+        props.loadSeller(purchase?.purchase?.seller);
 
     }, [match.params]);
 
     useEffect(() => {
       let purchaseId = match.params.id;
       getPurchase(purchaseId);
+        props.loadBuyer(purchase?.purchase?.buyer);
+        props.loadSeller(purchase?.purchase?.seller);
       //history.push(`../bargain/${purchase.purchase._id}`)
       
     }, [offerCount]);
   
-   // props.getOfferHistory(purchaseId);
-
-   // console.log("purchaseId"+purchaseId+ "newOffer "+  );
-    //const { loading } = props.loading;
-
-    // useEffect(() => {
-    //   //console.log(offersArray);
-    //   props.getOfferHistory(paramsId);
-      
-    //   //lastOffer = offers.offerHistory[offers.offerHistory.length - 1];
-    // }, [props.loading]);
-
 
     const packOffer = () => {
       let back = {
         ...props.offer,
       };
-      //back.purchaseId = purID;
-
       back.purchaseId= match.params.id;
       back.price=  enterOffer.price;
       back.offerHistory = [...thisOfferHistory, enterOffer.price];
       
       return back;
     };
+
     let offersArray = offer?.offers?.offerHistory;
     const handleOnClick = e => {
-      e.preventDefault();
-      //setThisOfferHistory(thisOfferHistory => [...thisOfferHistory, enterOffer.price]);
-      props.makeOffer(purchaseId, packOffer());
-      //setThisOfferHistory(...thisOfferHistory, enterOffer.price)
-      // Close modal
-      handleToggle();
-      setTurn(!turn);
-      setOfferCount(offerCount + 1 );
-     history.push(`../bargain/${purchase.purchase._id}`)
-
+        e.preventDefault();
+        props.makeOffer(purchaseId, packOffer());
+        handleToggle();
+        setTurn(!turn);
+        setOfferCount(offerCount + 1 );
+        history.push(`../bargain/${purchase.purchase._id}`)
     };
-
 
 
     useEffect(() => {
@@ -100,11 +81,8 @@ const Bargain = (props) => {
         props.loadBuyer(purchase?.purchase?.buyer);
         props.loadSeller(purchase?.purchase?.seller);
       }
-      // document.write(seller.firstname);
   }, [offerCount]);
-    //console.log(purchase.purchase.seller);
-    // loadBuyer("60edb706c917c34e50150ae0");
-    // loadSeller("60f043471af3a3e352a4abf4");
+
     const handleCancelClick = e => {
       e.preventDefault();
       props.withdrawOffer(purchaseId);
@@ -121,7 +99,7 @@ const Bargain = (props) => {
       let back = {
         ...props.purchase,
       };
-      back._id =purchase.purchase._id;
+      back._id = purchase.purchase._id;
       back.creationDate = purchase.purchase.creationDate;
       back.buyer = purchase.purchase.buyer;
       back.seller = purchase.purchase.seller;
@@ -130,7 +108,7 @@ const Bargain = (props) => {
       back.price = offersArray[offersArray.length-1];
       back.selectedItemList = purchase.purchase.selectedItemList;
       back.purchaseStatus= "DeliveryScheduling";
-  
+
       return back;
     };
 
@@ -217,22 +195,22 @@ const Bargain = (props) => {
         <ListGroup>{renderedListItem}</ListGroup>       
         <ListGroup>
           <TransitionGroup className="offers">
-            {offer?.buyer == loggedInUser ? (
+            {offer?.buyer === loggedInUser ? (
             <div className="d-flex w-100 justify-content-between mt-3">
                 <Alert variant="info" style={{"font-size":20, "text-align":"center", width:250}} block>
-                  <strong>{props.buyer?.username}</strong>
+                  <strong>{props.seller?.username}</strong>
                 </Alert>
                 <Alert variant="danger" style={{"font-size":20, "text-align":"center", width:250}} block>
-                  <strong>{props.seller?.username}</strong>
+                  <strong>{props.buyer?.username}</strong>
                 </Alert>
             </div>
             ) : (
             <div className="d-flex justify-content-between mt-3">
                 <Alert variant="danger" style={{"font-size":20,"text-align":"center", width:250}} block>
-                  <strong>{props.seller?.username}</strong>
+                  <strong>{props.buyer?.username}</strong>
                 </Alert>
                 <Alert variant="info" style={{"font-size":20, "text-align":"center", width:250}} block>
-                  <strong>{props.buyer?.username}</strong>
+                  <strong>{props.seller?.username}</strong>
                 </Alert>
             </div>
             )}

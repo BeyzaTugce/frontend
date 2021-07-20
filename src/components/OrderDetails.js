@@ -41,29 +41,34 @@ const OrderDetails = (props) => {
   }, []);
 
   useEffect(() => {
+      let purchaseId = match.params.id;
+      getPurchase(purchaseId);
     checkUser();
 }, [loggedInUser]);
 
 const checkUser = () => {
+    let purchaseId = match.params.id;
+    getPurchase(purchaseId);
   if(loggedInUser != null){
-    if (loggedInUser._id == purchase.purchase.seller) {
+    if (loggedInUser._id == purchase?.purchase?.seller) {
       setUserType("Seller");
-    } else if (loggedInUser._id == purchase.purchase.buyer) {
+    } else if (loggedInUser._id == purchase?.purchase?.buyer) {
       setUserType("Buyer");
     }
   }
 };
 
-  useEffect(() => {
 
-    setPickUpAddress(purchase.purchase.pickUpAddress);
+  useEffect(() => {
+      let purchaseId = match.params.id;
+      getPurchase(purchaseId);
+    setPickUpAddress(purchase.purchase.pickupLocation);
     setPrice(purchase.purchase.price +tax);
     setTotalwoTax(purchase.purchase.price);
     setItems(purchase.purchase.selectedItemList);
     setOrderDate(purchase.purchase.creationDate);
     setMethod(purchase.purchase.method);
     setPickUpDate(purchase.purchase.pickUpDate);
-    setPickUpAddress(purchase.purchase.pickUpAddress);
     setShipAddress(purchase.purchase.shipAddress);
     //setMethod(purchase.purchase.method);
    // setPickUpAddress(purchase.purchase.pickUpAddress);
@@ -90,7 +95,9 @@ const checkUser = () => {
 
     //will get the items from purchase.
     const extractItems = () => {
-        if (!purchase.purchase.selectedItemList ) {
+        let purchaseId = match.params.id;
+        getPurchase(purchaseId);
+        if (!purchase?.purchase?.selectedItemList ) {
             return;
         }
         setItems(purchase.purchase.selectedItemList)
@@ -100,7 +107,6 @@ const checkUser = () => {
         if (!props.seller ) {
             return;
         }
-
         setSellerName(props.seller.firstname);
     }
 

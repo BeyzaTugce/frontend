@@ -21,7 +21,7 @@ function DeliveryView(props) {
   }*/
 
   const onCancel = () => {
-    props.history.push("/");
+    props.history.push("/home");
   };
 
   return (

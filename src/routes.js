@@ -40,7 +40,7 @@ const routes = [
     component: UserLoginView,
   },
   {
-    path: "/delivery",
+    path: "/delivery/:id",
     component: DeliveryView,
   },
 
@@ -65,7 +65,7 @@ const routes = [
     component: SearchView,
   },
   {
-    path: "/payment",
+    path: "/payment/:id",
     component: Payment,
   },
   {

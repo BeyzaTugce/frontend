@@ -22,10 +22,11 @@ const Delivery = (props) => {
   let { match, getPurchase } = props;
   const history = useHistory();
   const loggedInUser = useSelector((state) => state.auth.user);
+  const purchase = useSelector((state) => state.purchase);
+
   const [date, setDate] = useState(new Date());
   const [pickUpError, setPickUpError] = React.useState("");
   const [location, setLocation] = React.useState("");
-  const purchase = useSelector((state) => state.purchase);
   const [userType, setUserType] = useState("Unknown");
   const [methodType, setMethodType] = useState("Unknown");
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -62,24 +63,28 @@ const Delivery = (props) => {
     }
   }, [props.user, props.pickup, props.new]);*/
 
+
   useEffect(() => {
     let purchaseId = match.params.id;
     getPurchase(purchaseId);
   }, [match.params]);
 
   useEffect(() => {
-      checkUser();
+    let purchaseId = match.params.id;
+    getPurchase(purchaseId);
+    checkUser();
   }, [purchase.purchase]);
 
   useEffect(() => {
     checkMethod();
 }, [loggedInUser]);
 
+
   const checkUser = () => {
     if(loggedInUser != null){
-      if (loggedInUser._id == purchase.purchase.seller) {
+      if (loggedInUser._id === purchase?.purchase?.seller) {
         setUserType("Seller");
-      } else if (loggedInUser._id == purchase.purchase.buyer) {
+      } else if (loggedInUser._id === purchase?.purchase?.buyer) {
         setUserType("Buyer");
       }
     }
@@ -92,7 +97,7 @@ const Delivery = (props) => {
   };
 
   useEffect(() => {
-    let garageId = purchase.purchase.garage;
+    let garageId = purchase?.purchase?.garageId;
     getGarage(garageId);
   }, [purchase.purchase != null]);
 
@@ -107,7 +112,10 @@ const Delivery = (props) => {
     back.garageId = purchase.purchase.garageId;
     back.price = purchase.purchase.price;
     back.selectedItemList = purchase.purchase.selectedItemList;
-    back.purchaseStatus = "Payment";
+    if(userType == "Seller")
+      back.purchaseStatus = "DeliveryScheduled"
+    else if(userType == "Buyer")
+      back.purchaseStatus = "Payment";
 
     if (userType == "Seller") {
       back.availableDates = newDate;
