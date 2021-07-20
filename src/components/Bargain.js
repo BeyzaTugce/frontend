@@ -78,7 +78,7 @@ const Bargain = (props) => {
       
       return back;
     };
-    let offersArray = offer?.offerHistory;
+    let offersArray = offer?.offers?.offerHistory;
     const handleOnClick = e => {
       e.preventDefault();
       //setThisOfferHistory(thisOfferHistory => [...thisOfferHistory, enterOffer.price]);
@@ -236,7 +236,7 @@ const Bargain = (props) => {
                 </Alert>
             </div>
             )}
-            {offer?.offer?.offerHistory?.map((price, index) => (
+            {offer?.offers?.offerHistory?.map((price, index) => (
               <CSSTransition key={index} timeout={1000} classNames="fade">
                 {(index%2) ? (
                     <div className="d-inline-flex w-100 justify-content-end">

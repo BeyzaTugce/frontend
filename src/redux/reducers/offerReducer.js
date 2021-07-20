@@ -10,13 +10,13 @@ export default function offerReducer(state = {}, action) {
     case "GET_OFFERHISTORY":
       //console.log(action.payload.offerHistory);
       if(action.payload)
-        return { ...state, offer: action.payload};
-      return { ...state, offer: []}
+        return { ...state, offers: action.payload};
+      return { ...state, offers: []}
     case "MAKE_OFFER":
       //console.log(action.payload);
-      return { ...state, offer: action.payload};
+      return { ...state, offers: action.payload};
     case "WITHDRAW_OFFER":
-      return { ...state, offer: []};
+      return { ...state, offers: []};
     case "OFFERS_LOADING":
       return { ...state, loading: true}
     case "LOAD_BUYER":
