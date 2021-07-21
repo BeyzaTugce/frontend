@@ -15,12 +15,13 @@ function SearchView(props) {
 
     useEffect(() => {
         const params = new URLSearchParams(props.location.search);
-        setSearchTerm(params.get('term'));
+        setSearchTerm(params.get('term').toUpperCase());
         store.dispatch(getItems());
     }, []);
 
     const filterItem = (item, searchTerm) => {
-        return item.name.includes(searchTerm) || item.tags.includes(searchTerm)
+        const upperCaseTags = item.tags.map(tag => tag.toUpperCase())
+        return item.name.toUpperCase().includes(searchTerm) || upperCaseTags.includes(searchTerm)
     };
 
     const foundItems =

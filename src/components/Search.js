@@ -14,9 +14,9 @@ const Search = (props) => {
     const [minPrice, setMinPrice] = React.useState(0);
     const [maxPrice, setMaxPrice] = React.useState(99999);
     const [minStars, setMinStars] = React.useState(0);
+    const [filtered, setFiltered] = React.useState([]);
+    const [showFiltered, setShowFiltered] = React.useState(false);
 
-    useEffect(() => {
-    }, );
 
     let filtering =
         props.foundItems?.map(item => {
@@ -69,22 +69,30 @@ const Search = (props) => {
         //sorting function
     };
 
-    const onClickPriceUp = (e) => {
-        filtering = filtering.sort((a, b) => a.props.price > b.props.price ? 1 : -1);
-        console.log(filtering);
+    const onClickPriceUp = () => {
+        setFiltered(filtering.slice(0).sort((a, b) => a.props.price > b.props.price ? 1 : -1));
+        setShowFiltered(true);
+        console.log(filtered);
     };
 
-    const onClickPriceDown = (e) => {
-        filtering = filtering.sort((a, b) => a.props.price < b.props.price ? 1 : -1);
-        console.log(filtering);
+    const onClickPriceDown = () => {
+        setFiltered(filtering.slice(0).sort((a, b) => a.props.price < b.props.price ? 1 : -1));
+        setShowFiltered(true);
+        console.log(filtered);
     };
 
     const onClickRatingUp = (e) => {
         //sorting function
+        setFiltered(filtering.slice(0).sort((a, b) => a.props.rating > b.props.rating ? 1 : -1));
+        setShowFiltered(true);
+        console.log(filtered);
     };
 
     const onClickRatingDown = (e) => {
         //sorting function
+        setFiltered(filtering.slice(0).sort((a, b) => a.props.rating < b.props.rating ? 1 : -1));
+        setShowFiltered(true);
+        console.log(filtered);
     };
 
     return (
@@ -254,7 +262,9 @@ const Search = (props) => {
                       <Navbar className="results-for w-100" style={{backgroundColor: '#F8F8F8'}}>Results for "{props.searchTerm}"</Navbar>
                       <div className="list-whole" style={{ paddingInline: 30, paddingTop:30 }}>
                           <ListGroup className="d-inline-block">
-                              {filtering}
+                            {showFiltered ?
+                             filtered : filtering}
+                              {/* {filtered} */}
                           </ListGroup>
                       </div>
                   </div>
