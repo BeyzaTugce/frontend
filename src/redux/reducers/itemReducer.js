@@ -3,7 +3,7 @@ export default function itemReducer(state = {}, action) {
     case "GETITEMS_SUCCESS":
       return { items: action.items };
     case "DELETEITEM_SUCCESS":
-      return { item: action.item };
+      return { items: action.items };
     case "ADDITEM_SUCCESS":
       return { ...state };
     case "UPDATEITEM_SUCCESS":

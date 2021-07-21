@@ -37,10 +37,10 @@ export default class ItemService {
     });
   }
 
-  static deleteItem(Item) {
+  static deleteItem(id) {
     return new Promise((resolve, reject) => {
       HttpService.remove(
-        `${ItemService.baseURL()}/${Item._id}`,
+        `${ItemService.baseURL()}/${id}`,
         function (data) {
           if (data.message !== undefined) {
             resolve(data.message);

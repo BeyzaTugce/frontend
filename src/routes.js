@@ -11,6 +11,7 @@ import VisitorView from "./views/VisitorView";
 import OrderDetailsView from "./views/OrderDetailsView";
 import Search from "./components/Search";
 import Payment from "./components/Payment";
+import RatingPage from "./components/RatingPage";
 import ImageView from "./components/Image";
 import SearchView from "./views/SearchView";
 import PurchaseView from "./views/PurchaseView";
@@ -79,6 +80,10 @@ const routes = [
   {
     path: "/item/:id",
     component: ItemDetailsView,
+  },
+  {
+    path: "/rating/:id",
+    component: RatingPage,
   },
  /* {
     path: "/item",

@@ -19,22 +19,22 @@ export function getItems() {
   };
 }
 
-export function deleteItem(item) {
+export function deleteItem(id) {
   function onSuccess(items) {
-    return { type: "DELETEITEM_SUCCESS", items: items };
+      return { type: "DELETEITEM_SUCCESS", items: items };
   }
   function onFailure(error) {
-    console.log("delete item failure", error);
+      console.log("delete item failure", error);
   }
 
   return async (dispatch) => {
-    try {
-      await ItemService.deleteItem(item);
-      let items = await ItemService.getItems();
-      dispatch(onSuccess(items));
-    } catch (e) {
-      onFailure(e);
-    }
+      try {
+          await ItemService.deleteItem(id);
+          let items = await ItemService.getItems();
+          dispatch(onSuccess(items));
+      } catch (e) {
+          onFailure(e);
+      }
   };
 }
 
