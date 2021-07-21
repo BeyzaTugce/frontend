@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Jumbotron, Form, Button } from "react-bootstrap";
 
-import { FormGroup, FormLabel,ListGroup, Alert} from "react-bootstrap";
+import { FormGroup, FormLabel, ListGroup, Alert } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import { DatePickerCalendar } from "react-nice-dates";
 import { format } from "date-fns";
@@ -63,7 +63,6 @@ const Delivery = (props) => {
     }
   }, [props.user, props.pickup, props.new]);*/
 
-
   useEffect(() => {
     let purchaseId = match.params.id;
     getPurchase(purchaseId);
@@ -77,11 +76,13 @@ const Delivery = (props) => {
 
   useEffect(() => {
     checkMethod();
-}, [loggedInUser]);
-
+  }, [loggedInUser]);
+  useEffect(() => {
+    checkStatus();
+  }, [match.params]);
 
   const checkUser = () => {
-    if(loggedInUser != null){
+    if (loggedInUser != null) {
       if (loggedInUser._id === purchase?.purchase?.seller) {
         setUserType("Seller");
       } else if (loggedInUser._id === purchase?.purchase?.buyer) {
@@ -91,8 +92,8 @@ const Delivery = (props) => {
   };
 
   const checkMethod = () => {
-    if(purchase.purchase != null){ 
-        setMethodType(purchase.purchase.method);
+    if (purchase.purchase != null) {
+      setMethodType(purchase.purchase.method);
     }
   };
 
@@ -112,10 +113,8 @@ const Delivery = (props) => {
     back.garageId = purchase.purchase.garageId;
     back.price = purchase.purchase.price;
     back.selectedItemList = purchase.purchase.selectedItemList;
-    if(userType == "Seller")
-      back.purchaseStatus = "DeliveryScheduled"
-    else if(userType == "Buyer")
-      back.purchaseStatus = "Payment";
+    if (userType == "Seller") back.purchaseStatus = "DeliveryScheduled";
+    else if (userType == "Buyer") back.purchaseStatus = "Payment";
 
     if (userType == "Seller") {
       back.availableDates = newDate;
@@ -155,10 +154,17 @@ const Delivery = (props) => {
     } else if (userType == "Buyer") {
       history.push(`../payment/${purchase.purchase._id}`);
     }
-   
   };
 
-
+  const checkStatus = () => {
+    if (purchase?.purchase?.purchaseStatus != "DeliveryScheduling") {
+      if (userType == "Seller") {
+        history.push(`../order/${purchase.purchase._id}`);
+      } else if (userType == "Buyer") {
+        history.push(`../payment/${purchase.purchase._id}`);
+      }
+    }
+  };
   return (
     <div className="Delivery">
       {userType == "Seller" ? (
@@ -246,7 +252,10 @@ const Delivery = (props) => {
               <Col>
                 <h4>Please Select a Date</h4>
                 <p>
-                <ButtonGroup vertical={true} style={{ marginTop: 100, width: 150}}>
+                  <ButtonGroup
+                    vertical={true}
+                    style={{ marginTop: 100, width: 150 }}
+                  >
                     {purchase.purchase.availableDates.map((item) => (
                       <td>
                         <ToggleButton
@@ -265,43 +274,49 @@ const Delivery = (props) => {
                   </ButtonGroup>
                 </p>
               </Col>
-              
+
               {methodType == "Both" ? (
                 <Col>
-                <h4>Please Select a Delivery Method</h4>
-                <p>
-                <FormGroup>
-              <div className="deliveryOptions">
-                <FormLabel className="labels">Delivery</FormLabel>
-                <div>
-                  <label>
-                    Shipment
-                    <input className="ml-2"
-                      name="Shipment"
-                      value="Shipment"
-                      type="radio"
-                      onChange={(e) =>
-                        setMethodType(e.currentTarget.value)
-                      } />
-                  </label>
-                </div>
-                <div>
-                  <label>
-                    Pick-up
-                    <input className="ml-2"
-                      name="PickUp"
-                      value="PickUp"
-                      type="radio"
-                      onChange={(e) =>
-                        setMethodType(e.currentTarget.value)
-                      } />
-                  </label>
-                </div>
-              </div>
-            </FormGroup>
-                </p>
-                </Col> ): "Delivery will be "+ methodType }
-             
+                  <h4>Please Select a Delivery Method</h4>
+                  <p>
+                    <FormGroup>
+                      <div className="deliveryOptions">
+                        <FormLabel className="labels">Delivery</FormLabel>
+                        <div>
+                          <label>
+                            Shipment
+                            <input
+                              className="ml-2"
+                              name="Shipment"
+                              value="Shipment"
+                              type="radio"
+                              onChange={(e) =>
+                                setMethodType(e.currentTarget.value)
+                              }
+                            />
+                          </label>
+                        </div>
+                        <div>
+                          <label>
+                            Pick-up
+                            <input
+                              className="ml-2"
+                              name="PickUp"
+                              value="PickUp"
+                              type="radio"
+                              onChange={(e) =>
+                                setMethodType(e.currentTarget.value)
+                              }
+                            />
+                          </label>
+                        </div>
+                      </div>
+                    </FormGroup>
+                  </p>
+                </Col>
+              ) : (
+                "Delivery will be " + methodType
+              )}
             </Row>
           </Container>
         </div>
