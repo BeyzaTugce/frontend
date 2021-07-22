@@ -270,7 +270,7 @@ function ItemCreation(props) {
   );
 }
 
-ItemCreation.prototypes = {
+ItemCreation.propTypes = {
   onRemove : PropTypes.func.isRequired,
   garage: PropTypes.object,
   user: PropTypes.object,

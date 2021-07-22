@@ -35,10 +35,11 @@ const Search = (props) => {
 
     const onChangeMinPrice = (e) => {
         setMinPrice(e.target.value);
+        setFiltered(false);
     };
     const onChangeMaxPrice = (e) => {
         setMaxPrice(e.target.value);
-
+        setFiltered(false);
         if (e.target.value === '') {
             setMaxPrice(99999);
         }
@@ -46,18 +47,22 @@ const Search = (props) => {
 
     const onClick4Stars = (e) => {
         setMinStars(4);
+        setFiltered(false);
     };
 
     const onClick3Stars = (e) => {
         setMinStars(3);
+        setFiltered(false);
     };
 
     const onClick2Stars = (e) => {
         setMinStars(2);
+        setFiltered(false);
     };
 
     const onClick1Star = (e) => {
         setMinStars(1);
+        setFiltered(false);
     };
 
     const onClickGarageDeadlineUp = (e) => {
