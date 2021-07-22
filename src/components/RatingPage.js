@@ -1,24 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Jumbotron, Form, Button } from "react-bootstrap";
-import { FormGroup, FormLabel, ListGroup, Alert } from "react-bootstrap";
-import "react-datepicker/dist/react-datepicker.css";
-import { DatePickerCalendar } from "react-nice-dates";
-import { format } from "date-fns";
+import { connect, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { enGB } from "date-fns/locale";
+import store from "../redux/store";
+import InputGroup from "react-bootstrap/InputGroup";
+import { Form, Button } from "react-bootstrap";
+import {ListGroup } from "react-bootstrap";
+import "react-datepicker/dist/react-datepicker.css";
 import GarageItem from "./GarageItem";
 import "react-nice-dates/build/style.css";
-import { useDateInput } from "react-nice-dates";
-import InputGroup from "react-bootstrap/InputGroup";
+
 import { getPurchase, changePurchase } from "../redux/actions/PurchaseActions";
 import { deleteItem } from "../redux/actions/ItemActions";
 import { getGarage } from "../redux/actions/GarageActions";
-import store from "../redux/store";
 import { withRouter } from "react-router-dom";
-import { connect, useSelector } from "react-redux";
-import ToggleButton from "react-bootstrap/ToggleButton";
-import ListItem from "./ListItem";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Rating from "@material-ui/lab/Rating";
@@ -73,9 +67,16 @@ const RatingPage = (props) => {
     checkMethod();
   }, [loggedInUser]);
 
+  useEffect(() => {
+    let garageId = purchase?.purchase?.garageId;
+    getGarage(garageId);
+  }, [purchase.purchase != null]);
+
+
   const onChangeComment = (e) => {
     setComment(e.target.value);
   };
+
   const checkUser = () => {
     if (loggedInUser != null) {
       if (loggedInUser._id === purchase?.purchase?.seller) {
@@ -92,10 +93,7 @@ const RatingPage = (props) => {
     }
   };
 
-  useEffect(() => {
-    let garageId = purchase?.purchase?.garageId;
-    getGarage(garageId);
-  }, [purchase.purchase != null]);
+
 
   const packPurchase = () => {
     let back = {
@@ -182,7 +180,6 @@ const RatingPage = (props) => {
               fullWidth
               value={comment}
               onChange={onChangeComment}
-              //error={pickUpError !== ""}
               required
             />
           </InputGroup>

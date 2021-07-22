@@ -1,6 +1,11 @@
 import React, {useEffect, useState} from "react";
 import { withRouter } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import { connect, useSelector } from "react-redux";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./Header.css";
+import CategoryBar from "./CategoryBar";
+import store from '../redux/store';
 import {
   Button,
   Form,
@@ -10,15 +15,10 @@ import {
   NavbarBrand,
   InputGroup,
 } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
 import {Cart3, House, PersonCircle, Search} from "react-bootstrap-icons";
-import "./Header.css";
-import { connect, useSelector } from "react-redux";
 import logo from "../views/logo.png";
 import { logoutNew } from "../redux/actions/AuthActions";
-import store from '../redux/store';
 import {getGarages} from "../redux/actions/GarageActions"
-import CategoryBar from "./CategoryBar";
 
 
 /**
@@ -27,11 +27,12 @@ import CategoryBar from "./CategoryBar";
  */
 const Header = ({auth}) => {
   const { isAuthenticated, user } = auth;
+
   const garage = useSelector((state) => state.garage);
-  const purchase = useSelector((state) => state.purchase);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedTerm, setDebouncedTerm] = useState(searchTerm);
+
   const history = useHistory();
 
   //Set search item with debouncing
@@ -48,7 +49,6 @@ const Header = ({auth}) => {
     store.dispatch(getGarages());
   }, [] );
 
-  //store.dispatch(getGarages());
   const onMyGarage = () => {
     store.dispatch(getGarages());
     if (garage?.garages?.garages?.filter(g => g.user === user._id).length === 0){
@@ -60,13 +60,7 @@ const Header = ({auth}) => {
   };
 
   const onMyPurchases = () => {
-
     history.push("/mypurchase");
-    /*if (!purchase.purchases.purchases.filter(p => p.buyer == user._id)) {
-    }
-    else {
-      purchase.purchases.purchases.filter(p => p.buyer == user._id).map( p => {history.push("/bargain/"+p._id)});
-    }*/
   };
 
   const onClickCreateGarage = () => {
@@ -79,7 +73,6 @@ const Header = ({auth}) => {
 
   const onClickLogout = () => {
     store.dispatch(logoutNew());
-    // props.onClose();
     history.push("/home");
   };
 

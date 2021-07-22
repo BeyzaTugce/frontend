@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import BargainComponent from "../components/Bargain";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -17,11 +17,9 @@ import Purchase from "../components/TrackPurchase";
  */
 
 const BargainView = props => {
-  //const { offers } = prop.offer
+
   useEffect(() => {
-    //console.log(offersArray);
     props.getOfferHistory(props.match.params.id);
-    //lastOffer = offers.offerHistory[offers.offerHistory.length - 1];
   }, [props.offer.offers]);
   
   return (
@@ -46,13 +44,9 @@ const mapStateToProps = (state) => ({
 });
 
 
-// const mapStateToProps = (state) => ({
-//     offer: state.offer
-// });
 export default connect(mapStateToProps, {
   getOfferHistory,
   makeOffer,
   withdrawOffer,
   setOffersLoading,
 })(withRouter(BargainView));
-// export default connect(mapStateToProps, { getOfferHistory, makeOffer })(withRouter(BargainView));

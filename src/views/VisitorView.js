@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { withRouter } from "react-router-dom";
-import { connect, useSelector } from "react-redux";
+import { connect } from "react-redux";
 import {Button} from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import Header from "../components/Header";

@@ -1,35 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, FormCheck, Image, ListGroupItem, Alert } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 
+import { Button, FormCheck, ListGroupItem } from "react-bootstrap";
+
 const GarageItem = (props) => {
-  // const items = useSelector((state) => state.items);
+
   const [button1Name, setButton1Name] = useState("");
   const [button2Name, setButton2Name] = useState("");
-  const [condition, setCondition] = useState(false);
-  //const [selectedItems, setSelectedItems] = useState(0);
 
   const history = useHistory();
 
   useEffect(() => {
     setButton1Name(button1Name)
     setButton2Name(button2Name)
-    /*
-    if(selectedItems>1){
-      props.onMultipleItems();
-    }
 
-     */
 }, [] );
 
   const onCheckboxClick = (e) => {
     if (e.target.checked) {
       props.onClickSelect();
-      //setSelectedItems(selectedItems+1);
     } else {
       props.onClickDeselect();
-      //setSelectedItems(selectedItems-1);
     }
   };
 
@@ -41,7 +33,6 @@ const GarageItem = (props) => {
     <ListGroupItem
       className="d-inline-flex align-items-center justify-content-between"
       style={{ borderColor: "#85A582" }}
-      //onClick={onClickItemDetail}
     >
       <FormCheck
         type="checkbox"

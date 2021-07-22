@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { registerNew } from "../redux/actions/AuthActions";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
-import { propTypes } from "react-bootstrap/esm/Image";
 
 const useStyles = makeStyles((theme) => ({
   usersignUpRoot: {
@@ -39,13 +38,12 @@ const Signup = ({
 }) => {
   const history = useHistory();
   const classes = useStyles();
-  //const registeredDate = new Date();
+
   const [username, setUsername] = useState("");
   const [firstname, setFirstname] = useState("");
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [isAdmin, setIsAdmin] = useState(false);
   const [gender, setGender] = useState("");
   const [correspondenceAddress, setcorrespondenceAddress] = useState("");
   const [district, setDistrict] = useState("");
@@ -54,31 +52,13 @@ const Signup = ({
   const [birthdate, setBirthdate] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [disabled, setDisabled] = useState(false);
   const [registerError, setRegisterError] = useState("");
   const [passRegisterError, setPassRegisterError] = useState("");
   const [emailRegisterError, setEmailRegisterError] = useState("");
   const [userNameRegisterError, setuserNameRegisterError] = useState("");
   const [msg, setMsg] = useState(null);
-  // useEffect(() => {
-  //   if (isEmpty(password)){
-  //     setPassRegisterError("Password can not be empty!");
-  //   }
 
-  //   else if (password !== password2);
-  //     setPassRegisterError("Passwords do not match!");
-  // }, [password, password2]);
-  // setPassRegisterError("Password must include minimum eight characters, at least one uppercase letter, one lowercase letter and one number");
-  // if (password !== "" && password2 !== "") {
-  //   if (password.length < 6)
-  //     setPassRegisterError("Password must be at least 6 characters!");
-  //   if (password !== password2) {
-  //     setPassRegisterError("Passwords do not match!");
-  //   } else {
-  //     setPassRegisterError("");
-  //   }
-  // }
 
   useEffect(() => {
     if (!isPassValid(password))
@@ -94,17 +74,9 @@ const Signup = ({
         setEmailRegisterError("Email is not in valid format!");
       else
         setEmailRegisterError("");
-    
-    // else
-    //   setEmailRegisterError("Email can not be empty!");
+
   }, [email]);
 
-  // useEffect(() => {
-  //   if (isEmpty(username))
-  //     setuserNameRegisterError("Username field can not be empty!");
-  //   else
-  //     setuserNameRegisterError("");
-  // }, [username]);
 
   useEffect(() => {
     if( !username || !password || !email || !firstname || !surname || !city || !district || !correspondenceAddress || !postcode ){
@@ -128,12 +100,6 @@ const Signup = ({
       return true
     return false
   }
-
-  // const isEmpty = (val) => {
-  //   if(val == "")
-  //     return true
-  //   return false
-  // }
 
   const isPassValid = (val) => {
     const regPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!-_@#$%^&*?]{8,}$/;

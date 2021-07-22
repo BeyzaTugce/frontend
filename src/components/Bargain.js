@@ -1,28 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import {
-  Container,
-  Button,
-  ListGroup,
-  ListGroupItem,
-  Modal,
-  Alert,
-} from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import { withRouter } from "react-router-dom";
+import store from "../redux/store";
+
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./Bargain.css";
 import { PropTypes } from "prop-types";
 import { connect, useSelector } from "react-redux";
 import Slider from "react-input-slider";
+
+import {
+  Container,
+  Button,
+  ListGroup,
+  Modal,
+  Alert,
+} from "react-bootstrap";
+
 import {
   getOfferHistory,
   makeOffer,
   withdrawOffer,
   setOffersLoading,
-  // loadBuyer,
-  // loadSeller
 } from "../redux/actions/OfferActions";
-import { withRouter } from "react-router-dom";
-import store from "../redux/store";
+
 import {
   getPurchase,
   changePurchase,
@@ -32,23 +33,30 @@ import {
 import ListItem from "./ListItem";
 
 const Bargain = (props) => {
+
+  let { match, getPurchase } = props;
+  let offersArray = offer?.offers?.offerHistory;
+
+
   const loggedInUser = useSelector((state) => state.auth.user);
   const purchase = useSelector((state) => state.purchase);
   const offer = useSelector((state) => state.offer);
-  let { match, getPurchase, loadBuyer, loadSeller } = props;
+
+
   const [show, setShow] = useState(false);
   const [enterOffer, setEnterOffer] = useState({
     price: Math.floor(purchase?.purchase?.price * 0.6),
   });
-  const handleToggle = () => {
-    setShow(!show);
-  };
+
   const [turn, setTurn] = useState(false);
   const [thisOfferHistory, setThisOfferHistory] = useState([]);
   const purchaseId = match.params.id;
   const history = useHistory();
   const [offerCount, setOfferCount] = useState(0);
-  //const [purchaseStatus, setPurchaseStatus] = useState("");
+
+  const handleToggle = () => {
+    setShow(!show);
+  };
 
   useEffect(() => {
     let purchaseId = match.params.id;
@@ -69,6 +77,23 @@ const Bargain = (props) => {
     checkStatus();
   }, [match.params]);
 
+  const packPurchase = () => {
+    let back = {
+      ...props.purchase,
+    };
+    back._id = purchase.purchase._id;
+    back.creationDate = purchase.purchase.creationDate;
+    back.buyer = purchase.purchase.buyer;
+    back.seller = purchase.purchase.seller;
+    back.garageId = purchase.purchase.garageId;
+    back.method = purchase.purchase.method;
+    back.price = offersArray[offersArray.length - 1];
+    back.selectedItemList = purchase.purchase.selectedItemList;
+    back.purchaseStatus = "DeliveryScheduling";
+
+    return back;
+  };
+
   const packOffer = () => {
     let back = {
       ...props.offer,
@@ -80,7 +105,7 @@ const Bargain = (props) => {
     return back;
   };
 
-  let offersArray = offer?.offers?.offerHistory;
+
   const handleOnClick = (e) => {
     e.preventDefault();
     props.makeOffer(purchaseId, packOffer());
@@ -116,22 +141,6 @@ const Bargain = (props) => {
     }
   };
 
-  const packPurchase = () => {
-    let back = {
-      ...props.purchase,
-    };
-    back._id = purchase.purchase._id;
-    back.creationDate = purchase.purchase.creationDate;
-    back.buyer = purchase.purchase.buyer;
-    back.seller = purchase.purchase.seller;
-    back.garageId = purchase.purchase.garageId;
-    back.method = purchase.purchase.method;
-    back.price = offersArray[offersArray.length - 1];
-    back.selectedItemList = purchase.purchase.selectedItemList;
-    back.purchaseStatus = "DeliveryScheduling";
-
-    return back;
-  };
 
   const renderedListItem = purchase.purchase?.selectedItemList.map((item) => {
     return (
@@ -175,9 +184,6 @@ const Bargain = (props) => {
           New Offer
         </Button>
       )}
-      {/* <Button variant="primary" onClick={handleToggle}>
-            New Offer
-        </Button> */}
       <Modal show={show} onHide={handleToggle}>
         <Modal.Header closeButton>
           <Modal.Title>Please select your offer</Modal.Title>
@@ -333,7 +339,6 @@ const mapStateToProps = (state) => ({
   seller: state.offer.seller,
 });
 
-// this.props.withdrawOffer, this.props.getOfferHistory, ...
 export default connect(mapStateToProps, {
   getOfferHistory,
   makeOffer,
@@ -345,5 +350,3 @@ export default connect(mapStateToProps, {
   loadSeller,
 })(withRouter(Bargain));
 
-// export default Offer;
-//export default connect()(withRouter(Bargain));

@@ -20,18 +20,19 @@ const OrderDetails = (props) => {
   const [pickUpDate, setPickUpDate] = React.useState("");
   const [pickUpAddress, setPickUpAddress] = React.useState("Not specified");
   const [shipAddress, setShipAddress] = React.useState("Not specified");
-  const [paymentMethod, setPaymentMethod] = React.useState("Not specified");
   const [totalwoTax, setTotalwoTax] = React.useState(0);
   const [price, setPrice] = React.useState(0);
   const [tax, setTax] = React.useState(5);
   const [items, setItems] = React.useState([]);
+  const [userType, setUserType] = useState("Unknown");
 
   const purchase = useSelector((state) => state.purchase);
   const loggedInUser = useSelector((state) => state.auth.user);
 
-  const [userType, setUserType] = useState("Unknown");
-  let { match, getPurchase } = props;
   const history = useHistory();
+
+  let { match, getPurchase } = props;
+
   useEffect(() => {
     let purchaseId = match.params.id;
     getPurchase(purchaseId);
@@ -70,23 +71,13 @@ const OrderDetails = (props) => {
     // setPickUpAddress(purchase.purchase.pickUpAddress);
   }, [purchase.purchase != null]);
 
-  /*
-    const extractOrder = () => {
-        if (!props.order ) {
-            return;
-        }
 
-        setStatus(props.order.enum);
-        setOrderDate(props.order.ordered);
-        /*setMethod(props.order.method);
-        setShipAddress(props.order.shipAddress);
-        setPickUpAddress(props.order.pickUpAddress);
-        setPickUpDate(props.order.pickUpDate);
-        setShipDate(props.order.shipDate);*/
-  /*  setTotalwoTax(props.order.total);
-        setTax(props.order.brokerageFee);
-    }*/
-  let purchaseID = match.params.id;
+  useEffect(() => {
+    // extractOrder();
+    extractSeller();
+    extractItems();
+  }, [props.order, props.seller, props.items]);
+
   //will get the items from purchase.
   const extractItems = () => {
     let purchaseId = match.params.id;
@@ -103,6 +94,7 @@ const OrderDetails = (props) => {
     }
     setSellerName(props.seller.firstname);
   };
+
   const packPurchase = () => {
     let back = {
       ...props.purchase,
@@ -126,11 +118,6 @@ const OrderDetails = (props) => {
     return back;
   };
 
-  useEffect(() => {
-    // extractOrder();
-    extractSeller();
-    extractItems();
-  }, [props.order, props.seller, props.items]);
 
   const renderedList = items.map((garageItem) => {
     return (
@@ -424,9 +411,11 @@ OrderDetails.propTypes = {
   user: PropTypes.object,
   items: PropTypes.object,
 };
+
 const mapStateToProps = (state) => ({
   purchase: state.purchase,
 });
+
 export default connect(mapStateToProps, {
   getPurchase,
   changePurchase,

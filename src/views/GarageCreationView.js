@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import { withRouter } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
 
@@ -6,7 +6,7 @@ import GarageCreationComponent from "../components/GarageCreation";
 import {
   addGarage,
   changeGarage,
-  deleteGarage, getGarages
+  deleteGarage,
 } from "../redux/actions/GarageActions";
 import PropTypes from "prop-types";
 import Header from "../components/Header";

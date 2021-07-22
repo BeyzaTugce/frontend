@@ -5,9 +5,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import {
   Button,
   Col,
-  Container,
-  FormCheck,
-  FormGroup,
   FormLabel,
   FormControl,
   ListGroup,
@@ -23,9 +20,6 @@ import PropTypes from "prop-types";
 import GarageItem from "./GarageItem";
 import ImageComponent from "./Image";
 
-import { useHistory } from "react-router-dom";
-
-//import ItemComponent from "../components/ItemCreation";
 import {addItem, deleteItem, getItem} from "../redux/actions/ItemActions";
 import {getGarages} from "../redux/actions/GarageActions";
 
@@ -48,9 +42,6 @@ function ItemCreation(props) {
   const [userName, setUserName] = React.useState([]);
 
 
-
-
-
   const extractItem = () => {
     if (!props.item) {
       return;
@@ -63,6 +54,29 @@ function ItemCreation(props) {
     setGarageId(props.item.garageId);
     setUserName(props.item.userName);
     setItemImage(props.item.itemImage);
+  };
+
+  const packItem = () => {
+    props.dispatch(getGarages());
+    let back = {
+      ...props.item,
+    };
+
+    if (!props.garageCreated){
+      back.garageId = garageId;
+    }
+    else{
+      garage.garages.garages.filter(g => g.user == user._id).map(x => {back.garageId = x._id});
+    }
+    back.name = itemTitle;
+    back.price = itemPrice;
+    back.tags = itemTags.split(" ");
+    back.info = itemInfo;
+    back.username = user.username;
+    console.log("pictures"+itemImage);
+    back.image = itemImage;
+
+    return back;
   };
 
   useEffect(() => {
@@ -109,28 +123,6 @@ function ItemCreation(props) {
     setItemImage(input);
   };
 
-  const packItem = () => {
-    props.dispatch(getGarages());
-    let back = {
-      ...props.item,
-    };
-
-    if (!props.garageCreated){
-      back.garageId = garageId;
-    }
-    else{
-      garage.garages.garages.filter(g => g.user == user._id).map(x => {back.garageId = x._id});
-    }
-    back.name = itemTitle;
-    back.price = itemPrice;
-    back.tags = itemTags.split(" ");
-    back.info = itemInfo;
-    back.username = user.username;
-    console.log("pictures"+itemImage);
-    back.image = itemImage;
-
-    return back;
-  };
 
   const onMyGarage = () => {
     if (props.garageCreated){

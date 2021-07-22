@@ -10,23 +10,20 @@ import ListItem from "../components/ListItem";
 
 const PurchaseView = (props) => {
 
-    let {match, getPurchases, getPurchaseSeller, getPurchaseBuyer} = props;
+    let {getPurchases} = props;
 
     const purchase = useSelector((state) => state.purchase);
     const user = useSelector((state) => state.auth.user);
-    const garage = useSelector((state) => state.garage);
 
 
     useEffect(() => {
         getPurchases();
     }, [] );
 
-    //getPurchases();
-
+    //View the purchases for user in the seller role
     const onClickGetSeller = () => {
         getPurchases();
 
-        //purchase.purchases.purchases.filter(p => p.seller == user._id).map( p => getPurchaseSeller(p.seller));
         purchase?.purchases?.purchases?.filter(p => p.seller == user._id).map( p => {
             switch(p.purchaseStatus){
                 case "WaitForAcceptance":
@@ -48,10 +45,10 @@ const PurchaseView = (props) => {
         );
     }
 
+    //View the purchases for user in the buyer role
     const onClickGetBuyer = () => {
         getPurchases();
 
-        //purchase.purchases.purchases.filter(p => p.buyer == user._id).map( p => getPurchaseBuyer(p.buyer));
         purchase?.purchases?.purchases?.filter(p => p.buyer == user._id).map( p => {
             switch(p.purchaseStatus){
                 case "WaitForAcceptance":
@@ -111,7 +108,6 @@ const PurchaseView = (props) => {
                         </div>
                     )}))}
             </div>
-
         </div>
     );
 

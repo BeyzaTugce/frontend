@@ -1,18 +1,22 @@
 import { PayPalButton } from "react-paypal-button-v2";
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
-import store from "../redux/store";
-import { Container, Row, Col, Jumbotron, Form, Button } from "react-bootstrap";
-import { connect, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+
+import store from "../redux/store";
+import { Button } from "react-bootstrap";
+import { connect, useSelector } from "react-redux";
 import { getPurchase, changePurchase } from "../redux/actions/PurchaseActions";
 
 const Payment = (props) => {
   const purchase = useSelector((state) => state.purchase);
   const loggedInUser = useSelector((state) => state.auth.user);
+
   const [userType, setUserType] = useState("Unknown");
+
   let { match, getPurchase } = props;
   const history = useHistory();
+
   useEffect(() => {
     let purchaseId = match.params.id;
     getPurchase(purchaseId);
@@ -71,9 +75,6 @@ const checkUser = () => {
                   },
                 },
               ],
-              // application_context: {
-              //   shipping_preference: "NO_SHIPPING" // default is "GET_FROM_FILE"
-              // }
             });
           }}
           onApprove={(data, actions) => {

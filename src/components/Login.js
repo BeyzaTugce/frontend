@@ -9,7 +9,6 @@ const Login = ({
   loginNew,
   error
 }) => {
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
@@ -17,13 +16,6 @@ const Login = ({
   const [emailRegisterError, setEmailRegisterError] = useState("");
   const [disabled, setDisabled] = useState(false);
 
-  // useEffect(() => {
-  //   if (props.user.error) {
-  //     setLoginError(props.user.error);
-  //   } else {
-  //     setLoginError("");
-  //   }
-  // }, [props.user]);
 
   const handleSignupClick = () => {
     history.push("/signup");
@@ -32,7 +24,6 @@ const Login = ({
   const onLogin = (e) => {
     e.preventDefault();
     const user = { email, password };
-
     // Attempt to login
     loginNew(user);
   };
@@ -66,6 +57,7 @@ const Login = ({
     else
       setEmailRegisterError("Email can not be empty!");
   }, [email]);
+
 
   const isEmail = (val) => {
     let regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

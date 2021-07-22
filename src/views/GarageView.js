@@ -3,16 +3,14 @@ import { connect, useSelector } from "react-redux";
 
 import { withRouter } from "react-router-dom";
 import Garage from "../components/Garage";
-import {getGarage, getSeller, getItems, deleteGarage} from "../redux/actions/GarageActions";
+import {getGarage, getSeller, getItems, deleteGarage, changeGarage} from "../redux/actions/GarageActions";
 
 import { addPurchase } from "../redux/actions/PurchaseActions";
 import Header from "../components/Header";
 function GarageView(props) {
   
-  let {match, getGarage, getSeller, getItems ,addPurchase} = props;
-  const [purchaseId, setPurchaseId] = React.useState();
-  
-  const [returnPurchase, setReturnPurchase] = React.useState();
+  let {match, getGarage, getSeller, getItems ,addPurchase, changeGarage} = props;
+
   const garage = useSelector((state) => state.garage);
   const user = useSelector((state) => state.auth);
   const purchase = useSelector((state) => state.purchase);
@@ -21,12 +19,10 @@ function GarageView(props) {
 
   useEffect(() => {
     getGarage(garageId);
-    //getSeller(garageId);
   }, [match.params]);
   
   useEffect(() => {
     getSeller(garageId);
-    //document.write(seller.seller.firstname);
   }, [match.params]);
 
   useEffect(() => {
@@ -37,6 +33,9 @@ function GarageView(props) {
 
   const onCreatePurchase = (purchased) => {
       addPurchase(purchased);
+  };
+  const onChangeGarage = (garage) => {
+    changeGarage(garage);
   };
 
   const onRemoveGarage = () => {
@@ -53,9 +52,9 @@ function GarageView(props) {
             items={garage.items}
             purchase= {purchase.purchase}
             onCreatePurchase = {onCreatePurchase}
+            onChangeGarage = {onChangeGarage}
             onRemoveGarage={onRemoveGarage}
             purchaseId= {purchase}
-            //isLoggedIn={!!user.user}
         />
       </div>
   );
@@ -63,5 +62,5 @@ function GarageView(props) {
 
 }
 
-export default connect(null, { getGarage, getSeller, getItems, addPurchase, deleteGarage })(withRouter(
+export default connect(null, { getGarage, getSeller, getItems, addPurchase, deleteGarage, changeGarage})(withRouter(
     GarageView));

@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, { useState} from "react";
 import { withRouter } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
 import Header from "../components/Header";
-import {Button, Carousel, CarouselItem, ListGroup, ListGroupItem,} from "react-bootstrap";
+import { Carousel, ListGroup, ListGroupItem,} from "react-bootstrap";
 import logo from "./logo.png";
-import MainPageCarouselComponent from "../components/MainPageCarouselComponent";
-import store from "../redux/store";
+
 import {getGarages} from "../redux/actions/GarageActions"
 
 

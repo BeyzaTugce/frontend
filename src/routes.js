@@ -85,11 +85,6 @@ const routes = [
     path: "/rating/:id",
     component: RatingPage,
   },
- /* {
-    path: "/item",
-    component: ItemView,
-    exact: true,
-  },*/
 ];
 
 export default routes;

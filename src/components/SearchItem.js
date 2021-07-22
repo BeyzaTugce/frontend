@@ -29,9 +29,7 @@ const SearchItem = (props) => {
                     className="item-tags text-black-50"
                     type="name"
                     fullWidth
-                    //value={props.tags.map(tag => {return "#"+tag})}
                     required
-                    // > {props.tags.map(tag => {return "#"+tag})} </div>
                 >
                     {props.tags.map( tag => {return "#"+tag+" "})}
                 </div>

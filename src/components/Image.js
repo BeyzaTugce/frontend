@@ -5,10 +5,8 @@ import { withRouter } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
 import "./styles.css";
 import PropTypes from "prop-types";
-//import {onChangeItemImage} from "./ItemCreation";
 
 const Image = (props) => {
- // const item = useSelector((state) => state.item);
     const [state, setState] = useState({
         upload: {
           pictures: [],
@@ -46,11 +44,8 @@ const Image = (props) => {
       pictures.map((img, index) => (console.log(img)))
       props.onChangeItemImage(pictures);
     }
-     
-    
   };
 
- 
     return (
       <div className="App">
         <hr />
@@ -66,9 +61,9 @@ const Image = (props) => {
     );
   
 }
+
 Image.prototypes = {
   onChangeItemImage: PropTypes.func.isRequired,
 };
 
-const rootElement = document.getElementById("root");
 export default connect( null)(withRouter(Image));

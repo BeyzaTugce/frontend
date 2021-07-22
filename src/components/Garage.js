@@ -34,12 +34,10 @@ const Garage = (props) => {
   const [price, setPurchasePrice] = useState(0);
   const [garageId, setGarageId] = useState("");
   const [shipAddress, setShipmentAddress] = useState("");
-  const [purchaseId, setPurchaseId] = useState("");
-  const [purID, setPurID] = useState(Math.floor(Math.random() * 100000000 + 1).toString());
-  const [purchases, setPurchases] = useState([]);
   const [bargain, setBargain] = useState(false);
   const [isMyGarage, setIsMyGarage] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [isPromoted, setIsPromoted] = useState(false);
 
   let buy = false;
   let bargainOption= false;
@@ -53,20 +51,17 @@ const Garage = (props) => {
     setGarageEndDate(props.garage.dateCreated)
     setDiscount(props.garage.discount)
     setBargain(props.garage.bargain)
+    setIsPromoted(props.garage.isPromoted);
   }
   const extractPurchase = () => {
     if (!props.purchase) {
       return;
     }
-   // setPurchaseId(props.purchase.purchaseId);
     setCreationDate(props.purchase.creationDate);
     setBuyer(props.purchase.buyer);
     setPurchaseSeller(props.purchase.seller);
     setPurchaseGarage(props.purchase.garageId);
     setPurchasePrice(props.purchase.price);
-   // setPurchases(props.purchase.purchases);
-   // setPurchaseStatus(props.purchase.purchaseStatus);
-  //  setSelectedItemList(props.purchase.selectedItemList);
   };
 
   const packPurchase = () => {
@@ -126,8 +121,18 @@ const Garage = (props) => {
   };
 
 
-  const trialFunction = (e) => {
-    e.preventDefault();
+  const changeGarage = (garage) => {
+    garage.preventDefault();
+    props.onChangeGarage(garage)
+  };
+
+
+  const onClickIsPromoted = (garage) => {
+    garage.preventDefault();
+    setIsPromoted(true);
+    props.onChangeGarage(garage)
+    //handleToggle();
+    history.push(`../payment`);
   };
 
   const extractSeller = () => {
@@ -285,9 +290,6 @@ const Garage = (props) => {
     );
   });
 
-  //console.log("seller:"+ JSON.stringify(props.garage.user));
-  //console.log("user:"+ JSON.stringify(props.user));
-
 
   //TODO: "Select All" button color
   //TODO: Bargain and buy buttons do not light up when clicked.
@@ -301,6 +303,9 @@ const Garage = (props) => {
           {isMyGarage ?
               <h1 className="display-5 text-center">My Garage</h1> :
               <h1 className="display-5 text-center">{userName}'s Garage</h1>
+          }
+          {isMyGarage ?
+              <Button style={{marginLeft: 1000}} onClick={onClickIsPromoted}>Let's get promoted</Button> : <p></p>
           }
           <em>
             <p
@@ -412,47 +417,6 @@ const Garage = (props) => {
   );
 };
 
-/*
-might be useful for GarageItem
-<ListGroupItem className="d-inline-flex align-items-center justify-content-between">
-                            <FormCheck
-                                type="checkbox"
-                                id="item-checkbox"
-                                style={{marginInline:17, marginRight:30}}
-                            />
-                            <div
-                                className="img-container d-flex align-items-center"
-                                style={{width:100, height:100, textAlign:"center", marginRight:30}}
-                            >
-                                <Image
-                                    className="item-image"
-                                    src={logo}
-                                    fluid
-                                />
-                            </div>
-                            <div className="name-and-tags flex-fill">
-                                <div className="item-name">Some Item</div>
-                                <div className="item-tags text-black-50" style={{fontSize:14}}>#all #tags #here</div>
-                            </div>
-                            <div className="justify-content-end d-inline-flex align-items-center justify-content-end">
-                                <div className="item-price" style={{marginRight:15}}>€30</div>
-                                <Button
-                                    className='btn border-0'
-                                    variant="dark"
-                                    style={{backgroundColor: "#A282A5", marginRight:8}}
-                                >
-                                    Bargain
-                                </Button>
-                                <Button
-                                    className='btn border-0 text-white'
-                                    variant="light"
-                                    style={{backgroundColor: "#85A582"}}
-                                >
-                                    Buy
-                                </Button>
-                            </div>
-                        </ListGroupItem>
- */
 
 Garage.propTypes = {
   garage: PropTypes.object,

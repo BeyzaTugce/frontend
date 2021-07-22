@@ -9,15 +9,11 @@ function OrderDetailsView(props) {
 
     const order = useSelector((state) => state.order);
     const user = useSelector((state) => state.user);
-    const items = useSelector((state) => state.items);
 
     useEffect(() => {
         let orderId = match.params.id;
-        console.log("user: " + user);
-        console.log("order: " + order);
         getOrder(orderId);
         getSeller(orderId);
-        //getItems(orderId);
     }, [match.params]);
 
     return (

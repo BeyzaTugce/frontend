@@ -1,13 +1,15 @@
 import React, {useEffect, useState} from "react";
+import { useHistory } from "react-router-dom";
+import { connect, useSelector } from "react-redux";
+import PropTypes from "prop-types";
+
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./GarageCreation.css";
+
 import {Button, FormGroup, FormLabel, Alert} from "react-bootstrap";
 import { Clock } from "react-bootstrap-icons";
 
-import "./GarageCreation.css";
-import { useHistory } from "react-router-dom";
-import PropTypes from "prop-types";
 import ItemCreation from "./ItemCreation";
-import { connect, useSelector } from "react-redux";
 
 
 const GarageCreation = (props) => {
@@ -21,7 +23,6 @@ const GarageCreation = (props) => {
   const [shipment, setShipment] = useState(false);
   const [pickup, setPickup] = useState(false);
   const [disabled, setDisabled] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
   const [isCreated, setIsCreated] = useState(false);
 
 
@@ -94,10 +95,6 @@ const GarageCreation = (props) => {
       props.onCreate(packGarage());
       setDisabled(true);
     }
-  }
-
-  const onCancel = () => {
-    props.onCancel();
   }
 
 
@@ -217,7 +214,6 @@ const GarageCreation = (props) => {
 };
 
 GarageCreation.propTypes = {
-  //onCreate: PropTypes.func.isRequired,
   newItem: PropTypes.object,
   garage: PropTypes.object,
   garageCreated: PropTypes.bool,

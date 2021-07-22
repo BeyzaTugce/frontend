@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from "react";
 import { connect, useSelector } from "react-redux";
-//import { reducer as searchReducer, reduxSearch } from "redux-search";
 import Search from "../components/Search";
 import { getItems, getItem } from "../redux/actions/ItemActions";
 import Header from "../components/Header";
 import store from "../redux/store";
 import SearchItem from "../components/SearchItem";
-import {isElement} from "react-dom/test-utils";
 
 function SearchView(props) {
     //let {match, getItem, getItems} = props;
