@@ -16,7 +16,7 @@ const Image = (props) => {
           ]
         }
       });
-      const { pictures } =state.upload;
+     
   
 
   const handleChange = files => {
@@ -41,9 +41,9 @@ const Image = (props) => {
     const { pictures, defaultImages } = state.upload;
     console.warn("Confirm Upload =>", [...pictures]);
     {pictures &&
-      pictures.map((img, index) => (console.log(img)))
+      pictures.map((img, index) => (console.log(img)))}
       props.onChangeItemImage(pictures);
-    }
+    
   };
 
     return (
