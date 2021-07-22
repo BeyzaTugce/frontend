@@ -66,6 +66,9 @@ const PurchaseView = (props) => {
                 case "Order":
                     props.history.push("../order/"+p._id)
                     break
+                case "Rating":
+                    props.history.push("../rating/"+p._id)
+                    break
             }}
         );
     }

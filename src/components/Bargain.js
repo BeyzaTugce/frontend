@@ -136,8 +136,8 @@ const Bargain = (props) => {
   };
 
   const checkStatus = () => {
-    if (purchase?.purchase?.purchaseStatus !== "WaitForAcceptance") {
-      history.push(`../delivery/${purchase?.purchase?._id}`);
+    if (purchase?.purchase?.purchaseStatus == "DeliveryScheduling") {
+      history.push(`../delivery/${purchase.purchase._id}`);
     }
   };
 
