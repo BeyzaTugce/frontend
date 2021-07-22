@@ -33,6 +33,7 @@ function SearchView(props) {
                         tags={item.tags}
                         price={item.price}
                         garageId={item.garageId}
+                        image={item.image}
                     />);
             }
     });
