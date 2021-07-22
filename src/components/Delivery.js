@@ -66,9 +66,9 @@ const Delivery = (props) => {
     checkMethod();
   }, [loggedInUser]);
 
-  useEffect(() => {
+ /* useEffect(() => {
     checkStatus();
-  }, [match.params]);
+  }, [match.params]);*/
 
   useEffect(() => {
     let garageId = purchase?.purchase?.garageId;
@@ -92,16 +92,16 @@ const Delivery = (props) => {
     }
   };
 
-  const checkStatus = () => {
-    if (purchase?.purchase?.purchaseStatus != "DeliveryScheduling") {
+ /* const checkStatus = () => {
+    if (purchase?.purchase?.purchaseStatus != "DeliveryScheduling" || ) {
       if (userType == "Seller") {
         history.push(`../order/${purchase.purchase._id}`);
       } else if (userType == "Buyer") {
-        history.push(`../payment/${purchase.purchase._id}`);
+        history.push(`../delivery/${purchase.purchase._id}`);
       }
     }
   };
-
+*/
 
   const packPurchase = () => {
     let back = {

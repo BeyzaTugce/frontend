@@ -75,7 +75,7 @@ const Bargain = (props) => {
 
   useEffect(() => {
     checkStatus();
-  }, [match.params]);
+  }, [purchase?.purchase]);
 
   const packPurchase = () => {
     let back = {
@@ -137,7 +137,7 @@ const Bargain = (props) => {
 
   const checkStatus = () => {
     if (purchase?.purchase?.purchaseStatus !== "WaitForAcceptance") {
-      history.push(`../delivery/${purchase.purchase._id}`);
+      history.push(`../delivery/${purchase?.purchase?._id}`);
     }
   };
 
