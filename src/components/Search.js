@@ -30,6 +30,7 @@ const Search = (props) => {
                         price={item.props.price}
                         garageId={item.props.garageId}
                         username={item.props.username}
+                        image= {item.props.image}
                     />);
             }
         });

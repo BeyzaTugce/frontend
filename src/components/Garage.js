@@ -221,6 +221,7 @@ const Garage = (props) => {
         tags={garageItem.tags}
         price={garageItem.price}
         itemId={garageItem._id}
+        image= {garageItem.image}
         button1Name={"Details"}
         userView={false}
           //image={garageItem.image}
@@ -249,6 +250,7 @@ const Garage = (props) => {
             tags={garageItem.tags}
             price={garageItem.price}
             itemId={garageItem._id}
+            image= {garageItem.image}
             button1Name={"Details"}
             button2Name={"Remove"}
             userView={true}
@@ -357,7 +359,7 @@ const Garage = (props) => {
                       className="btn border-0 text-white"
                       variant="light"
                       style={{ backgroundColor: "#85A582" }}
-                      onClick={trialFunction}
+                      onClick={buyFunction}
                       >
                       Buy Selected Items
                       </Button>

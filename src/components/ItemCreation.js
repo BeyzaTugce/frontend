@@ -62,6 +62,7 @@ function ItemCreation(props) {
     setItemImage(props.item.itemImage);
     setGarageId(props.item.garageId);
     setUserName(props.item.userName);
+    setItemImage(props.item.itemImage);
   };
 
   useEffect(() => {
@@ -255,6 +256,7 @@ function ItemCreation(props) {
                   info={item.info}
                   price={item.price}
                   tags={item.tags}
+                  image={item.image}
                   onRemove={onRemove}
                   button1Name={"Details"}
                   button2Name={"Remove"}

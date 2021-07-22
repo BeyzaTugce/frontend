@@ -35,6 +35,21 @@ const SearchItem = (props) => {
                 >
                     {props.tags.map( tag => {return "#"+tag+" "})}
                 </div>
+                <div className="img-container d-flex align-items-center">
+          <ul className="list-group list-group-flush">
+            {props.image &&
+              props.image.map((img, index) => (
+                <li className="list-group-item" key={index}>
+                     <img 
+                        src={img}
+                        width= "300"
+                     height="auto" 
+                   alt="new"
+                 />
+                </li>
+              ))}
+          </ul>
+        </div>
                 <div className="img-container d-flex align-items-center"
                      style={{width: 200, height: 200, textAlign: "center",}}
                 />
