@@ -21,7 +21,7 @@ const SearchItem = (props) => {
             className="d-inline-flex align-items-center justify-content-between border"
             style={{ borderColor: "#85A582"}}
         >
-            <div className="content flex-fill text-center">
+            <Button className="content flex-fill text-center" variant="" onClick={onClickGoToGarage}>
                 <div className="item-name" type="name" required style={{ fontSize: 18, fontWeight:"bold" }}>
                     {props.name}
                 </div>
@@ -35,28 +35,21 @@ const SearchItem = (props) => {
                 >
                     {props.tags.map( tag => {return "#"+tag+" "})}
                 </div>
-              
-                <div className="img-container d-flex align-items-center"
-                     style={{width: 200, height: 200, textAlign: "center",}}>
-                     <ul className="list-group list-group-flush">
-            {
-              props.image?.map((img, index) => (
-                <li className="list-group-item" key={index}>
-                     <img 
-                        src={img}
-                        width= "200"
-                     height="auto" 
-                   alt="new"
-                 />
-                </li>
-              ))}
-          </ul>
-          </div>
+                <div className="img-container d-flex align-items-center">
+                     <ul className="list-group list-group-flush" style={{width: 200, height: 200}}>
+                         <img
+                             className="img my-auto d-block"
+                             src={props.image}
+                             width= "200"
+                             height="auto"
+                             alt={props.name}>
+                         </img>
+                     </ul>
+                </div>
                 <div className="garage-name">At {props.username}'s Garage</div>
                 <div className="garage-name">Ends on {props.endDate}</div>
                 <div className="item-price" style={{ fontWeight:"bold" }}>€{props.price}</div>
-                <Button style={{marginTop: 10}} onClick={onClickGoToGarage}>Select</Button>
-            </div>
+            </Button>
         </ListGroupItem>
     );
 };

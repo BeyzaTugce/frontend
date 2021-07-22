@@ -39,6 +39,7 @@ const Garage = (props) => {
   const [purchases, setPurchases] = useState([]);
   const [bargain, setBargain] = useState(false);
   const [isMyGarage, setIsMyGarage] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   let buy = false;
   let bargainOption= false;
@@ -100,6 +101,15 @@ const Garage = (props) => {
    
   };
 
+  const forwardToSignUpPage = (e) => {
+    e.preventDefault();
+    history.push("/signup");
+  };
+
+  const forwardToLoginPage = (e) => {
+    e.preventDefault();
+    history.push("/login");
+  };
 
   const addPurchase = (e) => {
     e.preventDefault();
@@ -191,6 +201,9 @@ const Garage = (props) => {
     console.log(loggedInUser?._id);
     console.log(purchaseSeller?._id);
     console.log(isMyGarage)
+    if(loggedInUser?._id != null){
+      setLoggedIn(true);
+    }
   }, [packPurchase])
 
   const [selectedItemList, setSelectedItemList] = useState([]);
@@ -334,36 +347,64 @@ const Garage = (props) => {
                   </div> : ""
               }
             </div>
-            {isMyGarage ? "" : bargain ? 
-                  <div className="bargain-buy-buttons d-flex align-items-center justify-content-center">
-                      <Button
-                      className="btn border-0"
-                      variant="dark"
-                      style={{ backgroundColor: "#A282A5", marginRight: 8 }}
-                      onClick={bargainFunction}
-                      > 
-                        Bargain for Selected Items
-                      </Button>
-                      <Button
-                      className="btn border-0 text-white"
-                      variant="light"
-                      style={{ backgroundColor: "#85A582" }}
-                      onClick={buyFunction}
-                      >
-                        Buy Selected Items
-                      </Button> 
-                  </div>  
-                     : 
-                  <div className="bargain-buy-buttons d-flex align-items-center justify-content-center">        
-                      <Button
-                      className="btn border-0 text-white"
-                      variant="light"
-                      style={{ backgroundColor: "#85A582" }}
-                      onClick={buyFunction}
-                      >
-                      Buy Selected Items
-                      </Button>
-                  </div>}
+            {
+              (()=>{
+                if (loggedIn) {
+                  return <div style={{marginBottom:30}}>{isMyGarage ? "" : bargain ?
+                      <div className="bargain-buy-buttons d-flex align-items-center justify-content-center">
+                        <Button
+                            className="btn border-0"
+                            variant="dark"
+                            style={{ backgroundColor: "#A282A5", marginRight: 8 }}
+                            onClick={bargainFunction}
+                        >
+                          Bargain for Selected Items
+                        </Button>
+                        <Button
+                            className="btn border-0 text-white"
+                            variant="light"
+                            style={{ backgroundColor: "#85A582" }}
+                            onClick={buyFunction}
+                        >
+                          Buy Selected Items
+                        </Button>
+                      </div>
+                      :
+                      <div className="bargain-buy-buttons d-flex align-items-center justify-content-center">
+                        <Button
+                            className="btn border-0 text-white"
+                            variant="light"
+                            style={{ backgroundColor: "#85A582" }}
+                            onClick={buyFunction}
+                        >
+                          Buy Selected Items
+                        </Button>
+                      </div>}</div>
+                } else {
+                  return <div style={{marginBottom:30}}>
+                    <div className="login-or-sign-up-text text-center">Log in or create an account to continue your purchase!{"\n"}</div>
+                    <div className="sign-in-sign-up-button d-flex align-items-center justify-content-center">
+                      <div className="bargain-buy-buttons d-flex align-items-center justify-content-center">
+                        <Button
+                            className="btn border-0"
+                            variant="dark"
+                            style={{ backgroundColor: "#A282A5", marginRight: 8 }}
+                            onClick={forwardToSignUpPage}
+                        >
+                          Sign Up
+                        </Button>
+                        <Button
+                            className="btn border-0 text-white"
+                            variant="light"
+                            style={{ backgroundColor: "#85A582" }}
+                            onClick={forwardToLoginPage}
+                        >
+                          Sign In
+                        </Button>
+                      </div>
+                    </div></div>
+                }
+              })()}
           </div>
         </div>
       </span>

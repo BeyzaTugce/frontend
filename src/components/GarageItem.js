@@ -49,22 +49,22 @@ const GarageItem = (props) => {
         style={{ marginInline: 17, marginRight: 30 }}
         onClick={onCheckboxClick}
       />
-        <div className="img-container d-flex align-items-center">
-          <ul className="list-group list-group-flush">
-            {props.image &&
-              props.image.map((img, index) => (
-                <li className="list-group-item" key={index}>
-                     <img 
-                        src={img}
-                        width= "300"
-                     height="auto" 
-                   alt="new"
-                 />
-                </li>
-              ))}
-          </ul>
-        </div>
-      <div className="name-and-tags flex-fill">
+      <div className="img-container d-flex align-items-center " style={{width:300, height:300}}>
+        <ul className="list-group list-group-flush">
+          {props.image &&
+          props.image.map((img, index) => (
+              <li className="list-group-item" key={index}>
+                <img
+                    className="my-auto d-block"
+                    src={img}
+                    style={{width:300, maxHeight:300}}
+                    alt="item"
+                />
+              </li>
+          ))}
+        </ul>
+      </div>
+      <div className="name-and-tags flex-fill" style={{marginLeft:100}}>
         <div className="item-name" type="name" fullWidth required>
           {" "}
           {props.name}{" "}

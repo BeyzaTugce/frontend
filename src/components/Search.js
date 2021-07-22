@@ -5,9 +5,7 @@ import {
     ListGroup, Navbar,
 } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
-import PropTypes from "prop-types";
-import { connect, useSelector } from "react-redux";
-import {ArrowDown, ArrowUp, Clock, Star, StarFill} from "react-bootstrap-icons";
+import {ArrowDown, ArrowUp, Star, StarFill} from "react-bootstrap-icons";
 import SearchItem from "./SearchItem";
 
 const Search = (props) => {
@@ -260,7 +258,7 @@ const Search = (props) => {
                       </div>
                   </div>
                   <div className="w-100">
-                      <Navbar className="results-for w-100" style={{backgroundColor: '#F8F8F8'}}>Results for "{props.searchTerm}"</Navbar>
+                      <Navbar className="results-for w-100" style={{backgroundColor: '#F8F8F8'}}>RESULTS FOR "{props.searchTerm}"</Navbar>
                       <div className="list-whole" style={{ paddingInline: 30, paddingTop:30 }}>
                           <ListGroup className="d-inline-block">
                             {showFiltered ?
