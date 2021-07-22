@@ -35,24 +35,23 @@ const SearchItem = (props) => {
                 >
                     {props.tags.map( tag => {return "#"+tag+" "})}
                 </div>
-                <div className="img-container d-flex align-items-center">
-          <ul className="list-group list-group-flush">
-            {props.image &&
-              props.image.map((img, index) => (
+              
+                <div className="img-container d-flex align-items-center"
+                     style={{width: 200, height: 200, textAlign: "center",}}>
+                     <ul className="list-group list-group-flush">
+            {
+              props.image?.map((img, index) => (
                 <li className="list-group-item" key={index}>
                      <img 
                         src={img}
-                        width= "300"
+                        width= "200"
                      height="auto" 
                    alt="new"
                  />
                 </li>
               ))}
           </ul>
-        </div>
-                <div className="img-container d-flex align-items-center"
-                     style={{width: 200, height: 200, textAlign: "center",}}
-                />
+          </div>
                 <div className="garage-name">At {props.username}'s Garage</div>
                 <div className="garage-name">Ends on {props.endDate}</div>
                 <div className="item-price" style={{ fontWeight:"bold" }}>€{props.price}</div>
