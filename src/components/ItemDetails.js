@@ -19,7 +19,7 @@ const ItemDetails = (props) => {
         <div>
             <h1 className="text-center" style={{marginTop: 10, color: "#599219"}}>{item?.item?.username}'s {item?.item?.name}</h1>
             <p style={{fontSize:30, margin:50}}><i><strong>About item:  </strong></i>{item?.item?.info}</p>
-            <p style={{fontSize:30, margin:50}}><i><strong>Price:  </strong></i>{item?.item?.price}</p>
+            <p style={{fontSize:30, margin:50}}><i><strong>Price:  </strong></i>{item?.item?.price}€</p>
             <div className="card mt-3">
           <ul className="list-group list-group-flush">
             { item?.item?.image.map((img, index) => (

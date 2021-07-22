@@ -56,29 +56,6 @@ function ItemCreation(props) {
     setItemImage(props.item.itemImage);
   };
 
-  const packItem = () => {
-    props.dispatch(getGarages());
-    let back = {
-      ...props.item,
-    };
-
-    if (!props.garageCreated){
-      back.garageId = garageId;
-    }
-    else{
-      garage.garages.garages.filter(g => g.user == user._id).map(x => {back.garageId = x._id});
-    }
-    back.name = itemTitle;
-    back.price = itemPrice;
-    back.tags = itemTags.split(" ");
-    back.info = itemInfo;
-    back.username = user.username;
-    console.log("pictures"+itemImage);
-    back.image = itemImage;
-
-    return back;
-  };
-
   useEffect(() => {
     if (!props.new) {
       //extractUser();
@@ -129,6 +106,29 @@ function ItemCreation(props) {
       garage.garages.garages.filter(g => g.user == user._id).map( g => {props.history.push("/garage/"+g._id)});
     }
   }
+  
+  const packItem = () => {
+    props.dispatch(getGarages());
+    let back = {
+      ...props.item,
+    };
+
+    if (!props.garageCreated){
+      back.garageId = garageId;
+    }
+    else{
+      garage.garages.garages.filter(g => g.user == user._id).map(x => {back.garageId = x._id});
+    }
+    back.name = itemTitle;
+    back.price = itemPrice;
+    back.tags = itemTags.split(" ");
+    back.info = itemInfo;
+    back.username = user.username;
+    console.log("pictures"+itemImage);
+    back.image = itemImage;
+
+    return back;
+  };
 
   const onCreate = (e) => {
     e.preventDefault();
@@ -168,7 +168,7 @@ function ItemCreation(props) {
                     <Nav.Link eventKey="info">General Information</Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
-                    <Nav.Link eventKey="price">Price</Nav.Link>
+                    <Nav.Link eventKey="price">Price (€)</Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
                     <Nav.Link eventKey="tag">Tags</Nav.Link>

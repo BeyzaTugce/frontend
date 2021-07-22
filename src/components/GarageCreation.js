@@ -100,12 +100,23 @@ const GarageCreation = (props) => {
 
   const getDate = (today) => {
     let day = new Date();
+    let dd = day.getDate();
+    let mm = day.getMonth();
+    let mmUntil = day.getMonth() + 1;
+    let yyyy = day.getFullYear();
+    if(dd < 10)
+      dd='0'+dd;
+    if(mm < 10)
+      mm='0'+mm;
+    
+    const startDate = dd+'.'+mm+'.'+yyyy;
+    const endDate = dd+'.'+mmUntil+'.'+yyyy;
     if (today) {
       return (
-        day.getDate() + "." + (day.getMonth() + 1) + "." + day.getFullYear()
+        startDate
       );
     }
-    return day.getDate() + "." + (day.getMonth() + 2) + "." + day.getFullYear();
+    return endDate
   };
 
 

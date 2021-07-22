@@ -38,6 +38,7 @@ const Garage = (props) => {
   const [isMyGarage, setIsMyGarage] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [isPromoted, setIsPromoted] = useState(false);
+  const [formattedDate, setFormattedDate] = useState("");
 
   let buy = false;
   let bargainOption= false;
@@ -49,6 +50,7 @@ const Garage = (props) => {
     //will change the date later.
     setGarageId(props.garage._id)
     setGarageEndDate(props.garage.dateCreated)
+    setFormattedDate(new Date(props.garage.dateCreated).toLocaleDateString())
     setDiscount(props.garage.discount)
     setBargain(props.garage.bargain)
     setIsPromoted(props.garage.isPromoted);
@@ -313,7 +315,7 @@ const Garage = (props) => {
               style={{ fontSize: 17 }}
             >
               {postcode} {district} {city} <br />
-              until {garageEndDate}
+              until {formattedDate}
             </p>
           </em>
           {!bargain ?
