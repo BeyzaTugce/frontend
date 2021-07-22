@@ -4,21 +4,21 @@ import UploadComponent from "./Upload";
 import { withRouter } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
 import "./styles.css";
+import PropTypes from "prop-types";
+//import {onChangeItemImage} from "./ItemCreation";
 
 const Image = (props) => {
-
+ // const item = useSelector((state) => state.item);
     const [state, setState] = useState({
         upload: {
           pictures: [],
           maxFileSize: 5242880,
           imgExtension: [".jpg", ".png"],
           defaultImages: [
-            "https://media.smarteragent.com/unsafe/http://cdn.photos.sparkplatform.com/fl/20190819183614687947000000-o.jpg",
-            "https://media.smarteragent.com/unsafe/http://cdn.photos.sparkplatform.com/fl/20190819183639357715000000-o.jpg",
-            "https://media.smarteragent.com/unsafe/http://cdn.photos.sparkplatform.com/fl/20190819183701098384000000-o.jpg"
           ]
         }
       });
+      const { pictures } =state.upload;
   
 
   const handleChange = files => {
@@ -42,6 +42,10 @@ const Image = (props) => {
   const confirmUpload = () => {
     const { pictures, defaultImages } = state.upload;
     console.warn("Confirm Upload =>", [...pictures]);
+    {pictures &&
+      pictures.map((img, index) => (console.log(img)))}
+      props.onChangeItemImage(pictures);
+    
   };
 
  
@@ -55,10 +59,14 @@ const Image = (props) => {
           {...state.upload}
           handleChange={handleChange}
         />
+    
       </div>
     );
   
 }
+Image.prototypes = {
+  onChangeItemImage: PropTypes.func.isRequired,
+};
 
 const rootElement = document.getElementById("root");
 export default connect( null)(withRouter(Image));

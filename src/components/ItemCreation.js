@@ -49,6 +49,8 @@ function ItemCreation(props) {
 
 
 
+
+
   const extractItem = () => {
     if (!props.item) {
       return;
@@ -102,8 +104,8 @@ function ItemCreation(props) {
     setItemPrice(e.target.value);
   };
 
-  const onChangeItemImage = (e) => {
-    setItemImage(e.target.value);
+ const onChangeItemImage = (input) => {
+    setItemImage(input);
   };
 
   const packItem = () => {
@@ -122,8 +124,9 @@ function ItemCreation(props) {
     back.price = itemPrice;
     back.tags = itemTags.split(" ");
     back.info = itemInfo;
-    back.image = itemImage;
     back.username = user.username;
+    console.log("pictures"+itemImage);
+    back.image = itemImage;
 
     return back;
   };
@@ -229,7 +232,9 @@ function ItemCreation(props) {
                   </TabPane>
                   <TabPane eventKey="image">
                     <div style={{ marginLeft: 60, marginTop: 200 }}>
-                      <ImageComponent />
+                      <ImageComponent 
+                   onChangeItemImage = {onChangeItemImage} 
+                      />
                     </div>
                   </TabPane>
                 </TabContent>
@@ -270,3 +275,21 @@ ItemCreation.prototypes = {
 };
 
 export default connect()(withRouter(ItemCreation));
+
+
+/*
+Bu kullanılcak Imageları göstermek için
+      <div className="card mt-3">
+          <ul className="list-group list-group-flush">
+            {pictures &&
+              pictures.map((img, index) => (
+                <li className="list-group-item" key={index}>
+                     <img 
+                        src={img}
+                   alt="new"
+                 />
+                </li>
+              ))}
+          </ul>
+        </div>
+*/
