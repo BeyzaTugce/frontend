@@ -35,13 +35,13 @@ import ListItem from "./ListItem";
 const Bargain = (props) => {
 
   let { match, getPurchase } = props;
-  let offersArray = offer?.offers?.offerHistory;
+ 
 
 
   const loggedInUser = useSelector((state) => state.auth.user);
   const purchase = useSelector((state) => state.purchase);
   const offer = useSelector((state) => state.offer);
-
+  let offersArray = offer?.offers?.offerHistory;
 
   const [show, setShow] = useState(false);
   const [enterOffer, setEnterOffer] = useState({
@@ -136,7 +136,7 @@ const Bargain = (props) => {
   };
 
   const checkStatus = () => {
-    if (purchase?.purchase?.purchaseStatus != "WaitForAcceptance") {
+    if (purchase?.purchase?.purchaseStatus !== "WaitForAcceptance") {
       history.push(`../delivery/${purchase.purchase._id}`);
     }
   };
