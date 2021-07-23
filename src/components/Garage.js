@@ -35,10 +35,11 @@ const Garage = (props) => {
   const [garageId, setGarageId] = useState("");
   const [shipAddress, setShipmentAddress] = useState("");
   const [bargain, setBargain] = useState(false);
+  const [isPromoted, setIsPromoted] = useState(false);
   const [isMyGarage, setIsMyGarage] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [isPromoted, setIsPromoted] = useState(false);
   const [formattedDate, setFormattedDate] = useState("");
+  const [selectedItemList, setSelectedItemList] = useState([]);
 
   let buy = false;
   let bargainOption= false;
@@ -55,6 +56,7 @@ const Garage = (props) => {
     setBargain(props.garage.bargain)
     setIsPromoted(props.garage.isPromoted);
   }
+
   const extractPurchase = () => {
     if (!props.purchase) {
       return;
@@ -123,18 +125,10 @@ const Garage = (props) => {
   };
 
 
-  const changeGarage = (garage) => {
-    garage.preventDefault();
-    props.onChangeGarage(garage)
-  };
-
-
-  const onClickIsPromoted = (garage) => {
-    garage.preventDefault();
-    setIsPromoted(true);
-    props.onChangeGarage(garage)
+  const onClickPromote = (e) => {
+    e.preventDefault();
     //handleToggle();
-    history.push(`../payment`);
+    history.push(`../promote/${props.garageId}`);
   };
 
   const extractSeller = () => {
@@ -173,9 +167,14 @@ const Garage = (props) => {
     }
     else setSelectedMethod("PickUp");
   }
+  useEffect(() => {
+    extractGarage();
+    console.log("garageee: "+JSON.stringify(props.garage));
+  }, [] );
 
   useEffect(() => {
     extractGarage();
+    console.log("garageee: "+JSON.stringify(props.garage));
     getMethod();
   }, [props.garage] );
 
@@ -188,10 +187,7 @@ const Garage = (props) => {
   }, [props.items] );
 
   useEffect(() => {
-  
-      //extractUser();
       extractPurchase();
-    
   }, [props.purchase]);
 
   useEffect(() => {
@@ -205,15 +201,14 @@ const Garage = (props) => {
 
   useEffect(() => {
     setIsMyGarage(loggedInUser?._id == purchaseSeller?._id);
-    console.log(loggedInUser?._id);
-    console.log(purchaseSeller?._id);
-    console.log(isMyGarage)
+    //console.log(loggedInUser?._id);
+    //console.log(purchaseSeller?._id);
+    //console.log(isMyGarage)
     if(loggedInUser?._id != null){
       setLoggedIn(true);
     }
   }, [packPurchase])
 
-  const [selectedItemList, setSelectedItemList] = useState([]);
 
   const addToSelected = (input) => {
     if (!selectedItemList.includes(input)) {
@@ -244,7 +239,6 @@ const Garage = (props) => {
         image= {garageItem.image}
         button1Name={"Details"}
         userView={false}
-          //image={garageItem.image}
         onClickSelect={() =>
          {
            setTotalPrice(totalPrice+garageItem.price);
@@ -274,7 +268,6 @@ const Garage = (props) => {
             button1Name={"Details"}
             button2Name={"Remove"}
             userView={true}
-            //image={garageItem.image}
             onClickSelect={() =>
             {
               setTotalPrice(totalPrice+garageItem.price);
@@ -306,8 +299,11 @@ const Garage = (props) => {
               <h1 className="display-5 text-center">My Garage</h1> :
               <h1 className="display-5 text-center">{userName}'s Garage</h1>
           }
-          {isMyGarage ?
-              <Button style={{marginLeft: 1000}} onClick={onClickIsPromoted}>Let's get promoted</Button> : <p></p>
+          {isMyGarage && !isPromoted ?
+              <Button style={{marginLeft: 1100, marginTop:-150}} onClick={onClickPromote}>Let's get promoted</Button> :
+              isMyGarage && isPromoted ?
+                  <Button style={{marginLeft: 1100, marginTop:-150, backgroundColor:"#B740E0"}} disabled={true} onClick={onClickPromote}>You are promoted!</Button> :
+                  <p></p>
           }
           <em>
             <p

@@ -7,31 +7,81 @@ import {
 import { withRouter } from "react-router-dom";
 import {ArrowDown, ArrowUp, Star, StarFill} from "react-bootstrap-icons";
 import SearchItem from "./SearchItem";
+import {getGarages} from "../redux/actions";
+import {useSelector} from "react-redux";
+import store from "../redux/store";
 
 const Search = (props) => {
     const [minPrice, setMinPrice] = React.useState(0);
     const [maxPrice, setMaxPrice] = React.useState(99999);
     const [minStars, setMinStars] = React.useState(0);
     const [filtered, setFiltered] = React.useState([]);
+    const [promoted, setPromoted] = React.useState([]);
     const [showFiltered, setShowFiltered] = React.useState(false);
 
+    const garage = useSelector((state) => state.garage);
 
-    let filtering =
-        props.foundItems?.map(item => {
-            if (item?.key != null &&
-                item.props.price>=minPrice && item.props.price<=maxPrice){
-                return (
-                    <SearchItem
-                        name={item.props.name}
-                        info={item.props.info}
-                        tags={item.props.tags}
-                        price={item.props.price}
-                        garageId={item.props.garageId}
-                        username={item.props.username}
-                        image= {item.props.image}
-                    />);
-            }
+    useEffect(() => {
+        store.dispatch(getGarages());
+    }, []);
+
+
+    useEffect(() => {
+        store.dispatch(getGarages());
+    }, [props.match.params]);
+
+    //burda görüyor
+    console.log("outside g: "+JSON.stringify(garage.garages));
+
+    let filtering = props.foundItems?.map(item =>
+        {
+            //içerde görmüyor
+            console.log("inside g: "+JSON.stringify(garage.garages));
+
+            garage?.garages?.garages?.map( g =>
+            {
+                console.log(" In filteringg "+item.props.price);
+                if ( item.props.garageId === g._id ){
+                    if (item?.key != null &&
+                        item.props.price >= minPrice && item.props.price <= maxPrice) {
+                        return (
+                            <SearchItem
+                                name={item.props.name}
+                                info={item.props.info}
+                                tags={item.props.tags}
+                                price={item.props.price}
+                                garageId={item.props.garageId}
+                                username={item.props.username}
+                                image={item.props.image}
+                            />);
+                    }
+                }
+            })
         });
+
+    let promoting = props.foundItems?.map(item =>
+        { garage?.garages?.garages?.map( g =>
+            {
+                if ( item.props.garageId === g._id && g.isPromoted){
+                    if (item?.key != null &&
+                        item.props.price >= minPrice && item.props.price <= maxPrice){
+                        return (
+                            <SearchItem
+                                name={item.props.name}
+                                info={item.props.info}
+                                tags={item.props.tags}
+                                price={item.props.price}
+                                garageId={item.props.garageId}
+                                username={item.props.username}
+                                image= {item.props.image}
+                            />);
+                    }
+                }
+            })
+        });
+
+    console.log("filtering: "+filtering);
+    console.log("promoting: "+promoting);
 
     const onChangeMinPrice = (e) => {
         setMinPrice(e.target.value);
@@ -74,12 +124,14 @@ const Search = (props) => {
     };
 
     const onClickPriceUp = () => {
+        setPromoted(promoting.slice(0).sort((a, b) => a.props.price > b.props.price ? 1 : -1));
         setFiltered(filtering.slice(0).sort((a, b) => a.props.price > b.props.price ? 1 : -1));
         setShowFiltered(true);
         console.log(filtered);
     };
 
     const onClickPriceDown = () => {
+        setPromoted(promoting.slice(0).sort((a, b) => a.props.price < b.props.price ? 1 : -1));
         setFiltered(filtering.slice(0).sort((a, b) => a.props.price < b.props.price ? 1 : -1));
         setShowFiltered(true);
         console.log(filtered);
@@ -87,6 +139,7 @@ const Search = (props) => {
 
     const onClickRatingUp = (e) => {
         //sorting function
+        setPromoted(promoting.slice(0).sort((a, b) => a.props.rating > b.props.rating ? 1 : -1));
         setFiltered(filtering.slice(0).sort((a, b) => a.props.rating > b.props.rating ? 1 : -1));
         setShowFiltered(true);
         console.log(filtered);
@@ -94,6 +147,7 @@ const Search = (props) => {
 
     const onClickRatingDown = (e) => {
         //sorting function
+        setPromoted(promoting.slice(0).sort((a, b) => a.props.rating < b.props.rating ? 1 : -1));
         setFiltered(filtering.slice(0).sort((a, b) => a.props.rating < b.props.rating ? 1 : -1));
         setShowFiltered(true);
         console.log(filtered);
@@ -267,7 +321,16 @@ const Search = (props) => {
                       <div className="list-whole" style={{ paddingInline: 30, paddingTop:30 }}>
                           <ListGroup className="d-inline-block">
                             {showFiltered ?
-                             filtered : filtering}
+                                <div>
+                                    {filtered}
+                                    {promoted}
+                                </div>
+                                 :
+                                <div>
+                                    {filtering}
+                                    {promoting}
+                                </div>
+                            }
                               {/* {filtered} */}
                           </ListGroup>
                       </div>

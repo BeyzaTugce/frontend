@@ -55,6 +55,7 @@ function GarageView(props) {
             onChangeGarage = {onChangeGarage}
             onRemoveGarage={onRemoveGarage}
             purchaseId= {purchase}
+            garageId={garageId}
         />
       </div>
   );

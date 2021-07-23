@@ -16,6 +16,7 @@ import ImageView from "./components/Image";
 import SearchView from "./views/SearchView";
 import PurchaseView from "./views/PurchaseView";
 import ItemDetailsView from "./views/ItemDetailsView";
+import PayForPromotingGarage from "./components/PayForPromotingGarage";
 // routes within the movie database example app
 // used for routing
 
@@ -84,6 +85,10 @@ const routes = [
   {
     path: "/rating/:id",
     component: RatingPage,
+  },
+  {
+    path: "/promote/:id",
+    component: PayForPromotingGarage,
   },
 ];
 
