@@ -71,7 +71,7 @@ const GarageItem = (props) => {
         </div>
       </div>
       <div className="justify-content-end d-inline-flex align-items-center justify-content-end">
-      <div className="item-price" style={{"marginRight":15, "font-size":20}}><strong>€{props.price}</strong></div>
+      <div className="item-price" style={{"marginRight":15, "fontSize":20}}><strong>€{props.price}</strong></div>
         {props.userView ?
             <div>
               <Button

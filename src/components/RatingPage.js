@@ -9,7 +9,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import GarageItem from "./GarageItem";
 import "react-nice-dates/build/style.css";
 
-import { getPurchase, changePurchase } from "../redux/actions/PurchaseActions";
+import { getPurchase,getPurchases, changePurchase, getPurchaseSeller, loadSeller } from "../redux/actions/PurchaseActions";
+
+import { changeUser} from "../redux/actions/UserActions";
 import { deleteItem } from "../redux/actions/ItemActions";
 import { getGarage } from "../redux/actions/GarageActions";
 import { withRouter } from "react-router-dom";
@@ -51,26 +53,46 @@ const RatingPage = (props) => {
   const [comment, setComment] = React.useState("");
   const [garageItems, setGarageItems] = useState([]);
   const classes = useStyles();
+  let totalRating = 0;
+  let purchaseNumber = 0;
+  let newAvgRating = 0;
 
   useEffect(() => {
     let purchaseId = match.params.id;
     getPurchase(purchaseId);
-  }, [match.params]);
+  }, [match.params.id]);
 
-  useEffect(() => {
-    let purchaseId = match.params.id;
-    getPurchase(purchaseId);
-    checkUser();
-  }, [purchase.purchase]);
 
   useEffect(() => {
     checkMethod();
-  }, [loggedInUser]);
+  }, []);
+  
+
+  useEffect(() => {
+    getPurchases();
+    
+    if(purchase?.purchases?.purchases != null){
+      purchase?.purchases?.purchases?.filter(p => p.seller == purchase?.purchase?.seller).map( p => {
+        totalRating = totalRating + p.rating;
+        purchaseNumber = purchaseNumber + 1;
+        console.log("rating "+p.rating + " totalRating"+totalRating+ "purchaseNumber"+purchaseNumber);
+    });
+  }
+
+}, [] );
+
+  
+useEffect(() => {
+ store.dispatch(loadSeller(purchase.purchase.seller));
+
+  
+}, [purchase?.purchase]);
 
   useEffect(() => {
     let garageId = purchase?.purchase?.garageId;
     getGarage(garageId);
-  }, [purchase.purchase != null]);
+  
+  }, [match.params.id]);
 
   const onChangeComment = (e) => {
     setComment(e.target.value);
@@ -92,6 +114,17 @@ const RatingPage = (props) => {
     }
   };
 
+
+  const packSeller= () => {
+    let back = {
+      ...props.purchase,
+    };
+    back._id = purchase.seller._id;
+    newAvgRating =  (totalRating + value)  /(purchaseNumber + 1);
+    console.log("newAvgRating "+ newAvgRating);
+    back.avgRating= newAvgRating;
+    return back;
+  };
   const packPurchase = () => {
     let back = {
       ...props.purchase,
@@ -121,9 +154,9 @@ const RatingPage = (props) => {
   };
   const backToMainPage = (e) => {
     e.preventDefault();
-    //   props.onCreate(packPickUp());
     store.dispatch(changePurchase(packPurchase()));
     itemListRemove();
+    store.dispatch(changeUser(packSeller()));
     history.push(`../home`);
   };
 
@@ -162,7 +195,7 @@ const RatingPage = (props) => {
 
   return (
     <div>
-      {userType == "Buyer" ? (
+     
         <div>
           <ListGroup>{renderedList}</ListGroup>
 
@@ -198,14 +231,14 @@ const RatingPage = (props) => {
             </Button>
           </div>
         </div>
-      ) : (
-        "You are not a buyer . You cannot rate this purchase "
-      )}
+   
     </div>
   );
 };
 
 export default connect(null, {
   getPurchase,
+  getPurchases,
+  getPurchaseSeller,
   changePurchase,
 })(withRouter(RatingPage));

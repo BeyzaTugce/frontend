@@ -122,7 +122,7 @@ export function changeUser(changedUser) {
 
   return async (dispatch) => {
     try {
-      let user = await AuthService.updateUser(changedUser);
+      let user = await UserService.updateUser(changedUser);
       dispatch(onSuccess(user));
     } catch (e) {
       onFailure(e);
