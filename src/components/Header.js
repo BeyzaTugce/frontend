@@ -18,7 +18,7 @@ import {
 import {Cart3, House, PersonCircle, Search} from "react-bootstrap-icons";
 import logo from "../views/logo.png";
 import { logoutNew } from "../redux/actions/AuthActions";
-import {getGarages} from "../redux/actions/GarageActions"
+import {getGarages} from "../redux/actions/GarageActions";
 
 
 /**
@@ -51,11 +51,15 @@ const Header = ({auth}) => {
 
   const onMyGarage = () => {
     store.dispatch(getGarages());
-    if (garage?.garages?.garages?.filter(g => g.user === user._id).length === 0){
-      history.push("/garage");
-    }
-    else{
-      garage?.garages?.garages?.filter(g => g.user === user._id).map(  g => {history.push("/garage/"+g._id)});
+    if (isAuthenticated){
+      if (garage?.garages?.garages?.filter(g => g.user === user._id).length === 0){
+        history.push("/garage");
+      }
+      else{
+        garage?.garages?.garages?.filter(g => g.user === user._id).map(  g => {history.push("/garage/"+g._id)});
+      }
+    } else {
+      history.push("/yourgarage");
     }
   };
 
@@ -63,8 +67,8 @@ const Header = ({auth}) => {
     history.push("/mypurchase");
   };
 
-  const onClickCreateGarage = () => {
-    history.push("/yourgarage");
+  const onClickSignUp = () => {
+    history.push("/signup");
   };
 
   const onClickLogin = () => {
@@ -126,28 +130,18 @@ const Header = ({auth}) => {
               </Nav.Link>
           ) : ("")
           }
-          <Nav.Link href="#cart">
-            <Cart3 size={28} />
+          <Nav.Link alignRight onClick={onMyGarage}>
+            <House size={28}/>
           </Nav.Link>
-
-          <NavDropdown alignRight title={<House size={28} />}>
-            {!isAuthenticated ? (
-                <div>
-                  <NavDropdown.Item onClick={onClickCreateGarage}>SignUp</NavDropdown.Item>
-                </div>
-            ) : <div>
-              <NavDropdown.Item onClick={onMyGarage}>MyGarage</NavDropdown.Item>
-              <NavDropdown.Item onClick={onMyPurchases}>MyPurchase</NavDropdown.Item>
-            </div>
-            }
-          </NavDropdown>
           <NavDropdown alignRight title={<PersonCircle size={28} />}>
           {!isAuthenticated ? (
                   <div>
-                   <NavDropdown.Item onClick={onClickLogin}>Login</NavDropdown.Item>
+                    <NavDropdown.Item onClick={onClickSignUp}>Sign Up</NavDropdown.Item>
+                    <NavDropdown.Item onClick={onClickLogin}>Login</NavDropdown.Item>
                   </div>
-                ) :  <div> 
-                  <NavDropdown.Item onClick={onClickLogout}>Logout</NavDropdown.Item> </div> }
+                ) :  (<div>
+                  <NavDropdown.Item onClick={onMyPurchases}>My Purchases</NavDropdown.Item>
+                  <NavDropdown.Item onClick={onClickLogout}>Log out</NavDropdown.Item> </div> )}
           </NavDropdown>
         </Nav>
       </Navbar>

@@ -23,9 +23,9 @@ function VisitorView(props) {
           <Header/>
           <div style={{textAlign: "center"}}>
               <h1 style={{marginTop: 100 }}>
-                  <i>Don't you still have a garage ? <br/><br/> Time to create a garage </i>
+                  <i>Don't you still have a garage ? <br/><br/> Create one now! </i>
               </h1>
-              <Button style={{top: 50, marginTop: 50}} onClick={onSignUp}> Sign up</Button>
+              <Button style={{top: 50, marginTop: 50, fontSize: 25}} onClick={onSignUp}> Sign up</Button>
           </div>
       </div>
   );
