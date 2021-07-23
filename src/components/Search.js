@@ -41,7 +41,7 @@ const Search = (props) => {
             garage?.garages?.garages?.map( g =>
             {
                 console.log(" In filteringg "+item.props.price);
-                if ( item.props.garageId === g._id ){
+                if ( item.props.garageId === g._id && !g.isPromoted){
                     if (item?.key != null &&
                         item.props.price >= minPrice && item.props.price <= maxPrice) {
                         return (
