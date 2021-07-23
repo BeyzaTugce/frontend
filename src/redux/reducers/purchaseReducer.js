@@ -21,9 +21,9 @@ export default function purchaseReducer(state=initialState, action) {
       case "LOAD_SELLER":
         return { ...state, seller: action.payload}
       case "GETSELLER_SUCCESS":
-        return { seller: action.seller };
+        return { ...state, seller: action.seller };
       case "GETBUYER_SUCCESS":
-        return { buyer: action.buyer };
+        return { ...state, buyer: action.buyer };
       default:
         return state;
     }

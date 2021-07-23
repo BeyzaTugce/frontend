@@ -10,19 +10,19 @@ import ListItem from "../components/ListItem";
 
 const PurchaseView = (props) => {
 
-    let {getPurchases} = props;
+    // let {getPurchases} = props;
 
     const purchase = useSelector((state) => state.purchase);
     const user = useSelector((state) => state.auth.user);
 
 
     useEffect(() => {
-        getPurchases();
+        props.getPurchases();
     }, [] );
 
     //View the purchases for user in the seller role
     const onClickGetSeller = () => {
-        getPurchases();
+        props.getPurchases();
 
         purchase?.purchases?.purchases?.filter(p => p.seller == user._id).map( p => {
             switch(p.purchaseStatus){
@@ -47,7 +47,7 @@ const PurchaseView = (props) => {
 
     //View the purchases for user in the buyer role
     const onClickGetBuyer = () => {
-        getPurchases();
+        props.getPurchases();
 
         purchase?.purchases?.purchases?.filter(p => p.buyer == user._id).map( p => {
             switch(p.purchaseStatus){

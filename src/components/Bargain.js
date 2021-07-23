@@ -34,7 +34,7 @@ import ListItem from "./ListItem";
 
 const Bargain = (props) => {
 
-  let { match, getPurchase } = props;
+  let { match, getPurchase, loadBuyer, loadSeller } = props;
  
 
 
@@ -61,15 +61,17 @@ const Bargain = (props) => {
   useEffect(() => {
     let purchaseId = match.params.id;
     getPurchase(purchaseId);
-    props.loadBuyer(purchase?.purchase?.buyer);
-    props.loadSeller(purchase?.purchase?.seller);
+    loadBuyer(purchase?.purchase?.buyer);
+    loadSeller(purchase?.purchase?.seller);
   }, [match.params]);
 
   useEffect(() => {
     let purchaseId = match.params.id;
     getPurchase(purchaseId);
-    props.loadBuyer(purchase?.purchase?.buyer);
-    props.loadSeller(purchase?.purchase?.seller);
+    // getPurchaseBuyer();
+    // getPurchaseSeller();
+    loadBuyer(purchase?.purchase?.buyer);
+    loadSeller(purchase?.purchase?.seller);
     //history.push(`../bargain/${purchase.purchase._id}`)
   }, [offerCount]);
 
@@ -109,6 +111,7 @@ const Bargain = (props) => {
   const handleOnClick = (e) => {
     e.preventDefault();
     props.makeOffer(purchaseId, packOffer());
+    props.getOfferHistory();
     handleToggle();
     setTurn(!turn);
     setOfferCount(offerCount + 1);

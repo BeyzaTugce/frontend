@@ -9,7 +9,7 @@ export default function itemReducer(state = {}, action) {
     case "UPDATEITEM_SUCCESS":
       return { item: action.item };
     case "GETITEM_SUCCESS":
-      return { item: action.item };
+      return { ...state, item: action.item };
     case "GETITEM_ERROR":
       return { error: action.error };
     case "CHANGE_SELECTED_ITEM":

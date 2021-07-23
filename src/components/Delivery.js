@@ -58,7 +58,7 @@ const Delivery = (props) => {
 
   useEffect(() => {
     let purchaseId = match.params.id;
-    getPurchase(purchaseId);
+    // getPurchase(purchaseId);
     checkUser();
   }, [purchase.purchase]);
 

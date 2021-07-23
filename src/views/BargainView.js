@@ -18,9 +18,9 @@ import Purchase from "../components/TrackPurchase";
 
 const BargainView = props => {
 
-  useEffect(() => {
-    props.getOfferHistory(props.match.params.id);
-  }, [props.offer.offers]);
+  // useEffect(() => {
+  //   props.getOfferHistory(props.match.params.id);
+  // }, [props.offer.offers]);
   
   return (
       <div>

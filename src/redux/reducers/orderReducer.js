@@ -3,11 +3,11 @@ export default function order(state = {}, action) {
         case "GETORDERS_SUCCESS":
             return { orders: action.orders };
         case "GETITEMS_SUCCESS":
-            return { items: action.items };
+            return { ...state, items: action.items };
         case "GETSELLER_SUCCESS":
-            return { seller: action.seller };
+            return { ...state, seller: action.seller };
         case "GETORDER_SUCCESS":
-            return { order: action.order };
+            return { ...state, order: action.order };
         case "DELETEORDER_SUCCESS":
             return { orders: action.orders };
         case "ADDORDER_SUCCESS":
