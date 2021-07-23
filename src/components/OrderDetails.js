@@ -59,17 +59,20 @@ const OrderDetails = (props) => {
   useEffect(() => {
     let purchaseId = match.params.id;
     getPurchase(purchaseId);
-    setPickUpAddress(purchase.purchase.pickupLocation);
-    setPrice(purchase.purchase.price + tax);
-    setTotalwoTax(purchase.purchase.price);
-    setItems(purchase.purchase.selectedItemList);
-    setOrderDate(purchase.purchase.creationDate);
-    setMethod(purchase.purchase.method);
-    setPickUpDate(purchase.purchase.pickUpDate);
-    setShipAddress(purchase.purchase.shipAddress);
+    if(purchase.purchase != null){
+      setPickUpAddress(purchase.purchase.pickupLocation);
+      setPrice(purchase.purchase.price + tax);
+      setTotalwoTax(purchase.purchase.price);
+      setItems(purchase.purchase.selectedItemList);
+      setOrderDate(purchase.purchase.creationDate);
+      setMethod(purchase.purchase.method);
+      setPickUpDate(purchase.purchase.pickUpDate);
+      setShipAddress(purchase.purchase.shipAddress);
+    }
+   
     //setMethod(purchase.purchase.method);
     // setPickUpAddress(purchase.purchase.pickUpAddress);
-  }, [purchase.purchase != null]);
+  }, [purchase.purchase]);
 
 
   useEffect(() => {
@@ -284,11 +287,7 @@ const OrderDetails = (props) => {
                 </span>
                 Product delivered
               </div>
-              <a
-                class="btn btn-primary btn-sm mt-2"
-                href="../rating/?purchaseID"
-              >
-                {" "}
+         
                 <div class="step step-active">
                   <span class="step-icon">
                     <svg
@@ -309,7 +308,7 @@ const OrderDetails = (props) => {
                   </span>
                   Rate
                 </div>
-              </a>
+        
             </div>
           </div>
 
