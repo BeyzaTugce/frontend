@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import store from "../redux/store";
 import InputGroup from "react-bootstrap/InputGroup";
 import { Form, Button } from "react-bootstrap";
-import {ListGroup } from "react-bootstrap";
+import { ListGroup } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import GarageItem from "./GarageItem";
 import "react-nice-dates/build/style.css";
@@ -72,7 +72,6 @@ const RatingPage = (props) => {
     getGarage(garageId);
   }, [purchase.purchase != null]);
 
-
   const onChangeComment = (e) => {
     setComment(e.target.value);
   };
@@ -92,8 +91,6 @@ const RatingPage = (props) => {
       setMethodType(purchase.purchase.method);
     }
   };
-
-
 
   const packPurchase = () => {
     let back = {
@@ -118,7 +115,7 @@ const RatingPage = (props) => {
 
   const itemListRemove = () => {
     purchase.purchase?.selectedItemList.map((garageItem) => {
-      console.log("garageItem._id" + garageItem._id);
+      //console.log("garageItem._id" + garageItem._id);
       store.dispatch(deleteItem(garageItem._id));
     });
   };
@@ -141,7 +138,7 @@ const RatingPage = (props) => {
           itemId={garageItem._id}
           button1Name={"Details"}
           //userView={false}
-          //image={garageItem.image}
+          image={garageItem.image}
         />
 
         <Rating

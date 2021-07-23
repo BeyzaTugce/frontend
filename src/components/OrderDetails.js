@@ -6,10 +6,19 @@ import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect, useSelector } from "react-redux";
 import user from "../redux/reducers/userReducer";
-import { Container, Row, Col, Jumbotron, Form, Button } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Jumbotron,
+  Form,
+  Button,
+  NavLink,
+} from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { getPurchase, changePurchase } from "../redux/actions/PurchaseActions";
 import RatingPageComponent from "../components/RatingPage";
+import store from "../redux/store";
 
 const OrderDetails = (props) => {
   const [sellerName, setSellerName] = React.useState(" ");
@@ -59,7 +68,7 @@ const OrderDetails = (props) => {
   useEffect(() => {
     let purchaseId = match.params.id;
     getPurchase(purchaseId);
-    if(purchase.purchase != null){
+    if (purchase.purchase != null) {
       setPickUpAddress(purchase.purchase.pickupLocation);
       setPrice(purchase.purchase.price + tax);
       setTotalwoTax(purchase.purchase.price);
@@ -69,11 +78,10 @@ const OrderDetails = (props) => {
       setPickUpDate(purchase.purchase.pickUpDate);
       setShipAddress(purchase.purchase.shipAddress);
     }
-   
+
     //setMethod(purchase.purchase.method);
     // setPickUpAddress(purchase.purchase.pickUpAddress);
   }, [purchase.purchase]);
-
 
   useEffect(() => {
     // extractOrder();
@@ -121,7 +129,6 @@ const OrderDetails = (props) => {
     return back;
   };
 
-
   const renderedList = items.map((garageItem) => {
     return (
       <GarageItem
@@ -133,6 +140,12 @@ const OrderDetails = (props) => {
       />
     );
   });
+
+  const onRate = (e) => {
+    e.preventDefault();
+    store.dispatch(changePurchase(packPurchase()));
+    history.push(`../rating/${purchase.purchase._id}`);
+  };
 
   return (
     <div className="OrderDetails">
@@ -287,28 +300,27 @@ const OrderDetails = (props) => {
                 </span>
                 Product delivered
               </div>
-         
-                <div class="step step-active">
-                  <span class="step-icon">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="feather feather-award"
-                    >
-                      <circle cx="12" cy="8" r="7"></circle>
-                      <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
-                    </svg>
-                  </span>
-                  Rate
-                </div>
-        
+
+              <NavLink class="step step-active" onClick={onRate}>
+                <span class="step-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-award"
+                  >
+                    <circle cx="12" cy="8" r="7"></circle>
+                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                  </svg>
+                </span>
+                <div className="rate-text text-center">Rate</div>
+              </NavLink>
             </div>
           </div>
 
