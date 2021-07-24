@@ -53,6 +53,8 @@ const Bargain = (props) => {
   const purchaseId = match.params.id;
   const history = useHistory();
   const [offerCount, setOfferCount] = useState(0);
+  const [offerTurn, setOfferTurn] = useState(true);
+  const [disabled, setDisabled] = useState(true);
 
   const handleToggle = () => {
     setShow(!show);
@@ -114,6 +116,7 @@ const Bargain = (props) => {
     props.getOfferHistory();
     handleToggle();
     setTurn(!turn);
+    setOfferTurn(!offerTurn);
     setOfferCount(offerCount + 1);
     history.push(`../bargain/${purchase.purchase._id}`);
   };
@@ -143,6 +146,56 @@ const Bargain = (props) => {
       history.push(`../delivery/${purchase.purchase._id}`);
     }
   };
+
+  const isBuyer = () => {
+    if(props.buyer?._id == loggedInUser?._id)
+      return true
+    return false
+  }
+
+  const isSeller = () => {
+    if(props.seller?._id == loggedInUser?._id)
+      return true
+    return false
+  }
+
+  // const acceptCondition = () => {
+  //   if (offersArray && offersArray.length == 0) {
+  //     return true
+  //   }
+  //   else if (isBuyer && offerTurn)
+  //       return true
+  //   else if (isSeller && !offerTurn)
+  //       return true
+  //   return false
+  // }
+
+  const xMax = (arr) => {
+    if(arr === undefined)
+      return 
+    else if(arr.length<2)
+      return purchase?.purchase?.price;
+    else if (isBuyer())
+      return arr[arr.length - 1]
+    else
+      return arr[arr.length - 2]
+  }
+
+  const xMin = (arr) => {
+    if(arr === undefined)
+      return
+    else if(arr.length==0) {
+      return Math.floor(purchase?.purchase?.price * 0.6);
+    }
+    else if (isSeller()) {
+      return (arr[arr.length - 1]) 
+    }
+      
+    else if(isBuyer()) {
+      return ((arr[arr.length - 2])) 
+    }
+      
+  }
 
 
   const renderedListItem = purchase.purchase?.selectedItemList.map((item) => {
@@ -213,14 +266,13 @@ const Bargain = (props) => {
               }}
               axis="x"
               x={enterOffer.price}
-              xmin={
-                (offersArray && offersArray[offersArray.length - 1] + 1) ||
-                Math.floor(purchase?.purchase?.price * 0.6)
-              }
-              xmax={purchase?.purchase?.price}
+              xmin={xMin(offersArray)}
+              // xmax (offersArray?.length==0)? purchase?.purchase?.price : offersArray[offersArray.length - 1]
+              xmax={xMax(offersArray)}
               onChange={({ x }) =>
                 setEnterOffer((offer) => ({ ...offer, price: x }))
               }
+              {...console.log(isBuyer())}
             />
           </div>
         </Modal.Body>

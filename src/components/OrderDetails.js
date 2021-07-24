@@ -33,6 +33,8 @@ const OrderDetails = (props) => {
 
   let { match, getPurchase } = props;
   let purchaseReached = false;
+  let today = new Date();
+  let deliveryDate = new Date(today.setDate(today.getDate() + 4));
 
   useEffect(() => {
     let purchaseId = match.params.id;
@@ -155,7 +157,7 @@ const OrderDetails = (props) => {
             <div class="col-sm-4 mb-2">
               <div class="bg-secondary p-4 text-dark text-center">
                 <span class="font-weight-semibold mr-2">Expected date:</span>
-                June 17, 2019
+                {deliveryDate.toLocaleDateString()}
               </div>
             </div>
           </div>
