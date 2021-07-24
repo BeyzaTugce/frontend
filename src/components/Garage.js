@@ -5,14 +5,11 @@ import GarageItem from "./GarageItem";
 import { connect, useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
-import {getPurchases} from "../redux/actions/PurchaseActions";
-import garage from "../redux/reducers/garageReducer";
 
 const Garage = (props) => {
   const history = useHistory();
-  const purchase = useSelector((state) => state.purchase);
   const loggedInUser = useSelector((state) => state.auth.user);
-
+  const purchase = useSelector((state) => state.purchase);
 
   const [userName, setUserName] = useState("");
   const [sellerId, setSellerId] = useState(0);
@@ -26,12 +23,8 @@ const Garage = (props) => {
   const [discount, setDiscount] = useState(false);
   const [saving, setSaving] = useState(0);
   const [amountToPay, setAmountToPay] = useState(0);
-  const [purchaseSeller, setPurchaseSeller] = useState("");
-  const [purchaseGarage, setPurchaseGarage] = useState("");
   const [selectedMethod, setSelectedMethod] = useState("");
   const [creationDate, setCreationDate] = useState(new Date());
-  const [buyer, setBuyer] = useState("");
-  const [price, setPurchasePrice] = useState(0);
   const [garageId, setGarageId] = useState("");
   const [shipAddress, setShipmentAddress] = useState("");
   const [bargain, setBargain] = useState(false);
@@ -43,6 +36,8 @@ const Garage = (props) => {
 
   let buy = false;
   let bargainOption= false;
+  let garageReached = false;
+  let sellerReached = false;
 
   const extractGarage = () => {
     if (!props.garage ) {
@@ -56,17 +51,6 @@ const Garage = (props) => {
     setBargain(props.garage.bargain)
     setIsPromoted(props.garage.isPromoted);
   }
-
-  const extractPurchase = () => {
-    if (!props.purchase) {
-      return;
-    }
-    setCreationDate(props.purchase.creationDate);
-    setBuyer(props.purchase.buyer);
-    setPurchaseSeller(props.purchase.seller);
-    setPurchaseGarage(props.purchase.garageId);
-    setPurchasePrice(props.purchase.price);
-  };
 
   const packPurchase = () => {
     let back = {
@@ -85,7 +69,6 @@ const Garage = (props) => {
        back.purchaseStatus = "DeliveryScheduling";
     return back;
   };
-
 
   const buyFunction = (e) => {
     e.preventDefault();
@@ -114,8 +97,7 @@ const Garage = (props) => {
     e.preventDefault();
     if(!purchase.purchase){
        props.onCreatePurchase(packPurchase());
-      }
-      
+      }   
     else {
       if(buy == true)
          history.push(`../delivery/${purchase.purchase._id}`)
@@ -127,7 +109,6 @@ const Garage = (props) => {
 
   const onClickPromote = (e) => {
     e.preventDefault();
-    //handleToggle();
     history.push(`../promote/${props.garageId}`);
   };
 
@@ -167,28 +148,53 @@ const Garage = (props) => {
     }
     else setSelectedMethod("PickUp");
   }
-  useEffect(() => {
-    extractGarage();
-    console.log("garageee: "+JSON.stringify(props.garage));
-  }, [] );
 
   useEffect(() => {
     extractGarage();
-    console.log("garageee: "+JSON.stringify(props.garage));
-    getMethod();
-  }, [props.garage] );
+  }, [props.garage, garageReached === false]);
+
+  useEffect(() => {
+    if (props.garage!== undefined && props.garage !== null) {
+      garageReached = true;
+    }
+  }, [props.garage, garageReached === false]);
+
+  useEffect(() => {
+    console.log("second use effect " + garageReached);
+    if (props.garage !== undefined && props.garage !== null) {
+      getMethod();
+    }
+  }, [props.garage, garageReached]);
+
 
   useEffect(() => {
     extractSeller();
   }, [props.seller] );
 
   useEffect(() => {
-    extractItems();
-  }, [props.items] );
+    extractSeller();
+  }, [props.seller,sellerReached === false]);
 
   useEffect(() => {
-      extractPurchase();
-  }, [props.purchase]);
+    if (props.seller!== undefined && props.seller !== null) {
+      sellerReached = true;
+    }
+  }, [props.seller, sellerReached === false]);
+
+  useEffect(() => {
+    console.log("second use effect " + sellerReached);
+    if (props.seller !== undefined && props.seller !== null) {
+      setIsMyGarage(loggedInUser?._id == props.seller?._id);
+      if(loggedInUser?._id !== null){
+        setLoggedIn(true);
+      }
+    }
+  }, [props.seller, sellerReached]);
+
+
+  useEffect(() => {
+    extractItems();
+  }, [props.items] );
 
   useEffect(() => {
     if(numSelectedItems>1 & discount){
@@ -198,17 +204,6 @@ const Garage = (props) => {
     }
     setAmountToPay(totalPrice-saving);
   }, );
-
-  useEffect(() => {
-    setIsMyGarage(loggedInUser?._id == purchaseSeller?._id);
-    //console.log(loggedInUser?._id);
-    //console.log(purchaseSeller?._id);
-    //console.log(isMyGarage)
-    if(loggedInUser?._id != null){
-      setLoggedIn(true);
-    }
-  }, [packPurchase])
-
 
   const addToSelected = (input) => {
     if (!selectedItemList.includes(input)) {

@@ -14,20 +14,45 @@ function GarageView(props) {
   const garage = useSelector((state) => state.garage);
   const user = useSelector((state) => state.auth);
   const purchase = useSelector((state) => state.purchase);
-
+  let itemsReached = false;
+  let sellerReached = false;
+  let garageReached = false;
   let garageId = match.params.id;
 
   useEffect(() => {
+    let garageId = match.params.id;
     getGarage(garageId);
-  }, [match.params]);
-  
-  useEffect(() => {
-    getSeller(garageId);
-  }, [match.params]);
+  }, [match.params, garageReached === false]);
 
   useEffect(() => {
+    if (garage.garage !== undefined && garage.garage !== null) {
+      garageReached = true;
+    }
+  }, [garage.garage, garageReached === false]);
+
+  useEffect(() => {
+    let garageId = match.params.id;
+    getSeller(garageId);
+  }, [match.params, sellerReached === false]);
+
+  useEffect(() => {
+    if (garage.seller !== undefined && garage.seller !== null) {
+      sellerReached = true;
+    }
+  }, [garage.seller, sellerReached === false]);
+
+  useEffect(() => {
+    let garageId = match.params.id;
     getItems(garageId);
-  }, [match.params]);
+  }, [match.params, itemsReached === false]);
+
+  useEffect(() => {
+    if (garage.garageItems !== undefined && garage.garageItems !== null) {
+      itemsReached = true;
+    }
+  }, [garage.garageItems, itemsReached === false]);
+
+
 
 
 
@@ -50,11 +75,9 @@ function GarageView(props) {
             user={user.user}
             seller= {garage.seller}
             items={garage.garageItems}
-            purchase= {purchase.purchase}
             onCreatePurchase = {onCreatePurchase}
             onChangeGarage = {onChangeGarage}
             onRemoveGarage={onRemoveGarage}
-            purchaseId= {purchase}
             garageId={garageId}
         />
       </div>
