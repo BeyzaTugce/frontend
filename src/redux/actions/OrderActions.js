@@ -114,8 +114,8 @@ export const getSeller = (id) => {
 };
 
 export function getItems(id) {
-    function onSuccess(items) {
-        return { type: "GETITEMS_SUCCESS", items: items };
+    function onSuccess(orderItems) {
+        return { type: "GETORDERITEMS_SUCCESS", orderItems: orderItems };
     }
     // when the backend call was failed
     function onFailure(error) {
@@ -124,8 +124,8 @@ export function getItems(id) {
     }
     return async (dispatch) => {
         try {
-            let items = await OrderService.readItems(id);
-            dispatch(onSuccess(items));
+            let orderItems = await OrderService.readItems(id);
+            dispatch(onSuccess(orderItems));
         } catch (e) {
             onFailure(e);
         }

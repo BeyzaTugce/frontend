@@ -10,7 +10,6 @@ import {
   setOffersLoading,
 } from "../redux/actions/OfferActions";
 import Header from "../components/Header";
-import Purchase from "../components/TrackPurchase";
 /**
  * For register new users
  * @param {props} props

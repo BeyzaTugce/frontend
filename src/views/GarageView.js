@@ -49,7 +49,7 @@ function GarageView(props) {
             garage={garage.garage}
             user={user.user}
             seller= {garage.seller}
-            items={garage.items}
+            items={garage.garageItems}
             purchase= {purchase.purchase}
             onCreatePurchase = {onCreatePurchase}
             onChangeGarage = {onChangeGarage}

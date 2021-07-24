@@ -7,9 +7,6 @@ import {
 import { withRouter } from "react-router-dom";
 import {ArrowDown, ArrowUp, Star, StarFill} from "react-bootstrap-icons";
 import SearchItem from "./SearchItem";
-import {getGarages} from "../redux/actions";
-import {useSelector} from "react-redux";
-import store from "../redux/store";
 
 const Search = (props) => {
     const [minPrice, setMinPrice] = React.useState(0);
@@ -19,69 +16,73 @@ const Search = (props) => {
     const [promoted, setPromoted] = React.useState([]);
     const [showFiltered, setShowFiltered] = React.useState(false);
 
-    const garage = useSelector((state) => state.garage);
+    let filteredArray = [];
+    let promotedArray = [];
 
-    useEffect(() => {
-        store.dispatch(getGarages());
-    }, []);
+    let itemsFound = false;
+    let garagesSelected = false;
 
-
-    useEffect(() => {
-        store.dispatch(getGarages());
-    }, [props.match.params]);
-
-    //burda görüyor
-    console.log("outside g: "+JSON.stringify(garage.garages));
-
-    let filtering = props.foundItems?.map(item =>
+    const filterArray = () => {
+        props.foundItems?.map(item =>
         {
-            //içerde görmüyor
-            console.log("inside g: "+JSON.stringify(garage.garages));
-
-            garage?.garages?.garages?.map( g =>
-            {
-                console.log(" In filteringg "+item.props.price);
-                if ( item.props.garageId === g._id && !g.isPromoted){
-                    if (item?.key != null &&
-                        item.props.price >= minPrice && item.props.price <= maxPrice) {
-                        return (
-                            <SearchItem
-                                name={item.props.name}
-                                info={item.props.info}
-                                tags={item.props.tags}
-                                price={item.props.price}
-                                garageId={item.props.garageId}
-                                username={item.props.username}
-                                image={item.props.image}
-                            />);
-                    }
+            if ( !props.selectedGarages.includes(item.props.garageId)){
+                if (item?.key != null &&
+                    item.props.price >= minPrice && item.props.price <= maxPrice) {
+                    filteredArray.push(
+                        <SearchItem
+                            name={item.props.name}
+                            info={item.props.info}
+                            tags={item.props.tags}
+                            price={item.props.price}
+                            garageId={item.props.garageId}
+                            username={item.props.username}
+                            image={item.props.image}
+                        />);
                 }
-            })
+            }
         });
+    }
 
-    let promoting = props.foundItems?.map(item =>
-        { garage?.garages?.garages?.map( g =>
-            {
-                if ( item.props.garageId === g._id && g.isPromoted){
-                    if (item?.key != null &&
-                        item.props.price >= minPrice && item.props.price <= maxPrice){
-                        return (
-                            <SearchItem
-                                name={item.props.name}
-                                info={item.props.info}
-                                tags={item.props.tags}
-                                price={item.props.price}
-                                garageId={item.props.garageId}
-                                username={item.props.username}
-                                image= {item.props.image}
-                            />);
-                    }
+    const promoteArray = () => {
+        props.foundItems?.map(item =>
+        {
+            if (props.selectedGarages.includes(item.props.garageId)){
+                if (item?.key != null &&
+                    item.props.price >= minPrice && item.props.price <= maxPrice) {
+                    promotedArray.push(
+                        <SearchItem
+                            name={item.props.name}
+                            info={item.props.info}
+                            tags={item.props.tags}
+                            price={item.props.price}
+                            garageId={item.props.garageId}
+                            username={item.props.username}
+                            image={item.props.image}
+                        />);
                 }
-            })
+            }
         });
+    }
 
-    console.log("filtering: "+filtering);
-    console.log("promoting: "+promoting);
+    useEffect(() => {
+        if (props.selectedGarages !== undefined && props.selectedGarage !== null) {
+            garagesSelected = true;
+        }
+        if (props.foundItems !== undefined && props.foundItems !== null) {
+            itemsFound = true;
+        }
+    }, [props.selectedGarages, garagesSelected === false, props.foundItems, itemsFound === false]);
+
+    useEffect(() => {
+        if (props.foundItems !== undefined && props.foundItems !== null && props.selectedGarages !== undefined && props.selectedGarages !== null) {
+            promoteArray();
+            setPromoted(promotedArray);
+            filterArray();
+            setFiltered(filteredArray);
+        }
+    }, [props.selectedGarages, garagesSelected, props.foundItems, itemsFound]);
+
+
 
     const onChangeMinPrice = (e) => {
         setMinPrice(e.target.value);
@@ -124,31 +125,31 @@ const Search = (props) => {
     };
 
     const onClickPriceUp = () => {
-        setPromoted(promoting.slice(0).sort((a, b) => a.props.price > b.props.price ? 1 : -1));
-        setFiltered(filtering.slice(0).sort((a, b) => a.props.price > b.props.price ? 1 : -1));
+        setPromoted(promoted.slice(0).sort((a, b) => a.props.price > b.props.price ? 1 : -1));
+        setFiltered(filtered.slice(0).sort((a, b) => a.props.price > b.props.price ? 1 : -1));
         setShowFiltered(true);
         console.log(filtered);
     };
 
     const onClickPriceDown = () => {
-        setPromoted(promoting.slice(0).sort((a, b) => a.props.price < b.props.price ? 1 : -1));
-        setFiltered(filtering.slice(0).sort((a, b) => a.props.price < b.props.price ? 1 : -1));
+        setPromoted(promoted.slice(0).sort((a, b) => a.props.price < b.props.price ? 1 : -1));
+        setFiltered(filtered.slice(0).sort((a, b) => a.props.price < b.props.price ? 1 : -1));
         setShowFiltered(true);
         console.log(filtered);
     };
 
     const onClickRatingUp = (e) => {
         //sorting function
-        setPromoted(promoting.slice(0).sort((a, b) => a.props.rating > b.props.rating ? 1 : -1));
-        setFiltered(filtering.slice(0).sort((a, b) => a.props.rating > b.props.rating ? 1 : -1));
+        setPromoted(promoted.slice(0).sort((a, b) => a.props.rating > b.props.rating ? 1 : -1));
+        setFiltered(filtered.slice(0).sort((a, b) => a.props.rating > b.props.rating ? 1 : -1));
         setShowFiltered(true);
         console.log(filtered);
     };
 
     const onClickRatingDown = (e) => {
         //sorting function
-        setPromoted(promoting.slice(0).sort((a, b) => a.props.rating < b.props.rating ? 1 : -1));
-        setFiltered(filtering.slice(0).sort((a, b) => a.props.rating < b.props.rating ? 1 : -1));
+        setPromoted(promoted.slice(0).sort((a, b) => a.props.rating < b.props.rating ? 1 : -1));
+        setFiltered(filtered.slice(0).sort((a, b) => a.props.rating < b.props.rating ? 1 : -1));
         setShowFiltered(true);
         console.log(filtered);
     };
@@ -320,18 +321,10 @@ const Search = (props) => {
                       <Navbar className="results-for w-100" style={{backgroundColor: '#F8F8F8'}}>RESULTS FOR "{props.searchTerm}"</Navbar>
                       <div className="list-whole" style={{ paddingInline: 30, paddingTop:30 }}>
                           <ListGroup className="d-inline-block">
-                            {showFiltered ?
-                                <div>
-                                    {filtered}
-                                    {promoted}
+                            <div>
+                                {promoted}
+                                {filtered}
                                 </div>
-                                 :
-                                <div>
-                                    {filtering}
-                                    {promoting}
-                                </div>
-                            }
-                              {/* {filtered} */}
                           </ListGroup>
                       </div>
                   </div>

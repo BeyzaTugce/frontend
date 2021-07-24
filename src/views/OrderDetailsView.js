@@ -23,7 +23,7 @@ function OrderDetailsView(props) {
                 order={order.order}
                 user={user.user}
                 seller= {order.seller}
-                items={order.items}
+                items={order.orderItems}
                 isLoggedIn={!!user.user}
             />
         </div>
