@@ -364,12 +364,12 @@ const Garage = (props) => {
                           Bargain for Selected Items
                         </Button>
                         <Button
-                            className="btn border-0 text-white"
-                            variant="light"
+                            className="btn border-0"
                             style={{ backgroundColor: "#85A582" }}
+                            variant="light"
                             onClick={buyFunction}
                         >
-                          Buy Selected Items
+                          <div className="text-white">Buy Selected Items</div>
                         </Button>
                       </div>
                       :

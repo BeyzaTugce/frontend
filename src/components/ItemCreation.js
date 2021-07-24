@@ -13,7 +13,7 @@ import {
   Row,
   TabContent,
   TabPane,
-  TabContainer,
+  TabContainer, Tabs, Tab,
 } from "react-bootstrap";
 import { PlusLg } from "react-bootstrap-icons";
 import PropTypes from "prop-types";
@@ -40,6 +40,7 @@ function ItemCreation(props) {
   const [itemImage, setItemImage] = React.useState([]);
   const [garageId, setGarageId] = React.useState([]);
   const [userName, setUserName] = React.useState([]);
+  const [listEmpty, setListEmpty] = React.useState(true);
 
 
   const extractItem = () => {
@@ -69,6 +70,7 @@ function ItemCreation(props) {
     if (!itemList.includes(input)) {
       setItemList([...itemList, input]);
     }
+    setListEmpty(false);
   };
 
   const removeFromList = (input) => {
@@ -147,34 +149,27 @@ function ItemCreation(props) {
 
 
   return (
-    <div className="Item" style={{ paddingRight: 40, width: 800 }}>
-      <Button className="button-rounded" onClick={onCreate} disabled={!props.garageCreated} type="save" style={{marginLeft: 150}}>
-        <PlusLg></PlusLg>
-      </Button>
-      <FormLabel className="frame">Add Item</FormLabel>
-      <Button className="button-rounded" onClick={onMyGarage} disabled={!props.garageCreated} type="save" style={{marginLeft: 320}}>
-        Go to My Garage!
-      </Button>
-      <ListGroup>
-        <ListGroupItem className="d-flex align-items-start" style={{marginLeft: 120, paddingRight:30}}>
-          <TabContainer id="left-tabs-example" defaultActiveKey="info">
+    <div className="Item justify-content-center align-items-start mb-3">
+      <ListGroup className="mb-3">
+        <ListGroupItem style={{marginInline:275}}>
+          <TabContainer className="left-tabs mb-3" variant="light" id="left-tabs" defaultActiveKey="item">
             <Row>
               <Col sm={3}>
-                <Nav variant="pills" className="flex-column">
-                  <Nav.Item>
-                    <Nav.Link eventKey="item">Item Title</Nav.Link>
+                <Nav variant="pills" className="tab-navs flex-column">
+                  <Nav.Item className="tab-nav-item">
+                    <Nav.Link className="tab-nav" eventKey="item">Item Title</Nav.Link>
                   </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link eventKey="info">General Information</Nav.Link>
+                  <Nav.Item className="tab-nav-item">
+                    <Nav.Link className="tab-nav" eventKey="info">General Information</Nav.Link>
                   </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link eventKey="price">Price (€)</Nav.Link>
+                  <Nav.Item className="tab-nav-item">
+                    <Nav.Link className="tab-nav" eventKey="price">Price</Nav.Link>
                   </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link eventKey="tag">Tags</Nav.Link>
+                  <Nav.Item className="tab-nav-item">
+                    <Nav.Link className="tab-nav" eventKey="tag">Tags</Nav.Link>
                   </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link eventKey="image">Upload Image
+                  <Nav.Item className="tab-nav-item">
+                    <Nav.Link className="tab-nav" eventKey="image">Upload Image
                     </Nav.Link>
                   </Nav.Item>
                 </Nav>
@@ -189,10 +184,9 @@ function ItemCreation(props) {
                       value={itemTitle}
                       onChange={onChangeItemTitle}
                       required
-                      style={{ marginLeft: 60 }}
                     />
                   </TabPane>
-                  <TabPane eventKey="info">
+                  <TabPane eventKey="info" style={{marginTop:40}}>
                     <FormControl
                       type="info"
                       placeholder="Write about your item"
@@ -200,33 +194,32 @@ function ItemCreation(props) {
                       value={itemInfo}
                       onChange={onChangeItemInfo}
                       required
-                      style={{ marginLeft: 60, marginTop: 70 }}
                     />
                   </TabPane>
-                  <TabPane eventKey="price">
-                    <FormControl
-                      type="price"
-                      placeholder="Enter item price"
-                      fullWidth
-                      value={itemPrice}
-                      onChange={onChangeItemPrice}
-                      style={{ marginLeft: 60, marginTop: 125 }}
-                    />
+                  <TabPane eventKey="price" style={{marginTop:80}}>
+                    <div className="w-100 d-inline-flex">
+                      <div style={{fontSize:20, marginTop:4}}>€ </div>
+                      <FormControl
+                        type="price"
+                        placeholder="Enter item price"
+                        fullWidth
+                        value={itemPrice}
+                        onChange={onChangeItemPrice}
+                    /></div>
                   </TabPane>
-                  <TabPane eventKey="tag">
+                  <TabPane eventKey="tag" style={{marginTop:120}}>
                     <FormControl
                       type="tag"
                       placeholder="Enter some tags"
                       fullWidth
                       value={itemTags}
                       onChange={onChangeItemTags}
-                      style={{ marginLeft: 60, marginTop: 165 }}
                     />
                   </TabPane>
                   <TabPane eventKey="image">
-                    <div style={{ marginLeft: 60, marginTop: 200 }}>
-                      <ImageComponent 
-                   onChangeItemImage = {onChangeItemImage} 
+                    <div>
+                      <ImageComponent
+                          onChangeItemImage = {onChangeItemImage}
                       />
                     </div>
                   </TabPane>
@@ -234,12 +227,18 @@ function ItemCreation(props) {
               </Col>
             </Row>
           </TabContainer>
+          <div className="d-flex align-items-center justify-content-center">
+            <Button className="btn-green" onClick={onCreate} disabled={!props.garageCreated} type="save">
+              <PlusLg></PlusLg>
+            </Button></div>
         </ListGroupItem>
       </ListGroup>
-      <div style={{marginLeft: -380}}>
-        <FormLabel className="addItems">Added Items</FormLabel>
-      </div>
-      <div className="list-whole" style={{marginLeft: -380}}>
+      {listEmpty ?
+        "" : <div className="d-flex align-items-center justify-content-center">
+        <h4 className="addItems mb-3">Added Items</h4>
+        </div>
+      }
+      <div className="list-whole mb-2 pb-3" style={{marginInline:100}}>
         <ListGroup>
           {itemList.map((item) => {
             return (
@@ -257,6 +256,11 @@ function ItemCreation(props) {
             );
           })}
         </ListGroup>
+      </div>
+      <div className="d-flex align-items-center justify-content-center">
+        <Button className="btn-green" onClick={onMyGarage} disabled={!props.garageCreated} type="save" style={{marginBottom: 70}}>
+          Go to My Garage!
+        </Button>
       </div>
     </div>
   );

@@ -1,0 +1,45 @@
+.btn-green {
+    background-color: #85A582;
+    border: none;
+    color: white;
+}
+
+.btn-green:hover {
+    background-color: #5D735B;
+    color: white;
+}
+
+.btn-green:disabled {
+    background-color: slategrey;
+    color: white;
+}
+
+.btn-text {
+    color: white
+}
+
+.btn-purple {
+    background-color: #A282A5;
+    border: none;
+    color: white;
+}
+
+.btn-purple:hover {
+    background-color: #715B73;
+    color: white;
+}
+
+.tab-navs .tab-nav-item .tab-nav:not(.active):hover {
+    background-color: #715B73;
+    color: white;
+}
+
+.tab-navs .tab-nav-item .tab-nav {
+    background-color: #A282A5;
+    color: white;
+}
+
+.tab-navs .tab-nav-item .tab-nav:not(.active) {
+    background-color: white;
+    color: #A282A5;
+}

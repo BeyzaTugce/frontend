@@ -7,6 +7,7 @@ import {getPurchaseSeller, getPurchaseBuyer} from "../redux/actions/PurchaseActi
 import Header from "../components/Header";
 import GarageItem from "../components/GarageItem";
 import ListItem from "../components/ListItem";
+import "../components/Buttons.css";
 
 const PurchaseView = (props) => {
 
@@ -79,7 +80,9 @@ const PurchaseView = (props) => {
             <Header/>
             <h1 className="myGarage text-center">My Purchases</h1>
             <div className="d-block justify-content-center" style={{margin: 100}}>
-                <Button onClick={onClickGetSeller}>Go To My Sales</Button><br/><br/>
+                <Button onClick={onClickGetSeller} className="btn-green" variant="light">
+                    <div className="btn-text">Go To My Sales</div>
+                </Button><br/><br/>
                 {purchase?.purchases?.purchases?.filter(p => p.seller == user._id).map( p => p.selectedItemList.map( (item) => {
                     return (
                         <div>
@@ -95,7 +98,9 @@ const PurchaseView = (props) => {
                             <br/>
                         </div>
                     )}))} <br/><br/>
-                <Button onClick={onClickGetBuyer}>Go To My Orders</Button><br/><br/>
+                <Button onClick={onClickGetBuyer} className="btn-green" variant="light">
+                    <div className="btn-text">Go To My Orders</div>
+                </Button><br/><br/>
                 {purchase?.purchases?.purchases?.filter(p => p.buyer == user._id).map( p => p.selectedItemList.map( (item) => {
                     return (
                         <div>

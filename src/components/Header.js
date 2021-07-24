@@ -111,7 +111,7 @@ const Header = ({auth}) => {
               />
               <span className="input-group-append">
                 <Button
-                  className="btn shadow-none border-left-0"
+                  className="search-btn shadow-none border-left-0"
                   variant="light"
                   href={`/search?term=${debouncedTerm}`}
                 >
@@ -123,17 +123,17 @@ const Header = ({auth}) => {
         </Nav>
         <Nav className="justify-content-end">
           {isAuthenticated ? (
-              <Nav.Link>
-                <span className="navbar-text mr-3">
+              <div>
+                <span className="navbar-text mr-2">
                   <strong>{user ? `Welcome ${user.username}` : ''}</strong>
                 </span>
-              </Nav.Link>
+              </div>
           ) : ("")
           }
-          <Nav.Link alignRight onClick={onMyGarage}>
+          <Nav.Link alignRight onClick={onMyGarage} style={{marginTop:-3}}>
             <House size={28}/>
           </Nav.Link>
-          <NavDropdown alignRight title={<PersonCircle size={28} />}>
+          <NavDropdown alignRight title={<PersonCircle size={28} />} style={{marginTop:-3}}>
           {!isAuthenticated ? (
                   <div>
                     <NavDropdown.Item onClick={onClickSignUp}>Sign Up</NavDropdown.Item>

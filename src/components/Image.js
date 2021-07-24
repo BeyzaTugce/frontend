@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
 import "./styles.css";
 import PropTypes from "prop-types";
+import {Button} from "react-bootstrap";
 
 const Image = (props) => {
     const [state, setState] = useState({
@@ -50,12 +51,13 @@ const Image = (props) => {
       <div className="App">
         <hr />
 
-        <button onClick={confirmUpload}>Confirm upload</button>
 
         <UploadComponent
           {...state.upload}
           handleChange={handleChange}
         />
+
+        <Button className="btn-purple" onClick={confirmUpload}>Confirm upload</Button>
     
       </div>
     );

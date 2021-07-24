@@ -2,13 +2,10 @@ import React, {useEffect, useState} from "react";
 import { useHistory } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
 import PropTypes from "prop-types";
-
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./GarageCreation.css";
-
+import "./Buttons.css"
 import {Button, FormGroup, FormLabel, Alert} from "react-bootstrap";
 import { Clock } from "react-bootstrap-icons";
-
 import ItemCreation from "./ItemCreation";
 
 
@@ -24,6 +21,7 @@ const GarageCreation = (props) => {
   const [pickup, setPickup] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [isCreated, setIsCreated] = useState(false);
+  const [optionsDisabled, setOptionsDisabled] = useState(false);
 
 
   // for extracting the attributes of the given garage to the appropriate state variables
@@ -94,6 +92,7 @@ const GarageCreation = (props) => {
       setIsCreated(true);
       props.onCreate(packGarage());
       setDisabled(true);
+      setOptionsDisabled(true);
     }
   }
 
@@ -122,104 +121,122 @@ const GarageCreation = (props) => {
 
   return (
     <div>
-      <h1 className="myGarage text-center">My Garage</h1>
-      <div className="w-100" style={{ paddingInline: 50 }}>
-        <div className="d-flex justify-content-between">
-          <div className="d-inline-block">
-            <FormGroup style={{ marginTop: 60 }}>
-              <div className="garageOptions">
-                <FormLabel className="labels">Garage Sale Options</FormLabel>
-                <div>
-                  <label>
-                    Discount for multiple item selection
-                    <input className="ml-2"
-                      name="discount"
-                      type="checkbox"
-                      onChange={onChangeDiscount} />
-                  </label>
+      <div
+          className="jumbotron jumbotron-fluid bg-white"
+          style={{ marginBottom: -10 }}>
+        <h1 className="myGarage text-center">My Garage</h1>
+      </div>
+      <div className="container mb-sm-4">
+        <div className="row mb-3">
+          <div className="col-sm-4 mb-2 pb-3">
+            <div className="bg-secondary p-4 text-dark">
+              <FormGroup>
+                <div className="garage-sale-options">
+                  <FormLabel className="labels">Garage Sale Options</FormLabel>
+                  <div>
+                    <label>
+                      <input className="ml-2"
+                             name="discount"
+                             type="checkbox"
+                             onChange={onChangeDiscount}
+                             style={{marginRight:15}}
+                             disabled={optionsDisabled}
+                      />
+                      Discount for multiple item selection
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      <input className="ml-2"
+                             name="bargain"
+                             type="checkbox"
+                             onChange={onChangeBargain}
+                             style={{marginRight:15}}
+                             disabled={optionsDisabled}
+                      />
+                      Bargain offers
+                    </label>
+                  </div>
                 </div>
-                <div>
-                  <label>
-                    Bargain offers
-                    <input className="ml-2"
-                      name="bargain"
-                      type="checkbox"
-                      onChange={onChangeBargain} />
-                  </label>
+              </FormGroup>
+            </div>
+          </div>
+          <div className="col-sm-4 mb-2">
+            <div className="bg-secondary p-4 text-dark">
+              <FormGroup>
+                <div className="garage-delivery-options">
+                  <FormLabel className="labels">Delivery<b>(*)</b></FormLabel>
+                  <div>
+                    <label>
+                      <input className="ml-2"
+                             name="shipment"
+                             type="checkbox"
+                             onChange={onChangeShipment}
+                             style={{marginRight:15}}
+                             disabled={optionsDisabled}
+                      />
+                      Shipment
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      <input className="ml-2"
+                             name="pick-up"
+                             type="checkbox"
+                             onChange={onChangePickUp}
+                             style={{marginRight:15}}
+                             disabled={optionsDisabled}
+                      />
+                      Pick-up
+                    </label>
+                  </div>
                 </div>
-              </div>
-            </FormGroup>
-            <FormGroup>
-              <div className="garageOptions">
-                <FormLabel className="labels">Delivery</FormLabel>
-                <div>
-                  <label>
-                    Shipment
-                    <input className="ml-2"
-                      name="shipment"
-                      type="checkbox"
-                      onChange={onChangeShipment} />
-                  </label>
-                </div>
-                <div>
-                  <label>
-                    Pick-up
-                    <input className="ml-2"
-                      name="pick-up"
-                      type="checkbox"
-                      onChange={onChangePickUp} />
-                  </label>
-                </div>
-              </div>
-            </FormGroup>
-            <div
-              className="d-inline-flex justify-content-center"
-              style={{ marginBottom: -20 }}
-            >
-              <div style={{ marginRight: 10, marginTop: 10 }}>
-                <Clock />
-              </div>
-              <FormGroup style={{ fontStyle: "italic" }}>
+              </FormGroup>
+            </div>
+          </div>
+          <div className="col-sm-4 mb-2">
+            <div className="bg-secondary p-4 text-dark">
+              <FormLabel className="labels"><Clock /></FormLabel>
+              <FormGroup>
                 <FormLabel>Beginning Date: {getDate(true)}</FormLabel>
                 <br />
                 <FormLabel>Ending Date: {getDate(false)}</FormLabel>
               </FormGroup>
             </div>
           </div>
-          <div className="d-inline-block" style={{ width: 800 }}>
-            <ItemCreation
-                garage={props.garage}
-                garageCreated={props.garageCreated}
-            />
-          </div>
         </div>
-        {disabled && !isCreated ?
-          <Alert className="mb-5 mt-5" variant="danger">
-            <Alert.Heading>Please select at least one delivery option to create your garage!</Alert.Heading>
-          </Alert> : (isCreated ? <Alert className="mb-5 mt-5" variant="danger">
-              <Alert.Heading>You have successfully created your garage! Let's add some items!</Alert.Heading>
-            </Alert> : <p></p>)
-        }
-        {disabled ?
-        <Button
-            className="d-flex align-content-end"
-            variant="secondary"
-            size="lg"
-            style={{marginLeft: 1065, marginTop:10}}
-            disabled={disabled}
-            onClick={onCreate}
-        >Create</Button>
-        :
-        <Button
-            className="d-flex align-content-end"
-            variant="success"
-            size="lg"
-            style={{marginLeft: 1065, marginTop:10}}
-            disabled={disabled}
-            onClick={onCreate}
-        >Create</Button>
-        }
+        <div className="mb-3">
+          {disabled && !isCreated ?
+              <div className="text-danger text-center">Please select at least one delivery option to create your garage!</div>
+              : ""
+          }
+          <div className="d-flex align-items-center justify-content-center">
+            {disabled ?
+                <Button
+                    className="btn-green mt-4 mb-4"
+                    disabled={disabled}
+                    onClick={onCreate}
+                >Create</Button>
+                :
+                <Button
+                    className="btn-green mt-4 mb-4"
+                    disabled={disabled}
+                    onClick={onCreate}
+                >Create</Button>
+            }
+          </div>
+          {isCreated ? <div className="text-success text-center">You have successfully created your garage! Let's add some items!</div>
+                  : ""
+          }
+        </div>
       </div>
+      {isCreated ?
+          <ItemCreation className="d-flex align-items-center justify-content-center"
+                        garage={props.garage}
+                        garageCreated={props.garageCreated}
+          />
+          : ""
+      }
     </div>
   );
 };
