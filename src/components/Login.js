@@ -86,21 +86,21 @@ const Login = ({
         <Row>
           <Col className="mt-5" md={{ span: 7, offset: 3 }}>
             <Jumbotron>
-              <h1>Login</h1>
+              <h1 className="display-5 text-center">Login</h1>
               <Form>
                 {/* Email */}
                 <Form.Group controlId="formBasicEmail">
-                  <Form.Label>Email address</Form.Label>
+                  <Form.Label>Email Address</Form.Label>
                   <Form.Control
                     type="email"
                     fullWidth
-                    placeholder="Enter Email"
+                    placeholder="Email Address"
                     value={email}
                     onChange={onChangeEmail}
                     error={emailRegisterError !== ""}
                   />
                   {emailRegisterError !== "" ? (
-                    <div>
+                    <div style={{marginTop:10}}>
                       <p class="text-danger"><strong>{emailRegisterError}</strong></p>
                     </div>
                      ) : null}
@@ -118,21 +118,22 @@ const Login = ({
                 </Form.Group>
                 {msg ? <Alert variant="danger">{msg}</Alert> : null}
 
-                <div>
+                <div className="d-flex justify-content-end">
                   <Button
-                    variant="primary"
+                    className="btn-green"
+                    variant="light"
                     onClick={onLogin}
                     disabled={disabled}
                     type="submit"
                   >
                     Login
                   </Button>
-
-                  <h4 className="mt-4"> Not Registered yet?</h4>
-                  <Button onClick={handleSignupClick} variant="primary">
-                    Signup
-                  </Button>
                 </div>
+                <div className="text-center">
+                  <h4 className="mt-4 text-center"> Not Registered yet?</h4>
+                  <Button className="btn-purple" onClick={handleSignupClick} variant="light">
+                    Sign Up Now!
+                  </Button></div>
               </Form>
             </Jumbotron>
           </Col>

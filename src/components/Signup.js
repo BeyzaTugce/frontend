@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-end",
   },
   signUpButton: {
+
     marginLeft: theme.spacing(1),
   },
 }));
@@ -115,11 +116,6 @@ const Signup = ({
     }
     return true;
     }
-  };
-
-
-  const onCancel = () => {
-    history.push("/");
   };
 
   const onRegister = (e) => {
@@ -226,11 +222,7 @@ const Signup = ({
         <Row>
           <Col className="mt-5" md={{ span: 7, offset: 3 }}>
             <Jumbotron>
-              <h1>Become our customer</h1>
-              <p>
-                By registering to our platform, you can create your own garage
-                sale, also start bargaining for zillions of products.
-              </p>
+              <h1 className="display-5 text-center">Create an account</h1>
               {msg ? <Alert variant="danger">{msg}</Alert> : null}
               <Form>
                 <Form.Group controlId="Username">
@@ -302,10 +294,10 @@ const Signup = ({
                         //error={registerError !== ""}
                         custom
                       >
-                        <option value="m/f/d">Choose...</option>
-                       <option value="m">m</option>
-                       <option value="f">f</option>
-                       <option value="d">d</option>
+                      <option value="m/f/d">Choose...</option>
+                      <option value="m">Male</option>
+                      <option value="f">Female</option>
+                      <option value="o">Other</option>
                   </Form.Control>
                   </Form.Group>
                 </Form.Row>
@@ -337,7 +329,7 @@ const Signup = ({
                   </Form.Group>
                 </Form.Row>
                 {emailRegisterError !== "" ? (
-                    <div className={classes.signUpRow}>
+                    <div className={classes.signUpRow} style={{marginBlock:-15}}>
                       <p class="text-danger"><strong>{emailRegisterError}</strong></p>
                     </div>
                      ) : null}
@@ -379,7 +371,7 @@ const Signup = ({
                 {/* Address */}
                 <Form.Group controlId="signupAddress">
                   <Form.Label>Address<strong>(*)</strong></Form.Label>
-                  <Form.Control placeholder="Address line 1 (or Company name)"
+                  <Form.Control placeholder="Street and House Number"
                    value={correspondenceAddress}
                    onChange={onChangeAdress}
                    error={registerError !== ""}
@@ -390,7 +382,7 @@ const Signup = ({
                 <Form.Row>
                   <Form.Group xs={8} as={Col}>
                     <Form.Label>District<strong>(*)</strong></Form.Label>
-                    <Form.Control placeholder="Street and house number"
+                    <Form.Control placeholder="District"
                     
                     value={district}
                     onChange={onChangeDistrict}
@@ -399,7 +391,7 @@ const Signup = ({
                   </Form.Group>
                   <Form.Group as={Col}>
                     <Form.Label>Postcode<strong>(*)</strong></Form.Label>
-                    <Form.Control placeholder="80797"
+                    <Form.Control placeholder="Postcode"
                     value={postcode}
                     onChange={onChangePostcode}
                     //error={registerError !== ""}
@@ -407,11 +399,10 @@ const Signup = ({
                     ></Form.Control>
                   </Form.Group>
                 </Form.Row>
-
                 {/* City */}
                 <Form.Group controlId="signupCity">
                   <Form.Label>Town/City<strong>(*)</strong></Form.Label>
-                  <Form.Control placeholder="Munich"
+                  <Form.Control placeholder="City"
                                 value={city}
                                 onChange={onChangeCity}
                                 //error={registerError !== ""}
@@ -429,14 +420,8 @@ const Signup = ({
                   className={classes.signUpRow + " " + classes.signUpButtons}
                 >
                   <Button
-                    className={classes.signUpButton}
-                    onClick={onCancel}
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    className={classes.signUpButton}
-                    variant="primary"
+                    className="btn-green"
+                    variant="light"
                     onClick={onRegister}
                     disabled={disabled}
                     type="submit"

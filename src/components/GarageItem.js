@@ -75,17 +75,17 @@ const GarageItem = (props) => {
         {props.userView ?
             <div>
               <Button
-                  className="btn border-0"
-                  variant="dark"
-                  style={{ backgroundColor: "#85A582", width: 80, marginRight:10}}
+                  className="btn-green"
+                  variant="light"
+                  style={{ width: 80, marginRight:10}}
                   onClick={onClickItemDetail}
               >
                 {props.button1Name}
               </Button>
               <Button
-                  className="btn border-0"
-                  variant="dark"
-                  style={{ backgroundColor: "#85A582", width: 80 }}
+                  className="btn-green"
+                  variant="light"
+                  style={{ width: 80 }}
                   onClick={props.onRemove}
               >
                 {props.button2Name}
@@ -93,9 +93,9 @@ const GarageItem = (props) => {
             </div>
             :
             <Button
-                className="btn border-0"
-                variant="dark"
-                style={{ backgroundColor: "#85A582", width: 80 }}
+                className="btn-green"
+                variant="light"
+                style={{ width: 80 }}
                 onClick={onClickItemDetail}
             >
               {props.button1Name}

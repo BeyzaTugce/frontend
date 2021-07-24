@@ -63,9 +63,8 @@ function MainPageView(props) {
                             <div className="garage-name">Ends on 10.10.2021</div>
                             <div className="item-price" style={{ fontWeight:"bold" }}>€30</div>
                             <Button
-                                className="btn border-0"
-                                variant="dark"
-                                style={{ backgroundColor: "#85A582", width: 80, marginRight: 10 }}
+                                className="btn-green border-0"
+                                variant="light"
                                 //onClick={history.push("/garage/"+item.garageId)}
                             >
                                 Go to garage

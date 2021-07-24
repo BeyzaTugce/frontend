@@ -192,7 +192,7 @@ const Garage = (props) => {
 
   useEffect(() => {
     if(numSelectedItems>1 & discount){
-      setSaving(totalPrice/5);
+      setSaving(totalPrice/20);
     } else {
       setSaving(0);
     }
@@ -299,12 +299,6 @@ const Garage = (props) => {
               <h1 className="display-5 text-center">My Garage</h1> :
               <h1 className="display-5 text-center">{userName}'s Garage</h1>
           }
-          {isMyGarage && !isPromoted ?
-              <Button style={{marginLeft: 1100, marginTop:-150}} onClick={onClickPromote}>Let's get promoted</Button> :
-              isMyGarage && isPromoted ?
-                  <Button style={{marginLeft: 1100, marginTop:-150, backgroundColor:"#B740E0"}} disabled={true} onClick={onClickPromote}>You are promoted!</Button> :
-                  <p></p>
-          }
           <em>
             <p
               className="lead text-black-50 text-sm-center"
@@ -314,58 +308,54 @@ const Garage = (props) => {
               until {formattedDate}
             </p>
           </em>
-          {!bargain ?
-            <Alert className="d-flex align-items-center justify-content-center" variant="info"><strong>Bargain option disabled by the seller</strong></Alert>
-            : "" }
         </div>
-        <div>
-          <div className="select-all-button-field" style={{ paddingInline: 50 }}>
-            <Button
-                className="btn select-all-button"
-                variant="light"
-                style={{ color: "black", borderColor: "lightgray" }}
-            >
-              <div style={{ fontSize: 14 }}>Select all</div>
-            </Button>
-          </div>
+        <div className="text-center">
+          {isMyGarage && !isPromoted ?
+              <Button className="btn-purple" variant="light" onClick={onClickPromote}>Want to get promoted?</Button> :
+              isMyGarage && isPromoted ?
+                  <Button className="btn-green" variant="light" disabled={true} onClick={onClickPromote}>You are promoted!</Button> :
+                  <p></p>
+          }
           <div className="list-whole w-100" style={{ paddingInline: 50 }}>
             {isMyGarage ?
                 <ListGroup>{renderedListUser}</ListGroup> :
                 <ListGroup>{renderedListBuyer}</ListGroup>
             }
-            <div
-                className="price-info-text text-center"
-                style={{ marginTop: 25, marginBottom: 25 }}
-            >
-              <div className="total-price-text">Total price: €{totalPrice}</div>
-              {discount ?
-                  <div>
-                    <div className="saving-text">Saving: €{saving}</div>
-                    <div className="amount-to-pay-text">Amount to Pay: <strong></strong>€{amountToPay}</div>
-                  </div>
-                  : ""}
-              {discount && numSelectedItems===1 ?
-                  <div className="promotional-sentence-text text-danger">
-                    You can save up to 10% by choosing 1 more item!
-                  </div> : ""
-              }
-            </div>
+            {isMyGarage ?
+                "" :
+                <div
+                    className="price-info-text text-center"
+                    style={{ marginTop: 25, marginBottom: 25 }}
+                >
+                  <div className="total-price-text">Total price: €{totalPrice}</div>
+                  {discount ?
+                      <div>
+                        <div className="saving-text">Saving: €{saving}</div>
+                        <div className="amount-to-pay-text">Amount to Pay: <strong></strong>€{amountToPay}</div>
+                      </div>
+                      : ""}
+                  {discount && numSelectedItems===1 ?
+                      <div className="promotional-sentence-text text-danger">
+                        You can save up to 10% by choosing 1 more item!
+                      </div> : ""
+                  }
+                </div>
+            }
             {
               (()=>{
                 if (loggedIn) {
                   return <div style={{marginBottom:30}}>{isMyGarage ? "" : bargain ?
                       <div className="bargain-buy-buttons d-flex align-items-center justify-content-center">
                         <Button
-                            className="btn border-0"
-                            variant="dark"
-                            style={{ backgroundColor: "#A282A5", marginRight: 8 }}
+                            className="btn-purple"
+                            variant="light"
+                            style={{ marginRight: 8 }}
                             onClick={bargainFunction}
                         >
                           Bargain for Selected Items
                         </Button>
                         <Button
-                            className="btn border-0"
-                            style={{ backgroundColor: "#85A582" }}
+                            className="btn-green"
                             variant="light"
                             onClick={buyFunction}
                         >
@@ -375,9 +365,8 @@ const Garage = (props) => {
                       :
                       <div className="bargain-buy-buttons d-flex align-items-center justify-content-center">
                         <Button
-                            className="btn border-0 text-white"
+                            className="btn-green"
                             variant="light"
-                            style={{ backgroundColor: "#85A582" }}
                             onClick={buyFunction}
                         >
                           Buy Selected Items

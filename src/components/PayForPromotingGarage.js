@@ -53,7 +53,7 @@ const PayForPromotingGarage = (props) => {
     };
 
     return (
-        <div className="Payment">
+        <div className="Payment text-center" style={{marginTop:50}}>
             <PayPalButton
                 createOrder={(data, actions) => {
                     return actions.order.create({
@@ -87,16 +87,15 @@ const PayForPromotingGarage = (props) => {
             />
             <div className="buttons d-flex align-items-center justify-content-center">
                 <Button
-                    className="btn border-0"
-                    variant="dark"
-                    style={{ backgroundColor: "#A282A5", marginRight: 8 }}
+                    className="btn-purple"
+                    variant="light"
+                    style={{ marginRight: 8 }}
                 >
                     Go Back
                 </Button>
                 <Button
-                    className="btn border-0 text-white"
+                    className="btn-green"
                     variant="light"
-                    style={{ backgroundColor: "#85A582" }}
                     onClick={handleToggle}
                 >
                     Promote
