@@ -3,7 +3,7 @@ import axios from 'axios';
 import OfferService from "../../services/OfferService";
 
 const baseURL = "http://localhost:4000/bargain"
-const otherURL = "http://localhost:4000/auth"
+//const otherURL = "http://localhost:4000/auth"
 
 export const getOfferHistory = id => dispatch => {
     dispatch(setOffersLoading());

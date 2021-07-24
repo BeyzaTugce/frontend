@@ -1,5 +1,5 @@
 import GarageService from "../../services/GarageService";
-import garage from "../reducers/garageReducer";
+
 
 export function getGarages() {
   function onSuccess(garages) {

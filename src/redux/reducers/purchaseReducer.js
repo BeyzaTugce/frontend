@@ -1,5 +1,6 @@
 const initialState = {
   purchase: null,
+  purchases: null,
   buyer: null,
   seller: null
 };
@@ -7,15 +8,20 @@ const initialState = {
 export default function purchaseReducer(state=initialState, action) {
     switch (action.type) {
       case "GETPURCHASES_SUCCESS":
-      return { purchases: action.purchases };
+      return {...state, purchases: action.purchases };
       case "GETPURCHASE_SUCCESS":
-        return { ...state, purchase: action.purchase };
+        return {...state, purchase: action.purchase };
+      case "GETPURCHASE_ERROR":
+        return { error: action.error };
       case "DELETEPURCHASE_SUCCESS":
         return {  purchase: action.purchase};
       case "ADDPURCHASE_SUCCESS":
         return { ...state, purchase: action.purchase };
       case "UPDATEPURCHASE_SUCCESS":
-        return { purchase: action.purchase };
+        return {  purchase: {
+          ...state.purchase,
+          ...action.updates,
+      },};
       case "LOAD_BUYER":
         return { ...state, buyer: action.payload}
       case "LOAD_SELLER":

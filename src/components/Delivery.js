@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import { FormGroup, FormLabel} from "react-bootstrap";
+import { FormGroup, FormLabel } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import { DatePickerCalendar } from "react-nice-dates";
 import { format } from "date-fns";
@@ -33,52 +33,39 @@ const Delivery = (props) => {
   const [methodType, setMethodType] = useState("Unknown");
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [newDate, setNewDate] = useState([]);
-
-
   const timeInputProps = useDateInput({
     date,
     format: "HH:mm",
     locale: enGB,
     onDateChange: setDate,
   });
-
-
-  const addDate = (input) => {
-
-    if (!newDate.includes(input)) {
-      setNewDate([...newDate, input]);
-    }
-  };
-
+  let purchaseReached = false;
 
   useEffect(() => {
     let purchaseId = match.params.id;
     getPurchase(purchaseId);
-  }, [match.params]);
+  }, [match.params, purchaseReached === false]);
 
   useEffect(() => {
-    let purchaseId = match.params.id;
-    // getPurchase(purchaseId);
-    checkUser();
-  }, [purchase.purchase]);
+    if (purchase.purchase !== undefined && purchase.purchase !== null) {
+      purchaseReached = true;
+    }
+  }, [purchase.purchase, purchaseReached === false]);
 
   useEffect(() => {
-    checkMethod();
-  }, [loggedInUser]);
-
- /* useEffect(() => {
-    checkStatus();
-  }, [match.params]);*/
-
-  useEffect(() => {
-    let garageId = purchase?.purchase?.garageId;
-    getGarage(garageId);
-  }, [purchase.purchase != null]);
-
+    console.log("second use effect " + purchaseReached);
+    if (purchase.purchase !== undefined && purchase.purchase !== null) {
+      checkUser();
+      checkMethod();
+      //checkStatus();
+      let garageId = purchase?.purchase?.garageId;
+      getGarage(garageId);
+    }
+  }, [purchase.purchase, purchaseReached]);
 
   const checkUser = () => {
-    if (loggedInUser != null) {
-      if (loggedInUser._id === purchase?.purchase?.seller) {
+    if (loggedInUser !== null) {
+      if (loggedInUser?._id === purchase?.purchase?.seller) {
         setUserType("Seller");
       } else if (loggedInUser._id === purchase?.purchase?.buyer) {
         setUserType("Buyer");
@@ -87,12 +74,12 @@ const Delivery = (props) => {
   };
 
   const checkMethod = () => {
-    if (purchase.purchase != null) {
-      setMethodType(purchase.purchase.method);
+    if (purchase.purchase !== undefined) {
+      setMethodType(purchase?.purchase?.method);
     }
   };
 
- /* const checkStatus = () => {
+  /* const checkStatus = () => {
     if (purchase?.purchase?.purchaseStatus != "DeliveryScheduling" || ) {
       if (userType == "Seller") {
         history.push(`../order/${purchase.purchase._id}`);
@@ -100,8 +87,7 @@ const Delivery = (props) => {
         history.push(`../delivery/${purchase.purchase._id}`);
       }
     }
-  };
-*/
+  };*/
 
   const packPurchase = () => {
     let back = {
@@ -127,12 +113,16 @@ const Delivery = (props) => {
     return back;
   };
 
+  const addDate = (input) => {
+    if (!newDate.includes(input)) {
+      setNewDate([...newDate, input]);
+    }
+  };
 
   const onChangeLocation = (e) => {
     setLocation(e.target.value);
     setPickUpError("");
   };
-
 
   const addPickUp = (e) => {
     e.preventDefault();
@@ -144,7 +134,6 @@ const Delivery = (props) => {
       history.push(`../payment/${purchase.purchase._id}`);
     }
   };
-
 
   return (
     <div className="Delivery">
@@ -236,7 +225,7 @@ const Delivery = (props) => {
                     vertical={true}
                     style={{ marginTop: 100, width: 150 }}
                   >
-                    {purchase.purchase.availableDates.map((item) => (
+                    {purchase?.purchase?.availableDates.map((item) => (
                       <td>
                         <ToggleButton
                           type="radio"

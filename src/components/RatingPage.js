@@ -56,43 +56,57 @@ const RatingPage = (props) => {
   let totalRating = 0;
   let purchaseNumber = 0;
   let newAvgRating = 0;
+  let purchaseReached = false;
+  let purchasesReached = false;
 
   useEffect(() => {
     let purchaseId = match.params.id;
     getPurchase(purchaseId);
-  }, [match.params.id]);
+  }, [match.params, purchaseReached === false]);
 
 
   useEffect(() => {
-    checkMethod();
-  }, []);
+    if (purchase.purchase !== undefined && purchase.purchase !== null) {
+      purchaseReached = true;
+    }
+  }, [purchase.purchase, purchaseReached === false]);
+  
+  useEffect(() => {
+    getPurchases();
+  }, [ purchase.purchases, purchasesReached === false]);
+
+  useEffect(() => {
+    if (purchase.purchases !== undefined && purchase.purchases !== null) {
+      purchasesReached = true;
+    }
+  }, [purchase.purchases,purchasesReached === false]);
   
 
   useEffect(() => {
-    getPurchases();
+    console.log("second use effect " + purchaseReached);
+    if (purchase.purchase !== undefined && purchase.purchase !== null) {
+
+      checkUser();
+      checkMethod();
+      store.dispatch(loadSeller(purchase.purchase.seller));
+      let garageId = purchase?.purchase?.garageId;
+      getGarage(garageId);
+
+    }
+  }, [purchase.purchase, purchaseReached]);
+
+
+  useEffect(() => {
     
-    if(purchase?.purchases?.purchases != null){
+    if(purchase?.purchases?.purchases !== null && purchase.purchases !== undefined){
       purchase?.purchases?.purchases?.filter(p => p.seller == purchase?.purchase?.seller).map( p => {
         totalRating = totalRating + p.rating;
         purchaseNumber = purchaseNumber + 1;
-        console.log("rating "+p.rating + " totalRating"+totalRating+ "purchaseNumber"+purchaseNumber);
+        console.log("rating "+p.rating + " totalRating"+ totalRating + "purchaseNumber"+purchaseNumber);
     });
   }
 
-}, [] );
-
-  
-useEffect(() => {
- store.dispatch(loadSeller(purchase.purchase.seller));
-
-  
-}, [purchase?.purchase]);
-
-  useEffect(() => {
-    let garageId = purchase?.purchase?.garageId;
-    getGarage(garageId);
-  
-  }, [match.params.id]);
+}, [purchasesReached, purchase.purchases] );
 
   const onChangeComment = (e) => {
     setComment(e.target.value);

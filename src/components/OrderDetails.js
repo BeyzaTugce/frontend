@@ -5,24 +5,15 @@ import GarageItem from "./GarageItem";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect, useSelector } from "react-redux";
-import user from "../redux/reducers/userReducer";
 import {
-  Container,
-  Row,
-  Col,
-  Jumbotron,
-  Form,
-  Button,
   NavLink,
 } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import { getPurchase, changePurchase } from "../redux/actions/PurchaseActions";
-import RatingPageComponent from "../components/RatingPage";
+import { getPurchase, changePurchase} from "../redux/actions/PurchaseActions";
 import store from "../redux/store";
 
 const OrderDetails = (props) => {
   const [sellerName, setSellerName] = React.useState(" ");
-  const [status, setStatus] = React.useState("New");
   const [orderDate, setOrderDate] = React.useState("");
   const [method, setMethod] = React.useState("");
   const [shipDate, setShipDate] = React.useState("Not specified");
@@ -41,34 +32,25 @@ const OrderDetails = (props) => {
   const history = useHistory();
 
   let { match, getPurchase } = props;
+  let purchaseReached = false;
 
   useEffect(() => {
     let purchaseId = match.params.id;
     getPurchase(purchaseId);
-  }, []);
+  }, [match.params, purchaseReached === false]);
 
   useEffect(() => {
-    let purchaseId = match.params.id;
-    getPurchase(purchaseId);
-    checkUser();
-  }, [loggedInUser]);
-
-  const checkUser = () => {
-    let purchaseId = match.params.id;
-    getPurchase(purchaseId);
-    if (loggedInUser != null) {
-      if (loggedInUser._id == purchase?.purchase?.seller) {
-        setUserType("Seller");
-      } else if (loggedInUser._id == purchase?.purchase?.buyer) {
-        setUserType("Buyer");
-      }
+    if (purchase.purchase !== undefined && purchase.purchase !== null) {
+      purchaseReached = true;
     }
-  };
+  }, [purchase.purchase, purchaseReached === false]);
 
   useEffect(() => {
-    let purchaseId = match.params.id;
-    getPurchase(purchaseId);
-    if (purchase.purchase != null) {
+    console.log("second use effect " + purchaseReached);
+    if (purchase.purchase !== undefined && purchase.purchase !== null) {
+      checkUser();
+      //checkMethod();
+      //checkStatus();
       setPickUpAddress(purchase.purchase.pickupLocation);
       setPrice(purchase.purchase.price + tax);
       setTotalwoTax(purchase.purchase.price);
@@ -78,10 +60,17 @@ const OrderDetails = (props) => {
       setPickUpDate(purchase.purchase.pickUpDate);
       setShipAddress(purchase.purchase.shipAddress);
     }
+  }, [purchase.purchase, purchaseReached, getPurchase]);
 
-    //setMethod(purchase.purchase.method);
-    // setPickUpAddress(purchase.purchase.pickUpAddress);
-  }, [purchase.purchase]);
+  const checkUser = () => {
+    if (loggedInUser != null) {
+      if (loggedInUser._id == purchase?.purchase?.seller) {
+        setUserType("Seller");
+      } else if (loggedInUser._id == purchase?.purchase?.buyer) {
+        setUserType("Buyer");
+      }
+    }
+  };
 
   useEffect(() => {
     // extractOrder();
@@ -323,24 +312,6 @@ const OrderDetails = (props) => {
               </NavLink>
             </div>
           </div>
-
-          <div class="d-sm-flex flex-wrap justify-content-between align-items-center text-center pt-4">
-            <div class="custom-control custom-checkbox mt-2 mr-3">
-              <input
-                class="custom-control-input"
-                type="checkbox"
-                id="notify-me"
-                checked=""
-              />
-            </div>
-            <a
-              class="btn btn-primary btn-sm mt-2"
-              href="#order-details"
-              data-toggle="modal"
-            >
-              View Order Details
-            </a>
-          </div>
         </div>
         <div
           className="jumbotron jumbotron-fluid bg-white"
@@ -349,9 +320,7 @@ const OrderDetails = (props) => {
           <h2 className="display-5 text-center">
             Order from {sellerName}'s Garage on {orderDate}
           </h2>
-          <p className="text-sm-center" style={{ fontSize: 20 }}>
-            Status: {status}
-          </p>
+
         </div>
 
         <div
