@@ -38,6 +38,7 @@ const Garage = (props) => {
   let bargainOption= false;
   let garageReached = false;
   let sellerReached = false;
+  let itemsReached = false;
 
   const extractGarage = () => {
     if (!props.garage ) {
@@ -194,7 +195,16 @@ const Garage = (props) => {
 
   useEffect(() => {
     extractItems();
-  }, [props.items] );
+  }, [props.items,itemsReached === false]);
+
+  useEffect(() => {
+    if (props.items!== undefined && props.items !== null) {
+      itemsReached = true;
+    }
+  }, [props.items, itemsReached === false]);
+
+
+  
 
   useEffect(() => {
     if(numSelectedItems>1 & discount){
