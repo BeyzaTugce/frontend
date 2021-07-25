@@ -55,6 +55,8 @@ const Bargain = (props) => {
   const [offerCount, setOfferCount] = useState(0);
   const [offerTurn, setOfferTurn] = useState(true);
   const [disabled, setDisabled] = useState(true);
+  const [buyer, setBuyer] = useState("");
+  const [seller, setSeller] = useState("");
 
   const handleToggle = () => {
     setShow(!show);
@@ -65,6 +67,8 @@ const Bargain = (props) => {
     getPurchase(purchaseId);
     loadBuyer(purchase?.purchase?.buyer);
     loadSeller(purchase?.purchase?.seller);
+    setBuyer(purchase?.purchase?.buyer);
+    setSeller(purchase?.purchase?.seller);
   }, [match.params]);
 
   useEffect(() => {
@@ -74,6 +78,8 @@ const Bargain = (props) => {
     // getPurchaseSeller();
     loadBuyer(purchase?.purchase?.buyer);
     loadSeller(purchase?.purchase?.seller);
+    setBuyer(purchase?.purchase?.buyer);
+    setSeller(purchase?.purchase?.seller);
     //history.push(`../bargain/${purchase.purchase._id}`)
   }, [offerCount]);
 
@@ -113,7 +119,7 @@ const Bargain = (props) => {
   const handleOnClick = (e) => {
     e.preventDefault();
     props.makeOffer(purchaseId, packOffer());
-    props.getOfferHistory();
+    props.getOfferHistory(purchaseId);
     handleToggle();
     setTurn(!turn);
     setOfferTurn(!offerTurn);
@@ -126,6 +132,8 @@ const Bargain = (props) => {
       props.getOfferHistory(purchaseId);
       props.loadBuyer(purchase?.purchase?.buyer);
       props.loadSeller(purchase?.purchase?.seller);
+      setBuyer(purchase?.purchase?.buyer);
+      setSeller(purchase?.purchase?.seller);
     }
   }, [offerCount]);
 
@@ -147,14 +155,14 @@ const Bargain = (props) => {
     }
   };
 
-  const isBuyer = () => {
-    if(props.buyer?._id == loggedInUser?._id)
+  const isBuyer = (user) => {
+    if(user == loggedInUser?._id)
       return true
     return false
   }
 
-  const isSeller = () => {
-    if(props.seller?._id == loggedInUser?._id)
+  const isSeller = (user) => {
+    if(user == loggedInUser?._id)
       return true
     return false
   }
@@ -175,10 +183,10 @@ const Bargain = (props) => {
       return purchase?.purchase?.price;
     else if(arr && arr?.length<2)
       return purchase?.purchase?.price;
-    else if (isBuyer())
-      return arr[arr?.length - 1]
+    else if (isBuyer(buyer))
+      return (arr[arr?.length - 1])
     else
-      return arr[arr?.length - 2]
+      return (arr[arr?.length - 2])
   }
 
   const xMin = (arr) => {
@@ -187,12 +195,12 @@ const Bargain = (props) => {
     else if(arr?.length==0) {
       return Math.floor(purchase?.purchase?.price * 0.6);
     }
-    else if (isSeller()) {
+    else if (isSeller(seller)) {
       return (arr[arr?.length - 1]) 
     }
       
-    else if(isBuyer()) {
-      return ((arr[arr?.length - 2])) 
+    else if(isBuyer(buyer)) {
+      return (arr[arr?.length - 2])
     }
   }
 
