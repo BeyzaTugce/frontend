@@ -49,7 +49,7 @@ function MainPageView(props) {
                         style={{ borderColor: "#85A582", width: 250, height: 400}}
                     >
                         <div className="content flex-fill text-center">
-                            <div className="item-name" type="name" required style={{ fontSize: 18, fontWeight:"bold" }}>
+                            <div className="item-name" type="name" required style={{ fontWeight:"bold" }}>
                                 {item.name}
                             </div>
                             <div
@@ -64,7 +64,8 @@ function MainPageView(props) {
                                 <img
                                     className="img my-auto d-block"
                                     src={item.image[0]}
-                                    width= "200"
+                                    maxHeight= "200"
+                                    width="200"
                                     alt={item.name}>
                                 </img>
                             </div>
