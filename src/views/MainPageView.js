@@ -19,6 +19,7 @@ function MainPageView(props) {
     let garageReached = false;
     let itemReached = false;
     let renderedList = [];
+    let garageRenderedList = [];
 
     const history = useHistory();
 
@@ -75,6 +76,54 @@ function MainPageView(props) {
             setFoundItems(renderedList);
             console.log("rendered"+renderedList);
         }
+
+
+        if (garage.garages !== undefined && garage.garages !== null && items.items !== undefined && items.items !== null) {
+            garage.garages.garages?.map( item => {garageRenderedList.push(
+                <ListGroupItem
+                    className="d-inline-flex align-items-center justify-content-between border w-50"
+                    style={{ borderColor: "#85A582"}}
+                >
+                    <div className="content flex-fill text-center">
+                        <div className="item-name" type="name" required style={{ fontSize: 18, fontWeight:"bold" }}>
+                            {item.username}'s Garage
+                        </div>
+                        <div className="item-name" type="name" required style={{ fontSize: 16}}>
+                            Ends on {item.endDate}
+                        </div>
+                        <div className="Item-container d-inline-flex justify-content-center" style={{height:250}}>
+                            <div className="item-info-container d-inline-block align-items-center">
+                                <div className="img-container d-flex justify-content-center"
+                                     style={{width: 200, height: 200}}>
+                                    <img className="img my-auto d-block"
+                                         src={logo}
+                                         style={{maxWidth: 200}}/>
+                                </div>
+                                <div className="item-price" style={{ fontWeight:"bold" }}>€30</div>
+                            </div>
+                            <div className="item-info-container d-inline-block align-items-center">
+                                <div className="img-container d-flex justify-content-center"
+                                     style={{width: 200, height: 200}}>
+                                    <img className="img my-auto d-block"
+                                         src={logo}
+                                         style={{maxWidth: 200}}/>
+                                </div>
+                                <div className="item-price" style={{ fontWeight:"bold" }}>€30</div>
+                            </div>
+                            <div className="item-info-container d-inline-block align-items-center">
+                                <div className="img-container d-flex justify-content-center"
+                                     style={{width: 200, height: 200}}>
+                                    <img className="img my-auto d-block"
+                                         src={logo}
+                                         style={{maxWidth: 200}}/>
+                                </div>
+                                <div className="item-price" style={{ fontWeight:"bold" }}>€30</div>
+                            </div>
+                        </div>
+                    </div>
+                </ListGroupItem>
+
+            )});}
     }, [garage.garages, garageReached, items.items, itemReached]);
 
     /*
@@ -133,90 +182,7 @@ function MainPageView(props) {
                 </ListGroup>
                 <div className="jumbotron jumbotron-fluid text-center" style={{backgroundColor: "white"}}>
                     <ListGroup className="d-inline-block w-100">
-                        <ListGroupItem
-                            className="d-inline-flex align-items-center justify-content-between border w-50"
-                            style={{ borderColor: "#85A582"}}
-                        >
-                            <div className="content flex-fill text-center">
-                                <div className="item-name" type="name" required style={{ fontSize: 18, fontWeight:"bold" }}>
-                                    Berke's Garage
-                                </div>
-                                <div className="item-name" type="name" required style={{ fontSize: 16}}>
-                                    Ends on 10.10.2021
-                                </div>
-                                <div className="Item-container d-inline-flex justify-content-center" style={{height:250}}>
-                                    <div className="item-info-container d-inline-block align-items-center">
-                                        <div className="img-container d-flex justify-content-center"
-                                             style={{width: 200, height: 200}}>
-                                            <img className="img my-auto d-block"
-                                                 src={logo}
-                                                 style={{maxWidth: 200}}/>
-                                        </div>
-                                        <div className="item-price" style={{ fontWeight:"bold" }}>€30</div>
-                                    </div>
-                                    <div className="item-info-container d-inline-block align-items-center">
-                                        <div className="img-container d-flex justify-content-center"
-                                             style={{width: 200, height: 200}}>
-                                            <img className="img my-auto d-block"
-                                                 src={logo}
-                                                 style={{maxWidth: 200}}/>
-                                        </div>
-                                        <div className="item-price" style={{ fontWeight:"bold" }}>€30</div>
-                                    </div>
-                                    <div className="item-info-container d-inline-block align-items-center">
-                                        <div className="img-container d-flex justify-content-center"
-                                             style={{width: 200, height: 200}}>
-                                            <img className="img my-auto d-block"
-                                                 src={logo}
-                                                 style={{maxWidth: 200}}/>
-                                        </div>
-                                        <div className="item-price" style={{ fontWeight:"bold" }}>€30</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </ListGroupItem>
-                        <ListGroupItem
-                            className="d-inline-flex align-items-center justify-content-between border w-50"
-                            style={{ borderColor: "#85A582"}}
-                        >
-                            <div className="content flex-fill text-center">
-                                <div className="item-name" type="name" required style={{ fontSize: 18, fontWeight:"bold" }}>
-                                    Berke's Garage
-                                </div>
-                                <div className="item-name" type="name" required style={{ fontSize: 16}}>
-                                    Ends on 10.10.2021
-                                </div>
-                                <div className="Item-container d-inline-flex justify-content-center" style={{height:250}}>
-                                    <div className="item-info-container d-inline-block align-items-center">
-                                        <div className="img-container d-flex justify-content-center"
-                                             style={{width: 200, height: 200}}>
-                                            <img className="img my-auto d-block"
-                                                 src={logo}
-                                                 style={{maxWidth: 200}}/>
-                                        </div>
-                                        <div className="item-price" style={{ fontWeight:"bold" }}>€30</div>
-                                    </div>
-                                    <div className="item-info-container d-inline-block align-items-center">
-                                        <div className="img-container d-flex justify-content-center"
-                                             style={{width: 200, height: 200}}>
-                                            <img className="img my-auto d-block"
-                                                 src={logo}
-                                                 style={{maxWidth: 200}}/>
-                                        </div>
-                                        <div className="item-price" style={{ fontWeight:"bold" }}>€30</div>
-                                    </div>
-                                    <div className="item-info-container d-inline-block align-items-center">
-                                        <div className="img-container d-flex justify-content-center"
-                                             style={{width: 200, height: 200}}>
-                                            <img className="img my-auto d-block"
-                                                 src={logo}
-                                                 style={{maxWidth: 200}}/>
-                                        </div>
-                                        <div className="item-price" style={{ fontWeight:"bold" }}>€30</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </ListGroupItem>
+                        {garageRenderedList}
                     </ListGroup>
                 </div>
             </div>
