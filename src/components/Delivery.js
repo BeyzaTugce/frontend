@@ -348,7 +348,7 @@ const Delivery = (props) => {
         </div>
       ): "There must be something wrong you should not be here"}
 
-      {purchase?.purchase?.availableDates.length == 0 && methodType == "PickUp" && userType == "Buyer" ? <p></p> :
+      {purchase?.purchase?.availableDates.length == 0 &&  ((methodType == "PickUp" && userType == "Buyer") || (methodType === "Both" && userType == "Seller")) ? <p></p> :
           <div className="buttons d-flex align-items-center justify-content-center mb-5">
             <Button
                 className="btn-purple"
