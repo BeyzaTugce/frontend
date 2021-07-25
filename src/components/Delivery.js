@@ -157,7 +157,8 @@ const Delivery = (props) => {
       {userType === "Seller" ? (
          <div>
          {methodType === "Both" ? (
-           "Please wait for buyer to select a delivery method"
+          
+           <h4 className="display-5 text-center"> Please wait for buyer to select a delivery method</h4>
          ): methodType === "PickUp" ?(  
             <div>
           <Container
