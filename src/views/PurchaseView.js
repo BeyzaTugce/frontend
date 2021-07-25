@@ -78,9 +78,10 @@ const PurchaseView = (props) => {
         //View the purchases for user in the buyer role
         const onClickGoPurchaseSeller = (e) => {
             let purchaseId= e.target.value;
-            console.log("purchaseId"+purchaseId);
+            
             props.getPurchases();
             purchase?.purchases?.purchases?.filter(p => p._id == purchaseId).map( p => {
+                console.log("purchaseIdSeller"+purchaseId+"p_id"+ p._id);
                 switch(p.purchaseStatus){
                     case "WaitForAcceptance":
                         props.history.push("../bargain/"+purchaseId)
@@ -107,27 +108,28 @@ const PurchaseView = (props) => {
             //View the purchases for user in the buyer role
     const onClickGoPurchaseBuyer = (e) => {
         let purchaseId= e.target.value;
+        console.log("purchaseIdbuyer"+purchaseId);
         props.getPurchases();
 
         purchase?.purchases?.purchases?.filter(p =>  p._id == purchaseId).map( p => {
             switch(p.purchaseStatus){
                 case "WaitForAcceptance":
-                    props.history.push("../bargain/"+p._id)
+                    props.history.push("../bargain/"+purchaseId)
                     break
                 case "DeliveryScheduling":
-                    props.history.push("../delivery/"+p._id)
+                    props.history.push("../delivery/"+purchaseId)
                     break
                 case "DeliveryScheduled":
-                    props.history.push("../delivery/"+p._id)
+                    props.history.push("../delivery/"+purchaseId)
                     break
                 case "Payment":
-                    props.history.push("../payment/"+p._id)
+                    props.history.push("../payment/"+purchaseId)
                     break
                 case "Order":
-                    props.history.push("../order/"+p._id)
+                    props.history.push("../order/"+purchaseId)
                     break
                 case "Rating":
-                    props.history.push("../rating/"+p._id)
+                    props.history.push("../rating/"+purchaseId)
                     break
             }}
         );
