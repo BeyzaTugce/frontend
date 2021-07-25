@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import {
   Button,
   Col,
+  FormLabel,
   FormControl,
   ListGroup,
   ListGroupItem,
@@ -12,7 +13,7 @@ import {
   Row,
   TabContent,
   TabPane,
-  TabContainer,
+  TabContainer, Tabs, Tab,
 } from "react-bootstrap";
 import { PlusLg } from "react-bootstrap-icons";
 import PropTypes from "prop-types";
@@ -53,8 +54,8 @@ function ItemCreation(props) {
     setItemTags(props.item.itemTags);
     setItemPrice(props.item.itemPrice);
     setItemImage(props.item.itemImage);
-    setGarageId(props.item.garageId);
-    setGarageId(props.item.userId);
+    setGarageId(props.item.garageId);   
+    setUserId(props.item.userId);
     setUserName(props.item.userName);
     setItemImage(props.item.itemImage);
     setDeadline(props.item.deadline);
@@ -143,11 +144,17 @@ function ItemCreation(props) {
       addToList(packItem());
       props.dispatch(addItem(packItem()))
     }
+    setItemTitle("");
+    setItemInfo("");
+    setItemTags("");
+    setItemPrice("");
+    setItemImage([]);
   };
 
   const onRemove = (e) => {
     e.preventDefault();
     removeFromList(packItem());
+    console.log("onRemove itemcreation");
     props.dispatch(deleteItem(packItem()))
   }
 
@@ -164,7 +171,9 @@ function ItemCreation(props) {
                     <Nav.Link className="tab-nav" eventKey="item">Item Title</Nav.Link>
                   </Nav.Item>
                   <Nav.Item className="tab-nav-item">
-                    <Nav.Link className="tab-nav" eventKey="info">General Information</Nav.Link>
+                    <Nav.Link className="tab-nav " eventKey="info">
+                      <div className="text-nowrap">General Information</div>
+                    </Nav.Link>
                   </Nav.Item>
                   <Nav.Item className="tab-nav-item">
                     <Nav.Link className="tab-nav" eventKey="price">Price</Nav.Link>
@@ -206,6 +215,7 @@ function ItemCreation(props) {
                       <FormControl
                         type="price"
                         placeholder="Enter item price"
+                        type="Number"
                         fullWidth
                         value={itemPrice}
                         onChange={onChangeItemPrice}
