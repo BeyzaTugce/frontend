@@ -29,7 +29,7 @@ const Image = (props) => {
         state,
         upload: {
           ...state.upload,
-          pictures: [files]
+          pictures: [...files]
         }
       },
       () => {
