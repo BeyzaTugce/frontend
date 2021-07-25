@@ -167,17 +167,6 @@ const Bargain = (props) => {
     return false
   }
 
-  // const acceptCondition = () => {
-  //   if (offersArray && offersArray.length == 0) {
-  //     return true
-  //   }
-  //   else if (isBuyer && offerTurn)
-  //       return true
-  //   else if (isSeller && !offerTurn)
-  //       return true
-  //   return false
-  // }
-
   const xMax = (arr) => {
     if(arr === undefined)
       return purchase?.purchase?.price;
@@ -196,12 +185,10 @@ const Bargain = (props) => {
       return Math.floor(purchase?.purchase?.price * 0.6);
     }
     else if (isSeller()) {
-      console.log("selleer");
       return (arr[arr?.length - 1]) 
     }
       
     else if(isBuyer()) {
-      console.log("buyer");
       return (arr[arr?.length - 2])
     }
   }
@@ -326,12 +313,10 @@ const Bargain = (props) => {
                   axis="x"
                   x={enterOffer.price}
                   xmin={xMin(offersArray)}
-                  // xmax (offersArray?.length==0)? purchase?.purchase?.price : offersArray[offersArray.length - 1]
                   xmax={xMax(offersArray)}
                   onChange={({ x }) =>
                       setEnterOffer((offer) => ({ ...offer, price: x }))
                   }
-                  {...console.log(isBuyer())}
               />
             </div>
           </Modal.Body>
