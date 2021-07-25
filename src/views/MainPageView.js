@@ -57,7 +57,7 @@ function MainPageView(props) {
                             />
                             <div className="garage-name">At {item.username}'s Garage</div>
                             <div className="garage-name">Ends on {item.deadline}</div>
-                            <div className="item-price" style={{ fontWeight:"bold" }}>€30</div>
+                            <div className="item-price" style={{ fontWeight:"bold" }}>€{item.price}</div>
                             <Button
                                 className="btn-green border-0"
                                 variant="light"
