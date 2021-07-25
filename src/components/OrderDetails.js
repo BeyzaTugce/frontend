@@ -9,7 +9,7 @@ import {
   NavLink,
 } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import { getPurchase, changePurchase} from "../redux/actions/PurchaseActions";
+import { getPurchase, changePurchase,loadSeller } from "../redux/actions/PurchaseActions";
 import store from "../redux/store";
 
 const OrderDetails = (props) => {
@@ -32,6 +32,7 @@ const OrderDetails = (props) => {
 
   let { match, getPurchase } = props;
   let purchaseReached = false;
+  let sellerReached = false;
 
   useEffect(() => {
     let purchaseId = match.params.id;
@@ -58,6 +59,8 @@ const OrderDetails = (props) => {
       setMethod(purchase.purchase.method);
       setReceiveDate(new Date(purchase.purchase.pickUpDate).toLocaleDateString())
       setShipAddress(purchase.purchase.shipAddress);
+      store.dispatch(loadSeller(purchase.purchase.seller));
+      sellerReached = true;
     }
   }, [purchase.purchase, purchaseReached, getPurchase]);
 
@@ -72,10 +75,14 @@ const OrderDetails = (props) => {
   };
 
   useEffect(() => {
+    setSellerName(purchase?.seller?.username);
+  }, [purchase?.seller , sellerReached === true]);
+
+ 
+  useEffect(() => {
     // extractOrder();
-    extractSeller();
     extractItems();
-  }, [props.order, props.seller, props.items]);
+  }, [props.order, props.items]);
 
   //will get the items from purchase.
   const extractItems = () => {
@@ -85,13 +92,6 @@ const OrderDetails = (props) => {
       return;
     }
     setItems(purchase.purchase.selectedItemList);
-  };
-
-  const extractSeller = () => {
-    if (!props.seller) {
-      return;
-    }
-    setSellerName(props.seller.firstname);
   };
 
   const packPurchase = () => {
@@ -264,7 +264,7 @@ const OrderDetails = (props) => {
                 </span>
                 Product delivered
               </div>
-
+              {userType == "Buyer" ? (
               <NavLink class="step step-active" onClick={onRate}>
                 <span class="step-icon">
                   <svg
@@ -285,6 +285,7 @@ const OrderDetails = (props) => {
                 </span>
                 <div className="rate-text text-center">Rate</div>
               </NavLink>
+               ) : ""}
             </div>
           </div>
           <div className="row mb-3">
@@ -325,15 +326,27 @@ const OrderDetails = (props) => {
             </div>
           </div>
         </div>
+
+        {userType == "Buyer" ? (
+    
           <h4 className="items-bought text-center">
             Items Bought
           </h4>
+          
+          ) : userType == "Seller"? (
+            <h4 className="items-bought text-center">
+            Items Sold
+          </h4>
+        ) : ""}
+       
         <div
           className="list-whole w-100"
           style={{ paddingInline: 250 }}
         >
           <ListGroup style={{marginBottom:50}}>{renderedList}</ListGroup>
-        </div>
+          </div>
+        
+   
       </span>
     </div>
   );
@@ -341,8 +354,6 @@ const OrderDetails = (props) => {
 
 OrderDetails.propTypes = {
   order: PropTypes.object,
-  seller: PropTypes.object,
-  user: PropTypes.object,
   items: PropTypes.object,
 };
 
