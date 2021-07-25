@@ -5,7 +5,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import {
   Button,
   Col,
-  FormLabel,
   FormControl,
   ListGroup,
   ListGroupItem,
@@ -13,7 +12,7 @@ import {
   Row,
   TabContent,
   TabPane,
-  TabContainer, Tabs, Tab,
+  TabContainer,
 } from "react-bootstrap";
 import { PlusLg } from "react-bootstrap-icons";
 import PropTypes from "prop-types";
@@ -39,6 +38,7 @@ function ItemCreation(props) {
   const [itemPrice, setItemPrice] = React.useState("");
   const [itemImage, setItemImage] = React.useState([]);
   const [garageId, setGarageId] = React.useState("");
+  const [userId, setUserId] = React.useState("");
   const [userName, setUserName] = React.useState("");
   const [deadline, setDeadline] = React.useState("");
   const [listEmpty, setListEmpty] = React.useState(true);
@@ -54,6 +54,7 @@ function ItemCreation(props) {
     setItemPrice(props.item.itemPrice);
     setItemImage(props.item.itemImage);
     setGarageId(props.item.garageId);
+    setGarageId(props.item.userId);
     setUserName(props.item.userName);
     setItemImage(props.item.itemImage);
     setDeadline(props.item.deadline);
@@ -110,28 +111,6 @@ function ItemCreation(props) {
     }
   }
 
-
-  const getDate = (today) => {
-    let day = new Date();
-    let dd = day.getDate();
-    let mm = day.getMonth();
-    let mmUntil = day.getMonth() + 1;
-    let yyyy = day.getFullYear();
-    if(dd < 10)
-      dd='0'+dd;
-    if(mm < 10)
-      mm='0'+mm;
-
-    const startDate = dd+'.'+mm+'.'+yyyy;
-    const endDate = dd+'.'+mmUntil+'.'+yyyy;
-    if (today) {
-      return (
-          startDate
-      );
-    }
-    return endDate
-  };
-
   const packItem = () => {
     props.dispatch(getGarages());
     let back = {
@@ -150,12 +129,10 @@ function ItemCreation(props) {
     back.tags = itemTags.split(" ");
     back.info = itemInfo;
     back.username = user.username;
+    back.userId = user._id;
     back.image = itemImage;
     let today = new Date();
-    console.log("ilk ay "+today.getMonth());
-
     back.deadline = today.setMonth(today.getMonth() + 1, today.getDate());
-    console.log("next ay "+today.getMonth());
 
     return back;
   };
