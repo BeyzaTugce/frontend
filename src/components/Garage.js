@@ -47,7 +47,9 @@ const Garage = (props) => {
     }
     setGarageId(props.garage._id)
     setGarageEndDate(props.garage.dateCreated)
-    setFormattedDate(new Date(props.garage.dateCreated).toLocaleDateString())
+    const date = new Date(props.garage.dateCreated)
+    date.setMonth(date.getMonth() + 1)
+    setFormattedDate(date.toLocaleDateString())
     setDiscount(props.garage.discount)
     setBargain(props.garage.bargain)
     setIsPromoted(props.garage.isPromoted);
