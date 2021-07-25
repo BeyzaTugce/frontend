@@ -172,29 +172,28 @@ const Bargain = (props) => {
 
   const xMax = (arr) => {
     if(arr === undefined)
-      return 
-    else if(arr.length<2)
+      return purchase?.purchase?.price;
+    else if(arr && arr?.length<2)
       return purchase?.purchase?.price;
     else if (isBuyer())
-      return arr[arr.length - 1]
+      return arr[arr?.length - 1]
     else
-      return arr[arr.length - 2]
+      return arr[arr?.length - 2]
   }
 
   const xMin = (arr) => {
     if(arr === undefined)
-      return
-    else if(arr.length==0) {
+      return Math.floor(purchase?.purchase?.price * 0.6);
+    else if(arr?.length==0) {
       return Math.floor(purchase?.purchase?.price * 0.6);
     }
     else if (isSeller()) {
-      return (arr[arr.length - 1]) 
+      return (arr[arr?.length - 1]) 
     }
       
     else if(isBuyer()) {
-      return ((arr[arr.length - 2])) 
+      return ((arr[arr?.length - 2])) 
     }
-      
   }
 
 

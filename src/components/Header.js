@@ -17,8 +17,9 @@ import {
 } from "react-bootstrap";
 import {Cart3, House, PersonCircle, Search} from "react-bootstrap-icons";
 import logo from "../views/logo.png";
-import { logoutNew } from "../redux/actions/AuthActions";
+import { logoutNew, loadUser } from "../redux/actions/AuthActions";
 import {getGarages} from "../redux/actions/GarageActions";
+import {getItems} from "../redux/actions/ItemActions";
 
 
 /**
@@ -46,10 +47,13 @@ const Header = ({auth}) => {
   }, [searchTerm]);
 
   useEffect(() => {
+    store.dispatch(loadUser());
     store.dispatch(getGarages());
+    store.dispatch(getItems());
   }, [] );
 
   const onMyGarage = () => {
+    //store.dispatch(loadUser());
     store.dispatch(getGarages());
     if (isAuthenticated){
       if (garage?.garages?.garages?.filter(g => g.user === user._id).length === 0){
