@@ -11,8 +11,9 @@ const Image = (props) => {
     const [state, setState] = useState({
         upload: {
           pictures: [],
-          maxFileSize: 5242880,
+          maxFileSize: 	400000,
           imgExtension: [".jpg", ".png"],
+          fileSizeError: "File is too big",
           defaultImages: [
           ]
         }
