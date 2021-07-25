@@ -38,8 +38,9 @@ function ItemCreation(props) {
   const [itemTags, setItemTags] = React.useState("");
   const [itemPrice, setItemPrice] = React.useState("");
   const [itemImage, setItemImage] = React.useState([]);
-  const [garageId, setGarageId] = React.useState([]);
-  const [userName, setUserName] = React.useState([]);
+  const [garageId, setGarageId] = React.useState("");
+  const [userName, setUserName] = React.useState("");
+  const [deadline, setDeadline] = React.useState("");
   const [listEmpty, setListEmpty] = React.useState(true);
 
 
@@ -55,6 +56,7 @@ function ItemCreation(props) {
     setGarageId(props.item.garageId);
     setUserName(props.item.userName);
     setItemImage(props.item.itemImage);
+    setDeadline(props.item.deadline);
   };
 
   useEffect(() => {
@@ -102,13 +104,34 @@ function ItemCreation(props) {
     setItemImage(input);
   };
 
-
   const onMyGarage = () => {
     if (props.garageCreated){
-      garage.garages.garages.filter(g => g.user == user._id).map( g => {props.history.push("/garage/"+g._id)});
+      garage.garages.garages.filter(g => g.user === user._id).map(g => {props.history.push("/garage/"+g._id)});
     }
   }
-  
+
+
+  const getDate = (today) => {
+    let day = new Date();
+    let dd = day.getDate();
+    let mm = day.getMonth();
+    let mmUntil = day.getMonth() + 1;
+    let yyyy = day.getFullYear();
+    if(dd < 10)
+      dd='0'+dd;
+    if(mm < 10)
+      mm='0'+mm;
+
+    const startDate = dd+'.'+mm+'.'+yyyy;
+    const endDate = dd+'.'+mmUntil+'.'+yyyy;
+    if (today) {
+      return (
+          startDate
+      );
+    }
+    return endDate
+  };
+
   const packItem = () => {
     props.dispatch(getGarages());
     let back = {
@@ -117,25 +140,30 @@ function ItemCreation(props) {
 
     if (!props.garageCreated){
       back.garageId = garageId;
+      back.deadline = deadline;
     }
     else{
-      garage.garages.garages.filter(g => g.user == user._id).map(x => {back.garageId = x._id});
+      garage.garages.garages.filter(g => g.user === user._id).map(x => {back.garageId = x._id});
     }
     back.name = itemTitle;
     back.price = itemPrice;
     back.tags = itemTags.split(" ");
     back.info = itemInfo;
     back.username = user.username;
-    console.log("pictures"+itemImage);
     back.image = itemImage;
+    let today = new Date();
+    console.log("ilk ay "+today.getMonth());
+
+    back.deadline = today.setMonth(today.getMonth() + 1, today.getDate());
+    console.log("next ay "+today.getMonth());
 
     return back;
   };
 
   const onCreate = (e) => {
     e.preventDefault();
-    addToList(packItem());
     if (props.garageCreated){
+      addToList(packItem());
       props.dispatch(addItem(packItem()))
     }
   };
@@ -143,7 +171,6 @@ function ItemCreation(props) {
   const onRemove = (e) => {
     e.preventDefault();
     removeFromList(packItem());
-    console.log("onRemove itemcreation");
     props.dispatch(deleteItem(packItem()))
   }
 

@@ -48,7 +48,6 @@ function SearchView(props) {
         });
     }
 
-
     const filterItem = (item, searchTerm) => {
         const upperCaseTags = item.tags.map(tag => tag.toUpperCase())
         return item.name.toUpperCase().includes(searchTerm) || upperCaseTags.includes(searchTerm)
