@@ -1,13 +1,7 @@
 import React from "react";
 import { Button,ListGroupItem } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
 
 const PurchaseItem = (props) => {
-
-    const history = useHistory();
-    const onClickGoPurchase = () => {
-        history.push("/garage/"+props.garageId);
-    }
 
     return (
         <ListGroupItem

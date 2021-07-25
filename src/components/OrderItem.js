@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import React from "react";
 import PropTypes from "prop-types";
-
-import { Button, FormCheck, ListGroupItem } from "react-bootstrap";
+import {ListGroupItem} from "react-bootstrap";
 
 const OrderItem = (props) => {
 

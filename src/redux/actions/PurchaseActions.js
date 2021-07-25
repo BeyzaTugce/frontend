@@ -1,6 +1,5 @@
 import PurchaseService from "../../services/PurchaseService";
 import axios from 'axios';
-import GarageService from "../../services/GarageService";
 
 const otherURL = "http://localhost:4000/auth"
 
@@ -76,7 +75,6 @@ export function changePurchase(changedPurchase) {
             let purchase = await PurchaseService.updatePurchase(changedPurchase);
             dispatch(onSuccess(purchase));
         } catch (e) {
-          //console.log("2");
             onFailure(e);
         }
     };
@@ -84,7 +82,6 @@ export function changePurchase(changedPurchase) {
 
 export const getPurchaseSeller = (id) => {
     function onSuccess(seller) {
-        // document.write(seller.firstname);
         return { type: "GETSELLER_SUCCESS", seller: seller };
     }
     function onFailure(error) {
@@ -93,7 +90,6 @@ export const getPurchaseSeller = (id) => {
 
     return async (dispatch) => {
         try {
-            // let garage = await GarageService.getGarage(id);
             let seller = await PurchaseService.readSeller(id);
             console.log("SELLER ACTION:"+seller);
             dispatch(onSuccess(seller));
@@ -105,7 +101,6 @@ export const getPurchaseSeller = (id) => {
 
 export const getPurchaseBuyer = (id) => {
     function onSuccess(buyer) {
-        // document.write(seller.firstname);
         return { type: "GETBUYER_SUCCESS", buyer: buyer };
     }
     function onFailure(error) {
@@ -114,7 +109,6 @@ export const getPurchaseBuyer = (id) => {
 
     return async (dispatch) => {
         try {
-            // let garage = await GarageService.getGarage(id);
             let buyer = await PurchaseService.readBuyer(id);
             console.log("BUYER ACTION:"+buyer);
             dispatch(onSuccess(buyer));

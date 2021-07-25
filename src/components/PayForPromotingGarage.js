@@ -3,11 +3,9 @@ import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
-import store from "../redux/store";
-import {Button, Container, Modal} from "react-bootstrap";
+import {Button, Modal} from "react-bootstrap";
 import { connect, useSelector } from "react-redux";
 import {getGarage, changeGarage} from "../redux/actions/GarageActions";
-import Slider from "react-input-slider";
 
 const PayForPromotingGarage = (props) => {
 
@@ -132,10 +130,8 @@ const PayForPromotingGarage = (props) => {
     );
 };
 
-const mapStateToProps = (state) => ({
-});
 
-export default connect(mapStateToProps, {
+export default connect(null, {
     getGarage,
     changeGarage,
 })(withRouter(PayForPromotingGarage));

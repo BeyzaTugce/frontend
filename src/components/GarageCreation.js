@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { useHistory } from "react-router-dom";
-import { connect, useSelector } from "react-redux";
+import {useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Buttons.css"
@@ -13,7 +13,6 @@ const GarageCreation = (props) => {
   const history = useHistory();
   const user = useSelector((state) => state.auth.user);
 
-  //const [dateCreated, setDateCreated] = useState("");
   const [isPromoted, setIsPromoted] = useState(false);
   const [discount, setDiscount] = useState(false);
   const [bargain, setBargain] = useState(false);
@@ -63,13 +62,6 @@ const GarageCreation = (props) => {
   }, [shipment, pickup]);
 
 
-  // indicates whether the garage can be changed
-  const [editMode, setEditMode] = React.useState(null);
-
-  const onChangeIsPromoted = (e) => {
-    setIsPromoted(e.target.checked);
-  };
-
   const onChangeDiscount = (e) => {
     setDiscount(e.target.checked);
   };
@@ -86,8 +78,7 @@ const GarageCreation = (props) => {
     setPickup(e.target.checked);
   };
 
-  const onCreate = (e) => {
-    //e.preventDefault();
+  const onCreate = () => {
     if (!isCreated){
       setIsCreated(true);
       props.onCreate(packGarage());

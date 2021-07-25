@@ -4,7 +4,6 @@ import "./CategoryBar.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const CategoryBar = (props) => {
-  //TODO: Colors?
   return (
     <div className="CategoryBar">
       <Navbar className="navbar-links" variant="dark">

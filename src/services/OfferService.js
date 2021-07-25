@@ -6,7 +6,6 @@ export default class OfferService {
   }
 
 
-
   static getOffer(id) {
     return new Promise(async (resolve, reject) => {
       await HttpService.get(
@@ -28,7 +27,6 @@ export default class OfferService {
 
   
   static createOffer(id, offer) {
-    //OfferService.id = Math.floor(Math.random() * 100000000 + 1).toString();
 
     return new Promise((resolve, reject) => {
       HttpService.post(

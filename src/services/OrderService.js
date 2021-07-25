@@ -1,5 +1,4 @@
 import HttpService from "./HttpService";
-import ItemService from "./ItemService";
 
 export default class OrderService {
     static baseURL() {
@@ -92,7 +91,6 @@ export default class OrderService {
         });
     }
 
-    //TODO: Update item and seller operations
     static readItems(id) {
         return new Promise((resolve, reject) => {
             HttpService.get(
@@ -104,7 +102,6 @@ export default class OrderService {
                     reject(textStatus);
                 }
             );
-            console.log("ORDERSERVICE:"+OrderService.baseURL()+"/item/"+id);
         });
     }
 

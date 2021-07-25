@@ -1,5 +1,4 @@
 import OrderService from "../../services/OrderService";
-import order from "../reducers/orderReducer";
 
 export function getOrders() {
     function onSuccess(orders) {
@@ -95,7 +94,6 @@ export const getOrder = (id) => {
 
 export const getSeller = (id) => {
     function onSuccess(seller) {
-        // document.write(seller.firstname);
         return { type: "GETSELLER_SUCCESS", seller: seller };
     }
     function onFailure(error) {

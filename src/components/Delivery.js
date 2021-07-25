@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { withRouter } from "react-router-dom";
-
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import { FormGroup, FormLabel } from "react-bootstrap";
+import { FormGroup } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import { DatePickerCalendar } from "react-nice-dates";
-import { format } from "date-fns";
 import { enGB } from "date-fns/locale";
 import "react-nice-dates/build/style.css";
 import { useDateInput } from "react-nice-dates";
 import InputGroup from "react-bootstrap/InputGroup";
 import { getPurchase, changePurchase } from "../redux/actions/PurchaseActions";
-
-import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import { getGarage } from "../redux/actions/GarageActions";
 import store from "../redux/store";
 import { connect, useSelector } from "react-redux";
@@ -43,6 +39,7 @@ const Delivery = (props) => {
     locale: enGB,
     onDateChange: setDate,
   });
+
   let purchaseReached = false;
 
   useEffect(() => {
@@ -61,7 +58,6 @@ const Delivery = (props) => {
     if (purchase.purchase !== undefined && purchase.purchase !== null) {
       checkUser();
       checkMethod();
-      //checkStatus();
       let garageId = purchase?.purchase?.garageId;
       getGarage(garageId);
     }
@@ -81,23 +77,13 @@ const Delivery = (props) => {
     if (purchase.purchase !== undefined) {
       setMethodType(purchase?.purchase?.method);
     }
-    if(purchase?.purchase?.method == "Shipment" && userType == "Seller"){
+    if(purchase?.purchase?.method === "Shipment" && userType === "Seller"){
       history.push(`../order/${purchase.purchase._id}`);
     }
-    else if (purchase?.purchase?.method == "Shipment" && userType == "Buyer"){
+    else if (purchase?.purchase?.method === "Shipment" && userType === "Buyer"){
       history.push(`../payment/${purchase.purchase._id}`);
     }
   };
-
-  /* const checkStatus = () => {
-    if (purchase?.purchase?.purchaseStatus != "DeliveryScheduling" || ) {
-      if (userType == "Seller") {
-        history.push(`../order/${purchase.purchase._id}`);
-      } else if (userType == "Buyer") {
-        history.push(`../delivery/${purchase.purchase._id}`);
-      }
-    }
-  };*/
 
   const packPurchase = () => {
     let back = {
@@ -263,35 +249,34 @@ const Delivery = (props) => {
                 <div
                     className="jumbotron jumbotron-fluid bg-white"
                 >
-                  <h4 className="display-5 text-center">Please Select A Date</h4>
-                   {purchase?.purchase?.availableDates.length == 0 ? (  "Please wait for seller to choose the available dates"   ):
-                  
-                  <p className="text-center">
-                    <ButtonGroup
-                        vertical={true}
-                    >
-                      {purchase?.purchase?.availableDates.map((item) => (
-                          <td>
-                            <ToggleButton
-                                type="radio"
-                                variant="light"
-                                className="mr-2"
-                                //name={item}
-                                value={item}
-                                checked={selectedDate === item}
-                                onChange={(e) =>
-                                    setSelectedDate(e.currentTarget.value)
-                                }
-                            >
-                              {new Date(item).toLocaleDateString()}
-                            </ToggleButton>
-                          </td>
-                      ))}
-                    </ButtonGroup>
-                  </p> 
-                  
+                  {purchase?.purchase?.availableDates.length == 0 ?
+                      (<h4 className="display-5 text-center">Please wait for seller to choose the available dates</h4>) :
+                      <div>
+                        <h4 className="display-5 text-center">Please Select A Date</h4>
+                        <p className="text-center">
+                          <ButtonGroup
+                              vertical={true}
+                          >
+                            {purchase?.purchase?.availableDates.map((item) => (
+                                <td>
+                                  <ToggleButton
+                                      type="radio"
+                                      variant="light"
+                                      className="mr-2"
+                                      value={item}
+                                      checked={selectedDate === item}
+                                      onChange={(e) =>
+                                          setSelectedDate(e.currentTarget.value)
+                                      }
+                                  >
+                                    {new Date(item).toLocaleDateString()}
+                                  </ToggleButton>
+                                </td>
+                            ))}
+                          </ButtonGroup>
+                        </p>
+                      </div>
                   }
-                
                 </div>
               </Col> ):
     
@@ -299,7 +284,6 @@ const Delivery = (props) => {
                 <Col>
                   <div
                       className="jumbotron jumbotron-fluid bg-white"
-                      style={{ marginBottom: -10 }}
                   >
                     <h4 className="display-5 text-center">Please Select a Delivery Method</h4>
                     <p>
@@ -337,15 +321,14 @@ const Delivery = (props) => {
                                 Pick-up
                               </ToggleButton>
                             </label>
-
-                      <Button
-                        className="btn-green"
-                        variant="light"
-                        onClick={addDeliveryMethod}
-                      >
-                        Confirm Selected Method
-                      </Button>
                           </div>
+                          <Button
+                              className="btn-green"
+                              variant="light"
+                              onClick={addDeliveryMethod}
+                          >
+                            Confirm Selected Method
+                          </Button>
                         </div>
                       </FormGroup>
                     </p>
@@ -365,22 +348,24 @@ const Delivery = (props) => {
         </div>
       ): "There must be something wrong you should not be here"}
 
-      <div className="buttons d-flex align-items-center justify-content-center mb-5">
-        <Button
-          className="btn-purple"
-          variant="light"
-          style={{ marginRight: 8 }}
-        >
-          Go Back
-        </Button>
-        <Button
-          className="btn-green"
-          variant="light"
-          onClick={addPickUp}
-        >
-          Confirm
-        </Button>
-      </div>
+      {purchase?.purchase?.availableDates.length == 0 && methodType == "PickUp" && userType == "Buyer" ? <p></p> :
+          <div className="buttons d-flex align-items-center justify-content-center mb-5">
+            <Button
+                className="btn-purple"
+                variant="light"
+                style={{marginRight: 8}}
+            >
+              Go Back
+            </Button>
+            <Button
+                className="btn-green"
+                variant="light"
+                onClick={addPickUp}
+            >
+              Confirm
+            </Button>
+          </div>
+      }
     </div>
   );
 };

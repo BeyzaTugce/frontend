@@ -1,18 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {getPurchases} from "../redux/actions/PurchaseActions";
 import {connect, useSelector} from "react-redux";
 import {withRouter} from "react-router-dom";
-import {Button, FormLabel} from "react-bootstrap";
+import {Button} from "react-bootstrap";
 import {getPurchaseSeller, getPurchaseBuyer} from "../redux/actions/PurchaseActions";
 import Header from "../components/Header";
-import GarageItem from "../components/GarageItem";
-import ListItem from "../components/ListItem";
 import "../components/Buttons.css";
 import PurchaseItem from "../components/PurchaseItem";
 
 const PurchaseView = (props) => {
-
-    // let {getPurchases} = props;
 
     const purchase = useSelector((state) => state.purchase);
     const user = useSelector((state) => state.auth.user);
@@ -71,39 +67,36 @@ const PurchaseView = (props) => {
         );
     }
 
-        //View the purchases for user in the buyer role
-        const onClickGoPurchaseSeller = (e) => {
-            let purchaseId= e.target.value;
-            purchase?.purchases?.purchases?.filter(p => p._id == purchaseId).map( p => {
-                console.log("purchaseIdSeller"+purchaseId+"p_id"+ p._id);
-                switch(p.purchaseStatus){
-                    case "WaitForAcceptance":
-                        props.history.push("../bargain/"+purchaseId)
-                        break
-                    case "DeliveryScheduling":
-                        props.history.push("../delivery/"+purchaseId)
-                        break
-                    case "DeliveryScheduled":
-                        props.history.push("../order/"+purchaseId)
-                        break
-                    case "Payment":
-                        props.history.push("../order/"+purchaseId)
-                        break
-                    case "Order":
-                        props.history.push("../order/"+purchaseId)
-                        break
-                    case "Rating":
-                        props.history.push("../order/"+purchaseId)
-                        break
-                }}
-            );
-        }
+    //View the purchases for user in the seller role
+    const onClickGoPurchaseSeller = (e) => {
+        let purchaseId= e.target.value;
+        purchase?.purchases?.purchases?.filter(p => p._id == purchaseId).map( p => {
+            switch(p.purchaseStatus){
+                case "WaitForAcceptance":
+                    props.history.push("../bargain/"+purchaseId)
+                    break
+                case "DeliveryScheduling":
+                    props.history.push("../delivery/"+purchaseId)
+                    break
+                case "DeliveryScheduled":
+                    props.history.push("../order/"+purchaseId)
+                    break
+                case "Payment":
+                    props.history.push("../order/"+purchaseId)
+                    break
+                case "Order":
+                    props.history.push("../order/"+purchaseId)
+                    break
+                case "Rating":
+                    props.history.push("../order/"+purchaseId)
+                    break
+            }}
+        );
+    }
 
-            //View the purchases for user in the buyer role
+    //View the purchases for user in the buyer role
     const onClickGoPurchaseBuyer = (e) => {
         let purchaseId= e.target.value;
-        console.log("purchaseIdbuyer"+purchaseId);
-
         purchase?.purchases?.purchases?.filter(p =>  p._id == purchaseId).map( p => {
             switch(p.purchaseStatus){
                 case "WaitForAcceptance":
@@ -192,8 +185,6 @@ const PurchaseView = (props) => {
             </div>
         </div>
     );
-
-
 }
 
 export default connect(null, { getPurchases, getPurchaseSeller, getPurchaseBuyer})(withRouter(

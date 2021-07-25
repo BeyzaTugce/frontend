@@ -73,7 +73,6 @@ const Search = (props) => {
         })
     }
 
-
     useEffect(() => {
         if (props.selectedGarages !== undefined && props.selectedGarage !== null) {
             garagesSelected = true;
@@ -86,7 +85,6 @@ const Search = (props) => {
         }
     }, [props.selectedGarages, garagesSelected === false, props.foundItems, itemsFound === false, props.ratedItemUsers, ratedUsersFound === false]);
 
-
     useEffect(() => {
         if (props.foundItems !== undefined && props.foundItems !== null && props.selectedGarages !== undefined && props.selectedGarages !== null) {
             promoteArray();
@@ -95,7 +93,6 @@ const Search = (props) => {
             setFiltered(filteredArray);
         }
     }, [props.selectedGarages, garagesSelected, props.foundItems, itemsFound, filtering]);
-
 
 
     const onChangeMinPrice = (e) => {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {getItem} from "../redux/actions/ItemActions";
 import {connect, useSelector} from "react-redux";
 import {withRouter} from "react-router-dom";
-import {Carousel, CarouselItem} from "react-bootstrap";
+import {Carousel} from "react-bootstrap";
 
 
 const ItemDetails = (props) => {

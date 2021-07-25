@@ -5,7 +5,6 @@ import { connect, useSelector } from "react-redux";
 import GarageCreationComponent from "../components/GarageCreation";
 import {
   addGarage,
-  changeGarage,
   deleteGarage,
 } from "../redux/actions/GarageActions";
 import PropTypes from "prop-types";
@@ -33,10 +32,6 @@ function GarageCreationView(props) {
     props.dispatch(addGarage(newGarage));
     setGarageCreated(true);
     console.log("garageCreated:"+garageCreated);
-  };
-
-  const onChange = (newGarage) => {
-    props.dispatch(changeGarage(newGarage));
   };
 
   const onCancel = () => {

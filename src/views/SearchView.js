@@ -9,17 +9,14 @@ import {getGarages} from "../redux/actions/GarageActions";
 import {getUsers} from "../redux/actions/UserActions";
 
 function SearchView(props) {
-    //let {match, getItem, getItems} = props;
     const [searchTerm, setSearchTerm] = useState("");
     const items = useSelector((state) => state.items);
     const garage = useSelector((state) => state.garage);
     const user = useSelector((state) => state.user);
 
-
     const [selectedGarages, setSelectedGarages] = React.useState([]);
     const [foundItems, setFoundItems] = React.useState([]);
     const [ratedUsers, setRatedUsers] = React.useState([]);
-
 
     let selectedGarageIds = [];
     let foundItemsArray = [];
@@ -52,7 +49,6 @@ function SearchView(props) {
             userReached = true;
         }
     }, [garage.garages, garageReached === false, items.items, itemReached === false,  user.users, userReached === false]);
-
 
 
     const filterItem = (item, searchTerm) => {
@@ -112,7 +108,6 @@ function SearchView(props) {
     }, [garage.garages, garageReached, items.items, itemReached, user.users, userReached]);
 
 
-
     return (
         <div>
             <Header />
@@ -126,8 +121,6 @@ function SearchView(props) {
             />
         </div>
     );
-
-
 }
 
 export default connect(null, { getItem, getItems })(

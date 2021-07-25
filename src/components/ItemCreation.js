@@ -5,7 +5,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import {
   Button,
   Col,
-  FormLabel,
   FormControl,
   ListGroup,
   ListGroupItem,
@@ -13,7 +12,7 @@ import {
   Row,
   TabContent,
   TabPane,
-  TabContainer, Tabs, Tab,
+  TabContainer,
 } from "react-bootstrap";
 import { PlusLg } from "react-bootstrap-icons";
 import PropTypes from "prop-types";
@@ -63,7 +62,6 @@ function ItemCreation(props) {
 
   useEffect(() => {
     if (!props.new) {
-      //extractUser();
       extractItem();
     }
   }, [props.user, props.item, props.new]);
@@ -154,7 +152,6 @@ function ItemCreation(props) {
   const onRemove = (e) => {
     e.preventDefault();
     removeFromList(packItem());
-    console.log("onRemove itemcreation");
     props.dispatch(deleteItem(packItem()))
   }
 
@@ -288,20 +285,3 @@ ItemCreation.propTypes = {
 
 export default connect()(withRouter(ItemCreation));
 
-
-/*
-Bu kullanılcak Imageları göstermek için
-      <div className="card mt-3">
-          <ul className="list-group list-group-flush">
-            {pictures &&
-              pictures.map((img, index) => (
-                <li className="list-group-item" key={index}>
-                     <img 
-                        src={img}
-                   alt="new"
-                 />
-                </li>
-              ))}
-          </ul>
-        </div>
-*/

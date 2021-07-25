@@ -46,11 +46,8 @@ const OrderDetails = (props) => {
   }, [purchase.purchase, purchaseReached === false]);
 
   useEffect(() => {
-    console.log("second use effect " + purchaseReached);
     if (purchase.purchase !== undefined && purchase.purchase !== null) {
       checkUser();
-      //checkMethod();
-      //checkStatus();
       setPickUpAddress(purchase.purchase.pickupLocation);
       setPrice(purchase.purchase.price + tax);
       setTotalwoTax(purchase.purchase.price);
@@ -66,9 +63,9 @@ const OrderDetails = (props) => {
 
   const checkUser = () => {
     if (loggedInUser != null) {
-      if (loggedInUser._id == purchase?.purchase?.seller) {
+      if (loggedInUser._id === purchase?.purchase?.seller) {
         setUserType("Seller");
-      } else if (loggedInUser._id == purchase?.purchase?.buyer) {
+      } else if (loggedInUser._id === purchase?.purchase?.buyer) {
         setUserType("Buyer");
       }
     }
@@ -80,11 +77,10 @@ const OrderDetails = (props) => {
 
  
   useEffect(() => {
-    // extractOrder();
     extractItems();
   }, [props.order, props.items]);
 
-  //will get the items from purchase.
+  //Get the items from purchase.
   const extractItems = () => {
     let purchaseId = match.params.id;
     getPurchase(purchaseId);

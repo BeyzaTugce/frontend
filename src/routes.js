@@ -1,4 +1,3 @@
-//import MainPageView from "./components/CategoryBar";
 import MainPageView from "./views/MainPageView";
 import GarageView from "./views/GarageView";
 import GarageCreationView from "./views/GarageCreationView";
@@ -9,7 +8,6 @@ import AdminSignUpView from "./views/AdminSignUpView";
 import BargainView from "./views/BargainView";
 import VisitorView from "./views/VisitorView";
 import OrderDetailsView from "./views/OrderDetailsView";
-import Search from "./components/Search";
 import Payment from "./components/Payment";
 import RatingPage from "./components/RatingPage";
 import ImageView from "./components/Image";
@@ -17,7 +15,6 @@ import SearchView from "./views/SearchView";
 import PurchaseView from "./views/PurchaseView";
 import ItemDetailsView from "./views/ItemDetailsView";
 import PayForPromotingGarage from "./components/PayForPromotingGarage";
-// routes within the movie database example app
 // used for routing
 
 const routes = [

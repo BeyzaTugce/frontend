@@ -4,7 +4,6 @@ import { connect, useSelector } from "react-redux";
 
 import AdminSignUpComponent from "../components/AdminSignUp";
 
-import { register } from "../redux/actions/AdminActions";
 import Header from "../components/Header";
 
 /**
@@ -20,13 +19,11 @@ function AdminSignUpView(props) {
     }
   }, [admin, props.history]);
 
-  const onRegister = (email, password) => {
-    //  props.dispatch(register(email, password));
-  };
 
   const onCancel = () => {
     props.history.push("/");
   };
+
   const onSignUp = () => {
     props.history.push("/adminsinup");
   };
@@ -36,7 +33,6 @@ function AdminSignUpView(props) {
         <Header/>
         <AdminSignUpComponent
             admin={admin}
-            onRegister={onRegister}
             onCancel={onCancel}
         />
       </div>

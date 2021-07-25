@@ -6,7 +6,6 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { Form, Button } from "react-bootstrap";
 import { ListGroup } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
-import GarageItem from "./GarageItem";
 import "react-nice-dates/build/style.css";
 
 import { getPurchase,getPurchases, changePurchase, getPurchaseSeller, loadSeller } from "../redux/actions/PurchaseActions";
@@ -44,6 +43,7 @@ const useStyles = makeStyles({
 });
 
 const RatingPage = (props) => {
+
   let { match, getPurchase, getGarage, getItems, changeUser,deleteGarage } = props;
   const history = useHistory();
   const loggedInUser = useSelector((state) => state.auth.user);
@@ -54,8 +54,6 @@ const RatingPage = (props) => {
   const [hover, setHover] = React.useState(-1);
   const [methodType, setMethodType] = useState("Unknown");
   const [comment, setComment] = React.useState("");
-  const [garageItems, setGarageItems] = useState([]);
-  const classes = useStyles();
   let totalRating = 0;
   let purchaseNumber = 0;
   let newAvgRating = 0;
@@ -89,21 +87,17 @@ const RatingPage = (props) => {
   
 
   useEffect(() => {
-    console.log("second use effect " + purchaseReached);
     if (purchase.purchase !== undefined && purchase.purchase !== null) {
-
       checkUser();
       checkMethod();
       store.dispatch(loadSeller(purchase.purchase.seller));
       let garageId = purchase?.purchase?.garageId;
       getGarage(garageId);
-
     }
   }, [purchase.purchase, purchaseReached]);
 
 
   useEffect(() => {
-    
     if(purchase?.purchases?.purchases !== null && purchase.purchases !== undefined){
       purchase?.purchases?.purchases?.filter(p => p.seller == purchase?.purchase?.seller).map( p => {
         totalRating = totalRating + p.rating;
@@ -134,7 +128,6 @@ const RatingPage = (props) => {
     }
   };
 
-
   const packSeller= () => {
     let back = {
       ...props.purchase,
@@ -145,6 +138,7 @@ const RatingPage = (props) => {
     back.avgRating= newAvgRating;
     return back;
   };
+
   const packPurchase = () => {
     let back = {
       ...props.purchase,
@@ -168,7 +162,6 @@ const RatingPage = (props) => {
 
   const itemListRemove = () => {
     purchase.purchase?.selectedItemList.map((garageItem) => {
-      //console.log("garageItem._id" + garageItem._id);
       store.dispatch(deleteItem(garageItem._id));
       itemsRemoved = true;
     });
@@ -245,7 +238,6 @@ const RatingPage = (props) => {
               price={garageItem.price}
               itemId={garageItem._id}
               button1Name={"Details"}
-              //userView={false}
               image={garageItem.image}
           />
         </div>
