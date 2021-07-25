@@ -8,13 +8,14 @@ import { withRouter } from "react-router-dom";
 import {ArrowDown, ArrowUp, Star, StarFill} from "react-bootstrap-icons";
 import SearchItem from "./SearchItem";
 
+
 const Search = (props) => {
     const [minPrice, setMinPrice] = React.useState(0);
     const [maxPrice, setMaxPrice] = React.useState(99999);
     const [minStars, setMinStars] = React.useState(0);
     const [filtered, setFiltered] = React.useState([]);
     const [promoted, setPromoted] = React.useState([]);
-    const [showFiltered, setShowFiltered] = React.useState(false);
+    const [filtering, setFiltering] = React.useState(false);
 
     let filteredArray = [];
     let promotedArray = [];
@@ -64,6 +65,7 @@ const Search = (props) => {
         });
     }
 
+
     useEffect(() => {
         if (props.selectedGarages !== undefined && props.selectedGarage !== null) {
             garagesSelected = true;
@@ -73,6 +75,7 @@ const Search = (props) => {
         }
     }, [props.selectedGarages, garagesSelected === false, props.foundItems, itemsFound === false]);
 
+
     useEffect(() => {
         if (props.foundItems !== undefined && props.foundItems !== null && props.selectedGarages !== undefined && props.selectedGarages !== null) {
             promoteArray();
@@ -80,17 +83,18 @@ const Search = (props) => {
             filterArray();
             setFiltered(filteredArray);
         }
-    }, [props.selectedGarages, garagesSelected, props.foundItems, itemsFound]);
+    }, [props.selectedGarages, garagesSelected, props.foundItems, itemsFound, filtering]);
 
 
 
     const onChangeMinPrice = (e) => {
         setMinPrice(e.target.value);
-        setFiltered(false);
+        setFiltering(!filtering);
     };
+
     const onChangeMaxPrice = (e) => {
         setMaxPrice(e.target.value);
-        setFiltered(false);
+        setFiltering(!filtering);
         if (e.target.value === '') {
             setMaxPrice(99999);
         }
@@ -98,60 +102,48 @@ const Search = (props) => {
 
     const onClick4Stars = (e) => {
         setMinStars(4);
-        setFiltered(false);
     };
 
     const onClick3Stars = (e) => {
         setMinStars(3);
-        setFiltered(false);
     };
 
     const onClick2Stars = (e) => {
         setMinStars(2);
-        setFiltered(false);
     };
 
     const onClick1Star = (e) => {
         setMinStars(1);
-        setFiltered(false);
     };
 
-    const onClickGarageDeadlineUp = (e) => {
-        //sorting function
+    const onClickGarageDeadlineUp = () => {
+        setPromoted(promoted.slice(0).sort((a, b) => a.props.deadline < b.props.deadline ? 1 : -1));
+        setFiltered(filtered.slice(0).sort((a, b) => a.props.deadline < b.props.deadline ? 1 : -1));
     };
 
-    const onClickGarageDeadlineDown = (e) => {
-        //sorting function
+    const onClickGarageDeadlineDown = () => {
+        setPromoted(promoted.slice(0).sort((a, b) => a.props.deadline > b.props.deadline ? 1 : -1));
+        setFiltered(filtered.slice(0).sort((a, b) => a.props.deadline > b.props.deadline ? 1 : -1));
     };
 
     const onClickPriceUp = () => {
         setPromoted(promoted.slice(0).sort((a, b) => a.props.price > b.props.price ? 1 : -1));
         setFiltered(filtered.slice(0).sort((a, b) => a.props.price > b.props.price ? 1 : -1));
-        setShowFiltered(true);
-        console.log(filtered);
     };
 
     const onClickPriceDown = () => {
         setPromoted(promoted.slice(0).sort((a, b) => a.props.price < b.props.price ? 1 : -1));
         setFiltered(filtered.slice(0).sort((a, b) => a.props.price < b.props.price ? 1 : -1));
-        setShowFiltered(true);
-        console.log(filtered);
     };
 
-    const onClickRatingUp = (e) => {
-        //sorting function
+    const onClickRatingUp = () => {
         setPromoted(promoted.slice(0).sort((a, b) => a.props.rating > b.props.rating ? 1 : -1));
         setFiltered(filtered.slice(0).sort((a, b) => a.props.rating > b.props.rating ? 1 : -1));
-        setShowFiltered(true);
-        console.log(filtered);
     };
 
-    const onClickRatingDown = (e) => {
-        //sorting function
+    const onClickRatingDown = () => {
         setPromoted(promoted.slice(0).sort((a, b) => a.props.rating < b.props.rating ? 1 : -1));
         setFiltered(filtered.slice(0).sort((a, b) => a.props.rating < b.props.rating ? 1 : -1));
-        setShowFiltered(true);
-        console.log(filtered);
     };
 
     return (
@@ -321,10 +313,11 @@ const Search = (props) => {
                       <Navbar className="results-for w-100" style={{backgroundColor: '#F8F8F8'}}>RESULTS FOR "{props.searchTerm}"</Navbar>
                       <div className="list-whole" style={{ paddingInline: 30, paddingTop:30 }}>
                           <ListGroup className="d-inline-block">
-                            <div>
-                                {promoted}
-                                {filtered}
-                                </div>
+                              <div>
+                                  {promoted}
+                                  <br/><br/>
+                                  {filtered}
+                              </div>
                           </ListGroup>
                       </div>
                   </div>
@@ -333,5 +326,6 @@ const Search = (props) => {
         </div>
     );
 };
+
 
 export default withRouter(Search);
