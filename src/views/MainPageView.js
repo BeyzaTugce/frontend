@@ -4,7 +4,9 @@ import { connect, useSelector } from "react-redux";
 import Header from "../components/Header";
 import {Button, Carousel, ListGroup, ListGroupItem,} from "react-bootstrap";
 import logo from "../resources/logo.png";
+import logo2 from "../resources/logo2.png";
 import comingsoon from "../resources/coming-soon.png";
+import comingsoon2 from "../resources/coming-soon2.png";
 import {getGarages} from "../redux/actions/GarageActions"
 import store from "../redux/store";
 import {getItems} from "../redux/actions/ItemActions";
@@ -33,6 +35,9 @@ function MainPageView(props) {
         }
     }, [items.items, itemReached === false]);
 
+    const handleClick = (e) => {
+        history.push("/garage/"+e.target.value);
+    }
 
     useEffect(() => {
         if ( items.items !== undefined && items.items !== null) {
@@ -41,7 +46,7 @@ function MainPageView(props) {
                 renderedList.push(
                     <ListGroupItem
                         className="d-inline-flex align-items-center justify-content-between border"
-                        style={{ borderColor: "#85A582"}}
+                        style={{ borderColor: "#85A582", width: 250, height: 400}}
                     >
                         <div className="content flex-fill text-center">
                             <div className="item-name" type="name" required style={{ fontSize: 18, fontWeight:"bold" }}>
@@ -69,7 +74,8 @@ function MainPageView(props) {
                             <Button
                                 className="btn-green border-0"
                                 variant="light"
-                                //onClick={history.push("/garage/"+item.garageId)}
+                                value={item.garageId}
+                                onClick={handleClick}
                             >
                                 Go to garage
                             </Button>
@@ -85,20 +91,38 @@ function MainPageView(props) {
     return (
         <div>
             <Header/>
-            <div className="jumbotron jumbotron-fluid" style={{backgroundColor: "white"}}>
+            <div className="jumbotron jumbotron-fluid" style={{backgroundColor: "white", marginBottom:-50}}>
                 <div className="container"><Carousel>
-                    <Carousel.Item>
+                    <Carousel.Item style={{maxHeight:400}}>
                         <img
                             className="d-block w-100"
                             src={logo}
                             alt="MyGarage"
+                            height="400"
                         />
                     </Carousel.Item>
-                    <Carousel.Item>
+                    <Carousel.Item style={{maxHeight:400}}>
                         <img
                             className="d-block w-100"
                             src={comingsoon}
                             alt="Coming Soon"
+                            height="400"
+                        />
+                    </Carousel.Item>
+                    <Carousel.Item style={{maxHeight:400}}>
+                        <img
+                            className="d-block w-100"
+                            src={comingsoon2}
+                            alt="Coming Soon"
+                            height="400"
+                        />
+                    </Carousel.Item>
+                    <Carousel.Item style={{maxHeight:400}}>
+                        <img
+                            className="d-block w-100"
+                            src={logo2}
+                            alt="MyGarage"
+                            height="400"
                         />
                     </Carousel.Item>
                 </Carousel>

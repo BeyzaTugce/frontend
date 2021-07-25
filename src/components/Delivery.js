@@ -77,6 +77,12 @@ const Delivery = (props) => {
     if (purchase.purchase !== undefined) {
       setMethodType(purchase?.purchase?.method);
     }
+    if(purchase?.purchase?.method == "Shipment" && userType == "Seller"){
+      history.push(`../order/${purchase.purchase._id}`);
+    }
+    else if (purchase?.purchase?.method == "Shipment" && userType == "Buyer"){
+      history.push(`../payment/${purchase.purchase._id}`);
+    }
   };
 
   /* const checkStatus = () => {
@@ -107,8 +113,12 @@ const Delivery = (props) => {
       back.availableDates = newDate;
       back.pickupLocation = location;
     } else if (userType == "Buyer") {
+      if(methodType == "Both")  back.method = methodType;
+     else if (methodType == "PickUp") {
       back.pickUpDate = selectedDate;
       back.method = methodType;
+     }
+
     }
     return back;
   };
@@ -135,10 +145,19 @@ const Delivery = (props) => {
     }
   };
 
+  const addDeliveryMethod = (e) => {
+    e.preventDefault();
+    store.dispatch(changePurchase(packPurchase()));
+  };
+
   return (
     <div className="Delivery">
-      {userType == "Seller" ? (
-        <div>
+      {userType === "Seller" ? (
+         <div>
+         {methodType === "Both" ? (
+           "Please wait for buyer to select a delivery method"
+         ): methodType === "PickUp" ?(  
+            <div>
           <Container
             className="contact-content debug-border"
             style={{ display: "align-items-middle" }}
@@ -221,12 +240,16 @@ const Delivery = (props) => {
             </InputGroup>
           </Container>
         </div>
+         ) : "There must be something wrong you should not be here" }
+         </div>
+     
       ) : userType == "Buyer" ? (
         <div>
-          <Container
-            className="contact-content debug-border"
-          >
-            <Row>
+        <Container
+          className="contact-content debug-border"
+        >
+          <Row>
+        {methodType == "PickUp" ? (        
               <Col>
                 <div
                     className="jumbotron jumbotron-fluid bg-white"
@@ -256,9 +279,9 @@ const Delivery = (props) => {
                     </ButtonGroup>
                   </p>
                 </div>
-              </Col>
-
-              {methodType == "Both" ? (
+              </Col> ):
+    
+              methodType == "Both" ? (
                 <Col>
                   <div
                       className="jumbotron jumbotron-fluid bg-white"
@@ -304,6 +327,13 @@ const Delivery = (props) => {
                       </FormGroup>
                     </p>
                   </div>
+                <Button
+                  className="btn-green"
+                  variant="light"
+                  onClick={addDeliveryMethod}
+                >
+                  Confirm
+                </Button>
                 </Col>
               ) : (
                   <div
@@ -312,18 +342,12 @@ const Delivery = (props) => {
                   >
                     <h4 className="display-5 text-center">Delivery will be {methodType}</h4>
                   </div>
-              )}
+              )} 
+              
             </Row>
           </Container>
         </div>
-      ) : (
-          <div
-              className="jumbotron jumbotron-fluid bg-white"
-              style={{ marginBottom: -10 }}
-          >
-            <h4 className="display-5 text-center">Delivery will be {methodType}</h4>
-          </div>
-      )}
+      ): "There must be something wrong you should not be here"}
 
       <div className="buttons d-flex align-items-center justify-content-center mb-5">
         <Button
