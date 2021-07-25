@@ -6,21 +6,30 @@ import Header from "../components/Header";
 import store from "../redux/store";
 import SearchItem from "../components/SearchItem";
 import {getGarages} from "../redux/actions/GarageActions";
+import {getUsers} from "../redux/actions/UserActions";
 
 function SearchView(props) {
     //let {match, getItem, getItems} = props;
     const [searchTerm, setSearchTerm] = useState("");
     const items = useSelector((state) => state.items);
     const garage = useSelector((state) => state.garage);
+    const user = useSelector((state) => state.user);
+
 
     const [selectedGarages, setSelectedGarages] = React.useState([]);
     const [foundItems, setFoundItems] = React.useState([]);
+    const [ratedUsers, setRatedUsers] = React.useState([]);
+
 
     let selectedGarageIds = [];
     let foundItemsArray = [];
+    let ratedItemUsers = [];
+
+    let itemUserId = [];
 
     let garageReached = false;
     let itemReached = false;
+    let userReached = false;
 
 
     useEffect(() => {
@@ -28,7 +37,9 @@ function SearchView(props) {
         setSearchTerm(params.get('term').toUpperCase());
         store.dispatch(getItems());
         store.dispatch(getGarages());
-    }, [garageReached === false, itemReached === false]);
+        store.dispatch(getUsers());
+
+    }, [garageReached === false, itemReached === false, userReached === false]);
 
     useEffect(() => {
         if (garage.garages !== undefined && garage.garages !== null) {
@@ -37,16 +48,12 @@ function SearchView(props) {
         if (items.items !== undefined && items.items !== null) {
             itemReached = true;
         }
-    }, [garage.garages, garageReached === false, items.items, itemReached === false]);
+        if (user.users !== undefined && user.users !== null) {
+            userReached = true;
+        }
+    }, [garage.garages, garageReached === false, items.items, itemReached === false,  user.users, userReached === false]);
 
-    const selectGarages = () => {
-        garage?.garages?.garages?.map( g =>
-        {
-            if ( g.isPromoted){
-                selectedGarageIds.push(g._id);
-            }
-        });
-    }
+
 
     const filterItem = (item, searchTerm) => {
         const upperCaseTags = item.tags.map(tag => tag.toUpperCase())
@@ -56,6 +63,7 @@ function SearchView(props) {
     const findItems = () => {
         items?.items?.items.map(item => {
             if (filterItem(item,searchTerm)){
+                itemUserId.push(item.userId);
                 foundItemsArray.push(
                     <SearchItem
                         key={item._id}
@@ -70,6 +78,24 @@ function SearchView(props) {
         });
     }
 
+    const selectGarages = () => {
+        garage?.garages?.garages?.map( g =>
+        {
+            if ( g.isPromoted){
+                selectedGarageIds.push(g._id);
+            }
+        });
+    }
+
+    const selectRatedUsers = () => {
+        user?.users?.users?.map( u =>
+        {
+            if ( itemUserId.includes(u._id)){
+                ratedItemUsers.push(u);
+            }
+        });
+    }
+
     useEffect(() => {
         if (garage.garages !== undefined && garage.garages !== null) {
             selectGarages();
@@ -79,7 +105,11 @@ function SearchView(props) {
             findItems();
             setFoundItems(foundItemsArray);
         }
-    }, [garage.garages, garageReached, items.items, itemReached]);
+        if (user.users !== undefined && user.users !== null) {
+            selectRatedUsers();
+            setRatedUsers(ratedItemUsers);
+        }
+    }, [garage.garages, garageReached, items.items, itemReached, user.users, userReached]);
 
 
 
@@ -92,6 +122,7 @@ function SearchView(props) {
                 foundItems={foundItems}
                 garage={garage.garages}
                 selectedGarages={selectedGarages}
+                ratedItemUsers={ratedItemUsers}
             />
         </div>
     );

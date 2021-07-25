@@ -22,6 +22,7 @@ const Search = (props) => {
 
     let itemsFound = false;
     let garagesSelected = false;
+    let ratedUsersFound = false;
 
     const filterArray = () => {
         props.foundItems?.map(item =>
@@ -65,6 +66,13 @@ const Search = (props) => {
         });
     }
 
+    const ratedUserByItem = (item) => {
+        props.ratedItemUsers.map( u => {
+            if (u._id === item.userId)
+                return u.avgRating;
+        })
+    }
+
 
     useEffect(() => {
         if (props.selectedGarages !== undefined && props.selectedGarage !== null) {
@@ -73,7 +81,10 @@ const Search = (props) => {
         if (props.foundItems !== undefined && props.foundItems !== null) {
             itemsFound = true;
         }
-    }, [props.selectedGarages, garagesSelected === false, props.foundItems, itemsFound === false]);
+        if (props.ratedItemUsers !== undefined && props.ratedItemUsers !== null) {
+            ratedUsersFound = true;
+        }
+    }, [props.selectedGarages, garagesSelected === false, props.foundItems, itemsFound === false, props.ratedItemUsers, ratedUsersFound === false]);
 
 
     useEffect(() => {
@@ -137,13 +148,13 @@ const Search = (props) => {
     };
 
     const onClickRatingUp = () => {
-        setPromoted(promoted.slice(0).sort((a, b) => a.props.rating > b.props.rating ? 1 : -1));
-        setFiltered(filtered.slice(0).sort((a, b) => a.props.rating > b.props.rating ? 1 : -1));
+        setPromoted(promoted.slice(0).sort((a, b) => ratedUserByItem(a) > ratedUserByItem(b) ? 1 : -1));
+        setFiltered(filtered.slice(0).sort((a, b) => ratedUserByItem(a) > ratedUserByItem(b) ? 1 : -1));
     };
 
     const onClickRatingDown = () => {
-        setPromoted(promoted.slice(0).sort((a, b) => a.props.rating < b.props.rating ? 1 : -1));
-        setFiltered(filtered.slice(0).sort((a, b) => a.props.rating < b.props.rating ? 1 : -1));
+        setPromoted(promoted.slice(0).sort((a, b) => ratedUserByItem(a) < ratedUserByItem(b) ? 1 : -1));
+        setFiltered(filtered.slice(0).sort((a, b) => ratedUserByItem(a) < ratedUserByItem(b) ? 1 : -1));
     };
 
     return (
