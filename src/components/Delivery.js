@@ -12,6 +12,8 @@ import "react-nice-dates/build/style.css";
 import { useDateInput } from "react-nice-dates";
 import InputGroup from "react-bootstrap/InputGroup";
 import { getPurchase, changePurchase } from "../redux/actions/PurchaseActions";
+
+import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import { getGarage } from "../redux/actions/GarageActions";
 import store from "../redux/store";
 import { connect, useSelector } from "react-redux";
@@ -31,6 +33,8 @@ const Delivery = (props) => {
   const [location, setLocation] = React.useState("");
   const [userType, setUserType] = useState("Unknown");
   const [methodType, setMethodType] = useState("Unknown");
+  let selectedMethodType = "Unknown";
+  let purchaseStatus = "";
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [newDate, setNewDate] = useState([]);
   const timeInputProps = useDateInput({
@@ -106,14 +110,13 @@ const Delivery = (props) => {
     back.garageId = purchase.purchase.garageId;
     back.price = purchase.purchase.price;
     back.selectedItemList = purchase.purchase.selectedItemList;
-    if (userType == "Seller") back.purchaseStatus = "DeliveryScheduled";
-    else if (userType == "Buyer") back.purchaseStatus = "Payment";
+    back.purchaseStatus = purchaseStatus;
 
     if (userType == "Seller") {
       back.availableDates = newDate;
       back.pickupLocation = location;
     } else if (userType == "Buyer") {
-      if(methodType == "Both")  back.method = methodType;
+      if(methodType == "Both")  back.method = selectedMethodType;
      else if (methodType == "PickUp") {
       back.pickUpDate = selectedDate;
       back.method = methodType;
@@ -136,25 +139,22 @@ const Delivery = (props) => {
 
   const addPickUp = (e) => {
     e.preventDefault();
-    if ( methodType == "Both"){
-      setMethodType(e.target.value);
-    }
+    if (userType == "Seller") purchaseStatus = "DeliveryScheduled";
+    else if (userType == "Buyer") purchaseStatus = "Payment";
     //   props.onCreate(packPickUp());
     store.dispatch(changePurchase(packPurchase()));
     if (userType == "Seller") {
       history.push(`../order/${purchase.purchase._id}`);
-    } else if (userType == "Buyer" && methodType == "PickUp") {
-      history.push(`../delivery/${purchase.purchase._id}`);
-    }
-    else if (userType == "Buyer" && methodType == "Shipment") {
+    } else if (userType == "Buyer" ) {
       history.push(`../payment/${purchase.purchase._id}`);
     }
   };
 
   const addDeliveryMethod = (e) => {
-    e.preventDefault();
-    setMethodType(e.target.value);
+    purchaseStatus = "DeliveryScheduling";
+    selectedMethodType = e;
     store.dispatch(changePurchase(packPurchase()));
+    history.push(`../delivery/${purchase.purchase._id}`);
    
   };
 
@@ -288,7 +288,9 @@ const Delivery = (props) => {
                           </td>
                       ))}
                     </ButtonGroup>
-                  </p> }
+                  </p> 
+                  
+                  }
                 
                 </div>
               </Col> ):
@@ -304,34 +306,46 @@ const Delivery = (props) => {
                       <FormGroup>
                         <div className="deliveryOptions text-center">
                           <div>
-                            <label>
-                              <input
+                 
+                          <label>
+                              <ToggleButton
                                   className="mr-2"
                                   name="Shipment"
                                   variant="light"
                                   value="Shipment"
                                   type="radio"
+                                  onChange={(e) =>
+                                    addDeliveryMethod(e.currentTarget.value)
+                                  }
                               >
                               Shipment
-                              </input>
+                              </ToggleButton>
                             </label>
                           </div>
                           <div>
                             <label>
-                              <input
+                              <ToggleButton
                                   className="mr-2"
                                   name="PickUp"
                                   variant="light"
                                   value="PickUp"
                                   type="radio"
+                                  onChange={(e) =>
+                                    addDeliveryMethod(e.currentTarget.value)
+                                  }
                               >
                                 Pick-up
-                              </input>
+                              </ToggleButton>
                             </label>
+
+                      <Button
+                        className="btn-green"
+                        variant="light"
+                        onClick={addDeliveryMethod}
+                      >
+                        Confirm Selected Method
+                      </Button>
                           </div>
-                          <Button onClick={addPickUp}>
-                            Save
-                          </Button>
                         </div>
                       </FormGroup>
                     </p>
