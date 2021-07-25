@@ -12,7 +12,7 @@ const Image = (props) => {
         upload: {
           pictures: [],
           maxFileSize: 	100000,
-          imgExtension: [".jpg", ".png"],
+          imgExtension: [".jpg", ".png", ".jpeg"],
           fileSizeError: "File is too big",
           defaultImages: [
           ]
@@ -21,15 +21,15 @@ const Image = (props) => {
 
 
   const handleChange = files => {
-    const { pictures } =state.upload;
+    const { pictures } = state.upload;
     console.warn({ pictures, files });
 
     setState(
       {
-        ...state,
+        state,
         upload: {
           ...state.upload,
-          pictures: [...pictures, ...files]
+          pictures: [files]
         }
       },
       () => {
@@ -40,10 +40,8 @@ const Image = (props) => {
 
   const confirmUpload = () => {
     const { pictures, defaultImages } = state.upload;
-    console.warn("Confirm Upload =>", [...pictures]);
-    {pictures &&
-      pictures.map((img, index) => (console.log(img)))}
-      props.onChangeItemImage(pictures);
+    console.warn("Confirm Upload =>", []);
+    props.onChangeItemImage(pictures);
   };
 
     return (
