@@ -74,6 +74,63 @@ const PurchaseView = (props) => {
         );
     }
 
+        //View the purchases for user in the buyer role
+        const onClickGoPurchaseSeller = (e) => {
+            let purchaseId= e.target.value;
+            console.log("purchaseId"+purchaseId);
+            props.getPurchases();
+            purchase?.purchases?.purchases?.filter(p => p._id == purchaseId).map( p => {
+                switch(p.purchaseStatus){
+                    case "WaitForAcceptance":
+                        props.history.push("../bargain/"+purchaseId)
+                        break
+                    case "DeliveryScheduling":
+                        props.history.push("../delivery/"+purchaseId)
+                        break
+                    case "DeliveryScheduled":
+                        props.history.push("../delivery/"+purchaseId)
+                        break
+                    case "Payment":
+                        props.history.push("../payment/"+purchaseId)
+                        break
+                    case "Order":
+                        props.history.push("../order/"+purchaseId)
+                        break
+                    case "Rating":
+                        props.history.push("../rating/"+purchaseId)
+                        break
+                }}
+            );
+        }
+
+            //View the purchases for user in the buyer role
+    const onClickGoPurchaseBuyer = (e) => {
+        let purchaseId= e.target.value;
+        props.getPurchases();
+
+        purchase?.purchases?.purchases?.filter(p =>  p._id == purchaseId).map( p => {
+            switch(p.purchaseStatus){
+                case "WaitForAcceptance":
+                    props.history.push("../bargain/"+p._id)
+                    break
+                case "DeliveryScheduling":
+                    props.history.push("../delivery/"+p._id)
+                    break
+                case "DeliveryScheduled":
+                    props.history.push("../delivery/"+p._id)
+                    break
+                case "Payment":
+                    props.history.push("../payment/"+p._id)
+                    break
+                case "Order":
+                    props.history.push("../order/"+p._id)
+                    break
+                case "Rating":
+                    props.history.push("../rating/"+p._id)
+                    break
+            }}
+        );
+    }
 
     return(
         <div>
@@ -92,6 +149,7 @@ const PurchaseView = (props) => {
                     {purchase?.purchases?.purchases?.filter(p => p.seller == user._id).map( p => p.selectedItemList.map( (item) => {
                         return (
                             <div>
+                            <div>
                                 <ListItem
                                     name={item.name}
                                     info={item.info}
@@ -103,6 +161,16 @@ const PurchaseView = (props) => {
                                 />
                                 <br/>
                             </div>
+                            <Button
+                            className="btn-green"
+                            style={{ width: 80, marginRight: 10 }}
+                            onClick={onClickGoPurchaseSeller}
+                            value= {p._id}
+                        >
+                            Go to purchase
+                        </Button>
+                        </div>
+                            
                         )}))} <br/><br/>
                 </div>
                 <Button onClick={onClickGetBuyer} className="btn-green" variant="light">
@@ -112,6 +180,7 @@ const PurchaseView = (props) => {
                     {purchase?.purchases?.purchases?.filter(p => p.buyer == user._id).map( p => p.selectedItemList.map( (item) => {
                         return (
                             <div>
+                                 <div>
                                 <ListItem
                                     name={item.name}
                                     info={item.info}
@@ -121,6 +190,15 @@ const PurchaseView = (props) => {
                                     username={item.username}
                                 />
                                 <br/>
+                            </div>
+                                <Button
+                                className="btn-green"
+                                style={{ width: 80, marginRight: 10 }}
+                                onClick={onClickGoPurchaseBuyer}
+                                value= {p._id}
+                            >
+                                Go to purchase
+                            </Button>
                             </div>
                         )}))}
                 </div>
