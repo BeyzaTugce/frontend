@@ -24,8 +24,6 @@ const PurchaseView = (props) => {
 
     //View the purchases for user in the seller role
     const onClickGetSeller = () => {
-        props.getPurchases();
-
         purchase?.purchases?.purchases?.filter(p => p.seller == user._id).map( p => {
             switch(p.purchaseStatus){
                 case "WaitForAcceptance":
@@ -49,8 +47,6 @@ const PurchaseView = (props) => {
 
     //View the purchases for user in the buyer role
     const onClickGetBuyer = () => {
-        props.getPurchases();
-
         purchase?.purchases?.purchases?.filter(p => p.buyer == user._id).map( p => {
             switch(p.purchaseStatus){
                 case "WaitForAcceptance":
@@ -78,8 +74,6 @@ const PurchaseView = (props) => {
         //View the purchases for user in the buyer role
         const onClickGoPurchaseSeller = (e) => {
             let purchaseId= e.target.value;
-            
-            props.getPurchases();
             purchase?.purchases?.purchases?.filter(p => p._id == purchaseId).map( p => {
                 console.log("purchaseIdSeller"+purchaseId+"p_id"+ p._id);
                 switch(p.purchaseStatus){
@@ -109,7 +103,6 @@ const PurchaseView = (props) => {
     const onClickGoPurchaseBuyer = (e) => {
         let purchaseId= e.target.value;
         console.log("purchaseIdbuyer"+purchaseId);
-        props.getPurchases();
 
         purchase?.purchases?.purchases?.filter(p =>  p._id == purchaseId).map( p => {
             switch(p.purchaseStatus){
@@ -160,7 +153,6 @@ const PurchaseView = (props) => {
                                     price={item.price}
                                     garageId={item.garageId}
                                     username={"Me"}
-                                    status={p.purchaseStatus}
                                     onClickGoPurchase={onClickGoPurchaseSeller}
                                     p_id={p._id}
                                 />
