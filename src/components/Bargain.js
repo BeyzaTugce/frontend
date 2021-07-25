@@ -155,14 +155,14 @@ const Bargain = (props) => {
     }
   };
 
-  const isBuyer = (user) => {
-    if(user == loggedInUser?._id)
+  const isBuyer = () => {
+    if(buyer == loggedInUser?._id)
       return true
     return false
   }
 
-  const isSeller = (user) => {
-    if(user == loggedInUser?._id)
+  const isSeller = () => {
+    if(seller == loggedInUser?._id)
       return true
     return false
   }
@@ -183,7 +183,7 @@ const Bargain = (props) => {
       return purchase?.purchase?.price;
     else if(arr && arr?.length<2)
       return purchase?.purchase?.price;
-    else if (isBuyer(buyer))
+    else if (isBuyer())
       return (arr[arr?.length - 1])
     else
       return (arr[arr?.length - 2])
@@ -195,11 +195,13 @@ const Bargain = (props) => {
     else if(arr?.length==0) {
       return Math.floor(purchase?.purchase?.price * 0.6);
     }
-    else if (isSeller(seller)) {
+    else if (isSeller()) {
+      console.log("selleer");
       return (arr[arr?.length - 1]) 
     }
       
-    else if(isBuyer(buyer)) {
+    else if(isBuyer()) {
+      console.log("buyer");
       return (arr[arr?.length - 2])
     }
   }
