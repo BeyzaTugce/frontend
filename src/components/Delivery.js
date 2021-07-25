@@ -136,11 +136,17 @@ const Delivery = (props) => {
 
   const addPickUp = (e) => {
     e.preventDefault();
+    if ( methodType == "Both"){
+      setMethodType(e.target.value);
+    }
     //   props.onCreate(packPickUp());
     store.dispatch(changePurchase(packPurchase()));
     if (userType == "Seller") {
       history.push(`../order/${purchase.purchase._id}`);
-    } else if (userType == "Buyer") {
+    } else if (userType == "Buyer" && methodType == "PickUp") {
+      history.push(`../delivery/${purchase.purchase._id}`);
+    }
+    else if (userType == "Buyer" && methodType == "Shipment") {
       history.push(`../payment/${purchase.purchase._id}`);
     }
   };
@@ -299,36 +305,33 @@ const Delivery = (props) => {
                         <div className="deliveryOptions text-center">
                           <div>
                             <label>
-                              <ToggleButton
+                              <input
                                   className="mr-2"
                                   name="Shipment"
                                   variant="light"
                                   value="Shipment"
                                   type="radio"
-                                  onChange={(e) =>
-                                    addDeliveryMethod(e.currentTarget.value)
-                                  }
                               >
                               Shipment
-                              </ToggleButton>
+                              </input>
                             </label>
                           </div>
                           <div>
                             <label>
-                              <ToggleButton
+                              <input
                                   className="mr-2"
                                   name="PickUp"
                                   variant="light"
                                   value="PickUp"
                                   type="radio"
-                                  onChange={(e) =>
-                                    addDeliveryMethod(e.currentTarget.value)
-                                  }
                               >
                                 Pick-up
-                              </ToggleButton>
+                              </input>
                             </label>
                           </div>
+                          <Button onClick={addPickUp}>
+                            Save
+                          </Button>
                         </div>
                       </FormGroup>
                     </p>
