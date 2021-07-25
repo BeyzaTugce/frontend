@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(1),
   },
 }));
+
 const Signup = ({
   isAuthenticated,
   registerNew,
@@ -184,7 +185,6 @@ const Signup = ({
   };
   const onChangePhone = (e) => {
     setPhone(e.target.value);
-    //setRegisterError("");
   };
   const onChangeSurname = (e) => {
     setSurname(e.target.value);
@@ -203,17 +203,14 @@ const Signup = ({
 
   const onChangeGender = (e) => {
     setGender(e.target.value);
-    //setRegisterError("");
   };
 
   const onChangeBirthdate = (e) => {
     setBirthdate(e.target.value);
-    //setPassRegisterError("");
   };
 
   const onChangePassword2 = (e) => {
     setPassword2(e.target.value);
-    // setPassRegisterError("");
   };
 
   return (

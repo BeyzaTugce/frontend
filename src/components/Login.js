@@ -24,7 +24,6 @@ const Login = ({
   const onLogin = (e) => {
     e.preventDefault();
     const user = { email, password };
-    // Attempt to login
     loginNew(user);
   };
 
@@ -34,6 +33,7 @@ const Login = ({
     else
       setDisabled(false)
   }, [email])
+
 
   useEffect(() => {
     // Check for register error

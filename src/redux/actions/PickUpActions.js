@@ -18,42 +18,6 @@ export function addPickUp(pickup) {
   };
 }
 
-/*export function changePickUp(changedGarage) {
-    function onSuccess(garage) {
-        return { type: "UPDATEGARAGE_SUCCESS", garage: garage };
-    }
-    function onFailure(error) {
-        console.log("change garage failure", error);
-    }
-
-    return async (dispatch) => {
-        try {
-            let garage = await GarageService.updateGarage(changedGarage);
-            dispatch(onSuccess(garage));
-        } catch (e) {
-            onFailure(e);
-        }
-    };
-}*/
-
-/*export function deleteGarage(item) {
-    function onSuccess(garages) {
-        return { type: "DELETEGARAGE_SUCCESS", garages: garages };
-    }
-    function onFailure(error) {
-        console.log("delete garage failure", error);
-    }
-
-    return async (dispatch) => {
-        try {
-            await GarageService.deleteGarage(item);
-            let garages = await GarageService.getGarages();
-            dispatch(onSuccess(garages));
-        } catch (e) {
-            onFailure(e);
-        }
-    };
-}*/
 
 export const getPickUp = (id) => {
   function onSuccess(pickup) {

@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 
-import { Button, FormCheck, ListGroupItem } from "react-bootstrap";
+import {ListGroupItem } from "react-bootstrap";
 
 const RateItem = (props) => {
-
-  const history = useHistory();
 
   useEffect(() => {
 
@@ -16,11 +13,11 @@ const RateItem = (props) => {
     <ListGroupItem
       className="d-inline-flex align-items-center justify-content-between border-0"
     >
-      <div className="img-container d-flex align-items-center " style={{width:100, height:100}}>
+      <div className="img-container d-flex align-items-center " style={{width:300, height:300}}>
         <ul className="list-group list-group-flush">
           {props.image &&
           props.image.map((img, index) => (
-              <li className="list-group-item" key={index}>
+              <li className="list-group-item" key={index} >
                 <img
                     className="my-auto d-block"
                     src={img}
@@ -47,7 +44,7 @@ const RateItem = (props) => {
         </div>
       </div>
       <div className="justify-content-end d-inline-flex align-items-center justify-content-end">
-      <div className="item-price" style={{"marginRight":15, "fontSize":20}}><strong>€{props.price}</strong></div>
+      <div className="item-price" style={{marginLeft:40, "fontSize":20}}><strong>€{props.price}</strong></div>
       </div>
 
     </ListGroupItem>

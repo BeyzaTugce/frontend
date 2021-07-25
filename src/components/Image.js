@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
+import React, { useState } from "react";
 import UploadComponent from "./Upload";
 import { withRouter } from "react-router-dom";
-import { connect, useSelector } from "react-redux";
+import { connect } from "react-redux";
 import "./styles.css";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 
 const Image = (props) => {
+
     const [state, setState] = useState({
         upload: {
           pictures: [],
@@ -18,8 +18,7 @@ const Image = (props) => {
           ]
         }
       });
-     
-  
+
 
   const handleChange = files => {
     const { pictures } =state.upload;
@@ -45,21 +44,16 @@ const Image = (props) => {
     {pictures &&
       pictures.map((img, index) => (console.log(img)))}
       props.onChangeItemImage(pictures);
-    
   };
 
     return (
       <div className="App">
         <hr />
-
-
         <UploadComponent
           {...state.upload}
           handleChange={handleChange}
         />
-
         <Button className="btn-purple" onClick={confirmUpload}>Confirm upload</Button>
-    
       </div>
     );
   

@@ -30,7 +30,6 @@ export const registerNew = ({
     password,
     phone,
     birthdate,
-    //registeredDate,
     gender,
     district,
     postcode,

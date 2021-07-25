@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {Button, FormGroup, FormLabel,ListGroup, Alert} from "react-bootstrap";
-import { useHistory } from "react-router-dom";
-import GarageItem from "./GarageItem";
+import {Button,ListGroup} from "react-bootstrap";
+import { useHistory, withRouter } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
-import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
+import GarageItem from "./GarageItem";
+
 
 const Garage = (props) => {
   const history = useHistory();
@@ -40,11 +40,11 @@ const Garage = (props) => {
   let sellerReached = false;
   let itemsReached = false;
 
+  //Extract existing garage
   const extractGarage = () => {
     if (!props.garage ) {
       return;
     }
-    //will change the date later.
     setGarageId(props.garage._id)
     setGarageEndDate(props.garage.dateCreated)
     setFormattedDate(new Date(props.garage.dateCreated).toLocaleDateString())
@@ -53,11 +53,11 @@ const Garage = (props) => {
     setIsPromoted(props.garage.isPromoted);
   }
 
+  //Create a purchase
   const packPurchase = () => {
     let back = {
       ...props.purchase,
     };
-    //back.purchaseId = purID;
     back.creationDate = creationDate;
     back.buyer = loggedInUser._id;
     back.seller = sellerId;
@@ -77,23 +77,26 @@ const Garage = (props) => {
     addPurchase(e);
   
   };
+
   const bargainFunction = (e) => {
     e.preventDefault();
     bargainOption = true;
     addPurchase(e);
-   
   };
 
+  //Signup to bargain or buy items
   const forwardToSignUpPage = (e) => {
     e.preventDefault();
     history.push("/signup");
   };
 
+  //Login before bargaining or buying items
   const forwardToLoginPage = (e) => {
     e.preventDefault();
     history.push("/login");
   };
 
+  //When a bargain or buy action started, create a new purchase
   const addPurchase = (e) => {
     e.preventDefault();
     if(!purchase.purchase){
@@ -107,12 +110,13 @@ const Garage = (props) => {
     }
   };
 
-
+  //Promote your garage
   const onClickPromote = (e) => {
     e.preventDefault();
     history.push(`../promote/${props.garageId}`);
   };
 
+  //Extract existing seller
   const extractSeller = () => {
     if (!props.seller ) {
       return;
@@ -124,7 +128,7 @@ const Garage = (props) => {
     setCity(props.seller.city)
   }
 
- 
+ //Extract existing item
   const extractItems = () => {
     if (!props.items ) {
       return;
@@ -132,19 +136,19 @@ const Garage = (props) => {
     setGarageItems(props.items.items);
   }
 
+  //Decide on purchase delivery method
   const getMethod = () => {
     if (!props.garage ) {
       return;
     }
-    if(props.garage.shipment == true){
-      if(props.garage.pickup == true){
+    if(props.garage.shipment === true){
+      if(props.garage.pickup === true){
         setSelectedMethod("Both");
         setShipmentAddress(loggedInUser.correspondenceAddress + ", " + loggedInUser.postcode + " " + loggedInUser.district + "/" + loggedInUser.city);
       }
       else {
         setSelectedMethod("Shipment");
         setShipmentAddress(loggedInUser.correspondenceAddress + ", " + loggedInUser.postcode + " " + loggedInUser.district + "/" + loggedInUser.city);
-        
       }
     }
     else setSelectedMethod("PickUp");
@@ -161,12 +165,10 @@ const Garage = (props) => {
   }, [props.garage, garageReached === false]);
 
   useEffect(() => {
-    console.log("second use effect " + garageReached);
     if (props.garage !== undefined && props.garage !== null) {
       getMethod();
     }
   }, [props.garage, garageReached]);
-
 
   useEffect(() => {
     extractSeller();
@@ -183,9 +185,8 @@ const Garage = (props) => {
   }, [props.seller, sellerReached === false]);
 
   useEffect(() => {
-    console.log("second use effect " + sellerReached);
     if (props.seller !== undefined && props.seller !== null) {
-      setIsMyGarage(loggedInUser?._id == props.seller?._id);
+      setIsMyGarage(loggedInUser?._id === props.seller?._id);
       if(loggedInUser?._id !== null){
         setLoggedIn(true);
       }
@@ -204,7 +205,6 @@ const Garage = (props) => {
   }, [props.items, itemsReached === false]);
 
 
-  
   useEffect(() => {
     if(numSelectedItems>1 & discount){
       setSaving(totalPrice/20);
@@ -226,10 +226,6 @@ const Garage = (props) => {
         setSelectedItemList(filteredArray);
     }
   };
-
-  const removeGarage = () => {
-    props.onRemoveGarage();
-  }
 
 
   const renderedListBuyer = garageItems.map((garageItem) => {
@@ -290,8 +286,6 @@ const Garage = (props) => {
   });
 
 
-  //TODO: "Select All" button color
-  //TODO: Bargain and buy buttons do not light up when clicked.
   return (
     <div className="Garage">
       <span>

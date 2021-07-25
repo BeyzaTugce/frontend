@@ -2,14 +2,7 @@ import React from "react";
 import { Container, Row, Col, Jumbotron, Form } from "react-bootstrap";
 
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Paper,
-  Button,
-  TextField,
-  Typography,
-  FormControlLabel,
-  Checkbox,
-} from "@material-ui/core";
+import {Button, Typography} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   usersignUpRoot: {

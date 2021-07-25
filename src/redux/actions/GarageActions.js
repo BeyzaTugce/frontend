@@ -95,7 +95,6 @@ export const getGarage = (id) => {
 
 export const getSeller = (id) => {
   function onSuccess(seller) {
-   // document.write(seller.firstname);
     return { type: "GETSELLER_SUCCESS", seller: seller };
   }
   function onFailure(error) {
@@ -104,7 +103,6 @@ export const getSeller = (id) => {
 
   return async (dispatch, getState) => {
     try {
-     // let garage = await GarageService.getGarage(id);
       let seller = await GarageService.readSeller(id);
       dispatch(onSuccess(seller));
     } catch (e) {
@@ -135,7 +133,6 @@ export function getItems(id) {
 
 export const getGarageByUser = (userId) => {
   function onSuccess(garage) {
-    console.log("aaaaa:"+garage);
     return { type: "GETGARAGE_SUCCESS", garage: garage };
   }
   function onFailure(error) {
@@ -144,10 +141,7 @@ export const getGarageByUser = (userId) => {
 
   return async (dispatch, getState) => {
     try {
-      console.log("actiondayız");
-      // let garage = await GarageService.getGarage(id);
       let garage = await GarageService.readGarageByUser(userId);
-      console.log("aaaaa:"+garage);
 
       dispatch(onSuccess(garage));
     } catch (e) {

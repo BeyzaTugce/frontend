@@ -23,19 +23,7 @@ export default class HttpService {
     };
   }
 
-  /*static extractAdmin(token) {
-        let base64Url = token.split(".")[1];
-        let base64 = base64Url.replace("-", "+").replace("_", "/");
-        let adminJson = JSON.parse(window.atob(base64));
-        return {
-            user: {
-                _id: adminJson._id,
-                email: adminJson.email,
-                password: adminJson.password,
-            },
-        };
-    }
-*/
+
   static async get(url, onSuccess, onError) {
     let token = window.localStorage["jwtToken"];
     let header = new Headers();
@@ -135,7 +123,6 @@ export default class HttpService {
         if (resp.hasOwnProperty("token")) {
           window.localStorage["jwtToken"] = resp.token;
           resp.user = this.extractUser(resp.token);
-          //resp.admin = this.extractAdmin(resp.token);
         }
         onSuccess(resp);
       }

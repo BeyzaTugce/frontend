@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import BargainComponent from "../components/Bargain";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -16,10 +16,6 @@ import Header from "../components/Header";
  */
 
 const BargainView = props => {
-
-  // useEffect(() => {
-  //   props.getOfferHistory(props.match.params.id);
-  // }, [props.offer.offers]);
   
   return (
       <div>

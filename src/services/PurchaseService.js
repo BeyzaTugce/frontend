@@ -71,7 +71,6 @@ export default class PurchaseService {
   }
 
   static createPurchase(purchase) {
-   // purchase._id = Math.floor(Math.random() * 100000000 + 1).toString();
     return new Promise((resolve, reject) => {
       HttpService.post(
         `${PurchaseService.baseURL()}`,

@@ -1,13 +1,7 @@
 import React from "react";
 import { Button,ListGroupItem } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
 
 const PurchaseItem = (props) => {
-
-    const history = useHistory();
-    const onClickGoPurchase = () => {
-        history.push("/garage/"+props.garageId);
-    }
 
     return (
         <ListGroupItem
@@ -41,7 +35,10 @@ const PurchaseItem = (props) => {
                 </div>
             </div>
             <div className="justify-content-end d-inline-flex align-items-center justify-content-end" style={{marginLeft: 40}}>
-                <div className="purchase-status" style={{"marginRight":30, "font-size":20}}><strong>{props.purchaseStatus}</strong></div>
+                {props.status === "Closed" ?
+                    <div className="purchase-status" style={{"marginRight":30, "font-size":20}}><i>Rating: {props.rating}</i></div> :
+                    <p></p>
+                }
                 <div className="item-price" style={{"marginRight":30, "font-size":20}}><strong>€{props.price}</strong></div>
                 {props.status === "Closed" ?
                     <Button

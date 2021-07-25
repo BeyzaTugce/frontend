@@ -9,6 +9,7 @@ import { connect, useSelector } from "react-redux";
 import { getPurchase, changePurchase } from "../redux/actions/PurchaseActions";
 
 const Payment = (props) => {
+
   const purchase = useSelector((state) => state.purchase);
   const loggedInUser = useSelector((state) => state.auth.user);
 

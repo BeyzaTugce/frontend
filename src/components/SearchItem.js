@@ -15,7 +15,6 @@ const SearchItem = (props) => {
         history.push("/garage/"+props.garageId);
     }
 
-
     return (
         <ListGroupItem
             className="d-inline-flex align-items-center justify-content-between border"

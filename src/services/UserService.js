@@ -1,5 +1,4 @@
 import HttpService from "./HttpService";
-import AuthService from "./AuthService";
 
 export default class UserService {
   static baseURL() {

@@ -15,17 +15,17 @@ import {
   NavbarBrand,
   InputGroup,
 } from "react-bootstrap";
-import {Cart3, House, PersonCircle, Search} from "react-bootstrap-icons";
+import {House, PersonCircle, Search} from "react-bootstrap-icons";
 import logo from "../resources/logo.png";
 import { logoutNew, loadUser } from "../redux/actions/AuthActions";
 import {getGarages} from "../redux/actions/GarageActions";
 import {getItems} from "../redux/actions/ItemActions";
 
-
 /**
  * Navigation bar of the app
  * @param {props} props
  */
+
 const Header = ({auth}) => {
   const { isAuthenticated, user } = auth;
 
@@ -46,14 +46,15 @@ const Header = ({auth}) => {
     };
   }, [searchTerm]);
 
+
   useEffect(() => {
     store.dispatch(loadUser());
     store.dispatch(getGarages());
     store.dispatch(getItems());
   }, [] );
 
+
   const onMyGarage = () => {
-    //store.dispatch(loadUser());
     store.dispatch(getGarages());
     if (isAuthenticated){
       if (garage?.garages?.garages?.filter(g => g.user === user._id).length === 0){
@@ -84,9 +85,6 @@ const Header = ({auth}) => {
     history.push("/home");
   };
 
-  //TODO: Change the logo to .svg
-  //TODO: Find a better icon for Garage
-  //TODO: Colors?
 
   return (
     <div className="Header">

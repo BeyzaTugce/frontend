@@ -60,12 +60,10 @@ function GarageView(props) {
   }, [garage.garageItems, itemsReached, match]);
 
 
-
-
-
   const onCreatePurchase = (purchased) => {
       addPurchase(purchased);
   };
+
   const onChangeGarage = (garage) => {
     changeGarage(garage);
   };

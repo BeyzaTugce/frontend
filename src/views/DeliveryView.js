@@ -10,6 +10,7 @@ import Header from "../components/Header";
  * For register new users
  * @param {props} props
  */
+
 function DeliveryView(props) {
 
   const onCreate = (pickup) => {
@@ -25,7 +26,6 @@ function DeliveryView(props) {
         <Header/>
         <DeliveryComponent
             onCreate={onCreate}
-            // onRemove = {onRemove}
             onCancel={onCancel}
         />
       </div>
