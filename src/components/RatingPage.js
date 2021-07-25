@@ -13,7 +13,7 @@ import { getPurchase,getPurchases, changePurchase, getPurchaseSeller, loadSeller
 
 import { changeUser} from "../redux/actions/UserActions";
 import { deleteItem } from "../redux/actions/ItemActions";
-import { getGarage } from "../redux/actions/GarageActions";
+import { getGarage, getItems, deleteGarage } from "../redux/actions/GarageActions";
 import { withRouter } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -42,10 +42,11 @@ const useStyles = makeStyles({
 });
 
 const RatingPage = (props) => {
-  let { match, getPurchase } = props;
+  let { match, getPurchase, getGarage, getItems, changeUser,deleteGarage } = props;
   const history = useHistory();
   const loggedInUser = useSelector((state) => state.auth.user);
   const purchase = useSelector((state) => state.purchase);
+  const garage = useSelector((state) => state.garage);
   const [userType, setUserType] = useState("Unknown");
   const [value, setValue] = React.useState(2);
   const [hover, setHover] = React.useState(-1);
@@ -58,6 +59,9 @@ const RatingPage = (props) => {
   let newAvgRating = 0;
   let purchaseReached = false;
   let purchasesReached = false;
+  let itemsReached = false;
+  let garageReached = false;
+  let itemsRemoved = false;
 
   useEffect(() => {
     let purchaseId = match.params.id;
@@ -164,13 +168,47 @@ const RatingPage = (props) => {
     purchase.purchase?.selectedItemList.map((garageItem) => {
       //console.log("garageItem._id" + garageItem._id);
       store.dispatch(deleteItem(garageItem._id));
+      itemsRemoved = true;
     });
   };
+
+  useEffect(() => {
+    let garageId =  purchase.purchase.garageId;
+    getGarage(garageId);
+  }, [match.params, garageReached === false,  purchaseReached ===true]);
+
+  useEffect(() => {
+    if (garage.garage !== undefined && garage.garage !== null) {
+      garageReached = true;
+    }
+  }, [garage.garage, garageReached === false,  purchaseReached ===true]);
+
+
+  useEffect(() => {
+    let garageId = purchase.purchase.garageId;
+    getItems(garageId);
+  }, [match.params, itemsReached === false, itemsRemoved === true,  purchaseReached ===true]);
+
+  useEffect(() => {
+    if (garage.garageItems !== undefined && garage.garageItems !== null) {
+      itemsReached = true;
+    }
+  }, [garage.garageItems, itemsReached === false,itemsRemoved === true,  purchaseReached ===true]);
+
+  useEffect(() => {
+    console.log("second use effect " + itemsReached);
+    if (garage.garageItems !== undefined && garage.garageItems !== null && garage.garageItems.items.length === 0) {
+      deleteGarage(purchase.purchase.garageId);
+    }
+  }, [garage.garageItems, itemsReached=== true, itemsRemoved === true,  purchaseReached ===true]);
+
+
+
   const backToMainPage = (e) => {
     e.preventDefault();
     store.dispatch(changePurchase(packPurchase()));
     itemListRemove();
-    store.dispatch(changeUser(packSeller()));
+    changeUser(packSeller());
     history.push(`../home`);
   };
 
@@ -255,4 +293,8 @@ export default connect(null, {
   getPurchases,
   getPurchaseSeller,
   changePurchase,
+  getGarage,
+  getItems,
+  changeUser,
+  deleteGarage
 })(withRouter(RatingPage));

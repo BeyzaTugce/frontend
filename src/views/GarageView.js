@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { connect, useSelector } from "react-redux";
-
+import { useHistory } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import Garage from "../components/Garage";
 import {getGarage, getSeller, getItems, deleteGarage, changeGarage} from "../redux/actions/GarageActions";
@@ -9,8 +9,8 @@ import { addPurchase } from "../redux/actions/PurchaseActions";
 import Header from "../components/Header";
 function GarageView(props) {
   
-  let {match, getGarage, getSeller, getItems ,addPurchase, changeGarage} = props;
-
+  let {match, getGarage, getSeller, getItems ,addPurchase, changeGarage, deleteGarage} = props;
+  const history = useHistory();
   const garage = useSelector((state) => state.garage);
   const user = useSelector((state) => state.auth);
   const purchase = useSelector((state) => state.purchase);
@@ -52,6 +52,13 @@ function GarageView(props) {
     }
   }, [garage.garageItems, itemsReached === false]);
 
+  useEffect(() => {
+    console.log("second use effect " + itemsReached);
+    if (garage.garageItems !== undefined && garage.garageItems !== null && garage.garageItems.items.length === 0) {
+      onRemoveGarage(garageId);
+    }
+  }, [garage.garageItems, itemsReached, match]);
+
 
 
 
@@ -63,8 +70,9 @@ function GarageView(props) {
     changeGarage(garage);
   };
 
-  const onRemoveGarage = () => {
+  const onRemoveGarage = (garageId) => {
     deleteGarage(garageId);
+    history.push(`../home`);
   }
 
   return (
