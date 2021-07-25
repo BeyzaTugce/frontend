@@ -16,7 +16,7 @@ import {
   InputGroup,
 } from "react-bootstrap";
 import {Cart3, House, PersonCircle, Search} from "react-bootstrap-icons";
-import logo from "../views/logo.png";
+import logo from "../resources/logo.png";
 import { logoutNew, loadUser } from "../redux/actions/AuthActions";
 import {getGarages} from "../redux/actions/GarageActions";
 import {getItems} from "../redux/actions/ItemActions";

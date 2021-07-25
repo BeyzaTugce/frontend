@@ -3,7 +3,8 @@ import {useHistory, withRouter} from "react-router-dom";
 import { connect, useSelector } from "react-redux";
 import Header from "../components/Header";
 import {Button, Carousel, ListGroup, ListGroupItem,} from "react-bootstrap";
-import logo from "./logo.png";
+import logo from "../resources/logo.png";
+import comingsoon from "../resources/coming-soon.png";
 import {getGarages} from "../redux/actions/GarageActions"
 import store from "../redux/store";
 import {getItems} from "../redux/actions/ItemActions";
@@ -44,7 +45,7 @@ function MainPageView(props) {
                     >
                         <div className="content flex-fill text-center">
                             <div className="item-name" type="name" required style={{ fontSize: 18, fontWeight:"bold" }}>
-                                {item.username}
+                                {item.name}
                             </div>
                             <div
                                 className="item-tags text-black-50"
@@ -54,9 +55,16 @@ function MainPageView(props) {
                             </div>
                             <div className="img-container d-flex align-items-center"
                                  style={{width: 200, height: 200, textAlign: "center",}}
-                            />
+                            >
+                                <img
+                                    className="img my-auto d-block"
+                                    src={item.image[0]}
+                                    width= "200"
+                                    alt={item.name}>
+                                </img>
+                            </div>
                             <div className="garage-name">At {item.username}'s Garage</div>
-                            <div className="garage-name">Ends on {item.deadline}</div>
+                            <div className="garage-name">Ends on {new Date (item.deadline).toLocaleDateString()}</div>
                             <div className="item-price" style={{ fontWeight:"bold" }}>€{item.price}</div>
                             <Button
                                 className="btn-green border-0"
@@ -83,21 +91,14 @@ function MainPageView(props) {
                         <img
                             className="d-block w-100"
                             src={logo}
-                            alt="First slide"
+                            alt="MyGarage"
                         />
                     </Carousel.Item>
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
-                            src={logo}
-                            alt="Second slide"
-                        />
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <img
-                            className="d-block w-100"
-                            src={logo}
-                            alt="Third slide"
+                            src={comingsoon}
+                            alt="Coming Soon"
                         />
                     </Carousel.Item>
                 </Carousel>
