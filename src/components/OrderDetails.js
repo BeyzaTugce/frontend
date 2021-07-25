@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ListGroup } from "react-bootstrap";
 import "./OrderDetails.css";
-import GarageItem from "./GarageItem";
+import OrderItem from "./OrderItem";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect, useSelector } from "react-redux";
@@ -16,8 +16,7 @@ const OrderDetails = (props) => {
   const [sellerName, setSellerName] = React.useState(" ");
   const [orderDate, setOrderDate] = React.useState("");
   const [method, setMethod] = React.useState("");
-  const [shipDate, setShipDate] = React.useState("Not specified");
-  const [pickUpDate, setPickUpDate] = React.useState("");
+  const [receiveDate, setReceiveDate] = React.useState("");
   const [pickUpAddress, setPickUpAddress] = React.useState("Not specified");
   const [shipAddress, setShipAddress] = React.useState("Not specified");
   const [totalwoTax, setTotalwoTax] = React.useState(0);
@@ -33,8 +32,6 @@ const OrderDetails = (props) => {
 
   let { match, getPurchase } = props;
   let purchaseReached = false;
-  let today = new Date();
-  let deliveryDate = new Date(today.setDate(today.getDate() + 4));
 
   useEffect(() => {
     let purchaseId = match.params.id;
@@ -57,9 +54,9 @@ const OrderDetails = (props) => {
       setPrice(purchase.purchase.price + tax);
       setTotalwoTax(purchase.purchase.price);
       setItems(purchase.purchase.selectedItemList);
-      setOrderDate(purchase.purchase.creationDate);
+      setOrderDate(new Date(purchase.purchase.creationDate).toLocaleDateString())
       setMethod(purchase.purchase.method);
-      setPickUpDate(purchase.purchase.pickUpDate);
+      setReceiveDate(new Date(purchase.purchase.pickUpDate).toLocaleDateString())
       setShipAddress(purchase.purchase.shipAddress);
     }
   }, [purchase.purchase, purchaseReached, getPurchase]);
@@ -122,7 +119,7 @@ const OrderDetails = (props) => {
 
   const renderedList = items.map((garageItem) => {
     return (
-      <GarageItem
+      <OrderItem
         name={garageItem.name}
         info={garageItem.info}
         tags={garageItem.tags}
@@ -140,41 +137,17 @@ const OrderDetails = (props) => {
 
   return (
     <div className="OrderDetails">
+      <div
+          className="jumbotron jumbotron-fluid bg-white"
+          style={{ marginBottom: -10 }}
+      >
+        <h2 className="display-5 text-center">
+          Order from {sellerName}'s Garage
+        </h2>
+      </div>
       <span>
-        <div class="container pb-5 mb-sm-4">
-          <div class="row mb-3">
-            <div class="col-sm-4 mb-2">
-              <div class="bg-secondary p-4 text-dark text-center">
-                <span class="font-weight-semibold mr-2">Shipped via:</span>UPS
-                Ground
-              </div>
-            </div>
-            <div class="col-sm-4 mb-2">
-              <div class="bg-secondary p-4 text-dark text-center">
-                <span class="font-weight-semibold mr-2">Status:</span>
-              </div>
-            </div>
-            <div class="col-sm-4 mb-2">
-              <div class="bg-secondary p-4 text-dark text-center">
-                <span class="font-weight-semibold mr-2">Expected date:</span>
-                {deliveryDate.toLocaleDateString()}
-              </div>
-            </div>
-          </div>
-
-          <div class="steps">
-            <div class="steps-header">
-              <div class="progress">
-                <div
-                  class="progress-bar"
-                  role="progressbar"
-                  style={{ width: 40 }}
-                  aria-valuenow="40"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                ></div>
-              </div>
-            </div>
+        <div class="container mb-3 mb-sm-4">
+          <div class="steps mb-3">
             <div class="steps-body">
               <div class="step step-completed">
                 <span class="step-indicator">
@@ -314,73 +287,52 @@ const OrderDetails = (props) => {
               </NavLink>
             </div>
           </div>
-        </div>
-        <div
-          className="jumbotron jumbotron-fluid bg-white"
-          style={{ marginBottom: -10 }}
-        >
-          <h2 className="display-5 text-center">
-            Order from {sellerName}'s Garage on {orderDate}
-          </h2>
-
-        </div>
-
-        <div
-          className="d-flex justify-content-center"
-          style={{ paddingInline: 50 }}
-        >
-          <div className="order-details d-flex justify-content-center w-50">
-            <div className="delivery-pickup-details d-flex justify-content-start w-50">
-              <div
-                className="delivery-pickup-labels text-right text-nowrap"
-                style={{ paddingRight: 5 }}
-              >
-                <div className="date">{method} Date: </div>
-                <div className="address">{method} Address: </div>
-              </div>
-              <div className="delivery-pickup-values">
-                <div className="date">
-                  {method === "Delivery" ? (
-                    <div>{shipDate}</div>
-                  ) : (
-                    <div>{pickUpDate}</div>
-                  )}
-                </div>
-                <div className="address text-wrap">
-                  {method === "Delivery" ? (
-                    <div>{pickUpAddress}</div>
-                  ) : (
-                    <div>{shipAddress}</div>
-                  )}
-                </div>
+          <div className="row mb-3">
+            <div className="col-sm-4 mb-2">
+              <div className="col bg-secondary h-100 pt-4 pb-4 text-dark text-center">
+                <div className="row-cols-1 text-center">
+                <span className="font-weight-semibold mr-2">Order Date:</span>{orderDate}</div>
+                <div className="row-cols-1 text-center">
+                <span className="font-weight-semibold mr-2">Status:</span></div>
               </div>
             </div>
-            <div className="payment-details d-flex justify-content-start w-50">
-              <div
-                className="payment-detail-labels text-right"
-                style={{ paddingRight: 5 }}
-              >
-                <div className="price-before-tax">Price before Tax: </div>
-                <div className="tax">Tax: </div>
-                <div className="total-price">Total Price: </div>
+            <div className="col-sm-4 mb-2">
+              <div className="col bg-secondary p-4 pb-4 text-dark text-center">
+                <div className="row-cols-1 text-center">
+                <span className="font-weight-semibold mr-2">{method} date:</span>{receiveDate}</div>
+                <div className="row-cols-1 text-center">
+                <span className="font-weight-semibold mr-2">Shipped via:</span>UPS
+                Ground</div>
+                <div className="row-cols-1 text-center">
+                <div className="address font-weight-semibold mr-2">
+                  <span className="font-weight-semibold mr-2">{method} Address:</span>
+                  {method === "Delivery" ? (
+                      <div>{pickUpAddress}</div>
+                  ) : (
+                      <div>{shipAddress}</div>
+                  )}</div></div>
               </div>
-              <div className="payment-detail-values">
-                <div className="price-before-tax">€{totalwoTax}</div>
-                <div className="tax">€{tax}</div>
-                <div className="total-price">€{price}</div>
+            </div>
+            <div className="col-sm-4 mb-2">
+              <div className="bg-secondary p-4 h-100 text-dark text-center">
+                <div className="row-cols-1 text-center">
+                <span className="price-before-tax font-weight-semibold mr-2">Price before Tax:</span>€{totalwoTax}</div>
+                <div className="row-cols-1 text-center">
+                <span className="tax font-weight-semibold mr-2">Tax:</span>€{tax}</div>
+                <div className="row-cols-1 text-center">
+                <span className="total-price font-weight-semibold mr-2">Total Price:</span>€{price}</div>
               </div>
             </div>
           </div>
         </div>
-
+          <h4 className="items-bought text-center">
+            Items Bought
+          </h4>
         <div
           className="list-whole w-100"
-          style={{ paddingInline: 50, paddingTop: 30 }}
+          style={{ paddingInline: 250 }}
         >
-          <p className="items-bought text-sm-center" style={{ fontSize: 20 }}>
-            Items Bought
-          </p>
-          <ListGroup>{renderedList}</ListGroup>
+          <ListGroup style={{marginBottom:50}}>{renderedList}</ListGroup>
         </div>
       </span>
     </div>

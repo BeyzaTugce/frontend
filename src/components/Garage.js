@@ -139,11 +139,11 @@ const Garage = (props) => {
     if(props.garage.shipment == true){
       if(props.garage.pickup == true){
         setSelectedMethod("Both");
-        setShipmentAddress(loggedInUser.correspondenceAddress + loggedInUser.district + loggedInUser.city);
+        setShipmentAddress(loggedInUser.correspondenceAddress + ", " + loggedInUser.postcode + " " + loggedInUser.district + "/" + loggedInUser.city);
       }
       else {
         setSelectedMethod("Shipment");
-        setShipmentAddress(loggedInUser.correspondenceAddress + loggedInUser.district + loggedInUser.city);
+        setShipmentAddress(loggedInUser.correspondenceAddress + ", " + loggedInUser.postcode + " " + loggedInUser.district + "/" + loggedInUser.city);
         
       }
     }
@@ -205,7 +205,6 @@ const Garage = (props) => {
 
 
   
-
   useEffect(() => {
     if(numSelectedItems>1 & discount){
       setSaving(totalPrice/20);
@@ -314,13 +313,15 @@ const Garage = (props) => {
             </p>
           </em>
         </div>
-        <div className="text-center">
-          {isMyGarage && !isPromoted ?
-              <Button className="btn-purple" variant="light" onClick={onClickPromote}>Want to get promoted?</Button> :
-              isMyGarage && isPromoted ?
-                  <Button className="btn-green" variant="light" disabled={true} onClick={onClickPromote}>You are promoted!</Button> :
-                  <p></p>
-          }
+        <div>
+          <div className="promote-button text-center mb-5">
+            {isMyGarage && !isPromoted ?
+                <Button className="btn-purple" variant="light" onClick={onClickPromote}>Want to get promoted?</Button> :
+                isMyGarage && isPromoted ?
+                    <Button className="btn-green" variant="light" disabled={true} onClick={onClickPromote}>You are promoted!</Button> :
+                    <p></p>
+            }
+          </div>
           <div className="list-whole w-100" style={{ paddingInline: 50 }}>
             {isMyGarage ?
                 <ListGroup>{renderedListUser}</ListGroup> :

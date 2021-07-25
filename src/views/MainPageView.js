@@ -4,7 +4,6 @@ import { connect, useSelector } from "react-redux";
 import Header from "../components/Header";
 import {Button, Carousel, ListGroup, ListGroupItem,} from "react-bootstrap";
 import logo from "./logo.png";
-
 import {getGarages} from "../redux/actions/GarageActions"
 import store from "../redux/store";
 import {getItems} from "../redux/actions/ItemActions";

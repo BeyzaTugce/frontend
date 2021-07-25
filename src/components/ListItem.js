@@ -11,8 +11,8 @@ const ListItem = (props) => {
 
     return (
         <ListGroupItem
-            className="d-inline-flex align-items-center justify-content-between"
-            style={{ borderColor: "#85A582", width: 1000}}
+            className="d-inline-flex align-items-center justify-content-between w-100"
+            style={{ borderColor: "#85A582"}}
         >
             <div
                 className="img-container d-flex align-items-center"
@@ -44,9 +44,8 @@ const ListItem = (props) => {
                 <div className="purchase-status" style={{"marginRight":30, "font-size":20}}><strong>{props.purchaseStatus}</strong></div>
                 <div className="item-price" style={{"marginRight":30, "font-size":20}}><strong>€{props.price}</strong></div>
                 <Button
-                    className="btn border-0"
-                    variant="dark"
-                    style={{ backgroundColor: "#85A582", width: 80, marginRight: 10 }}
+                    className="btn-green"
+                    style={{ width: 80, marginRight: 10 }}
                     onClick={onClickGoToGarage}
                 >
                     Go to garage

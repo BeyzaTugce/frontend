@@ -78,43 +78,52 @@ const PurchaseView = (props) => {
     return(
         <div>
             <Header/>
-            <h1 className="myGarage text-center">My Purchases</h1>
-            <div className="d-block justify-content-center" style={{margin: 100}}>
+            <div
+                className="jumbotron jumbotron-fluid bg-white"
+                style={{ marginTop: -10}}
+            >
+                <h1 className="display-5 text-center">My Purchases</h1>
+            </div>
+            <div className="" style={{paddingInline: 100}}>
                 <Button onClick={onClickGetSeller} className="btn-green" variant="light">
                     <div className="btn-text">Go To My Sales</div>
                 </Button><br/><br/>
-                {purchase?.purchases?.purchases?.filter(p => p.seller == user._id).map( p => p.selectedItemList.map( (item) => {
-                    return (
-                        <div>
-                            <ListItem
-                                name={item.name}
-                                info={item.info}
-                                tags={item.tags}
-                                price={item.price}
-                                garageId={item.garageId}
-                                username={"Me"}
-                                status={p.purchaseStatus}
-                            />
-                            <br/>
-                        </div>
-                    )}))} <br/><br/>
+                <div>
+                    {purchase?.purchases?.purchases?.filter(p => p.seller == user._id).map( p => p.selectedItemList.map( (item) => {
+                        return (
+                            <div>
+                                <ListItem
+                                    name={item.name}
+                                    info={item.info}
+                                    tags={item.tags}
+                                    price={item.price}
+                                    garageId={item.garageId}
+                                    username={"Me"}
+                                    status={p.purchaseStatus}
+                                />
+                                <br/>
+                            </div>
+                        )}))} <br/><br/>
+                </div>
                 <Button onClick={onClickGetBuyer} className="btn-green" variant="light">
                     <div className="btn-text">Go To My Orders</div>
                 </Button><br/><br/>
-                {purchase?.purchases?.purchases?.filter(p => p.buyer == user._id).map( p => p.selectedItemList.map( (item) => {
-                    return (
-                        <div>
-                            <ListItem
-                                name={item.name}
-                                info={item.info}
-                                tags={item.tags}
-                                price={item.price}
-                                garageId={item.garageId}
-                                username={item.username}
-                            />
-                            <br/>
-                        </div>
-                    )}))}
+                <div>
+                    {purchase?.purchases?.purchases?.filter(p => p.buyer == user._id).map( p => p.selectedItemList.map( (item) => {
+                        return (
+                            <div>
+                                <ListItem
+                                    name={item.name}
+                                    info={item.info}
+                                    tags={item.tags}
+                                    price={item.price}
+                                    garageId={item.garageId}
+                                    username={item.username}
+                                />
+                                <br/>
+                            </div>
+                        )}))}
+                </div>
             </div>
         </div>
     );

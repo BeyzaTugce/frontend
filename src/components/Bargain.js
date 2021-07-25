@@ -213,146 +213,35 @@ const Bargain = (props) => {
 
   return (
     <Container>
-      <Button
-        className="mr-5"
-        variant="success"
-        size="lg"
-        onClick={acceptOffer}
-      >
-        Accept Offer
-      </Button>
-      {turn ? (
-        <Button
-          className="mr-5"
-          variant="primary"
-          size="lg"
-          onClick={handleToggle}
-        >
-          New Offer
-        </Button>
-      ) : (
-        <Button
-          className="mr-5"
-          variant="dark"
-          size="lg"
-          onClick={handleToggle}
-        >
-          New Offer
-        </Button>
-      )}
-      <Modal show={show} onHide={handleToggle}>
-        <Modal.Header closeButton>
-          <Modal.Title>Please select your offer</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div>
-            ({enterOffer.price})
-            {/* <Slider axis="x" x={state.x} onChange={setState} /> */}
-            <Slider
-              styles={{
-                track: {
-                  backgroundColor: "blue",
-                },
-                active: {
-                  backgroundColor: "red",
-                },
-                thumb: {
-                  width: 15,
-                  height: 15,
-                },
-                disabled: {
-                  opacity: 0.5,
-                },
-              }}
-              axis="x"
-              x={enterOffer.price}
-              xmin={xMin(offersArray)}
-              // xmax (offersArray?.length==0)? purchase?.purchase?.price : offersArray[offersArray.length - 1]
-              xmax={xMax(offersArray)}
-              onChange={({ x }) =>
-                setEnterOffer((offer) => ({ ...offer, price: x }))
-              }
-              {...console.log(isBuyer())}
-            />
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleToggle}>
-            Cancel
-          </Button>
-          <Button
-            variant="primary"
-            onClick={(e) => {
-              if (
-                window.confirm(
-                  `Please confirm your offer for selected product(s): ${enterOffer.price}€`
-                )
-              )
-                handleOnClick(e);
-            }}
-          >
-            Make Offer
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      <Button
-        variant="danger"
-        className="mt-3 mb-3"
-        onClick={(e) => {
-          if (
-            window.confirm(`Are you sure you want to cancel bargain process?`)
-          )
-            handleCancelClick(e);
-        }}
-        size="lg"
-      >
-        Cancel Bargain
-      </Button>
-      <ListGroup>{renderedListItem}</ListGroup>
+      <div className="d-flex align-items-center justify-content-center">
+        <h4 className="addItems mb-3 mt-3">Bargaining For:</h4>
+      </div>
+      <ListGroup className="mb-3">{renderedListItem}</ListGroup>
       <ListGroup>
         <TransitionGroup className="offers">
-          {offer?.buyer === loggedInUser ? (
-            <div className="d-flex w-100 justify-content-between mt-3">
-              <Alert
-                variant="info"
-                style={{ "font-size": 20, "text-align": "center", width: 250 }}
-                block
-              >
-                <strong>{props.seller?.username}</strong>
-              </Alert>
-              <Alert
-                variant="danger"
-                style={{ "font-size": 20, "text-align": "center", width: 250 }}
-                block
-              >
-                <strong>{props.buyer?.username}</strong>
-              </Alert>
-            </div>
-          ) : (
-            <div className="d-flex justify-content-between mt-3">
-              <Alert
-                variant="danger"
-                style={{ "font-size": 20, "text-align": "center", width: 250 }}
-                block
-              >
-                <strong>{props.buyer?.username}</strong>
-              </Alert>
-              <Alert
-                variant="info"
-                style={{ "font-size": 20, "text-align": "center", width: 250 }}
-                block
-              >
-                <strong>{props.seller?.username}</strong>
-              </Alert>
-            </div>
-          )}
+          <div className="d-flex justify-content-between align-items-center">
+            <Button
+              className="btn-purplee mb-3"
+              disabled={true}
+              style={{"font-size": 20, "text-align": "center", width: 250, height: 40 }}
+            >
+              <strong>Buyer: {props.buyer?.username}</strong>
+            </Button>
+            <Button
+                className="btn-dark-greenn mb-3"
+                disabled={true}
+                style={{"font-size": 20, "text-align": "center", width: 250, height: 40 }}
+            >
+              <strong>Seller: {props.seller?.username}</strong>
+            </Button>
+          </div>
           {offer?.offers?.offerHistory?.map((price, index) => (
-            <CSSTransition key={index} timeout={1000} classNames="fade">
+            <CSSTransition key={index} timeout={1000} classNames="fade" style={{marginBottom:10}}>
               {index % 2 ? (
                 <div className="d-inline-flex w-100 justify-content-end">
                   <Button
-                    variant="success"
-                    className="btn float-right"
+                    className="btn-greenn float-right"
+                    disabled
                     style={{ width: 250 }}
                     block
                   >
@@ -362,8 +251,8 @@ const Bargain = (props) => {
               ) : (
                 <div className="d-inline-flex w-100 justify-content-start">
                   <Button
-                    variant="dark"
-                    className="btn"
+                    className="btn-light-purplee"
+                    disabled
                     style={{ width: 250 }}
                     block
                   >
@@ -375,6 +264,100 @@ const Bargain = (props) => {
           ))}
         </TransitionGroup>
       </ListGroup>
+      {}
+      <div className="d-flex align-items-center justify-content-center mt-3">
+        <Button
+            className="btn-green mr-3"
+            onClick={acceptOffer}
+            variant="light"
+        >
+          Accept Offer
+        </Button>
+        {turn ? (
+            <Button
+                className="btn-purple mr-3"
+                onClick={handleToggle}
+                variant="light"
+            >
+              New Offer
+            </Button>
+        ) : (
+            <Button
+                className="btn-purple mr-3"
+                onClick={handleToggle}
+                variant="light"
+            >
+              New Offer
+            </Button>
+        )}
+        <Modal show={show} onHide={handleToggle}>
+          <Modal.Header closeButton>
+            <Modal.Title>Please select your offer</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div>
+              ({enterOffer.price})
+              {/* <Slider axis="x" x={state.x} onChange={setState} /> */}
+              <Slider
+                  styles={{
+                    track: {
+                      backgroundColor: "blue",
+                    },
+                    active: {
+                      backgroundColor: "red",
+                    },
+                    thumb: {
+                      width: 15,
+                      height: 15,
+                    },
+                    disabled: {
+                      opacity: 0.5,
+                    },
+                  }}
+                  axis="x"
+                  x={enterOffer.price}
+                  xmin={xMin(offersArray)}
+                  // xmax (offersArray?.length==0)? purchase?.purchase?.price : offersArray[offersArray.length - 1]
+                  xmax={xMax(offersArray)}
+                  onChange={({ x }) =>
+                      setEnterOffer((offer) => ({ ...offer, price: x }))
+                  }
+                  {...console.log(isBuyer())}
+              />
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="light" className="btn-red" onClick={handleToggle}>
+              Cancel
+            </Button>
+            <Button
+                variant="light" className="btn-green"
+                onClick={(e) => {
+                  if (
+                      window.confirm(
+                          `Please confirm your offer for selected product(s): ${enterOffer.price}€`
+                      )
+                  )
+                    handleOnClick(e);
+                }}
+            >
+              Make Offer
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        <Button
+            className="btn-red mr-3"
+            variant="light"
+            onClick={(e) => {
+              if (
+                  window.confirm(`Are you sure you want to cancel bargain process?`)
+              )
+                handleCancelClick(e);
+            }}
+        >
+          Cancel Bargain
+        </Button>
+      </div>
     </Container>
   );
 };
