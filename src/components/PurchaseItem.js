@@ -43,15 +43,28 @@ const PurchaseItem = (props) => {
             <div className="justify-content-end d-inline-flex align-items-center justify-content-end" style={{marginLeft: 40}}>
                 <div className="purchase-status" style={{"marginRight":30, "font-size":20}}><strong>{props.purchaseStatus}</strong></div>
                 <div className="item-price" style={{"marginRight":30, "font-size":20}}><strong>€{props.price}</strong></div>
-                <Button
-                    className="btn-green"
-                    variant="light"
-                    style={{ marginRight: 10 }}
-                    onClick={props.onClickGoPurchase}
-                    value={props.p_id}
-                >
-                    Go to purchase
-                </Button>
+                {props.status === "Closed" ?
+                    <Button
+                        className="btn-green"
+                        variant="light"
+                        style={{ marginRight: 10 }}
+                        onClick={props.onClickGoPurchase}
+                        value={props.p_id}
+                        disabled={true}
+                    >
+                        Closed
+                    </Button> :
+                    <Button
+                        className="btn-green"
+                        variant="light"
+                        style={{ marginRight: 10 }}
+                        onClick={props.onClickGoPurchase}
+                        value={props.p_id}
+                    >
+                        Go to purchase
+                    </Button>
+                }
+
             </div>
         </ListGroupItem>
     );

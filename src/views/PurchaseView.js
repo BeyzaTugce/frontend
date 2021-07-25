@@ -155,6 +155,7 @@ const PurchaseView = (props) => {
                                     username={"Me"}
                                     onClickGoPurchase={onClickGoPurchaseSeller}
                                     p_id={p._id}
+                                    status={p.purchaseStatus}
                                 />
                                 <br/>
                             </div>
@@ -179,6 +180,7 @@ const PurchaseView = (props) => {
                                     username={item.username}
                                     onClickGoPurchase={onClickGoPurchaseBuyer}
                                     p_id={p._id}
+                                    status={p.purchaseStatus}
                                 />
                                 <br/>
                             </div>
