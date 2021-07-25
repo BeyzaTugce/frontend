@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {getItem} from "../redux/actions/ItemActions";
 import {connect, useSelector} from "react-redux";
 import {withRouter} from "react-router-dom";
+import {Carousel, CarouselItem} from "react-bootstrap";
 
 
 const ItemDetails = (props) => {
@@ -15,24 +16,35 @@ const ItemDetails = (props) => {
         getItem(itemId)
     }, [match.params]);
 
-    return(
-        <div>
-            <h1 className="text-center" style={{marginTop: 10, color: "#599219"}}>{item?.item?.username}'s {item?.item?.name}</h1>
-            <p style={{fontSize:30, margin:50}}><i><strong>About item:  </strong></i>{item?.item?.info}</p>
-            <p style={{fontSize:30, margin:50}}><i><strong>Price:  </strong></i>{item?.item?.price}€</p>
-            <div className="card mt-3">
-          <ul className="list-group list-group-flush">
-            { item?.item?.image.map((img, index) => (
-                <li className="list-group-item" key={index}>
-                     <img 
-                        src={img}
-                   alt="new"
-                 />
-                </li>
-              ))}
-          </ul>
-        </div>
+    const imageList = item?.item?.image.map((item) => {
+        return(
+            <Carousel.Item interval={1000}
+                           className="center-block"
+            >
+                <img
+                    src={item}
+                    alt={item.alt}
+                    style={{maxHeight:300}}
 
+                />
+            </Carousel.Item>);
+    })
+
+    return(
+        <div className="d-inline-block justify-content-center align-items-center text-center w-100">
+            <div
+                className="jumbotron jumbotron-fluid bg-white"
+                style={{ marginTop: -10, marginBottom:-10}}
+            >
+                <h1 className="display-5 text-center">Item Details</h1>
+            </div>
+            <Carousel style={{height:300}} className="carousel-dark">
+                {imageList}
+            </Carousel>
+            <h4 className="text-center mt-3">{item?.item?.username}'s {item?.item?.name}</h4>
+            <div>General information:  {item?.item?.info}</div>
+            <div>Tags: {item?.item?.tags.map(tag => "#"+tag+" ")}</div>
+            <div>Price:  €{item?.item?.price}</div>
         </div>
     );
 }

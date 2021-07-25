@@ -147,7 +147,12 @@ const Delivery = (props) => {
               <Col>
                 <div className="input-container">
                   <div>
-                    <h4>Please select available dates and times for pick-up</h4>
+                    <div
+                        className="jumbotron jumbotron-fluid bg-white"
+                        style={{ marginBottom: -10 }}
+                    >
+                      <h4 className="display-5 text-center">Please select available dates and times for pick-up</h4>
+                    </div>
                     <DatePickerCalendar
                       date={date}
                       onDateChange={setDate}
@@ -162,32 +167,37 @@ const Delivery = (props) => {
                         />
                       )}
                     </DatePickerCalendar>
-                    <input
-                      className="input"
-                      style={{ marginLeft: 16, width: 80 }}
-                      {...timeInputProps}
-                    />
-                    <Button
-                      className="btn border-0"
-                      variant="dark"
-                      style={{ backgroundColor: "#A282A5", marginRight: 8 }}
-                      onClick={() => {
-                        addDate(date);
-                      }}
-                    >
-                      Add
-                    </Button>
+                    <div className="d-flex justify-content-center mt-3 mb-3">
+                      <input
+                          className="input"
+                          style={{ marginLeft: 16, width: 80 }}
+                          {...timeInputProps}
+                      />
+                      <Button
+                          className="btn-purple"
+                          variant="light"
+                          onClick={() => {
+                            addDate(date);
+                          }}
+                      >
+                        Add
+                      </Button></div>
                   </div>
                 </div>
               </Col>
               <Col>
-                <h4>Selected Dates</h4>
+                <div
+                    className="jumbotron jumbotron-fluid bg-white"
+                    style={{ marginBottom: -10 }}
+                >
+                  <h4 className="display-5 text-center">Selected Dates</h4>
+                </div>
                 <p>
                   {newDate.map((item) => {
                     return (
-                      <li>
+                      <li className="text-center">
                         {item
-                          ? format(item, "dd MMM yyyy HH:mm", { locale: enGB })
+                          ? new Date(item).toLocaleDateString()
                           : ""}
                       </li>
                     );
@@ -195,7 +205,7 @@ const Delivery = (props) => {
                 </p>
               </Col>
             </Row>
-            <InputGroup>
+            <InputGroup className="mb-3">
               <InputGroup.Prepend>
                 <InputGroup.Text>Location</InputGroup.Text>
               </InputGroup.Prepend>
@@ -215,96 +225,117 @@ const Delivery = (props) => {
         <div>
           <Container
             className="contact-content debug-border"
-            style={{ display: "align-items-middle" }}
           >
             <Row>
               <Col>
-                <h4>Please Select a Date</h4>
-                <p>
-                  <ButtonGroup
-                    vertical={true}
-                    style={{ marginTop: 100, width: 150 }}
-                  >
-                    {purchase?.purchase?.availableDates.map((item) => (
-                      <td>
-                        <ToggleButton
-                          type="radio"
-                          //name={item}
-                          value={item}
-                          checked={selectedDate === item}
-                          onChange={(e) =>
-                            setSelectedDate(e.currentTarget.value)
-                          }
-                        >
-                          {item}
-                        </ToggleButton>
-                      </td>
-                    ))}
-                  </ButtonGroup>
-                </p>
+                <div
+                    className="jumbotron jumbotron-fluid bg-white"
+                >
+                  <h4 className="display-5 text-center">Please Select A Date</h4>
+                  <p className="text-center">
+                    <ButtonGroup
+                        vertical={true}
+                    >
+                      {purchase?.purchase?.availableDates.map((item) => (
+                          <td>
+                            <ToggleButton
+                                type="radio"
+                                variant="light"
+                                className="mr-2"
+                                //name={item}
+                                value={item}
+                                checked={selectedDate === item}
+                                onChange={(e) =>
+                                    setSelectedDate(e.currentTarget.value)
+                                }
+                            >
+                              {new Date(item).toLocaleDateString()}
+                            </ToggleButton>
+                          </td>
+                      ))}
+                    </ButtonGroup>
+                  </p>
+                </div>
               </Col>
 
               {methodType == "Both" ? (
                 <Col>
-                  <h4>Please Select a Delivery Method</h4>
-                  <p>
-                    <FormGroup>
-                      <div className="deliveryOptions">
-                        <FormLabel className="labels">Delivery</FormLabel>
-                        <div>
-                          <label>
-                            Shipment
-                            <input
-                              className="ml-2"
-                              name="Shipment"
-                              value="Shipment"
-                              type="radio"
-                              onChange={(e) =>
-                                setMethodType(e.currentTarget.value)
-                              }
-                            />
-                          </label>
+                  <div
+                      className="jumbotron jumbotron-fluid bg-white"
+                      style={{ marginBottom: -10 }}
+                  >
+                    <h4 className="display-5 text-center">Please Select a Delivery Method</h4>
+                    <p>
+                      <FormGroup>
+                        <div className="deliveryOptions text-center">
+                          <div>
+                            <label>
+                              <ToggleButton
+                                  className="mr-2"
+                                  name="Shipment"
+                                  variant="light"
+                                  value="Shipment"
+                                  type="radio"
+                                  onChange={(e) =>
+                                      setMethodType(e.currentTarget.value)
+                                  }
+                              >
+                              Shipment
+                              </ToggleButton>
+                            </label>
+                          </div>
+                          <div>
+                            <label>
+                              <ToggleButton
+                                  className="mr-2"
+                                  name="PickUp"
+                                  variant="light"
+                                  value="PickUp"
+                                  type="radio"
+                                  onChange={(e) =>
+                                      setMethodType(e.currentTarget.value)
+                                  }
+                              >
+                                Pick-up
+                              </ToggleButton>
+                            </label>
+                          </div>
                         </div>
-                        <div>
-                          <label>
-                            Pick-up
-                            <input
-                              className="ml-2"
-                              name="PickUp"
-                              value="PickUp"
-                              type="radio"
-                              onChange={(e) =>
-                                setMethodType(e.currentTarget.value)
-                              }
-                            />
-                          </label>
-                        </div>
-                      </div>
-                    </FormGroup>
-                  </p>
+                      </FormGroup>
+                    </p>
+                  </div>
                 </Col>
               ) : (
-                "Delivery will be " + methodType
+                  <div
+                      className="jumbotron jumbotron-fluid bg-white"
+                      style={{ marginBottom: -10 }}
+                  >
+                    <h4 className="display-5 text-center">Delivery will be {methodType}</h4>
+                  </div>
               )}
             </Row>
           </Container>
         </div>
       ) : (
-        "You are not a buyer or seller. Check if you are logged in"
+          <div
+              className="jumbotron jumbotron-fluid bg-white"
+              style={{ marginBottom: -10 }}
+          >
+            <h4 className="display-5 text-center">Delivery will be {methodType}</h4>
+          </div>
       )}
 
-      <div className="buttons d-flex align-items-center justify-content-center">
+      <div className="buttons d-flex align-items-center justify-content-center mb-5">
         <Button
-          className="btn border-0"
-          variant="dark"
-          style={{ backgroundColor: "#A282A5", marginRight: 8 }}
+          className="btn-purple"
+          variant="light"
+          style={{ marginRight: 8 }}
         >
           Go Back
         </Button>
         <Button
-          className="btn border-0 text-white"
+          className="btn-green"
           variant="light"
-          style={{ backgroundColor: "#85A582" }}
           onClick={addPickUp}
         >
           Confirm

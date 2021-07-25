@@ -19,6 +19,8 @@ import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Rating from "@material-ui/lab/Rating";
 import Box from "@material-ui/core/Box";
+import Header from "./Header";
+import RateItem from "./RateItem";
 
 const labels = {
   0.5: "Useless",
@@ -173,7 +175,7 @@ const RatingPage = (props) => {
   };
 
   useEffect(() => {
-    let garageId =  purchase.purchase.garageId;
+    let garageId =  purchase?.purchase?.garageId;
     getGarage(garageId);
   }, [match.params, garageReached === false,  purchaseReached ===true]);
 
@@ -185,7 +187,7 @@ const RatingPage = (props) => {
 
 
   useEffect(() => {
-    let garageId = purchase.purchase.garageId;
+    let garageId = purchase?.purchase?.garageId;
     getItems(garageId);
   }, [match.params, itemsReached === false, itemsRemoved === true,  purchaseReached ===true]);
 
@@ -214,44 +216,56 @@ const RatingPage = (props) => {
 
   const renderedList = purchase.purchase?.selectedItemList.map((garageItem) => {
     return (
-      <div className="RateList">
-        <GarageItem
-          name={garageItem.name}
-          info={garageItem.info}
-          tags={garageItem.tags}
-          price={garageItem.price}
-          itemId={garageItem._id}
-          button1Name={"Details"}
-          //userView={false}
-          image={garageItem.image}
-        />
-
-        <Rating
-          name="hover-feedback"
-          value={value}
-          precision={0.5}
-          size="large"
-          onChange={(event, newValue) => {
-            setValue(newValue);
-          }}
-          onChangeActive={(event, newHover) => {
-            setHover(newHover);
-          }}
-        />
-        {value !== null && (
-          <Box ml={2}>{labels[hover !== -1 ? hover : value]}</Box>
-        )}
+      <div
+          className="d-flex align-items-center border"
+          style={{ border: "#85A582", borderColor: "#85A582" }}>
+        <div className="text-center">
+          <Rating
+              name="hover-feedback"
+              style={{marginLeft:15}}
+              value={value}
+              precision={0.5}
+              size="large"
+              onChange={(event, newValue) => {
+                setValue(newValue);
+              }}
+              onChangeActive={(event, newHover) => {
+                setHover(newHover);
+              }}
+          />
+          {value !== null && (
+              <Box ml={2}>{labels[hover !== -1 ? hover : value]}</Box>
+          )}
+        </div>
+        <div className="flex-grow-1">
+          <RateItem
+              name={garageItem.name}
+              info={garageItem.info}
+              tags={garageItem.tags}
+              price={garageItem.price}
+              itemId={garageItem._id}
+              button1Name={"Details"}
+              //userView={false}
+              image={garageItem.image}
+          />
+        </div>
       </div>
     );
-  });
+  })
 
   return (
     <div>
-     
-        <div>
-          <ListGroup>{renderedList}</ListGroup>
+      <Header />
+        <div style={{paddingInline:100}}>
+          <div
+              className="jumbotron jumbotron-fluid bg-white"
+              style={{ marginTop: -10}}
+          >
+            <h1 className="display-5 text-center">Rate Your Purchase</h1>
+          </div>
+          <ListGroup className="mb-3">{renderedList}</ListGroup>
 
-          <InputGroup>
+          <InputGroup className="mb-3">
             <InputGroup.Prepend>
               <InputGroup.Text>Comment</InputGroup.Text>
             </InputGroup.Prepend>
@@ -265,25 +279,24 @@ const RatingPage = (props) => {
               required
             />
           </InputGroup>
-          <div className="buttons d-flex align-items-center justify-content-center">
+          <div className="buttons d-flex align-items-center justify-content-center" style={{marginBottom:20}}>
             <Button
-              className="btn border-0"
-              variant="dark"
-              style={{ backgroundColor: "#A282A5", marginRight: 8 }}
+              className="btn-purple"
+              variant="light"
+              style={{ marginRight: 8 }}
             >
               Go Back
             </Button>
             <Button
-              className="btn border-0 text-white"
+              className="btn-green"
               variant="light"
-              style={{ backgroundColor: "#85A582" }}
               onClick={backToMainPage}
             >
               Confirm
             </Button>
           </div>
         </div>
-   
+
     </div>
   );
 };

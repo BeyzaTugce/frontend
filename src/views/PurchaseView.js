@@ -8,6 +8,7 @@ import Header from "../components/Header";
 import GarageItem from "../components/GarageItem";
 import ListItem from "../components/ListItem";
 import "../components/Buttons.css";
+import PurchaseItem from "../components/PurchaseItem";
 
 const PurchaseView = (props) => {
 
@@ -150,7 +151,7 @@ const PurchaseView = (props) => {
                         return (
                             <div>
                             <div>
-                                <ListItem
+                                <PurchaseItem
                                     name={item.name}
                                     info={item.info}
                                     tags={item.tags}
@@ -158,17 +159,11 @@ const PurchaseView = (props) => {
                                     garageId={item.garageId}
                                     username={"Me"}
                                     status={p.purchaseStatus}
+                                    onClickGoPurchase={onClickGoPurchaseSeller}
+                                    p_id={p._id}
                                 />
                                 <br/>
                             </div>
-                            <Button
-                            className="btn-green"
-                            style={{ width: 80, marginRight: 10 }}
-                            onClick={onClickGoPurchaseSeller}
-                            value= {p._id}
-                        >
-                            Go to purchase
-                        </Button>
                         </div>
                             
                         )}))} <br/><br/>
@@ -181,24 +176,18 @@ const PurchaseView = (props) => {
                         return (
                             <div>
                                  <div>
-                                <ListItem
+                                <PurchaseItem
                                     name={item.name}
                                     info={item.info}
                                     tags={item.tags}
                                     price={item.price}
                                     garageId={item.garageId}
                                     username={item.username}
+                                    onClickGoPurchase={onClickGoPurchaseBuyer}
+                                    p_id={p._id}
                                 />
                                 <br/>
                             </div>
-                                <Button
-                                className="btn-green"
-                                style={{ width: 80, marginRight: 10 }}
-                                onClick={onClickGoPurchaseBuyer}
-                                value= {p._id}
-                            >
-                                Go to purchase
-                            </Button>
                             </div>
                         )}))}
                 </div>
