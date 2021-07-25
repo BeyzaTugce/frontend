@@ -147,7 +147,9 @@ const Delivery = (props) => {
 
   const addDeliveryMethod = (e) => {
     e.preventDefault();
+    setMethodType(e.target.value);
     store.dispatch(changePurchase(packPurchase()));
+   
   };
 
   return (
@@ -255,6 +257,8 @@ const Delivery = (props) => {
                     className="jumbotron jumbotron-fluid bg-white"
                 >
                   <h4 className="display-5 text-center">Please Select A Date</h4>
+                   {purchase?.purchase?.availableDates.length == 0 ? (  "Please wait for seller to choose the available dates"   ):
+                  
                   <p className="text-center">
                     <ButtonGroup
                         vertical={true}
@@ -277,7 +281,8 @@ const Delivery = (props) => {
                           </td>
                       ))}
                     </ButtonGroup>
-                  </p>
+                  </p> }
+                
                 </div>
               </Col> ):
     
@@ -300,7 +305,7 @@ const Delivery = (props) => {
                                   value="Shipment"
                                   type="radio"
                                   onChange={(e) =>
-                                      setMethodType(e.currentTarget.value)
+                                    addDeliveryMethod(e.currentTarget.value)
                                   }
                               >
                               Shipment
@@ -316,7 +321,7 @@ const Delivery = (props) => {
                                   value="PickUp"
                                   type="radio"
                                   onChange={(e) =>
-                                      setMethodType(e.currentTarget.value)
+                                    addDeliveryMethod(e.currentTarget.value)
                                   }
                               >
                                 Pick-up
@@ -327,13 +332,6 @@ const Delivery = (props) => {
                       </FormGroup>
                     </p>
                   </div>
-                <Button
-                  className="btn-green"
-                  variant="light"
-                  onClick={addDeliveryMethod}
-                >
-                  Confirm
-                </Button>
                 </Col>
               ) : (
                   <div
