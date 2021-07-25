@@ -35,6 +35,9 @@ function MainPageView(props) {
         }
     }, [items.items, itemReached === false]);
 
+    const handleClick = (e) => {
+        history.push("/garage/"+e.target.value);
+    }
 
     useEffect(() => {
         if ( items.items !== undefined && items.items !== null) {
@@ -71,7 +74,8 @@ function MainPageView(props) {
                             <Button
                                 className="btn-green border-0"
                                 variant="light"
-                                //onClick={history.push("/garage/"+item.garageId)}
+                                value={item.garageId}
+                                onClick={handleClick}
                             >
                                 Go to garage
                             </Button>
