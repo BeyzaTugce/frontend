@@ -84,16 +84,16 @@ const PurchaseView = (props) => {
                         props.history.push("../delivery/"+purchaseId)
                         break
                     case "DeliveryScheduled":
-                        props.history.push("../delivery/"+purchaseId)
+                        props.history.push("../order/"+purchaseId)
                         break
                     case "Payment":
-                        props.history.push("../payment/"+purchaseId)
+                        props.history.push("../order/"+purchaseId)
                         break
                     case "Order":
                         props.history.push("../order/"+purchaseId)
                         break
                     case "Rating":
-                        props.history.push("../rating/"+purchaseId)
+                        props.history.push("../order/"+purchaseId)
                         break
                 }}
             );
@@ -156,6 +156,7 @@ const PurchaseView = (props) => {
                                     onClickGoPurchase={onClickGoPurchaseSeller}
                                     p_id={p._id}
                                     status={p.purchaseStatus}
+                                    rating={p.rating}
                                 />
                                 <br/>
                             </div>
@@ -181,6 +182,7 @@ const PurchaseView = (props) => {
                                     onClickGoPurchase={onClickGoPurchaseBuyer}
                                     p_id={p._id}
                                     status={p.purchaseStatus}
+                                    rating={p.rating}
                                 />
                                 <br/>
                             </div>
