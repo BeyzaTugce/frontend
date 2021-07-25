@@ -43,8 +43,6 @@ const SearchItem = (props) => {
                          </img>
                      </ul>
                 </div>
-                <div className="garage-name">At {props.username}'s Garage</div>
-                <div className="garage-name">Ends on {props.endDate}</div>
                 <div className="item-price" style={{ fontWeight:"bold" }}>€{props.price}</div>
             </Button>
         </ListGroupItem>

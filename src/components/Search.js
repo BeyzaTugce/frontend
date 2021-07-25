@@ -39,6 +39,7 @@ const Search = (props) => {
                             garageId={item.props.garageId}
                             username={item.props.username}
                             image={item.props.image}
+                            endDate={item.props.deadline}
                         />);
                 }
             }
@@ -60,6 +61,7 @@ const Search = (props) => {
                             garageId={item.props.garageId}
                             username={item.props.username}
                             image={item.props.image}
+                            endDate={item.props.deadline}
                         />);
                 }
             }
