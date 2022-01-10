@@ -1,3 +1,5 @@
+  My Garage is an online garage sale platform to help people with items to get rid of to sell their belongings easily and efficiently with a user-friendly bargain interface which does not require direct messaging with the sellers and also offering potential discounts to buyers in case of selecting multiple items from the same garage. 
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
